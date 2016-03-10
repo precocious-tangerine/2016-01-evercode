@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 var db = require('../db/database');
 var _ = require('lodash');
 
-class Files = () => {
+class Files {
 };
 
 

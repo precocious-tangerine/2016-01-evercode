@@ -3,7 +3,8 @@ const Promise = require('bluebird');
 var db = require('../db/database');
 var _ = require('lodash');
 
-var Users = () => {
+class Users {
+
 };
 
 

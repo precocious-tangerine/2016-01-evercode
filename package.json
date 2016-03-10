@@ -17,7 +17,6 @@
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "redis": "^2.5.0-1",
-    "request": "^2.69.0",
     "sessions": "0.0.2-7"
   },
   "devDependencies": {},
