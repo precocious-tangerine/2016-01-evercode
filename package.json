@@ -6,12 +6,16 @@
   "dependencies": {
     "5": "0.0.1",
     "babel": "^6.5.2",
+    "body-parser": "^1.15.0",
     "bower": "^1.7.7",
+    "express-session": "^1.13.0",
     "gulp": "^3.9.1",
     "mongodb": "^2.1.7",
     "mongoose": "^4.4.6",
+    "morgan": "^1.7.0",
     "node": "0.0.0",
     "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
     "redis": "^2.5.0-1",
     "sessions": "0.0.2-7"
   },
