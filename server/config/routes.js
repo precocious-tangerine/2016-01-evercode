@@ -8,7 +8,7 @@ var utils = require('./utils');
 var config = require('../config');
 
 var Users = require('../models/users');
-var Snippets = require('../models/snippits');
+var Snippets = require('../models/snippets');
 
 var Users = new Users();
 var Snippets = new Snippets();
