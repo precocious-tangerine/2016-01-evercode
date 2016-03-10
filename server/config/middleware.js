@@ -12,7 +12,7 @@ passport.use(new GitHubStrategy({
   clientID: config.githubClientId,
   clientSecret: config.githubSecret,
   callbackURL: config.serverUrl+ '/auth/github/callback'
-}, function(accessToken, refreshToken, profile, done) {
+}, (accessToken, refreshToken, profile, done) => {
   done(null, {
     accessToken: accessToken,
     profile: profile
@@ -32,7 +32,7 @@ module.exports = (app, express) => {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
 
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
@@ -43,7 +43,7 @@ module.exports = (app, express) => {
   app.use(passport.session());
 
 //may need troubleshooting
-  app.use((req,res, next)=>{
+  app.use((req,res, next) => {
   	if (req.isAuthenticated()) {
   		res.redirect('/auth/github');
   	} else {

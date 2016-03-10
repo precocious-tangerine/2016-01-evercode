@@ -3,24 +3,23 @@ const Promise = require('bluebird');
 var db = require('../db/database');
 var _ = require('lodash');
 
-var Users = function() {
- this._users = {};
+var Users = () => {
 };
 
 
-Users.prototype.newUserAsync = function (user) {
+Users.prototype.newUserAsync = (user) => {
   
 }
 
-Users.prototype.getUserAsync = function (userName) {
+Users.prototype.getUserAsync = (userName) => {
   
 }
 
-Users.prototype.updateUserAsync = function (user) {
+Users.prototype.updateUserAsync = (user) => {
  
 }
 
-Users.prototype.getUsersAsync = function(userName) {
+Users.prototype.getUsersAsync = (userName) => {
   
 }
 
