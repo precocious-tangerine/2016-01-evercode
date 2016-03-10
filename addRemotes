@@ -1,0 +1,14 @@
+#!/bin/sh
+#Point to the upstream
+git remote add upstream http://www.github.com/precocious-tangerine/evercode
+#Add everyone's remotes
+git remote add edison http://www.github.com/bamboostgg/evercode
+git remote add orlando http://www.github.com/orlandoc01/evercode
+git remote add gerret http://www.github.com/ytenma/evercode
+git remote add max http://www.github.com/maxkroshka/evercode
+#Add shortcuts to everyone's remotes
+git remote add u http://www.github.com/precocious-tangerine/evercode
+git remote add e http://www.github.com/bamboostgg/evercode
+git remote add o http://www.github.com/orlandoc01/evercode
+git remote add g http://www.github.com/ytenma/evercode
+git remote add m http://www.github.com/maxkroshka/evercode
