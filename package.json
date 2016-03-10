@@ -1,0 +1,36 @@
+{
+  "name": "evercode",
+  "version": "0.0.1",
+  "description": "A plave to store and easily retrieve pieces of code.",
+  "main": "server.js",
+  "dependencies": {
+    "5": "0.0.1",
+    "babel": "^6.5.2",
+    "bower": "^1.7.7",
+    "gulp": "^3.9.1",
+    "node": "0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bamboostgg/2016-01-evercode.git"
+  },
+  "keywords": [
+    "code",
+    "snippets",
+    "hackrector",
+    "text",
+    "sharing",
+    "javascript"
+  ],
+  "author": "Edison D. Huff, Gerret Ytenma, Max Kroshka, Orlando Castillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bamboostgg/2016-01-evercode/issues"
+  },
+  "homepage": "https://github.com/bamboostgg/2016-01-evercode#readme"
+}
