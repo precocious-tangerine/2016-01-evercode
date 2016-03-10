@@ -1,0 +1,33 @@
+{
+  "name": "evercode",
+  "homepage": "https://github.com/precocious-tangerine/2016-01-evercode",
+  "authors": [
+    "Edison Huff",
+    "Gerret Ytenma",
+    "Max Kroshka",
+    "Orlando Castillo"
+  ],
+  "description": "a place to store and easily bits of code",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "code",
+    "snippets",
+    "save",
+    "share",
+    "store",
+    "filestorage"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0"
+  }
+}
