@@ -6,12 +6,16 @@
     "body-parser": "^1.15.0",
     "cluster": "^0.7.7",
     "express": "^4.4.5",
+    "html-webpack-plugin": "^2.10.0",
     "jsonwebtoken": "^5.7.0",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
+    "ng-redux": "^3.3.3",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
-    "redis": "^2.5.0-1"
+    "path": "^0.12.7",
+    "redis": "^2.5.0-1",
+    "webpack": "^1.12.14"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
@@ -26,7 +30,8 @@
   "scripts": {
     "test": "test",
     "start": "node --harmony-destructuring server/noncluster.js",
-    "cluster": "node --harmony-destructuring server/cluster.js"
+    "cluster": "node --harmony-destructuring server/cluster.js",
+    "build-wb": "webpack-dev-server --content-base dist/ --inline"
   },
   "repository": {
     "type": "git",
