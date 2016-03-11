@@ -21,6 +21,17 @@ var secret = 'shhh! it\'s a secret';
 
 Promise.promisifyAll(utils);
 
+let checkReqAuthorization = (req, res, next) => {
+	let token = req.header['x-access-token'];
+	redisClient.get(token, (err, result) => {
+		if(err || result === undefined) {
+			res.send(401, 'Unauthorized');
+		} else {
+			next();
+		}
+	});
+}
+
 module.exports = (app, express) => {
 	app.route('/')
 		.get((req, res) =>{
@@ -52,7 +63,7 @@ module.exports = (app, express) => {
 
 	app.route('/auth/github/failure')
 		.get((req, res) => {
-			res.send(401, 'Unauthorized User');
+			res.send(401, 'Unauthorized');
 		});
 
 	app.get('/auth/github', passport.authenticate('github'));
