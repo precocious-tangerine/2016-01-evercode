@@ -47,13 +47,13 @@ let userSchema = mongoose.Schema({
     private_repos: { type: Number },
     collaborators: { type: Number },
   },
-  directories: { type: Schema.Types.Mixed, default: {'myFiles': 'root'}},
-  files: { type: Schema.Types.Mixed },
+  directories: { type: mongoose.Schema.Types.Mixed, default: {'myFiles': 'root'}},
+  files: { type: mongoose.Schema.Types.Mixed },
 });
 
 let User = mongoose.model('User',userSchema);
 
-User.makeUser = (userObj, callback) =>{
+User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
   
   // email based login
@@ -64,31 +64,30 @@ User.makeUser = (userObj, callback) =>{
       })
       .then((hash) => {
         userObj._password = hash;
-        return User.create(userObj).exec();
+        return User.create(userObj);
       })
       .then((result) => {
         console.log("test makeUser result", result);
         return callback(result);
       })
-      .catch((err){
+      .catch((err) => {
         console.log("Error:", err);
       });
   }
 
   // OAuth based login (no supplied password)
-  User.create(userObj).exec()
+  User.create(userObj)
       .then((result) => {
-        console.log("test makeUser result", result);
+        console.log("test makeUser result - no pw", result);
         return callback(result);
       })
-      .catch((err){
+      .catch((err) => {
         console.log("Error:", err);
       });
-
 }
 
-User.getUser = (_id){
-  User.findOne({_id: new ObjectId(_id)}).exec()
+User.getUser = (_id) => {
+  User.findOne({_id: mongoose.Types.ObjectId(_id)})
     .then((userObj) => {
       console.log(userObj);
       callback(userObj);
@@ -99,10 +98,9 @@ User.getUser = (_id){
 }
 
 
-}
-
-User.checkCredentials(email, password){
+User.checkCredentials = (email, password) => {
   // TODO password verification
+  console.log("still building checkCredentials!", email,password);
 }
 
 module.exports = User;

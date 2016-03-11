@@ -1,5 +1,8 @@
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1/everCode');
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);
