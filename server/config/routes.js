@@ -1,4 +1,5 @@
 "use strict";
+var request = require('request');
 var _ = require('lodash');
 var passport = require('passport');
 var Promise = require('bluebird');
@@ -6,10 +7,10 @@ var Promise = require('bluebird');
 var utils = require('./utils');
 var config = require('../config');
 var Users = require('../models/users');
-var Files = require('../models/files');
+var Snippets = require('../models/snippits');
 
 var Users = new Users();
-var Files = new Files();
+var Snippets = new Snippets();
 
 var redis = require('redis');
 var redisClient = redis.createClient();

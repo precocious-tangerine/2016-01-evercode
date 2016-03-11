@@ -2,13 +2,15 @@
 const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let _ = require('lodash');
+let bcrypt = Promise.promisifyAll(require('bcrypt'));
 
 let userSchema = mongoose.Schema({
+  _password: {type: String},
   login: { type: String, required: true },
-  id: { type: Number, required: true },
+  id: { type: Number},
   avatar_url: { type: String },
   gravatar_id: { type: String },
-  url: { type: String },
+  url: { type: String},
   html_url: { type: String },
   followers_url: { type: Number },
   following_url: { type: Number },
@@ -51,6 +53,56 @@ let userSchema = mongoose.Schema({
 
 let User = mongoose.model('User',userSchema);
 
+User.makeUser = (userObj, callback) =>{
+  let pw = userObj._password;
+  
+  // email based login
+  if (typeof pw === 'string' && pw !== ''){
+    return bcrypt.genSaltAsync(13)
+      .then((salt) => {
+        return bcrypt.hashAsync(user.password, salt);
+      })
+      .then((hash) => {
+        userObj._password = hash;
+        return User.create(userObj).exec();
+      })
+      .then((result) => {
+        console.log("test makeUser result", result);
+        return callback(result);
+      })
+      .catch((err){
+        console.log("Error:", err);
+      });
+  }
 
+  // OAuth based login (no supplied password)
+  User.create(userObj).exec()
+      .then((result) => {
+        console.log("test makeUser result", result);
+        return callback(result);
+      })
+      .catch((err){
+        console.log("Error:", err);
+      });
+
+}
+
+User.getUser = (_id){
+  User.findOne({_id: new ObjectId(_id)}).exec()
+    .then((userObj) => {
+      console.log(userObj);
+      callback(userObj);
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+}
+
+
+}
+
+User.checkCredentials(email, password){
+  // TODO password verification
+}
 
 module.exports = User;
