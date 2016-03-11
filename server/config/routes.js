@@ -18,6 +18,10 @@ var redisClient = redis.createClient();
 Promise.promisifyAll(utils);
 
 module.exports = (app, express) => {
+	app.route('/')
+		.get((req, res) =>{
+			res.redirect('/index.html');
+		})
 	app.route('/api/signin')
 		.post((req,res) => {
 			console.log('posted to api/signin');
