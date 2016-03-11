@@ -5,7 +5,6 @@ var Promise = require('bluebird');
 
 var utils = require('./utils');
 var config = require('../config');
-
 var Users = require('../models/users');
 var Files = require('../models/files');
 
@@ -25,7 +24,7 @@ let checkReqAuthorization = (req, res, next) => {
 	let token = req.header['x-access-token'];
 	redisClient.get(token, (err, result) => {
 		if(err || result === undefined) {
-			res.send(401, 'Unauthorized');
+			res.status(401).send('Unauthorized');
 		} else {
 			next();
 		}
@@ -48,13 +47,13 @@ module.exports = (app, express) => {
 				redisClient.mset([token, true], (err, replies) =>{
 					if (err) {
 						throw new Error(err);
-						res.send(501, 'Error');
+						res.status(501).send('Error');
 					} else {
-						res.send(201, token)
+						res.status(201).send(token)
 					}
 				})	
 			} else {
-				res.send(401, 'Unauthorized');
+				res.status(401).send('Unauthorized');
 			}
 		});
 
@@ -64,12 +63,12 @@ module.exports = (app, express) => {
 			////Do some saving
 
 			let token = jwt.sign({username}, secret);
-			res.send(201, token);
+			res.status(201).send(token);
 		});
 
 	app.route('/auth/github/failure')
 		.get((req, res) => {
-			res.send(401, 'Unauthorized');
+			res.status(401).send('Unauthorized');
 		});
 
 	app.get('/auth/github', passport.authenticate('github'));
@@ -81,9 +80,9 @@ module.exports = (app, express) => {
 			redisClient.mset([token, true], (err, replies) =>{
 				if (err) {
 					throw new Error(err);
-					res.send(501, 'Error');
+					res.status(501).send('Error');
 				} else {
-					res.send(201, token)
+					res.status(201).send(token)
 				}
 			});	
 		});

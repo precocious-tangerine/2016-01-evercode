@@ -3,10 +3,8 @@
   "version": "0.0.1",
   "description": "A plave to store and easily retrieve pieces of code.",
   "dependencies": {
-    "babel": "^6.5.2",
     "body-parser": "^1.15.0",
     "express": "^4.4.5",
-    "express-session": "^1.13.0",
     "jsonwebtoken": "^5.7.0",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
