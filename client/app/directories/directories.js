@@ -3,7 +3,7 @@ angular.module('evercode.directories', [])
 .controller('DirectoriesCtrl', function($scope, $rootScope, Folders, $location) {
   $scope.data = {};
   $scope.data.folders = [{name: 'React'}];
-  $scope.showInput = false;
+  $scope.folder = {};
 
   $scope.initialize = function() {
     Folders.getFolders().then(function(data) {
@@ -13,11 +13,11 @@ angular.module('evercode.directories', [])
 
   $scope.addFolder = function() {
     $scope.toggleInput();
-    Folders.addFolder({ name: $scope.folderName })
+    Folders.addFolder({ name: $scope.folder.name })
       .then(function(res) {
         $scope.initialize();
       });
-    $scope.folderName = '';
+    $scope.folder.name = '';
     
   };
 
@@ -34,13 +34,9 @@ angular.module('evercode.directories', [])
     }
   };
 
-  $scope.toggleInput = function() {
-    $scope.showInput = !$scope.showInput;
-  };
-
   $scope.deleteMode = function() {
     $rootScope.deleteMode = !$rootScope.deleteMode;
   };
   
-  $scope.initialize();
+  // $scope.initialize();
 });

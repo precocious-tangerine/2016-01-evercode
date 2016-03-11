@@ -33,7 +33,7 @@ angular.module('evercode.services', [])
       removeFolder: removeFolder
     };
   })
-  .factory('Auth', function($http, $location) {
+  .factory('Auth', function($http, $location, $window) {
 
     var signin = function(user) {
       return $http({
@@ -51,11 +51,16 @@ angular.module('evercode.services', [])
       })
     };
 
+    var isAuth = function () {
+      return !!$window.localStorage.getItem('com.shortly');
+    };
+
     var signout = function() {
       return $http({
         method: 'GET',
         url: '/api/signout'
       }).then(function() {
+        $window.localStorage.removeItem('com.evercode');
         $location.path('/signin');
       })
     };
@@ -63,6 +68,7 @@ angular.module('evercode.services', [])
     return {
       signin: signin,
       signup: signup,
+      isAuth: isAuth,
       signout: signout
     };
   });
