@@ -2,7 +2,7 @@
 /server/config.js
 
 #client
-/client/bower_components/*
+/client/lib/*
 
 #npm_files
 /node_modules/*
