@@ -24,33 +24,43 @@ Promise.promisifyAll(utils);
 module.exports = (app, express) => {
 	app.route('/')
 		.get((req, res) =>{
-			res.redirect('/app/auth/signin.html');
-		})
+			res.redirect('/app/auth/signinCopy.html');
+		});
+
 	app.route('/signin')
 		.post((req,res) => {
-			let username = req.body.username;
-			let password = req.body.password;
-			res.send('hi');
+			let {username, password} = req.body;
+			//Do some comparing
+			
+			let loginSucess = true;
+			if(loginSucess) {
+				let token = jwt.sign({username}, secret);
+				res.send(201, token)
+			} else {
+				res.send(401, 'Unauthorized');
+			}
 		});
 
 	app.route('/signup')
 		.post((req, res) => {
-			let username = req.body.username;
-			let password = req.body.password;
-			res.send('hi');
-		})
-	app.route('/api/success')
-		.get((req,res) => {});
+			let {username, password} = req.body;
+			////Do some saving
 
-	app.route('/api/failure')
-		.get((req, res) => {});
+			let token = jwt.sign({username}, secret);
+			res.send(201, token);
+		});
+
+	app.route('/auth/github/failure')
+		.get((req, res) => {
+			res.send(401, 'Unauthorized User');
+		});
 
 	app.get('auth/github', passport.authenticate('github'));
 
 	app.get('auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/api/failure'}),
 		(req, res) => {
-			let username = req.user.profile.username
-
-		})
+			let token = jwt.sign({username: req.user.profile.username}, secret);
+			res.send(201, token);
+		});
 }
