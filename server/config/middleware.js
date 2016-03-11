@@ -42,14 +42,6 @@ module.exports = (app, express) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-// //may need troubleshooting
-//   app.use((req,res, next) => {
-//   	if (req.isAuthenticated()) {
-//   		res.redirect('/auth/github');
-//   	} else {
-//   		next();
-//   	}
-//   })
 
   app.use('/', express.static(__dirname + '/../../client'));
 };
