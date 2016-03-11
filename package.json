@@ -2,44 +2,38 @@
   "name": "evercode",
   "version": "0.0.1",
   "description": "A plave to store and easily retrieve pieces of code.",
-  "main": "server.js",
   "dependencies": {
-    "5": "0.0.1",
     "babel": "^6.5.2",
+    "express": "^4.4.5",
     "body-parser": "^1.15.0",
-    "bower": "^1.7.7",
     "express-session": "^1.13.0",
-    "gulp": "^3.9.1",
-    "mongodb": "^2.1.7",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
-    "node": "0.0.0",
     "passport": "^0.3.2",
-    "passport-github": "^1.1.0",
-    "redis": "^2.5.0-1",
-    "sessions": "0.0.2-7"
+    "passport-github": "^1.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-shell": "^0.2.7",
+    "karma": "^0.13.15",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.2.1",
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
   "scripts": {
     "test": "test",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bamboostgg/2016-01-evercode.git"
+    "url": "https://github.com/precocious-tangerine/evercode.git"
   },
-  "keywords": [
-    "code",
-    "snippets",
-    "hackrector",
-    "text",
-    "sharing",
-    "javascript"
-  ],
-  "author": "Edison D. Huff, Gerret Ytenma, Max Kroshka, Orlando Castillo",
-  "license": "ISC",
+  "author": "Edison D. Huff, Gerrit Yntema, Max Kroshka, Orlando Castillo",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/bamboostgg/2016-01-evercode/issues"
+    "url": "https://github.com/precocious-tangerine/evercode.git/issues"
   },
-  "homepage": "https://github.com/bamboostgg/2016-01-evercode#readme"
+  "homepage": "https://github.com/precocious-tangerine/evercode.git#readme"
 }
