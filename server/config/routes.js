@@ -31,6 +31,14 @@ let checkReqAuthorization = (req, res, next) => {
 	});
 }
 
+let addReqTokenToRedis = (token) => {
+	return new Promise((resolve, reject) => {
+		redisClient.mset([token, true], (err, replies) => {
+			err ? reject(err) : resolve(replies);
+		});
+	});
+}
+
 module.exports = (app, express) => {
 	app.route('/')
 		.get((req, res) =>{
@@ -44,14 +52,14 @@ module.exports = (app, express) => {
 			let loginSucess = true;
 			if(loginSucess) {
 				let token = jwt.sign({username}, secret);
-				redisClient.mset([token, true], (err, replies) =>{
-					if (err) {
-						throw new Error(err);
-						res.status(501).send('Error');
-					} else {
-						res.status(201).send(token)
-					}
-				})	
+				addReqTokenToRedis(token)
+				.then((replies) => {
+					res.status(200).send(token);
+				})
+				.catch((err) => {
+					console.log(err);
+					res.status(500).send(err);
+				});
 			} else {
 				res.status(401).send('Unauthorized');
 			}
@@ -63,6 +71,14 @@ module.exports = (app, express) => {
 			////Do some saving
 
 			let token = jwt.sign({username}, secret);
+			addReqTokenToRedis(token)
+			.then((replies) => {
+				res.status(200).send(token)
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(500).send(err);
+			})
 			res.status(201).send(token);
 		});
 
@@ -77,13 +93,13 @@ module.exports = (app, express) => {
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),
 		(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
-			redisClient.mset([token, true], (err, replies) =>{
-				if (err) {
-					throw new Error(err);
-					res.status(501).send('Error');
-				} else {
-					res.status(201).send(token)
-				}
-			});	
+			addReqTokenToRedis(token)
+			.then((replies) => {
+				res.status(201).send(token)
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(500).send('Error');
+			});
 		});
 }
