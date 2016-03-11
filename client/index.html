@@ -3,14 +3,29 @@
   <head>
     <meta charset='utf-8' />
     <title>Evercode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
   </head>
   <body>
+    <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;" ng-controller='DirectoriesCtrl' ng-show="location != '/signup' && location != '/signin'">
+      <li class="search">
+        <div class="search-wrapper card">
+          <input id="search" /><i class="material-icons">search</i>
+          <div class="search-results"></div>
+        </div>
+      </li>
+      <li class='newFolder'><a class="btn-floating btn waves-effect waves-light cyan darken-2"><i class="material-icons" ng-click='toggleInput()'>add</i></a><input ng-show='showInput' placeholder="New Folder" type="text" class="validate" maxlength="20" ng-minlength='1' ng-model='folderName'></li>
+      <li class='folder' ng-repeat="folder in data.folders">
+        <a href='#/' class="waves-effect waves-teal" ng-click='changeFolder(folder.name)'>{{folder.name}}</a>
+      </li>
+      <li class="bold active"><a href="about.html" class="waves-effect waves-teal">Favorites</a></li>
+    </ul>
     <div ui-view class='main'>      
     </div>
 
     <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-ui-router/release/angular-ui-angular.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app/app.js"></script>
     <script src="app/auth/auth.js"></script>
     <script src="app/directories/directories.js"></script>
