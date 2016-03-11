@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
+    <!-- Le css -->
+    <link rel="stylesheet" type="text/css" href="http://codemirror.net/lib/codemirror.css"/>
+    <link rel="stylesheet" type="text/css" href="http://codemirror.net/theme/twilight.css"/>
   </head>
   <body>
     <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;" ng-controller='DirectoriesCtrl' ng-show="location != '/signup' && location != '/signin'">
@@ -19,23 +21,20 @@
       <li>
         <form name="folderForm" ng-submit="addFolder()" novalidate>
           <div class="form-group">
-            <input placeholder="New Folder" type="text" class="validate" class='form-control' maxlength="20" ng-minlength='1' ng-model='folder.name' />
+            <input placeholder="New Folder" type="text" class="validate" class='form-control' maxlength='20' ng-minlength='1' ng-model='folder.name' />
           </div>
         </form>
       </li>
+      <li class="bold active"><a href="#/favorites" class="waves-effect waves-teal">Favorites</a></li>
       <li class='folder' ng-repeat="folder in data.folders">
-        <a href='#/' class="waves-effect waves-teal" ng-click='changeFolder(folder.name)'>{{folder.name}}</a>
+        <a href='#' class="waves-effect waves-teal" ng-click='changeFolder(folder.name)'>{{folder.name}}</a>
       </li>
-      <li class="bold active"><a href="about.html" class="waves-effect waves-teal">Favorites</a></li>
     </ul>
     <div ui-view class='main'>      
     </div>
 
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
-
-    <script src="lib/angular-ui-router/release/angular-ui-angular.js"></script>
-
     <script type="text/javascript" src="lib/codemirror/lib/codemirror.js"></script>
     <script type="text/javascript" src="lib/angular-ui-codemirror/ui-codemirror.js"></script>
 
@@ -44,7 +43,6 @@
     <script src="app/directories/directories.js"></script>
     <script src="app/editor/editor.js"></script>
     <script src="app/services/services.js"></script>
-    <script src="app/services/config.js"></script>
     <script src="app/snippets/snippets.js"></script>
   </body>
 </html>
