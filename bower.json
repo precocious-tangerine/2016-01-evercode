@@ -32,5 +32,8 @@
     "angular-route": "~1.3.16",
     "angular-mocks": "~1.3.16",
     "angular-ui-router": "^0.2.18"
+  },
+  "resolutions": {
+    "angular": "^1.5.0"
   }
 }
