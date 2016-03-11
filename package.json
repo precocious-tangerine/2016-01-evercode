@@ -4,6 +4,7 @@
   "description": "A plave to store and easily retrieve pieces of code.",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cluster": "^0.7.7",
     "express": "^4.4.5",
     "jsonwebtoken": "^5.7.0",
     "mongoose": "^4.4.6",
@@ -24,7 +25,8 @@
   },
   "scripts": {
     "test": "test",
-    "start": "node server/server.js"
+    "start": "node --harmony-destructuring server/noncluster.js",
+    "cluster": "node --harmony-destructuring server/cluster.js"
   },
   "repository": {
     "type": "git",
