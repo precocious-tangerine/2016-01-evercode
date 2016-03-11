@@ -55,9 +55,9 @@ module.exports = (app, express) => {
 			res.send(401, 'Unauthorized User');
 		});
 
-	app.get('auth/github', passport.authenticate('github'));
+	app.get('/auth/github', passport.authenticate('github'));
 
-	app.get('auth/github/callback',
+	app.get('/auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/api/failure'}),
 		(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
