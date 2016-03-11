@@ -42,11 +42,17 @@ module.exports = (app, express) => {
 		.post((req,res) => {
 			let {username, password} = req.body;
 			//Do some comparing
-			
 			let loginSucess = true;
 			if(loginSucess) {
 				let token = jwt.sign({username}, secret);
-				res.send(201, token)
+				redisClient.mset([token, true], (err, replies) =>{
+					if (err) {
+						throw new Error(err);
+						res.send(501, 'Error');
+					} else {
+						res.send(201, token)
+					}
+				})	
 			} else {
 				res.send(401, 'Unauthorized');
 			}
@@ -72,6 +78,13 @@ module.exports = (app, express) => {
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),
 		(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
-			res.send(201, token);
+			redisClient.mset([token, true], (err, replies) =>{
+				if (err) {
+					throw new Error(err);
+					res.send(501, 'Error');
+				} else {
+					res.send(201, token)
+				}
+			});	
 		});
 }
