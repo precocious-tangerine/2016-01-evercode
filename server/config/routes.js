@@ -58,7 +58,7 @@ module.exports = (app, express) => {
 	app.get('/auth/github', passport.authenticate('github'));
 
 	app.get('/auth/github/callback',
-		passport.authenticate('github', {failureRedirect:'/api/failure'}),
+		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),
 		(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
 			res.send(201, token);
