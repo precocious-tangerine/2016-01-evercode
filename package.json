@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "test",
-    "start": "node server/server.js"
+    "start": "node --harmony-destructuring server/server.js"
   },
   "repository": {
     "type": "git",
