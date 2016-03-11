@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var db = require('./db/database'); 
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);
