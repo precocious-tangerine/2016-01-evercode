@@ -5,6 +5,7 @@ angular.module('evercode.auth', [])
   $scope.failed = true;
 
   $scope.signin = function(boolean) {
+    $scope.failed = true;
     if (boolean) {
       Auth.signin($scope.user)
         .then(function(token) {
@@ -19,6 +20,7 @@ angular.module('evercode.auth', [])
   };
 
   $scope.signup = function(boolean) {
+    $scope.failed = true;
     if (boolean) {
       Auth.signup($scope.user)
         .then(function(token) {

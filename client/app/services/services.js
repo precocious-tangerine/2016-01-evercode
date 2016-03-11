@@ -5,7 +5,7 @@ angular.module('evercode.services', [])
     var getFolders = function() {
       return $http({
         method: 'GET',
-        url: 'api/folders'
+        url: '/folders'
       }).then(function(res) {
         return res.data;
       });
@@ -14,7 +14,7 @@ angular.module('evercode.services', [])
     var addFolder = function(list) {
       return $http({
         method: 'POST',
-        url: 'api/folders',
+        url: '/folders',
         data: list
       });
     };
@@ -22,7 +22,7 @@ angular.module('evercode.services', [])
     var removeFolder = function(list) {
       return $http({
         method: 'POST',
-        url: 'api/folders/remove',
+        url: '/folders/remove',
         data: list
       });
     };
@@ -38,7 +38,7 @@ angular.module('evercode.services', [])
     var signin = function(user) {
       return $http({
         method: 'POST',
-        url: '/api/signin',
+        url: '/signin',
         data: user
       })
     };
@@ -46,7 +46,7 @@ angular.module('evercode.services', [])
     var signup = function(user) {
       return $http({
         method: 'POST',
-        url: '/api/signup',
+        url: '/signup',
         data: user
       })
     };
@@ -58,7 +58,7 @@ angular.module('evercode.services', [])
     var signout = function() {
       return $http({
         method: 'GET',
-        url: '/api/signout'
+        url: '/signout'
       }).then(function() {
         $window.localStorage.removeItem('com.evercode');
         $location.path('/signin');
