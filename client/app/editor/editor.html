@@ -5,6 +5,14 @@
   <div>
     <h2>{{FILENAME}}</h2>
   </div>
-  <!-- <ui-codemirror></ui-codemirror> -->
-  <textarea ui-codemirror ui-codemirror-opts="editorOptions"></textarea>
+  <section>
+    <div ui-codemirror="{
+            lineNumbers: true,
+            theme:'twilight',
+            readOnly: 'nocursor',
+            lineWrapping : true,
+            mode: 'xml'
+          }" >
+    </div>
+  </section>
 </div>

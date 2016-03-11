@@ -29,6 +29,12 @@ angular.module('evercode', ['evercode.directories', 'evercode.services', 'everco
         controller: 'SnippetsCtrl',
         access: {restricted: true}
       })
+      .state('editor', {
+        url: '/editor',
+        templateUrl: 'app/editor/editor.html',
+        controller: 'EditorCtrl',
+        access: {restricted: false}
+      })
 
     $httpProvider.interceptors.push('AttachTokens');
   })
