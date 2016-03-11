@@ -12,6 +12,9 @@ var Files = require('../models/files');
 var Users = new Users();
 var Files = new Files();
 
+var redis = require('redis');
+var redisClient = redis.createClient();
+
 Promise.promisifyAll(utils);
 
 module.exports = (app, express) => {
