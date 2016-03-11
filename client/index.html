@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
+
+    <!-- Le css -->
+    <link rel="stylesheet" type="text/css" href="http://codemirror.net/lib/codemirror.css"/>
+    <link rel="stylesheet" type="text/css" href="http://codemirror.net/theme/twilight.css"/>
   </head>
   <body>
     <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;" ng-controller='DirectoriesCtrl' ng-show="location != '/signup' && location != '/signin'">
@@ -34,10 +37,12 @@
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
 
-    <script src="lib/angular-ui-router/release/angular-ui-angular.js"></script>
+    <!-- Le vendor... -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+        <script src="http://codemirror.net/lib/codemirror.js"></script>
+        <script src="http://codemirror.net/mode/xml/xml.js"></script>
+        <script src="https://rawgithub.com/angular-ui/ui-codemirror/bower/ui-codemirror.min.js"></script>
 
-    <script type="text/javascript" src="lib/codemirror/lib/codemirror.js"></script>
-    <script type="text/javascript" src="lib/angular-ui-codemirror/ui-codemirror.js"></script>
 
     <script src="app/app.js"></script>
     <script src="app/auth/auth.js"></script>
