@@ -39,11 +39,15 @@ let addReqTokenToRedis = (token) => {
 	});
 }
 
-module.exports = (app, express) => {
-	app.route('/')
-		.get((req, res) =>{
-			res.redirect('/app/auth/signinCopy.html');
+let removeReqTokenFromRedis = (token) => {
+	return new Promise((resolve, reject) => {
+		redisclient.del(token, (err, replies) => {
+			err ? reject(err) : resolve(replies);
 		});
+	});
+}
+
+module.exports = (app, express) => {
 
 	app.route('/signin')
 		.post((req,res) => {
@@ -82,6 +86,19 @@ module.exports = (app, express) => {
 			res.status(201).send(token);
 		});
 
+	app.route('/logout')
+		.get((req, res) => {
+			let token = req.header['x-access-token'];
+			removeReqTokenFromRedis(token)
+			.then((replies) => {
+				res.status(200).send(token);
+			})
+			.catch((err) => {
+				res.send(500).send(err);
+			})
+
+		})
+
 	app.route('/auth/github/failure')
 		.get((req, res) => {
 			res.status(401).send('Unauthorized');
@@ -90,8 +107,7 @@ module.exports = (app, express) => {
 	app.get('/auth/github', passport.authenticate('github'));
 
 	app.get('/auth/github/callback',
-		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),
-		(req, res) => {
+		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
 			addReqTokenToRedis(token)
 			.then((replies) => {
