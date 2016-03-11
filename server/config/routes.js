@@ -20,13 +20,22 @@ Promise.promisifyAll(utils);
 module.exports = (app, express) => {
 	app.route('/')
 		.get((req, res) =>{
-			res.redirect('/index.html');
+			res.redirect('/app/auth/signin.html');
 		})
-	app.route('/api/signin')
+	app.route('/signin')
 		.post((req,res) => {
-			console.log('posted to api/signin');
+
+			let username = req.body.username;
+			let password = req.body.password;
+			res.send('hi');
 		});
 
+	app.route('/signup')
+		.post((req, res) => {
+			let username = req.body.username;
+			let password = req.body.password;
+			res.send('hi');
+		})
 	app.route('/api/success')
 		.get((req,res) => {});
 
