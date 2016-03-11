@@ -1,26 +1,55 @@
-angular.module('evercode', ['evercode.directories', 'evercode.services'])
-.config(function ($stateProvider, $urlRouterProvider){
-  $urlRouterProvider.otherwise('/login');
+angular.module('evercode', ['evercode.directories', 'evercode.services', 'evercode.auth', 'evercode.snippets', 'ui.router'])
+  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    $urlRouterProvider.otherwise('/');
 
-//   $stateProvider
-//     .state('login', {
-//       url: '/login',
-//       templateUrl: 'app/auth/signin.html',
-//       controller: ''
-//     })
-//     .state('login', {
-//       url: '/login',
-//       templateUrl: 'app/auth/signin.html',
-//       controller: ''
-//     })
-//     .state('login', {
-//       url: '/login',
-//       templateUrl: 'app/auth/signin.html',
-//       controller: ''
-//     })
-})
-.run(function($rootScope, $location) {
-  $rootScope.$on('$routeChangeStart', function(evt, next, current) {
-    $rootScope.location = $location.path();
+    $stateProvider
+      .state('login', {
+        url: '/signin',
+        templateUrl: './app/auth/signin.html',
+        controller: 'AuthCtrl',
+        access: {restricted: false}
+      })
+      .state('signup', {
+        url: '/signup',
+        templateUrl: 'app/auth/signup.html',
+        controller: 'AuthCtrl',
+        access: {restricted: false}
+      })
+      .state('signout', {
+        resolve: {
+          signout: function(Auth) {
+            return Auth.signout();   
+          }
+        },
+        access: {restricted: false}
+      })
+      .state('snippets', {
+        url: '/snippets',
+        templateUrl: 'app/snippets/snippets.html',
+        controller: 'SnippetsCtrl',
+        access: {restricted: true}
+      })
+
+    $httpProvider.interceptors.push('AttachTokens');
+  })
+  .factory('AttachTokens', function($window) {
+    var attach = {
+      request: function(object) {
+        var jwt = $window.localStorage.getItem('com.evercode');
+        if (jwt) {
+          object.headers['x-access-token'] = jwt;
+        }
+        object.headers['Allow-Control-Allow-Origin'] = '*';
+        return object;
+      }
+    };
+    return attach;
+  })
+  .run(function($rootScope, $location, Auth) {
+    $rootScope.$on('$stateChangeStart', function(evt, next, current) {
+      $rootScope.location = $location.path();
+      if (next.access.restricted && !Auth.isAuth()) {
+        $location.path('/signin');
+      }
+    });
   });
-});
