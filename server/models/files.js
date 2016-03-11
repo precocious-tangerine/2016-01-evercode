@@ -13,7 +13,11 @@ let fileSchema = mongoose.Schema({
 
 let File = mongoose.model('File',fileSchema);
 
-File.getFile(_id, callback){
+File.makeFile = () => {
+	File.create({})
+}
+
+File.getFile = (_id, callback) => {
 	return File.findOne({_id: new ObjectId(_id)}).exec()
 		.then((fileObj) => {
 		 	callback(fileObj);
@@ -23,18 +27,24 @@ File.getFile(_id, callback){
 		});
 }
 
-File.getFileByUser(user_Id, callback){
+File.getFileByUser = (user_Id, callback) => {
 	return File.find({createdBy: nuser_Id}).exec()
 		.then((foundFiles) => {
 			if(Array.isArray(foundFiles) && foundFiles.length !== 0){
 			 	callback(fileObj);
 			 	return
 			}
-			callback({message: 'password invalid'}, null);
+			return callback({message: 'password invalid'}, null);
 		})
 		.catch((err) => {
 		 	console.log("error", err);
+		 	return
 		});
+}
+
+File.updateFile = (_id, callback) => {
+	return "not yet";
+
 }
 
 module.exports = File;
