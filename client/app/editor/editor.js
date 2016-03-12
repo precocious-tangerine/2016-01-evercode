@@ -7,4 +7,5 @@ angular.module('evercode.editor', [])
         mode: 'xml',
         value: 'hello'
     };
+    $scope.tags = ['angular','directives','javascript'];
 }]);

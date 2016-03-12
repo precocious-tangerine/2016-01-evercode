@@ -43,7 +43,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "test": "test",
+    "test": "./node_modules/karma/bin/karma start",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
     "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client"

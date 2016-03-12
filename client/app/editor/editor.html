@@ -1,17 +1,21 @@
 <div class='col s9 offset-s3'> 
   <div>
-    <h4>{{FOLDER}}</h4>
+    <h4>FOLDER</h4>
   </div>
   <div>
-    <h2>{{FILENAME}}</h2>
+    <h2>FILENAME</h2>
   </div>
-    <section>
-       <div ui-codemirror="{
-               lineNumbers: true,
-               theme:'twilight',
-               lineWrapping : true,
-               mode: 'xml'
-             }">
-       </div>
-     </section>
+  <div>
+    <tags data="tags"></tags>
+  </div>
+  <div ui-codemirror="{
+   lineNumbers: true,
+   theme:'twilight',
+   lineWrapping : true,
+   mode: 'xml'
+ }" class="col s2">
+  </div>
+  <div>
+    Annotations
+  </div>
 </div>
