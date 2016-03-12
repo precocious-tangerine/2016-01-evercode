@@ -126,13 +126,17 @@ User.checkCredentials = (email, attempt, callback) => {
 }
 
 User.updateUser = (_id, newProps) => {
-  return User.findOne({_id: mongoose.Schema.Types.ObjectId(_id)})
+  return User.findOne({_id: mongoose.Types.ObjectId(_id)})
     .then((foundUser) => {
+      console.log("before", foundUser);
       for (var key in newProps){
         foundUser[key] = newProps[key];
       }
-      foundUser.save();
-      return "success"
+      console.log("after", foundUser);
+      return foundUser.save();
+    })
+    .then((success) => {
+      return success;
     })
     .catch((err) => {
       console.log("error", err);
