@@ -1,6 +1,6 @@
 angular.module('evercode', ['evercode.directories', 'evercode.services', 'evercode.auth', 'evercode.snippets', 'ui.router', 'evercode.editor', 'ui.codemirror'])
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/main');
 
     $stateProvider
       .state('login', {
@@ -23,17 +23,23 @@ angular.module('evercode', ['evercode.directories', 'evercode.services', 'everco
         },
         access: {restricted: false}
       })
-      .state('snippets', {
-        url: '/snippets',
+      .state('main', {
+        url: '/main',
+        templateUrl: './app/directories/main.html',
+        controller: 'DirectoriesCtrl',
+        access: {restricted: true}
+      })
+      .state('main.snippets', {
+        url: '/:folder',
         templateUrl: 'app/snippets/snippets.html',
         controller: 'SnippetsCtrl',
         access: {restricted: true}
       })
-      .state('editor', {
+      .state('main.snippets.editor', {
          url: '/editor',
          templateUrl: 'app/editor/editor.html',
          controller: 'EditorCtrl',
-         access: {restricted: false}
+         access: {restricted: true}
        })
 
     $httpProvider.interceptors.push('AttachTokens');
