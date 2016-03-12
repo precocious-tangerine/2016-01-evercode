@@ -1,7 +1,15 @@
-angular.module('evercode', ['evercode.directories', 'evercode.services', 'evercode.auth', 'evercode.snippets', 'ui.router', 'evercode.editor', 'ui.codemirror'])
-  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/main');
 
+import angular from 'angular';
+import ngRedux from 'ng-redux';
+import createLogger from 'redux-logger';
+import finalReducer from './redux/reducers.js';
+import angular_ui_router from 'angular-ui-router';
+import angular_ui_codemirror from 'angular-ui-codemirror';
+
+
+angular.module('evercode', ['evercode.directories', 'evercode.services', 'evercode.auth', 'evercode.snippets', 'evercode.editor', angular_ui_router, angular_ui_codemirror, ngRedux])
+  .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider) => {
+    $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('login', {
         url: '/signin',
@@ -43,10 +51,12 @@ angular.module('evercode', ['evercode.directories', 'evercode.services', 'everco
        })
 
     $httpProvider.interceptors.push('AttachTokens');
+
+    $ngReduxProvider.createStoreWith(finalReducer, [createLogger()]);
   })
-  .factory('AttachTokens', function($window) {
+  .factory('AttachTokens', ($window) => {
     var attach = {
-      request: function(object) {
+      request: (object) => {
         var jwt = $window.localStorage.getItem('com.evercode');
         if (jwt) {
           object.headers['x-access-token'] = jwt;
@@ -57,8 +67,8 @@ angular.module('evercode', ['evercode.directories', 'evercode.services', 'everco
     };
     return attach;
   })
-  .run(function($rootScope, $location, Auth) {
-    $rootScope.$on('$stateChangeStart', function(evt, next, current) {
+  .run(($rootScope, $location, Auth) => {
+    $rootScope.$on('$stateChangeStart', (evt, next, current) => {
       $rootScope.location = $location.path();
       if (next.access.restricted && !Auth.isAuth()) {
         $location.path('/signin');
