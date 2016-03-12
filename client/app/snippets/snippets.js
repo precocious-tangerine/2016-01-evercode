@@ -1,15 +1,22 @@
-angular.module('evercode.snippets', [])
-
-.controller('SnippetsCtrl', function($scope) {
-
-  $scope.data = {};
-  $scope.data.snippets = [{name: 'redux'}];
-  $scope.snippet = {};
-
-  $scope.favorite = function() {
+export const snippets = (url) => {
+  return {
+    url: url,
+    controllerAs: 'snippets',
+    controller: SnippetsCtrl,
+    template: require('./snippets.html'),
+    scope: {}
   };
+}
 
-  $scope.copy = function() {
-  };
+class SnippetsCtrl {
+  constructor($scope, $location, $window, Auth) {
+    this.data = {};
+  }
 
-});
+  addSnippet() {
+    
+  }
+  removeSnippet() {
+    
+  }
+}
