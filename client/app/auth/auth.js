@@ -10,7 +10,7 @@ angular.module('evercode.auth', [])
       Auth.signin($scope.user)
         .then(function(token) {
           $window.localStorage.setItem('com.evercode', token);
-          $location.path('/snippets');
+          $location.path('/main');
         })
         .catch(function(error) {
           $scope.failed = false;
@@ -25,7 +25,7 @@ angular.module('evercode.auth', [])
       Auth.signup($scope.user)
         .then(function(token) {
           $window.localStorage.setItem('com.evercode', token);
-          $location.path('/evercode');
+          $location.path('/main');
         })
         .catch(function(error) {
           $scope.failed = false;

@@ -52,7 +52,7 @@ angular.module('evercode.services', [])
     };
 
     var isAuth = function () {
-      return !!$window.localStorage.getItem('com.shortly');
+      return !!$window.localStorage.getItem('com.evercode');
     };
 
     var signout = function() {
