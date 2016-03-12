@@ -28,7 +28,6 @@ class AuthCtrl {
     if (boolean) {
       this.Auth.signup(this.user);
 
-
     }
   }
 
