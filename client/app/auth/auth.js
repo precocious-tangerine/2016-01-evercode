@@ -27,6 +27,7 @@ class AuthCtrl {
     this.failed = true;
     if (boolean) {
       this.Auth.signup(this.user);
+
     }
   }
 
