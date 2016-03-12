@@ -1,4 +1,4 @@
-export default function snippets(url) {
+export const snippets = (url) => {
   return {
     url: url,
     controllerAs: 'snippets',
@@ -9,7 +9,7 @@ export default function snippets(url) {
 }
 
 class SnippetsCtrl {
-  constructor($ngRedux) {
+  constructor($scope, $location, $window, Auth) {
     this.data = {};
   }
 

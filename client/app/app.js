@@ -7,7 +7,7 @@ import angular_ui_router from 'angular-ui-router';
 import angular_ui_codemirror from 'angular-ui-codemirror';
 import {createAuthCtrl} from './auth/auth.js';
 import {Folders, Auth} from './services/services.js'
-import snippets from './snippets/snippets.js';
+import {snippets} from './snippets/snippets.js';
 
 
 angular.module('evercode', [angular_ui_router, ngRedux])
