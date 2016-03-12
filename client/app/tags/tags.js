@@ -4,7 +4,7 @@ angular.module('evercode.tags', [])
         scope:{
             tags: '=data' 
         },
-        template: '<li ng-repeat="tag in tags">{{ tag }} </li>'
+        template: '<span>TAGS: </span><span style="margin-left: 10px" ng-repeat="tag in tags">{{ tag }}</span>'
         }
     }
 );
