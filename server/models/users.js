@@ -6,7 +6,7 @@ let bcrypt = Promise.promisifyAll(require('bcrypt'));
 
 let userSchema = mongoose.Schema({
   _password: {type: String},
-  login: { type: String, required: true },
+  login: { type: String},
   id: { type: Number},
   avatar_url: { type: String },
   gravatar_id: { type: String },
@@ -84,6 +84,7 @@ User.makeUser = (userObj, callback) => {
       .then((result) => {
         console.log("test makeUser result - no pw", result);
         callback(result);
+        return
       })
       .catch((err) => {
         console.log("Error:", err);
