@@ -1,61 +1,57 @@
-angular.module('evercode.services', [])
 
-.factory('Folders', function($http) {
+export class Folders {
+  constructor($http) {
 
-    var getFolders = function() {
+  }
+  getFolders() {
       return $http({
         method: 'GET',
         url: '/folders'
       }).then(function(res) {
         return res.data;
       });
-    };
+  }
 
-    var addFolder = function(list) {
+  addFolder(list) {
       return $http({
         method: 'POST',
         url: '/folders',
         data: list
       });
-    };
+  }
 
-    var removeFolder = function(list) {
+  removeFolder(list) {
       return $http({
         method: 'POST',
         url: '/folders/remove',
         data: list
       });
-    };
+  }
+}
+export class Auth { 
+  constructor($http, $location, $window) {
 
-    return {
-      getFolders: getFolders,
-      addFolder: addFolder,
-      removeFolder: removeFolder
-    };
-  })
-  .factory('Auth', function($http, $location, $window) {
-
-    var signin = function(user) {
+  }
+  signin(user) {
       return $http({
         method: 'POST',
         url: '/signin',
         data: user
       })
-    };
-
-    var signup = function(user) {
+  }
+  signup(user) {
       return $http({
         method: 'POST',
         url: '/signup',
         data: user
       })
-    };
+  }
 
-    var isAuth = function () {
+  isAuth() {
       return !!$window.localStorage.getItem('com.evercode');
-    };
+  }
 
-    var signout = function() {
+  signout() {
       return $http({
         method: 'GET',
         url: '/signout'
@@ -63,12 +59,9 @@ angular.module('evercode.services', [])
         $window.localStorage.removeItem('com.evercode');
         $location.path('/signin');
       })
-    };
+  }
 
-    return {
-      signin: signin,
-      signup: signup,
-      isAuth: isAuth,
-      signout: signout
-    };
-  });
+  
+}
+
+
