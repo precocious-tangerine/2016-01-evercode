@@ -4,9 +4,11 @@ let mongoose = require('mongoose');
 let _ = require('lodash');
 
 let snippetSchema = mongoose.Schema({
-	data: {type: String, required: true},
+	_createdAt: {type: Date, default: new Date()},
+  	_updatedAt: {type: Date, default: new Date()},
 	createdBy: { type: String, required: true },
-	snippetPath: { type: String, required: true},
+	data: {type: String, required: true},
+	filePath: { type: String, required: true},
 	labels: { type: mongoose.Schema.Types.Mixed, default: {} },
 	shareUrl: { type: String },
 });
@@ -50,10 +52,21 @@ Snippet.getSnippetByUser = (user_Id, callback) => {
 		});
 }
 
-Snippet.updateSnippet = (_id, callback) => {
-	return "not yet";
-
+Snippet.updateSnippet = (_id, newProps, callback) => {
+  newProps._updatedAt = new Date();
+  return Snippet.update({_id: mongoose.Types.ObjectId(_id)}, newProps, { multi: false } , (err, raw) => {
+  		if (raw) {
+      		callback(null, raw);
+  		} else {
+  			callback(err, null);
+  		}
+    });
 }
+
+Snippet.removeSnippet = (_id, callback) => {
+  Snippet.findOne({email: email}).remove(callback);
+}
+
 
 module.exports = Snippet;
 

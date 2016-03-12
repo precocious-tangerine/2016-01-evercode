@@ -6,6 +6,8 @@ let bcrypt = Promise.promisifyAll(require('bcrypt'));
 
 let userSchema = mongoose.Schema({
   _password: {type: String},
+  _createdAt: {type: Date, default: new Date()},
+  _updatedAt: {type: Date, default: new Date()},
   login: { type: String},
   id: { type: Number},
   avatar_url: { type: String },
@@ -94,8 +96,8 @@ User.makeUser = (userObj, callback) => {
   console.log("you must supply a password or github id to retrieve user data");
 }
 
-User.getUser = (_id) => {
-  return User.findOne({_id: mongoose.Types.ObjectId(_id)})
+User.getUser = (email) => {
+  return User.findOne({email: email})
     .then((userObj) => {
       userObj = userObj.toObject();
       callback(userObj);
@@ -125,22 +127,19 @@ User.checkCredentials = (email, attempt, callback) => {
     });
 }
 
-User.updateUser = (_id, newProps) => {
-  return User.findOne({_id: mongoose.Types.ObjectId(_id)})
-    .then((foundUser) => {
-      console.log("before", foundUser);
-      for (var key in newProps){
-        foundUser[key] = newProps[key];
+User.updateUser = (email, newProps, callback) => {
+ newProps._updatedAt = new Date();
+ return User.update({email: email}, newProps, { multi: false } , (err, raw) => {
+      if (raw) {
+          callback(null, raw);
+      } else {
+        callback(err, null);
       }
-      console.log("after", foundUser);
-      return foundUser.save();
-    })
-    .then((success) => {
-      return success;
-    })
-    .catch((err) => {
-      console.log("error", err);
     });
+}
+
+User.removeUser = (email, callback) => {
+  User.findOne({email: email}).remove(callback);
 }
 
 module.exports = User;
