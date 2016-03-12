@@ -39,7 +39,7 @@
   "scripts": {
     "test": "test",
     "start": "node --harmony-destructuring server/noncluster.js",
-    "cluster": "node --harmony-destructuring server/cluster.js",
+    "cluster": "node --harmony-destructuring server/cluster.js"
   },
   "repository": {
     "type": "git",
