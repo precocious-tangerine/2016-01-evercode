@@ -1,7 +1,7 @@
 {
   "name": "evercode",
   "version": "0.0.1",
-  "description": "A plave to store and easily retrieve pieces of code.",
+  "description": "A place to store and easily retrieve pieces of code.",
   "dependencies": {
     "angular": "^1.5.0",
     "angular-route": "^1.5.0",
@@ -14,6 +14,8 @@
     "html-webpack-plugin": "^2.10.0",
     "jsonwebtoken": "^5.7.0",
     "mocks": "0.0.15",
+    "babel": "^6.5.2",
+    "bcrypt": "^0.8.5",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
     "ng-redux": "^3.3.3",
