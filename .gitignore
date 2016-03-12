@@ -3,6 +3,7 @@
 
 #client
 /client/lib/*
+/client/dist/*
 
 #npm_files
 /node_modules/*
