@@ -40,7 +40,6 @@
     "test": "test",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
-    "build-wb": "webpack-dev-server --content-base dist/ --inline"
   },
   "repository": {
     "type": "git",
