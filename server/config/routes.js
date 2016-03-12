@@ -112,7 +112,7 @@ module.exports = (app, express) => {
 
 	app.get('/auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),(req, res) => {
-			let token = jwt.sign({username: req.user.prosnippet.username}, secret);
+			let token = jwt.sign({username: req.user.profile.username}, secret);
 			addReqTokenToRedis(token)
 			.then((replies) => {
 				res.status(201).send(token)
