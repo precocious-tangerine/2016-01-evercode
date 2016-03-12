@@ -22,7 +22,7 @@ export const setSselectedFolder = (folder) => {
 };
 export const removeSelectedFolder = () => {
 	return {
-		type: 'REMOVE_SELECTED_SNIPPET'
+		type: 'REMOVE_SELECTED_FOLDER'
 	};
 };
 
