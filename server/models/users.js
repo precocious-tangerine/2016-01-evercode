@@ -27,7 +27,7 @@ let userSchema = mongoose.Schema({
   company: { type: String },
   blog: { type: String },
   location: { type: String },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true, dropDups: true},
   hireable: { type: Boolean },
   bio: { type: String },
   public_repos: { type: Number },
@@ -47,8 +47,11 @@ let userSchema = mongoose.Schema({
     private_repos: { type: Number },
     collaborators: { type: Number },
   },
-  directories: { type: mongoose.Schema.Types.Mixed, default: {'myFiles': 'root'}},
-  files: { type: mongoose.Schema.Types.Mixed },
+  directories: { 
+    type: mongoose.Schema.Types.Mixed, 
+    default: {'mySnippets': 'root'}
+  },
+  snippets: { type: mongoose.Schema.Types.Mixed },
 });
 
 let User = mongoose.model('User',userSchema);
@@ -60,7 +63,7 @@ User.makeUser = (userObj, callback) => {
   if (typeof pw === 'string' && pw !== ''){
     return bcrypt.genSaltAsync(13)
       .then((salt) => {
-        return bcrypt.hashAsync(user.password, salt);
+        return bcrypt.hashAsync(userObj._password, salt);
       })
       .then((hash) => {
         userObj._password = hash;
@@ -68,7 +71,7 @@ User.makeUser = (userObj, callback) => {
       })
       .then((result) => {
         console.log("test makeUser result", result);
-        return callback(result);
+        callback(result);
       })
       .catch((err) => {
         console.log("Error:", err);
@@ -76,20 +79,24 @@ User.makeUser = (userObj, callback) => {
   }
 
   // OAuth based login (no supplied password)
-  User.create(userObj)
+  if (typeof userObj.id === 'number') {
+    return User.create(userObj)
       .then((result) => {
         console.log("test makeUser result - no pw", result);
-        return callback(result);
+        callback(result);
       })
       .catch((err) => {
         console.log("Error:", err);
       });
+  }
+
+  console.log("you must supply a password or github id to retrieve user data");
 }
 
 User.getUser = (_id) => {
-  User.findOne({_id: mongoose.Types.ObjectId(_id)})
+  return User.findOne({_id: mongoose.Types.ObjectId(_id)})
     .then((userObj) => {
-      console.log(userObj);
+      userObj = userObj.toObject();
       callback(userObj);
     })
     .catch((err) => {
@@ -97,10 +104,38 @@ User.getUser = (_id) => {
     });
 }
 
-
-User.checkCredentials = (email, password) => {
+User.checkCredentials = (email, attempt, callback) => {
   // TODO password verification
-  console.log("still building checkCredentials!", email,password);
+  let userData = {};
+  return User.findOne({email: email})
+    .then((foundUser) => {
+      userData = foundUser.toObject();
+      return bcrypt.compareAsync(attempt,foundUser._password);
+    })
+    .then((success) => {
+      if (success){
+        delete userData._password;
+        callback(userData);
+      }
+      return new Error();
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+}
+
+User.updateUser = (_id, newProps) => {
+  return User.findOne({_id: mongoose.Schema.Types.ObjectId(_id)})
+    .then((foundUser) => {
+      for (var key in newProps){
+        foundUser[key] = newProps[key];
+      }
+      foundUser.save();
+      return "success"
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
 }
 
 module.exports = User;

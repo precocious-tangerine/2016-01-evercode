@@ -6,10 +6,10 @@ var Promise = require('bluebird');
 var utils = require('./utils');
 var config = require('../config');
 var Users = require('../models/users');
-var Files = require('../models/files');
+var Snippets = require('../models/snippets');
 
 var Users = new Users();
-var Files = new Files();
+var Snippets = new Snippets();
 
 var redis = require('redis');
 var redisClient = redis.createClient();
@@ -108,7 +108,7 @@ module.exports = (app, express) => {
 
 	app.get('/auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),(req, res) => {
-			let token = jwt.sign({username: req.user.profile.username}, secret);
+			let token = jwt.sign({username: req.user.prosnippet.username}, secret);
 			addReqTokenToRedis(token)
 			.then((replies) => {
 				res.status(201).send(token)

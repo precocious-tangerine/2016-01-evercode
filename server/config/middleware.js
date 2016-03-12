@@ -10,10 +10,10 @@ passport.use(new GitHubStrategy({
   clientID: config.githubClientId,
   clientSecret: config.githubSecret,
   callbackURL: config.serverUrl+ '/auth/github/callback'
-}, (accessToken, refreshToken, profile, done) => {
+}, (accessToken, refreshToken, prosnippet, done) => {
   done(null, {
     accessToken: accessToken,
-    profile: profile
+    prosnippet: prosnippet
   });
 }));
 
