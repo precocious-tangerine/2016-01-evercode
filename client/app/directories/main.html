@@ -1,6 +1,6 @@
 <div class='row'>
 <div class='col s3'>
-<ul id="nav-mobile" class="side-nav fixed" style="width: 240px;" ng-controller='DirectoriesCtrl'>
+<ul id="nav-mobile" class="side-nav fixed" style="width: 240px;">
   <li class="search">
     <div class="search-wrapper card">
       <input id="search" /><i class="material-icons">search</i>
@@ -8,15 +8,15 @@
     </div>
   </li>
   <li>
-    <form name="folderForm" ng-submit="addFolder()" novalidate>
+    <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
       <div class="form-group">
-        <input placeholder="New Folder" type="text" class="validate" class='form-control' maxlength='20' ng-minlength='1' ng-model='folder.name' />
+        <input placeholder="New Folder" type="text" class="validate" class='form-control' maxlength='20' ng-minlength='1' ng-model='directories.folder.name' />
       </div>
     </form>
   </li>
   <li class="bold active"><a href="#/favorites" class="waves-effect waves-teal">Favorites</a></li>
-  <li class='folder' ng-repeat="folder in data.folders">
-    <a ui-sref='.snippets' class="waves-effect waves-teal" ng-click='changeFolder(folder.name)'>{{folder.name}}</a>
+  <li class='folder' ng-repeat="folder in directories.data.folders">
+    <a ui-sref='.snippets' class="waves-effect waves-teal" ng-click='directories.changeFolder(folder.name)'>{{folder.name}}</a>
   </li>
 </ul>
 </div>
