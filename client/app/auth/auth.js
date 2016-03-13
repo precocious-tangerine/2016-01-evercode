@@ -13,16 +13,19 @@ class AuthCtrl {
   constructor($location, $window, Auth) {
   this.user = {};
   this.failed = true;
+  this.$location = $location;
+  this.$window = $window;
+  this.Auth = Auth;
   }
   
   signin(boolean) {
-    console.log('triggered');
     this.failed = true;
     if (boolean) {
-      Auth.signin(this.user)
+      this.Auth.signin(this.user)
         .then(function(token) {
-          $window.localStorage.setItem('com.evercode', token);
-          $location.path('/main');
+          console.log('token', token);
+          this.$window.localStorage.setItem('com.evercode', token);
+          this.$location.path('/main');
         })
         .catch(function(error) {
           this.failed = false;
@@ -33,7 +36,6 @@ class AuthCtrl {
   
 
   signup(boolean) {
-    console.log('triggered signup');
     this.failed = true;
     // if (boolean) {
     //   Auth.signup($scope.user)

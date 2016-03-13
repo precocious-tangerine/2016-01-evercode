@@ -19,6 +19,7 @@ class DirectoriesCtrl {
   this.data = {};
   this.data.folders = [{name: 'React'}];
   this.folder = {};
+  this.$location = $location;
   }
   initialize() {
     Folders.getFolders().then(data => {
