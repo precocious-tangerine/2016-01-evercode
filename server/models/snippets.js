@@ -8,7 +8,8 @@ let snippetSchema = mongoose.Schema({
   	_updatedAt: {type: Date, default: new Date()},
 	createdBy: { type: String, required: true },
 	data: {type: String, required: true},
-	filePath: { type: String, required: true},
+	name: {type: String, required: true},
+	filePath: { type: String, required: true, default: "__root"},
 	labels: { type: mongoose.Schema.Types.Mixed, default: {} },
 	shareUrl: { type: String },
 });
@@ -37,11 +38,26 @@ Snippet.getSnippet = (_id, callback) => {
 		});
 }
 
-Snippet.getSnippetByUser = (user_Id, callback) => {
-	return Snippet.find({createdBy: user_Id})
+Snippet.getSnippetsByUser = (email, callback) => {
+	return Snippet.find({createdBy: email})
 		.then((foundSnippets) => {
 			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
-			 	callback(snippetObj);
+			 	callback(foundSnippets);
+			 	return;
+			}
+			return callback({message: 'snippets for ' + email + ' not found.'}, null);
+		})
+		.catch((err) => {
+		 	console.log("error", err);
+		 	return
+		});
+}
+
+Snippet.getSnippetInfoByUser = (email, callback) => {
+	return Snippet.find({createdBy: email}, '-data')
+		.then((foundSnippets) => {
+			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
+			 	callback(foundSnippets);
 			 	return;
 			}
 			return callback({message: 'password invalid'}, null);
@@ -61,6 +77,14 @@ Snippet.updateSnippet = (_id, newProps, callback) => {
   			callback(err, null);
   		}
     });
+}
+
+Snippet.makeSubFolder = (email, callback) => {
+	return Snippet.makeSnippet({name:'.config', data:'', createdBy: email});
+}
+
+Snippet.makeRootFolder = (email, callback) => {
+	return Snippet.makeSnippet({name:'.config', data:'', createdBy: email});
 }
 
 Snippet.removeSnippet = (_id, callback) => {

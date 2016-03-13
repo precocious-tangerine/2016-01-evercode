@@ -103,6 +103,20 @@ module.exports = (app, express) => {
 
 		})
 
+	app.route('/api/snippets')
+		.get((req, res) => {
+
+		})
+		.post((req, res) => {
+
+		})
+		.delete((req,res) => {
+
+		})
+		.update((req,res) => {
+
+		})
+
 	app.route('/auth/github/failure')
 		.get((req, res) => {
 			res.status(401).send('Unauthorized');

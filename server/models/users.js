@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let _ = require('lodash');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
+let Snippets = require('./snippets.js');
 
 let userSchema = mongoose.Schema({
   _password: {type: String},
@@ -49,10 +50,6 @@ let userSchema = mongoose.Schema({
     private_repos: { type: Number },
     collaborators: { type: Number },
   },
-  directories: { 
-    type: mongoose.Schema.Types.Mixed, 
-    default: {'mySnippets': 'root'}
-  },
   snippets: { type: mongoose.Schema.Types.Mixed },
 });
 
@@ -69,6 +66,10 @@ User.makeUser = (userObj, callback) => {
       })
       .then((hash) => {
         userObj._password = hash;
+        return Snippets.makeFolder(userObj.email);
+      })
+      .then((rootFolder) => {
+        userObj.snippets = rootFolder;
         return User.create(userObj);
       })
       .then((result) => {
