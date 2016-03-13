@@ -7,8 +7,8 @@ import angular_ui_codemirror from 'angular-ui-codemirror';
 import { createAuthCtrl } from './auth/auth.js';
 import { Folders, Auth } from './services/services.js'
 import { snippets } from './snippets/snippets.js';
-import directories from './directories/directories.js';
-import editor from './editor/editor.js';
+import { directories } from './directories/directories.js';
+import { editor } from './editor/editor.js';
 
 angular.module('evercode', [ngRedux, angular_ui_router])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider) => {
@@ -24,8 +24,8 @@ angular.module('evercode', [ngRedux, angular_ui_router])
           signout: function(Auth) {
             return Auth.signout();
           }
-        },
-        access: { restricted: false }
+        }
+        // access: { restricted: false }
       })
 
     $httpProvider.interceptors.push('AttachTokens');
@@ -50,9 +50,8 @@ angular.module('evercode', [ngRedux, angular_ui_router])
   .run(($rootScope, $location, Auth) => {
     $rootScope.$on('$stateChangeStart', (evt, next, current) => {
       $rootScope.location = $location.path();
-      if (next.access.restricted && !Auth.isAuth()) {
-        $location.path('/signin');
-      }
+      // if (next.access.restricted && !Auth.isAuth()) {
+      //   $location.path('/signin');
+      // }
     });
   });
-})

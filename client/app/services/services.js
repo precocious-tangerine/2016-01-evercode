@@ -1,8 +1,6 @@
-
-export class Folders {
-  constructor($http) {
-
-  }
+export function Folders() {
+  this.$inject = ['$http'];
+  return ({ 
   getFolders() {
       return $http({
         method: 'GET',
@@ -10,7 +8,7 @@ export class Folders {
       }).then(function(res) {
         return res.data;
       });
-  }
+  },
 
   addFolder(list) {
       return $http({
@@ -18,7 +16,7 @@ export class Folders {
         url: '/folders',
         data: list
       });
-  }
+  },
 
   removeFolder(list) {
       return $http({
@@ -27,29 +25,31 @@ export class Folders {
         data: list
       });
   }
+});
 }
-export class Auth { 
-  constructor($http, $location, $window) {
 
-  }
+export function Auth() {
+
+  this.$inject = ['$http', '$location', '$window'];
+  return ({ 
   signin(user) {
       return $http({
         method: 'POST',
         url: '/signin',
         data: user
       })
-  }
+  },
   signup(user) {
       return $http({
         method: 'POST',
         url: '/signup',
         data: user
       })
-  }
+  },
 
   isAuth() {
       return !!$window.localStorage.getItem('com.evercode');
-  }
+  },
 
   signout() {
       return $http({
@@ -60,8 +60,6 @@ export class Auth {
         $location.path('/signin');
       })
   }
-
   
+});
 }
-
-

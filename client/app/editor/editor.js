@@ -1,4 +1,4 @@
-export default function editor(){
+export const editor = () => {
 return {
     url: '/editor',
     restrict: 'E',

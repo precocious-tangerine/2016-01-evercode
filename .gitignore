@@ -8,3 +8,4 @@
 #npm_files
 /node_modules/*
 *.rdb
+npm-debug.log

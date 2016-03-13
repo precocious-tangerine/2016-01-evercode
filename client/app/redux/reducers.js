@@ -48,10 +48,8 @@ const modifyFileTree = (state = {snippets: [], folders: []}, action) => {
 	}
 }
 
-const finalReducer = combineReducers({
+export const finalReducer = combineReducers({
 	selectedSnippet: modifySelectedSnippet,
 	selectedFolder: modifyFileTree,
 	fileTree: modifyFileTree
 });
-
-export default finalReducer;

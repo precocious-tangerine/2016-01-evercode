@@ -1,4 +1,4 @@
-export default function directories(){
+export const directories = () => {
 return {
     url: '/main',
     restrict: 'E',
