@@ -10,10 +10,12 @@ export const createAuthCtrl = (url) => {
 }
 
 class AuthCtrl {
-  constructor(Auth) {
-    this.user = {};
-    this.failed = true;
-    this.Auth = Auth;
+  constructor($scope, $location, $window, Auth) {
+  this.user = {};
+  this.failed = true;
+  this.Auth = Auth;
+  this.$location = $location;
+  this.$window = $window;
   }
 
   signin(boolean) {
