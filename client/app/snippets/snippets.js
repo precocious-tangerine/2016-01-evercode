@@ -1,3 +1,5 @@
+import * as Actions from '../redux/actions.js';
+
 export const snippets = (url) => {
   return {
     url: url,
@@ -9,17 +11,20 @@ export const snippets = (url) => {
 }
 
 class SnippetsCtrl {
-  constructor($location, $window) {
+  constructor($location, $window, $ngRedux) {
     this.data = {};
     this.data.snippets = [{name: 'Redux'}];
     this.$location = $location;
     this.$window = $window;
+    
+    const unsubscribe = $ngRedux.connect(this.mapStateToThis, Actions)(this);
+    $scope.$on('$destroy', unsubscribe);
+
   }
 
-  addSnippet() {
-    
-  }
-  removeSnippet() {
-    
+  mapStateToThis(state) {
+    return {
+      value: state.snippet;
+    };
   }
 }
