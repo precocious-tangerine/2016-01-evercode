@@ -53,4 +53,3 @@ export const finalReducer = combineReducers({
 	selectedFolder: modifyFileTree,
 	fileTree: modifyFileTree
 });
-

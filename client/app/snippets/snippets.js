@@ -9,8 +9,11 @@ export const snippets = (url) => {
 }
 
 class SnippetsCtrl {
-  constructor($scope, $location, $window, Auth) {
+  constructor($location, $window) {
     this.data = {};
+    this.data.snippets = [{name: 'Redux'}];
+    this.$location = $location;
+    this.$window = $window;
   }
 
   addSnippet() {

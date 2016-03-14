@@ -1,42 +1,63 @@
-angular.module('evercode.directories', [])
+export const directories = () => {
+return {
+    url: '/main',
+    restrict: 'E',
+    controllerAs: 'directories',
+    controller: DirectoriesCtrl,
+    template: require('./main.html'),
+    scope: {},
+    access: {restricted: false}
+  }
+}
 
-.controller('DirectoriesCtrl', function($scope, $rootScope, Folders, $location) {
-  $scope.data = {};
-  $scope.data.folders = [{name: 'React'}];
-  $scope.folder = {};
-
-  $scope.initialize = function() {
-    Folders.getFolders().then(function(data) {
-      $scope.data.folders = data;
+class DirectoriesCtrl {
+  constructor($location) {
+  // const unsubscribe = $ngRedux.connect(this.mapStateToThis, AsyncActions)((selectedState, actions) => {
+  //   this.componentWillReceiveStateAndActions(selectedState, actions);
+  //   Object.assign(this, selectedState, actions);
+  // });
+  this.data = {};
+  this.data.folders = [{name: 'React'}];
+  this.folder = {};
+  this.$location = $location;
+  }
+  initialize() {
+    Folders.getFolders().then(data => {
+      this.data.folders = data;
     });
   };
 
-  $scope.addFolder = function() {
-    $scope.toggleInput();
-    Folders.addFolder({ name: $scope.folder.name })
-      .then(function(res) {
-        $scope.initialize();
+  addFolder() {
+    Folders.addFolder({ name: this.folder.name })
+      .then(res => {
+        this.initialize();
       });
-    $scope.folder.name = '';
+    this.folder.name = '';
     
   };
 
-  $scope.changeTab = function(tabName){
-    if($rootScope.deleteMode){
-      Folders.removeFolder({name: tabName})
-      .then(function(res){
-        $scope.initialize();
-        $rootScope.deleteMode = false;
-        $location.path('/bookmarks');
-      });
-    } else {
-      $rootScope.activeTab = tabName;
-    }
-  };
-
-  $scope.deleteMode = function() {
-    $rootScope.deleteMode = !$rootScope.deleteMode;
+  changeTab(tabName){
+    // $rootScope.activeTab = tabName;
   };
   
-  // $scope.initialize();
-});
+  // Which part of the Redux global state does our component want to receive?
+  // mapStateToThis(state) {
+  //   const { selectedReddit, postsByReddit } = state;
+  //   const {
+  //     isFetching,
+  //     lastUpdated,
+  //     items: posts
+  //   } = postsByReddit[selectedReddit] || {
+  //     isFetching: true,
+  //     items: []
+  //   };
+
+  //   return {
+  //     selectedReddit,
+  //     posts,
+  //     isFetching,
+  //     lastUpdated
+  //   };
+  // }
+
+  };
