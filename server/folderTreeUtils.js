@@ -1,4 +1,5 @@
-import R from 'ramda';
+'use strict';
+let R = require('ramda');
 
 class Tree {
   constructor(value) {
@@ -20,28 +21,33 @@ class Tree {
   }
   findChild(value) {
     return R.find(R.equals(value), this.children);
+  }
 }
-
-
 let insertIntoTreeRoot = (tree, filePathArrReverse) => {
   if(filePathArrReverse.length !== 0) {
+    console.log('inside loop');
     let currValue = filePathArrReverse.pop();
-    let nextValue = filePathArrReverse[fileTree.length -1];
-    this.value = this.value ? this.value : currValue;
-    let childNode = tree.findChild(nextValue) || new Tree(null);
+    let nextValue = filePathArrReverse[filePathArrReverse.length -1];
+    tree.value = tree.value ? tree.value : currValue;
+    let childNode = tree.findChild(nextValue);
+    if(childNode === undefined && typeof tree.value === 'string') {
+      childNode = new Tree(null);
+      tree.children.push(childNode);
+      childNode.parent = tree;
+    }
     insertIntoTreeRoot(childNode, filePathArrReverse)
   }
 }
 
 
 module.exports.convertToTree = function(snippetObj) {
-  var keyValues = R.toPairs(snippetObj);
-  var flePaths = keyValues.map( (keyValue) => {
+  let keyValues = R.toPairs(snippetObj);
+  let filePaths = keyValues.map( (keyValue) => {
    let folders = keyValue[0].split('/'); 
    folders[folders.length - 1] = keyValue[1];
    return R.reverse(folders);
   });
-  var userTree = new Tree(null);
+  let userTree = new Tree(null);
   filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath) );
   return userTree;
 };
