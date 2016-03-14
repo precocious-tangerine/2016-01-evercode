@@ -10,13 +10,12 @@ export const createAuthCtrl = (url) => {
 }
 
 class AuthCtrl {
-  constructor($location, $window, Auth, Folders) {
+  constructor($location, $window, Auth) {
     this.user = {};
     this.failed = true;
     this.$location = $location;
     this.$window = $window;
     this.Auth = Auth;
-    this.Folders = Folders;
   }
 
   signin(boolean) {
@@ -24,9 +23,7 @@ class AuthCtrl {
     if (boolean) {
       this.Auth.signin(this.user)
         .then(token => {
-          console.log('token', token);
           this.$window.localStorage.setItem('com.evercode', token);
-          this.Folders.getFileTree().then
           this.$location.path('/main');
         })
         .catch(error => {
