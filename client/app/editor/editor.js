@@ -1,8 +1,10 @@
+import * as Actions from '../redux/actions.js';
+
 export const editor = () => {
 return {
     url: '/editor',
     restrict: 'E',
-    controllerAs: 'directories',
+    controllerAs: 'editor',
     controller: EditorCtrl,
     template: require('./editor.html'),
     scope: {},
@@ -11,7 +13,7 @@ return {
 }
 
 class EditorCtrl {
-  constructor() {
+  constructor($ngRedux, $scope) {
     this.editorOptions = {
         lineWrapping : true,
         lineNumbers: true,
@@ -20,5 +22,14 @@ class EditorCtrl {
         value: 'hello'
     };
     this.tags = ['angular','directives','javascript'];
+
+    const unsubscribe = $ngRedux.connect(this.mapStateToThis, Actions)(this);
+    $scope.$on('$destroy', unsubscribe);
+  }
+
+  mapStateToThis(state) {
+    return {
+      value: state.selectedSnippet;
+    };
   }
 }

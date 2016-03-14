@@ -11,12 +11,12 @@ export const snippets = (url) => {
 }
 
 class SnippetsCtrl {
-  constructor($location, $window, $ngRedux) {
+  constructor($location, $window, $ngRedux, $scope) {
     this.data = {};
     this.data.snippets = [{name: 'Redux'}];
     this.$location = $location;
     this.$window = $window;
-    
+
     const unsubscribe = $ngRedux.connect(this.mapStateToThis, Actions)(this);
     $scope.$on('$destroy', unsubscribe);
 
@@ -24,7 +24,7 @@ class SnippetsCtrl {
 
   mapStateToThis(state) {
     return {
-      value: state.snippet;
+      value: state.selectedSnippet;
     };
   }
 }
