@@ -13,7 +13,7 @@
     </form>
   </li>
   <li class='snippet' ng-repeat="snippet in snippets.data.snippets">
-    <a ui-sref='.editor' class="waves-effect waves-teal" ng-click='changeSnippet(snippet.name)'>{{snippet.name}}</a>
+    <a ui-sref='.editor' class="waves-effect waves-teal" ng-click='snippets.changeSnippet(snippet.name)'>{{snippet.name}}</a>
   </li>
 </ul>
 <div ui-view></div>
