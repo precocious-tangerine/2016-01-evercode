@@ -1,4 +1,4 @@
-import R from 'ramda'
+import R from 'ramda';
 
 class Tree {
   constructor(value) {
@@ -27,7 +27,7 @@ let insertIntoTreeRoot = (tree, filePathArrReverse) => {
   if(filePathArrReverse.length !== 0) {
     let currValue = filePathArrReverse.pop();
     let nextValue = filePathArrReverse[fileTree.length -1];
-    this.value ? this.value : currValue;
+    this.value = this.value ? this.value : currValue;
     let childNode = tree.findChild(nextValue) || new Tree(null);
     insertIntoTreeRoot(childNode, filePathArrReverse)
   }
@@ -38,7 +38,8 @@ module.exports.convertToTree = function(snippetObj) {
   var keyValues = R.toPairs(snippetObj);
   var flePaths = keyValues.map( (keyValue) => {
    let folders = keyValue[0].split('/'); 
-   return R.reverse(folders.concat(keyValue[1]));
+   folders[folders.length - 1] = keyValue[1];
+   return R.reverse(folders);
   });
   var userTree = new Tree(null);
   filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath) );
