@@ -5,20 +5,20 @@ export const createAuthCtrl = (url) => {
     controller: AuthCtrl,
     template: require(`.${url}.html`),
     scope: {},
-    access: {restricted: false}
+    access: { restricted: false }
   }
 }
 
 class AuthCtrl {
   constructor($location, $window, Auth, Folders) {
-  this.user = {};
-  this.failed = true;
-  this.$location = $location;
-  this.$window = $window;
-  this.Auth = Auth;
-  this.Folders = Folders;
+    this.user = {};
+    this.failed = true;
+    this.$location = $location;
+    this.$window = $window;
+    this.Auth = Auth;
+    this.Folders = Folders;
   }
-  
+
   signin(boolean) {
     this.failed = true;
     if (boolean) {
@@ -33,9 +33,9 @@ class AuthCtrl {
           this.failed = false;
           console.error(error);
         });
-      }
+    }
   }
-  
+
 
   signup(boolean) {
     this.failed = true;

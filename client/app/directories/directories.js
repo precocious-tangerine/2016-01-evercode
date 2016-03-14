@@ -19,17 +19,17 @@ class DirectoriesCtrl {
     this.folder = {};
   }
 
-    addFolder() {
-      this.Folders.addFolder({ name: this.folder.name });
-      this.folder.name = '';
-    }
-    changeActiveTab(tabName) {
-    
-    }
+  addFolder() {
+    this.Folders.addFolder({ name: this.folder.name });
+    this.folder.name = '';
+  }
+  changeActiveTab(tabName) {
 
-    removeFolder(name){
-      this.Folders.removeFolder({ name: name});
-    }
+  }
+
+  removeFolder(name) {
+    this.Folders.removeFolder({ name: name });
+  }
 
   mapStateToThis(state) {
     const { fileTree, selectedFolder } = state;

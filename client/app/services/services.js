@@ -46,27 +46,27 @@ export class Snippets {
   }
 
   addSnippet(snippet) {
-      return this.$http({
-        method: 'POST',
-        url: '/snippets',
-        data: snippet
-      });
+    return this.$http({
+      method: 'POST',
+      url: '/snippets',
+      data: snippet
+    });
   }
 
   updateSnippet(name, value) {
-      return this.$http({
-        method: 'PUT',
-        url: '/snippets',
-        data: {name, value}
-      });
+    return this.$http({
+      method: 'PUT',
+      url: '/snippets',
+      data: { name, value }
+    });
   }
 
   removeSnippet(snippet) {
-      return this.$http({
-        method: 'POST',
-        url: '/snippets/remove',
-        data: snippet
-      });
+    return this.$http({
+      method: 'POST',
+      url: '/snippets/remove',
+      data: snippet
+    });
   }
 }
 
