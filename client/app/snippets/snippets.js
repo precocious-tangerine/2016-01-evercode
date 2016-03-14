@@ -18,7 +18,6 @@ class SnippetsCtrl {
   }
 
   addSnippet() {
-    console.log('addSnippet: ', this.snippet);
     this.Snippets.addSnippet({ name: this.snippet.name })
     this.snippet.name = '';
   };
