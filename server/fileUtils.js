@@ -34,8 +34,10 @@ let insertIntoTreeRoot = (tree, filePathArrReverse) => {
 }
 
 
-module.exports = function(snippetObj) {
-  
-
-
+module.exports.convertToTree = function(snippetObj) {
+  var keyValues = R.toPairs(snippetObj);
+  var flePaths = R.reverse(keyValues.map( (k,v) => k.concat(v) ));
+  var userTree = new Tree(null);
+  filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath) );
+  return userTree;
 };
