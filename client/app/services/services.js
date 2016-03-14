@@ -49,10 +49,10 @@ export class Snippets {
   mapDispatchToThis(dispatch) {
     return {
 
-      getSnippet(snippet) {
+      getSnippet(snippetID) {
         return this.$http({
           method: 'GET',
-          url: '/api/snippets?snippet=' + snippet
+          url: '/api/snippets?snippetID=' + snippetID
         });
       },
 
@@ -64,19 +64,19 @@ export class Snippets {
         });
       },
 
-      updateSnippet(name, value) {
+      updateSnippet(snippetID, value) {
         return this.$http({
           method: 'PUT',
           url: '/api/snippets',
-          data: { name, value }
+          data: { snippetID, value }
         });
       },
 
-      removeSnippet(snippet) {
+      removeSnippet(snippetID) {
         return this.$http({
           method: 'DELETE',
           url: '/api/snippets',
-          data: snippet
+          data: { snippetID }
         });
       }
     }
