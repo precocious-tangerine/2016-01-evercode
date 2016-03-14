@@ -36,7 +36,10 @@ let insertIntoTreeRoot = (tree, filePathArrReverse) => {
 
 module.exports.convertToTree = function(snippetObj) {
   var keyValues = R.toPairs(snippetObj);
-  var flePaths = R.reverse(keyValues.map( (k,v) => k.concat(v) ));
+  var flePaths = keyValues.map( (keyValue) => {
+   let folders = keyValue[0].split('/'); 
+   return R.reverse(folders.concat(keyValue[1]));
+  });
   var userTree = new Tree(null);
   filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath) );
   return userTree;
