@@ -11,7 +11,7 @@ export class Folders {
       getFileTree() {
         return this.$http({
           method: 'GET',
-          url: '/api/fileTree'
+          url: '/api/user/snippets'
         }).then(res => {
           dispatch(setFileTree(res.data.tree));
         })
@@ -20,7 +20,7 @@ export class Folders {
       addFolder(folder) {
         return this.$http({
           method: 'POST',
-          url: '/folders',
+          url: '/api/folders',
           data: folder
         }).then(res => {
           this.getFileTree();
@@ -29,8 +29,8 @@ export class Folders {
 
       removeFolder(folder) {
         return this.$http({
-          method: 'POST',
-          url: '/folders/remove',
+          method: 'DELETE',
+          url: '/api/folders',
           data: folder
         }).then(res => {
           this.getFileTree();
@@ -41,17 +41,25 @@ export class Folders {
 }
 
 export class Snippets {
-  constructor($http, ngRedux) {
+  constructor($http, $ngRedux) {
     this.$http = $http;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
 
   mapDispatchToThis(dispatch) {
     return {
+
+      getSnippet(snippet) {
+        return this.$http({
+          method: 'GET',
+          url: '/api/snippets?snippet=' + snippet
+        });
+      },
+
       addSnippet(snippet) {
         return this.$http({
           method: 'POST',
-          url: '/snippets',
+          url: '/api/snippets',
           data: snippet
         });
       },
@@ -59,15 +67,15 @@ export class Snippets {
       updateSnippet(name, value) {
         return this.$http({
           method: 'PUT',
-          url: '/snippets',
+          url: '/api/snippets',
           data: { name, value }
         });
       },
 
       removeSnippet(snippet) {
         return this.$http({
-          method: 'POST',
-          url: '/snippets/remove',
+          method: 'DELETE',
+          url: '/api/snippets',
           data: snippet
         });
       }

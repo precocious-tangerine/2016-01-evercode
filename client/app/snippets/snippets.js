@@ -4,25 +4,17 @@ export const snippets = (url) => {
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require('./snippets.html'),
-    scope: {}
+    scope: {},
+    access: { restricted: true }
   };
 }
 
 class SnippetsCtrl {
-  constructor($location, $window, $ngRedux, $scope, Snippets) {
+  constructor($ngRedux, Snippets) {
+    $ngRedux.connect(this.mapStateToThis)(this);
     this.data = {};
     this.data.snippets = [{ name: 'Redux' }];
-    this.$location = $location;
-    this.$window = $window;
     this.Snippets = Snippets;
-
-    $ngRedux.connect(this.mapStateToThis)(this);
-  }
-
-  mapStateToThis(state) {
-    return {
-      value: state.selectedSnippet
-    };
   }
 
   addSnippet() {
@@ -31,9 +23,17 @@ class SnippetsCtrl {
     this.snippet.name = '';
   };
 
-  removeSnippet() {
-    this.Snippets.removeSnippet({ name: this.snippet.name })
-    this.snippet.name = '';
+  removeSnippet(name) {
+    this.Snippets.removeSnippet({ name: name });
   };
 
+  updateSnippet(name) {
+    this.Snippets.updateSnippet({ name: name });
+  };
+
+
+  mapStateToThis(state) {
+    const { selectedSnippet } = state;
+    return {selectedSnippet};
+  };
 }

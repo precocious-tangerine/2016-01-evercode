@@ -9,7 +9,7 @@ export const editor = () => {
     controller: EditorCtrl,
     template: require('./editor.html'),
     scope: {},
-    access: { restricted: false }
+    access: { restricted: true }
   }
 }
 
