@@ -1,4 +1,5 @@
 import * as Actions from '../redux/actions.js';
+import ui_codemirror from 'angular-ui-codemirror';
 
 export const editor = () => {
 return {
@@ -8,7 +9,7 @@ return {
     controller: EditorCtrl,
     template: require('./editor.html'),
     scope: {},
-    access: {restricted: true}
+    access: {restricted: false}
   }
 }
 

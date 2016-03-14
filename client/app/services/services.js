@@ -27,6 +27,29 @@ export class Folders {
       });
   }
 }
+
+export class Snippets {
+  constructor($http) {
+    this.$http = $http;
+  }
+
+  addSnippet(snippet) {
+      return this.$http({
+        method: 'POST',
+        url: '/snippets',
+        data: snippet
+      });
+  }
+
+  removeSnippet(snippet) {
+      return this.$http({
+        method: 'POST',
+        url: '/snippets/remove',
+        data: snippet
+      });
+  }
+}
+
 export class Auth { 
   constructor($http, $location, $window) {
     this.$http = $http;
