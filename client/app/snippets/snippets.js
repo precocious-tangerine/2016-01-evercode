@@ -11,7 +11,7 @@ export const snippets = (url) => {
 class SnippetsCtrl {
   constructor($location, $window, $ngRedux, $scope, Snippets) {
     this.data = {};
-    this.data.snippets = [{name: 'Redux'}];
+    this.data.snippets = [{ name: 'Redux' }];
     this.$location = $location;
     this.$window = $window;
     this.Snippets = Snippets;
