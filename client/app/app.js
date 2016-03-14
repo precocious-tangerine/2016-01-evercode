@@ -25,7 +25,6 @@ angular.module('evercode', [ngRedux, angular_ui_router])
             return Auth.signout();
           }
         }
-        // access: { restricted: false }
       })
 
     $httpProvider.interceptors.push('AttachTokens');
@@ -51,8 +50,8 @@ angular.module('evercode', [ngRedux, angular_ui_router])
   .run(($rootScope, $location, Auth) => {
     $rootScope.$on('$stateChangeStart', (evt, next, current) => {
       $rootScope.location = $location.path();
-      // if (next.access.restricted && !Auth.isAuth()) {
-      //   $location.path('/signin');
-      // }
+      if (next.access.restricted && !Auth.isAuth()) {
+        $location.path('/signin');
+      }
     });
   });
