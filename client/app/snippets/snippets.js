@@ -24,7 +24,7 @@ class SnippetsCtrl {
 
   mapStateToThis(state) {
     return {
-      value: state.selectedSnippet;
+      value: state.selectedSnippet
     };
   }
 }
