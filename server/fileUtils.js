@@ -18,7 +18,12 @@ class Tree {
   }
 }
 
+
+let insertIntoTreeRoot = (tree, filePathArrReverse) => {
+  
+
 module.exports = function(snippetObj) {
+  
 
 
 };
