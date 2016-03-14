@@ -13,6 +13,10 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
+    preLoaders: [{
+      text: /\.js$/,
+      loader: 'source-map-loader'
+    }],
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
