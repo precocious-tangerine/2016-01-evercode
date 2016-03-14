@@ -27,4 +27,20 @@ class SnippetsCtrl {
       value: state.selectedSnippet
     };
   }
+
+  addSnippet() {
+    Snippets.addSnippet({ name: this.snippet.name })
+    this.snippet.name = '';
+  };
+
+  updateSnippet() {
+    Snippets.updateSnippet({ name: this.snippet.name })
+    this.snippet.name = '';
+  };
+
+  removeSnippet() {
+    Snippets.removeSnippet({ name: this.snippet.name })
+    this.snippet.name = '';
+  };
+
 }

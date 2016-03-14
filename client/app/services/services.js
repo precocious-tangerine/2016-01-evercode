@@ -41,6 +41,14 @@ export class Snippets {
       });
   }
 
+  updateSnippet(name, value) {
+      return this.$http({
+        method: 'PUT',
+        url: '/snippets',
+        data: {name, value}
+      });
+  }
+
   removeSnippet(snippet) {
       return this.$http({
         method: 'POST',
