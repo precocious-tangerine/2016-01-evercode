@@ -5,8 +5,8 @@ var Promise = require('bluebird');
 
 var utils = require('./utils');
 var config = require('../config');
-var Users = require('../models/users');
-var Snippets = require('../models/snippets');
+var Users = Promise.promisifyAll(require('../models/users'));
+var Snippets = Promise.promisifyAll(require('../models/snippets'));
 
 var redis = require('redis');
 var redisClient = redis.createClient();
@@ -73,21 +73,22 @@ module.exports = (app, express) => {
 		.post((req, res) => {
 			let {email, password} = req.body;
 			////Do some saving
-			Users.makeUser({
+			Users.makeUserAsync({
 				email:email, 
 				_password: password
-			}, (userData) => {
+			})
+			.then((userData) => {
 				let token = jwt.sign({email}, secret);
-				addReqTokenToRedis(token)
-				.then((replies) => {
-					// can also send userData
-					res.status(201).send(token);
-				})
-				.catch((err) => {
-					console.log(err);
-					res.status(500).send(err);
-				})
-			});
+				return addReqTokenToRedis(token)
+			})
+			.then((replies) => {
+				// can also send userData
+				return res.status(201).send(token)
+			})
+			.catch((err) => {
+				console.log(err);
+				return res.status(500).send(err);
+			})
 		});
 
 	app.route('/logout')
@@ -105,17 +106,74 @@ module.exports = (app, express) => {
 
 	app.route('/api/snippets')
 		.get((req, res) => {
-
+			Snippets.getSnippetAsync(req.param("_id"))
+				.then((snippet) => {
+					if (snippet) {
+						res.status(200).send(snippet)
+					} else {
+						res.status(404).send("Snippet not Found");
+					}
+				})
+				.catch((err) => {
+					res.send(500).send(err);
+				})
 		})
+
 		.post((req, res) => {
-
+			Snippets.makeSnippetAsync(req.body)
+				.then((snippet) => {
+					res.status(201).send(snippet)
+				})
+				.catch((err) => {
+					res.send(500).send(err);
+			})
 		})
+
 		.delete((req,res) => {
-
+			Snippets.removeSnippetAsync(req.body.snippetId)
+				.then((snippet) => {
+					if (snippet) {
+						res.status(201).send(snippet);
+					} else {
+						res.status(404).send("Snippet not Found");
+					}
+				})
+				.catch((err) => {
+					res.send(500).send(err);
+				})
 		})
-		.update((req,res) => {
+		.put((req,res) => {
+			Snippets.updateSnippetAsync(req.body.snippetId, req.body)
+				.then((snippet) => {
+					if (snippet) {
+						res.status(201).send(snippet);
+					} else {
+						res.status(404).send("Snippet not Found");
+					}
+				})
+				.catch((err) => {
+					res.send(500).send(err);
+				})
+		});
 
+	app.route('/api/user/snippets/')
+		.get((req, res) => {
+			var email = jwt.verify(req.token, secret);
+			var filepath = req.path;
+			return Snippets.getSnippetByFilepathAsync(email, filepath)
+				.then((results) => {
+			  		if (Array.isArray(results) && results.length > 0) {
+						res.status(200).send(results)
+					} else {
+						res.status(404).send("Snippets not Found");
+					}
+			  	})
+			  	.catch((err) => {
+			  		res.send(500).send(err);
+			  	})
 		})
+
+	}
 
 	app.route('/auth/github/failure')
 		.get((req, res) => {

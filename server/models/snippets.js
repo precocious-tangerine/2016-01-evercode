@@ -9,7 +9,7 @@ let snippetSchema = mongoose.Schema({
 	createdBy: { type: String, required: true },
 	data: {type: String, required: true},
 	name: {type: String, required: true},
-	filePath: { type: String, required: true, default: "__root"},
+	filePath: { type: String, required: true},
 	labels: { type: mongoose.Schema.Types.Mixed, default: {} },
 	shareUrl: { type: String },
 });
@@ -19,7 +19,6 @@ let Snippet = mongoose.model('Snippet', snippetSchema);
 Snippet.makeSnippet = (snippetObj, callback) => {
 	return Snippet.create(snippetObj)
 	  .then((result)=> {
-	  	console.log("snippet Created");
 	  	return callback(result);
 	  })
 	  .catch((err) => {
@@ -29,6 +28,17 @@ Snippet.makeSnippet = (snippetObj, callback) => {
 
 Snippet.getSnippet = (_id, callback) => {
 	return Snippet.findOne({_id: mongoose.Types.ObjectId(_id)})
+		.then((snippetObj) => {
+		 	callback(snippetObj);
+		})
+		.catch((err) => {
+		 	console.log("error", err);
+		 	return err;
+		});
+}
+
+Snippet.getSnippetByFilepath = (email, filepath, callback) => {
+	return Snippet.findOne({email: email, fillePath: filepath})
 		.then((snippetObj) => {
 		 	callback(snippetObj);
 		})
@@ -60,6 +70,36 @@ Snippet.getSnippetInfoByUser = (email, callback) => {
 			 	callback(foundSnippets);
 			 	return;
 			}
+			return callback({message: 'you have no files'}, null);
+		})
+		.catch((err) => {
+		 	console.log("error", err);
+		 	return
+		});
+}
+
+Snippet.getSnippetInfoByFolder = (email, folder, callback) => {
+	return Snippet.find({email: email, filePath: folder + /.+/igm}, '-data')
+		.then((foundSnippets) => {
+			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
+			 	callback(foundSnippets);
+			 	return;
+			}
+			return callback({message: 'password invalid'}, null);
+		})
+		.catch((err) => {
+		 	console.log("error", err);
+		 	return
+		});
+}
+
+Snippet.getSnippetsByFolder = (email, folder, callback) => {
+	return Snippet.find({email: email, filePath: folder + /.+/igm})
+		.then((foundSnippets) => {
+			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
+			 	callback(foundSnippets);
+			 	return;
+			}
 			return callback({message: 'password invalid'}, null);
 		})
 		.catch((err) => {
@@ -79,12 +119,18 @@ Snippet.updateSnippet = (_id, newProps, callback) => {
     });
 }
 
-Snippet.makeSubFolder = (email, callback) => {
-	return Snippet.makeSnippet({name:'.config', data:'', createdBy: email});
+Snippet.makeSubFolder = (email, filepath, callback) => {
+	return Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: filepath + "/"}, 
+		(snippet) => {
+			return callback(null ,snippet)
+		});
 }
 
 Snippet.makeRootFolder = (email, callback) => {
-	return Snippet.makeSnippet({name:'.config', data:'', createdBy: email});
+	return Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: email + "/"}, 
+		(snippet) => {
+			return callback( null ,snippet)
+		});
 }
 
 Snippet.removeSnippet = (_id, callback) => {
