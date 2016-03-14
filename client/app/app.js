@@ -12,7 +12,7 @@ import { editor } from './editor/editor.js';
 
 angular.module('evercode', [ngRedux, angular_ui_router])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider) => {
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/main');
     $stateProvider
       .state('main', directories())
       .state('main.snippets', snippets('/snippets'))
