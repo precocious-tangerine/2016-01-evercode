@@ -33,4 +33,12 @@ class EditorCtrl {
       value: state.selectedSnippet
     };
   }
+
+  updateSnippet(name, value) {
+      return this.$http({
+        method: 'PUT',
+        url: '/snippets',
+        data: {name, value}
+      });
+  }
 }
