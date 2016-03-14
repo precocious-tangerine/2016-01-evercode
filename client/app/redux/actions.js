@@ -41,19 +41,18 @@ export const removeSnippetFileTree = (snippet) => {
 	};
 };
 
-//Handling adding/removing folder to main file tree
-export const addFolderToFileTree = (folder) => {
-	return {
-		type: 'ADD_NEW_FOLDER',
-		folder
-	};
-};
-export const removeFolderFileTree = (folder) => {
-	return {
-		type: 'REMOVE_FOLDER',
-		folder
-	};
-};
+// export const addFolderToFileTree = (folder) => {
+// 	return {
+// 		type: 'ADD_NEW_FOLDER'
+// 		folder
+// 	};
+// };
+// export const removeFolderFileTree = (folder) => {
+// 	return {
+// 		type: 'REMOVE_FOLDER';
+// 		folder
+// 	};
+// };
 
 //Set file tree snippet
 export const setFileTree = (fileTree) => {

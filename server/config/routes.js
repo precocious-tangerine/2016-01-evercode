@@ -48,6 +48,7 @@ module.exports = (app, express) => {
 
 	app.route('/signin')
 		.post((req,res) => {
+			console.log(req.body);
 			let {email, password} = req.body;
 			  //Do some comparing
 			Users.checkCredentials(email, password, (userData) => {
@@ -56,7 +57,7 @@ module.exports = (app, express) => {
 					addReqTokenToRedis(token)
 					.then((replies) => {
 						//should we send user data on success?
-						res.status(200).send(token);
+						res.status(201).send(token);
 					})
 					.catch((err) => {
 						console.log(err);
@@ -80,13 +81,12 @@ module.exports = (app, express) => {
 				addReqTokenToRedis(token)
 				.then((replies) => {
 					// can also send userData
-					res.status(200).send(token)
+					res.status(201).send(token);
 				})
 				.catch((err) => {
 					console.log(err);
 					res.status(500).send(err);
 				})
-				res.status(201).send(token);
 			});
 		});
 

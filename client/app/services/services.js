@@ -1,30 +1,42 @@
+import * as Actions from '../redux/actions.js';
+
 export class Folders {
-  constructor($http) {
+  constructor($http, ngRedux) {
     this.$http = $http;
-  }
-  getFolders() {
-      return this.$http({
-        method: 'GET',
-        url: '/folders'
-      }).then(function(res) {
-        return res.data;
-      });
+    $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
 
-  addFolder(list) {
-      return this.$http({
-        method: 'POST',
-        url: '/folders',
-        data: list
-      });
-  }
+  mapDispatchToThis(dispatch) {
+    return {
+      getFileTree() {
+        return this.$http({
+          method: 'GET',
+          url: '/api/fileTree'
+        }).then(res => {
+          dispatch(setFileTree(res.data.tree));
+        })
+      },
 
-  removeFolder(list) {
-      return this.$http({
-        method: 'POST',
-        url: '/folders/remove',
-        data: list
-      });
+      addFolder(folder) {
+        return this.$http({
+          method: 'POST',
+          url: '/folders',
+          data: folder
+        }).then(res => {
+          this.getFileTree();
+        })
+      },
+
+      removeFolder(folder) {
+        return this.$http({
+          method: 'POST',
+          url: '/folders/remove',
+          data: folder
+        }).then(res => {
+          this.getFileTree();
+        })
+      }
+    }
   }
 }
 
@@ -58,38 +70,38 @@ export class Snippets {
   }
 }
 
-export class Auth { 
-  constructor($http, $location, $window) {
+export class Auth {
+  constructor($http, $location, $window, Folders) {
     this.$http = $http;
     this.$location = $location;
     this.$window = $window;
   }
   signin(user) {
-      return this.$http({
-        method: 'POST',
-        url: '/signin',
-        data: user
-      })
+    return this.$http({
+      method: 'POST',
+      url: '/signin',
+      data: user
+    })
   }
   signup(user) {
-      return this.$http({
-        method: 'POST',
-        url: '/signup',
-        data: user
-      })
+    return this.$http({
+      method: 'POST',
+      url: '/signup',
+      data: user
+    })
   }
 
   isAuth() {
-      return !!this.$window.localStorage.getItem('com.evercode');
+    return !!this.$window.localStorage.getItem('com.evercode');
   }
 
   signout() {
-      return this.$http({
-        method: 'GET',
-        url: '/signout'
-      }).then(function() {
-        this.$window.localStorage.removeItem('com.evercode');
-        this.$location.path('/signin');
-      })
-  } 
+    return this.$http({
+      method: 'GET',
+      url: '/signout'
+    }).then(function() {
+      this.$window.localStorage.removeItem('com.evercode');
+      this.$location.path('/signin');
+    })
+  }
 }
