@@ -1,21 +1,22 @@
 <!doctype html>
 <html ng-app='evercode'>
-  <head>
-    <meta charset='utf-8' />
-    <title>Evercode</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <!-- Le css -->
-    <link rel="stylesheet" type="text/css" href="http://codemirror.net/lib/codemirror.css"/>
-    <link rel="stylesheet" type="text/css" href="http://codemirror.net/theme/twilight.css"/>
-  </head>
-  <body>
-    <div ui-view class='main'>      
-    </div>
 
-    <script src="dist/bundle.js"></script>
-    <script src="http://codemirror.net/lib/codemirror.js"></script>
-    <!-- <script src="../node_modules/codemirror/lib/codemirror.js"></script> -->
-  </body>
+<head>
+  <meta charset='utf-8' />
+  <title>Evercode</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="http://codemirror.net/lib/codemirror.css" />
+  <link rel="stylesheet" type="text/css" href="http://codemirror.net/theme/twilight.css" />
+  <link rel="stylesheet" type="text/css" href="styles/style.css" />
+</head>
+
+<body>
+  <div ui-view class="container">
+  </div>
+  <script src="dist/bundle.js"></script>
+  <script src="http://codemirror.net/lib/codemirror.js"></script>
+  <!-- <script src="../node_modules/codemirror/lib/codemirror.js"></script> -->
+</body>
+
 </html>

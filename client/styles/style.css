@@ -1,0 +1,39 @@
+.container {
+  position: absolute;
+  height: auto;
+  width: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.main {
+  position: relative;
+  width: 140px;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.snippets {
+  position: relative;
+  width: 200px;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.editor {
+  position: relative;
+  width: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.editor input {
+  width: 150px;
+}
