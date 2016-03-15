@@ -1,4 +1,6 @@
 import * as Actions from '../redux/actions.js';
+import convertToTree from './fileTree.js';
+
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -14,6 +16,17 @@ export class Folders {
           url: '/api/user/snippets'
         }).then(res => {
           dispatch(setFileTree(res.data.tree));
+        })
+      },
+
+      getTestFileTree() {
+        return this.$http({
+          method: 'GET',
+          url: 'api/test-folder-tree'
+        }).then(res => {
+          console.log('got snippets');
+          window.testTree = convertToTree(res);
+          dispatch(setFileTree(convertToTree(res)));
         })
       },
 
