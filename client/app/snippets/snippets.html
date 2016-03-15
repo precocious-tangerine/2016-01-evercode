@@ -1,19 +1,8 @@
-<ul id="nav-mobile" class="side-nav col s3" style="width: 240px;">
-  <li class="search">
-    <div class="search-wrapper card">
-      <input id="search" /><i class="material-icons">search</i>
-      <div class="search-results"></div>
-    </div>
-  </li>
-  <li>
-    <form name="snippetForm" ng-submit="snippets.addSnippet()" novalidate>
-      <div class="form-group">
-        <input placeholder="New Snippet" type="text" class="validate" class='form-control' maxlength="20" ng-minlength='1' ng-model='snippets.snippet.name' />
-      </div>
-    </form>
-  </li>
-  <li class='snippet' ng-repeat="snippet in snippets.data.snippets">
-    <a ui-sref='.editor' class="waves-effect waves-teal" ng-click='snippets.changeSnippet(snippet.name)'>{{snippet.name}}</a>
+<ul class="snippets side-nav col s12 m3 l3">
+  <h3>Folder Name</h3>
+  <h5>File Path</h5>
+  <li class="snippet" ng-repeat="snippet in snippets.data.snippets">
+    <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.changeSnippet(snippet.name)">{{snippet.name}}</a>
   </li>
 </ul>
-<div ui-view></div>
+<div class="col s9 m9 l9 editor" ui-view></div>

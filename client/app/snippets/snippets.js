@@ -13,7 +13,7 @@ class SnippetsCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.data = {};
-    this.data.snippets = [{ name: 'Redux' }];
+    this.data.snippets = [{ name: 'Redux' }, { name: 'Express' }, { name: 'Login' }, { name: 'Auth' }, { name: 'Navbar' }];
     this.Snippets = Snippets;
   }
 

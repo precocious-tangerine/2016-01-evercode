@@ -15,7 +15,7 @@ class DirectoriesCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Folders = Folders;
     this.data = {};
-    this.data.folders = [{ name: 'React' }];
+    this.data.folders = [{ name: 'React' }, { name: 'Angular' }, { name: 'Meteor' }, { name: 'Amber' }, { name: 'Backbone' }];
     this.folder = {};
   }
 
