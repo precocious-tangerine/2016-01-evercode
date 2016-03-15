@@ -117,7 +117,8 @@ export class Auth {
             url: '/signin',
             data: user
           }).then(token => {
-            this.$window.localStorage.setItem('com.evercode', token);
+            console.log(token);
+            this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })
           .catch(error => {
@@ -133,7 +134,7 @@ export class Auth {
             data: user
           }).then(token => {
             console.log(token);
-            this.$window.localStorage.setItem('com.evercode', token);
+            this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })
           .catch(error => {
