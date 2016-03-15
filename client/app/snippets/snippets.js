@@ -21,26 +21,22 @@ class SnippetsCtrl {
   }
 
   favoriteSnippet(snippet) {
-    this.Snippets.updateSnippet({ snippetId: snippet._id, value: {favorite: true} });
+    this.Snippets.updateSnippet({ snippetId: snippet._id, value: { favorite: true } });
   }
 
   grabAndChangeSnippet(snippetObj) {
     this.Snippets.getSnippet(snippetObj._id)
-    .then(this.Snippets.changeSnippet);
+      .then(this.Snippets.changeSnippet);
   }
 
   mapStateToThis(state) {
-    const visibleFolders = !state.selectedFolder ? null : state.selectedFolder.children.filter(function(element){
-      return typeof element.value === 'string' 
-    });
-    const visibleSnippets = !state.selectedFolder ? null : state.selectedFolder.children.filter(function(element){
-      return typeof element.value !== 'string' && element.value.name !== '.config'
-    })
+    const visibleFolders = !state.selectedFolder ? null : state.selectedFolder.children.filter(element => (typeof element.value === 'string'));
+    const visibleSnippets = !state.selectedFolder ? null : state.selectedFolder.children.filter(element => (typeof element.value !== 'string' && element.value.name !== '.config'));
 
     return {
       visibleSnippets,
       visibleFolders
     };
   }
-  
+
 }
