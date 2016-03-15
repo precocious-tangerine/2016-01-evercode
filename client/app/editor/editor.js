@@ -22,6 +22,7 @@ class EditorCtrl {
       value: 'hello'
     };
     this.tags = ['angular', 'directives', 'javascript'];
+    this.Snippets = Snippets;
   }
 
   addSnippet() {
@@ -31,6 +32,7 @@ class EditorCtrl {
   };
 
   updateSnippet() {
+    console.log('updateSnippet', this)
     this.Snippets.updateSnippet(this.selectedSnippet._id, this.content);
   }
 
