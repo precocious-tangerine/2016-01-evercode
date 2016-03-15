@@ -81,19 +81,15 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
 
 Snippet.updateSnippet = (_id, newProps, callback) => {
   newProps._updatedAt = new Date();
-  Snippet.update({_id: mongoose.Types.ObjectId(_id)}, newProps, {multi: false} , (err, raw) => {
-		raw ? callback(null, raw) : callback(err, null);
-  });
+  Snippet.update({_id: mongoose.Types.ObjectId(_id)}, newProps, {multi: false} , callback);
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
-	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: filepath + "/"}, 
-		(err, snippet) => err ? callback(err, null): callback(null ,snippet));
+	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: filepath + "/"}, callback);
 }
 
 Snippet.makeRootFolder = (email, callback) => {
-	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: email + "/"}, 
-		(err, snippet) => err ? callback(err, null): callback(null ,snippet));
+	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: email + "/"}, callback);
 }
 
 Snippet.removeSnippet = (_id, callback) => {
