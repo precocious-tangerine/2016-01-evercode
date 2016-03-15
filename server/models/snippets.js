@@ -17,103 +17,82 @@ let snippetSchema = mongoose.Schema({
 let Snippet = mongoose.model('Snippet', snippetSchema);
 
 Snippet.makeSnippet = (snippetObj, callback) => {
-	return Snippet.create(snippetObj)
+	Snippet.create(snippetObj)
 	  .then((result)=> {
-	  	return callback(null, result);
+	  	callback(null, result);
 	  })
-	  .catch((err) => {
-	  	console.log("Error:", err);
-	  	return callback(err, null);
-	  })
+	  .catch(callback);
 }
 
 Snippet.getSnippet = (_id, callback) => {
-	return Snippet.findOne({_id: mongoose.Types.ObjectId(_id)})
+	Snippet.findOne({_id: mongoose.Types.ObjectId(_id)})
 		.then((snippetObj) => {
 		 	callback(null, snippetObj);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return callback(err, null);
-		});
+		.catch(callback);
 }
 
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
-	return Snippet.findOne({email: email, fillePath: filepath})
+	Snippet.findOne({email: email, fillePath: filepath})
 		.then((snippetObj) => {
-		 	return callback(null, snippetObj);
+		 	callback(null, snippetObj);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return callback(err, null);
-		});
+		.catch(callback);
 }
 
 Snippet.getSnippetsByUser = (email, callback) => {
-	return Snippet.find({createdBy: email})
+	Snippet.find({createdBy: email})
 		.then((foundSnippets) => {
-			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
+			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
 			 	callback(null, foundSnippets);
-			 	return;
+			} else {
+			  callback(new Error('no e-mails found', null);
 			}
-			return callback({message: 'snippets for ' + email + ' not found.'}, null);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return
-		});
+		.catch(callback);
 }
 
 Snippet.getSnippetInfoByUser = (email, callback) => {
-	return Snippet.find({createdBy: email}, '-data')
+	Snippet.find({createdBy: email}, '-data')
 		.then((foundSnippets) => {
 			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
 			 	callback(null, foundSnippets);
-			 	return;
+			} else {
+			  callback(new Error('you have no files'), null);
 			}
-			return callback({message: 'you have no files'}, null);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return
-		});
+		.catch(callback);
 }
 
 Snippet.getSnippetInfoByFolder = (email, folder, callback) => {
-	return Snippet.find({email: email, filePath: folder + /.+/igm}, '-data')
+	Snippet.find({email: email, filePath: folder + /.+/igm}, '-data')
 		.then((foundSnippets) => {
 			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
 			 	callback(null, foundSnippets);
-			 	return;
+			} else {
+				callback(new Error('password invalid'), null);
 			}
-			return callback({message: 'password invalid'}, null);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return
-		});
+		.catch(callback);
 }
 
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
-	return Snippet.find({email: email, filePath: folder + /.+/igm})
+	Snippet.find({email: email, filePath: folder + /.+/igm})
 		.then((foundSnippets) => {
 			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0){
 			 	callback(null, foundSnippets);
-			 	return;
+			} else {
+			callback({message: 'password invalid'}, null);
 			}
-			return callback({message: 'password invalid'}, null);
 		})
-		.catch((err) => {
-		 	console.log("error", err);
-		 	return
-		});
+		.catch(callback);
 }
 
 Snippet.updateSnippet = (_id, newProps, callback) => {
   newProps._updatedAt = new Date();
-  return Snippet.update({_id: mongoose.Types.ObjectId(_id)}, newProps, { multi: false } , (err, raw) => {
+  Snippet.update({_id: mongoose.Types.ObjectId(_id)}, newProps, { multi: false } , (err, raw) => {
   		if (raw) {
-      		callback(null, raw);
+      	callback(null, raw);
   		} else {
   			callback(err, null);
   		}
@@ -121,16 +100,24 @@ Snippet.updateSnippet = (_id, newProps, callback) => {
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
-	return Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: filepath + "/"}, 
-		(snippet) => {
-			return callback(null ,snippet)
+	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: filepath + "/"}, 
+		(err, snippet) => {
+			if(err) {
+				callback(err, null);
+			} else {
+				callback(null ,snippet);
+			}
 		});
 }
 
 Snippet.makeRootFolder = (email, callback) => {
-	return Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: email + "/"}, 
-		(snippet) => {
-			return callback(null ,snippet)
+	Snippet.makeSnippet({name:'.config', data:'..', createdBy: email, filePath: email + "/"}, 
+		(err, snippet) => {
+			if(err) {
+				callback(err, null);
+			} else {
+				callback(null ,snippet);
+			}
 		});
 }
 

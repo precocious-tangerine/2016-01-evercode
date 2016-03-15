@@ -57,7 +57,6 @@ let User = mongoose.model('User',userSchema);
 
 User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
-  console.log("making new user" , pw, callback);
   // email based login
   if (typeof pw === 'string' && pw !== ''){
     return bcrypt.genSaltAsync(13)
@@ -69,70 +68,59 @@ User.makeUser = (userObj, callback) => {
         return Snippets.makeRootFolderAsync(userObj.email);
       })
       .then((rootFolder) => {
-        console.log("rootFolder", rootFolder);
-        console.log("userObj", userObj);
         userObj.snippets = {};
         userObj.snippets[rootFolder._id] = rootFolder;
-        console.log(userObj);
         return User.create(userObj);
       })
       .then((result) => {
-        console.log("result", result);
-        console.log("final result");
-        return callback(result);
+        callback(null, result);
       })
-      .catch((err) => {
-        console.log("Error:", err);
-      });
-  }
-
+      .catch(callback);
+  } else if (typeof userObj.id === 'number') {
   // OAuth based login (no supplied password)
-  if (typeof userObj.id === 'number') {
     return User.create(userObj)
       .then((result) => {
-        callback(result);
-        return
+        callback(null, result);
       })
-      .catch((err) => {
-        console.log("Error:", err);
-      });
+      .catch(callback);
+  } else {
+    callback(new Error('must login via github or local session'))
   }
 
-  console.log("you must supply a password or github id to retrieve user data");
+
 }
 
-User.getUser = (email) => {
+User.getUser = (email, callback) => {
   return User.findOne({email: email})
     .then((userObj) => {
       userObj = userObj.toObject();
-      callback(userObj);
+      callback(null, userObj);
     })
-    .catch((err) => {
-      console.log("error", err);
-    });
+    .catch(callback);
 }
 
 User.checkCredentials = (email, attempt, callback) => {
-  // TODO password verification
+// TODO password verification
   let userData = {};
   return User.findOne({email: email})
     .then((foundUser) => {
-      if (foundUser){
+      if (foundUser) {
         userData = foundUser.toObject();
-        return bcrypt.compareAsync(attempt,foundUser._password);
+        return bcrypt.compareAsync(attempt,foundUser._password)
+        .then((success) => {
+          if (success){
+            delete userData._password;
+            callback(null, userData);
+          } else {
+            callback(new Error("Incorrect Password"), null);
+          }
+        }).catch((err) => {
+          callback(err, null);
+        });
+      } else {
+        callback(new Error("Email not found"), null);
       }
-      return new Error("Email not found");
     })
-    .then((success) => {
-      if (success){
-        delete userData._password;
-        return callback(userData);
-      }
-      return new Error("Incorrect Password");
-    })
-    .catch((err) => {
-      console.log("error", err);
-    });
 }
 
 User.updateUser = (email, newProps, callback) => {
