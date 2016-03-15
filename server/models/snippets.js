@@ -1,7 +1,5 @@
 'use strict';
-const Promise = require('bluebird');
 let mongoose = require('mongoose');
-let _ = require('lodash');
 
 let snippetSchema = mongoose.Schema({
 	_createdAt: {type: Date, default: new Date()},
@@ -28,6 +26,7 @@ Snippet.getSnippet = (_id, callback) => {
 		.catch(callback);
 }
 
+
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
 	Snippet.findOne({email,filepath})
 		.then(snippetObj => callback(null, snippetObj))
@@ -45,6 +44,7 @@ Snippet.getSnippetsByUser = (email, callback) => {
 		})
 		.catch(callback);
 }
+
 
 Snippet.getSnippetInfoByUser = (email, callback) => {
 	Snippet.find({createdBy: email}, '-data')
@@ -96,6 +96,19 @@ Snippet.removeSnippet = (_id, callback) => {
   Snippet.findOne({_id}).remove(callback);
 }
 
+Snippet.removeFolder = (email, folder, callback) => {
+	Snippet.getSnippetsByFolder(email, folder,(err, snippets) => {
+		if(err){
+			callback(err);
+		} else {
+			let allErr = null;
+			snippets.forEach(snippet => {
+				Snippet.removeSnippet(snippet._id, err => allErr = err);
+			}
+			callback(allErr);
+		}
+	})
+}
 
 module.exports = Snippet;
 

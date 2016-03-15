@@ -20,7 +20,7 @@ class DirectoriesCtrl {
   }
 
   addFolder() {
-    this.Folders.addFolder({ name: this.folder.name });
+    this.Folders.addFolder({ path: this.folder.name });
     this.folder.name = '';
   }
   changeActiveTab(tabName) {
