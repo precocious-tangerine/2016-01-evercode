@@ -15,8 +15,8 @@
       </form>
     </li>
     <li class="bold active"><a href="#/favorites" class="waves-effect waves-teal">Favorites</a></li>
-    <li class="folder" ng-repeat="folder in directories.data.folders">
-      <a ui-sref=".snippets" class="waves-effect waves-teal" ng-click="directories.changeFolder(folder.name)">{{folder.name}}</a>
+    <li class="folder" ng-repeat="folder in directories.folders">
+      <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder)" ui-sref=".snippets">{{folder.value}}</a>
     </li>
   </ul>
   <div class="col s12 m10 l10" ui-view>

@@ -14,7 +14,6 @@ var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
 var snippetsArray = require('./testSnippetArray.js').testSnippets;
-var folderTree = require('./folderTree.js');
 
 Promise.promisifyAll(utils);
 

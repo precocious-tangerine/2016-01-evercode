@@ -25,7 +25,6 @@ class Tree {
 }
 let insertIntoTreeRoot = (tree, filePathArrReverse) => {
   if(filePathArrReverse.length !== 0) {
-    console.log('inside loop');
     let currValue = filePathArrReverse.pop();
     let nextValue = filePathArrReverse[filePathArrReverse.length -1];
     tree.value = tree.value ? tree.value : currValue;
@@ -42,7 +41,6 @@ let insertIntoTreeRoot = (tree, filePathArrReverse) => {
 
 let convertToTree = function(snippetObj) {
   let keyValues = R.toPairs(snippetObj);
-  console.log(keyValues);
   let filePaths = keyValues.map( (keyValue) => {
     let folders = keyValue[0].split('/'); 
     folders[folders.length - 1] = keyValue[1];

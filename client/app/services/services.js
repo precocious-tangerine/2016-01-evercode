@@ -38,6 +38,10 @@ export class Folders {
         })
       },
 
+      selectFolder(folder) {
+        dispatch(Actions.setSselectedFolder(folder));
+      },
+
       removeFolder(folder) {
         return this.$http({
           method: 'DELETE',

@@ -38,11 +38,7 @@ const modifyFileTree = (state = { snippets: [], folders: [] }, action) => {
       newFolders = state.folders.pop();
       return Object.assign({}, state, { folders: [] });
     case 'SET_FILE_TREE':
-      newTree = {
-        snippets: ['newSnippet,newTree'],
-        folders: ['newFolder,newTree']
-      };
-      return newTree;
+      return action.fileTree;
     default:
       return state;
   }
