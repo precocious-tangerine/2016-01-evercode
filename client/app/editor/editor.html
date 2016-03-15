@@ -5,13 +5,20 @@
   <div>
     <tags data="tags"></tags>
   </div>
-  <div ui-codemirror="{
+  <form name="snippetForm" ng-submit="editor.addSnippet()" novalidate>
+    <div class="form-group">
+      <input placeholder="New Snippet" type="text" class='form-control' ng-model='editor.snippet.name' />
+    </div>
+    <button type="submit" class="waves-effect waves-light btn">Save Snippet</button>
+  </form>
+  <div ng-model='editor.content' ui-codemirror="{
                         lineNumbers: true,
                         theme:'twilight',
                         lineWrapping : true,
                         mode: 'xml'
                       }">
   </div>
+
   <div>
     Annotations
   </div>

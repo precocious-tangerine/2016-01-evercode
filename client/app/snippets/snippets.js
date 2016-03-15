@@ -17,22 +17,17 @@ class SnippetsCtrl {
     this.Snippets = Snippets;
   }
 
-  addSnippet() {
-    this.Snippets.addSnippet({ name: this.snippet.name })
-    this.snippet.name = '';
+  copySnippet(snippet) {
+    this.Snippets.getSnippet({ snippetId: snippet._id });
   };
 
-  removeSnippet(name) {
-    this.Snippets.removeSnippet({ name: name });
-  };
-
-  updateSnippet(name) {
-    this.Snippets.updateSnippet({ name: name });
-  };
+  favoriteSnippet(snippet) {
+    this.Snippets.updateSnippet({ snippetId: snippet._id, value: {favorite: true} });
+  }
 
 
   mapStateToThis(state) {
     const { selectedSnippet } = state;
-    return {selectedSnippet};
+    return { selectedSnippet };
   };
 }
