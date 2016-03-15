@@ -60,9 +60,7 @@ User.makeUser = (userObj, callback) => {
   // email based login
   if (typeof pw === 'string' && pw !== ''){
     return bcrypt.genSaltAsync(13)
-      .then((salt) => {
-        return bcrypt.hashAsync(userObj._password, salt);
-      })
+      .then((salt) => bcrypt.hashAsync(pw, salt)) 
       .then((hash) => {
         userObj._password = hash;
         return Snippets.makeRootFolderAsync(userObj.email);
@@ -72,22 +70,16 @@ User.makeUser = (userObj, callback) => {
         userObj.snippets[rootFolder._id] = rootFolder;
         return User.create(userObj);
       })
-      .then((result) => {
-        callback(null, result);
-      })
+      .then(result => callback(null, result))
       .catch(callback);
   } else if (typeof userObj.id === 'number') {
   // OAuth based login (no supplied password)
     return User.create(userObj)
-      .then((result) => {
-        callback(null, result);
-      })
+      .then(result => callback(null, result))
       .catch(callback);
   } else {
-    callback(new Error('must login via github or local session'))
+    callback(new Error('must login via github or local session'), null);
   }
-
-
 }
 
 User.getUser = (email, callback) => {
@@ -114,9 +106,7 @@ User.checkCredentials = (email, attempt, callback) => {
           } else {
             callback(new Error("Incorrect Password"), null);
           }
-        }).catch((err) => {
-          callback(err, null);
-        });
+        }).catch(callback);
       } else {
         callback(new Error("Email not found"), null);
       }
@@ -125,7 +115,7 @@ User.checkCredentials = (email, attempt, callback) => {
 
 User.updateUser = (email, newProps, callback) => {
  newProps._updatedAt = new Date();
- return User.update({email: email}, newProps, { multi: false } , (err, raw) => {
+ return User.update({email}, newProps, { multi: false }, (err, raw) => {
       if (raw) {
           callback(null, raw);
       } else {
@@ -135,7 +125,7 @@ User.updateUser = (email, newProps, callback) => {
 }
 
 User.removeUser = (email, callback) => {
-  User.findOne({email: email}).remove(callback);
+  User.findOne({email}).remove(callback);
 }
 
 module.exports = User;
