@@ -53,7 +53,7 @@ module.exports = (app, express) => {
 			  //Do some comparing
 			Users.checkCredentialsAync(email, password) 
 			.then((userData) => {
-				token = jwt.sign(email, secret);
+				token = jwt.sign({email}, secret);
 				addReqTokenToRedisAsync(token)
 				.then((replies) => {
 					//should we send user data on success?
@@ -81,7 +81,7 @@ module.exports = (app, express) => {
 				_password: password
 			})
 			.then((userData) => {
-				token = jwt.sign(email, secret);
+				token = jwt.sign({email}, secret);
 				return addReqTokenToRedisAsync(token)
 			})
 			.then((reddisReplies) => {
