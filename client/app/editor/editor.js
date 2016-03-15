@@ -12,7 +12,7 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, $scope, Snippets, ui_codemirror) {
+  constructor($ngRedux, $scope, Snippets) {
     this.tags = ['angular','directives','javascript'];
     this.Snippets = Snippets;
 

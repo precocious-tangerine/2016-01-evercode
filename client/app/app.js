@@ -4,13 +4,14 @@ import createLogger from 'redux-logger';
 import { finalReducer } from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import ui_codemirror from 'angular-ui-codemirror';
+import codemirror from 'codemirror';
 import { createAuthCtrl } from './auth/auth.js';
 import { Folders, Auth, Snippets } from './services/services.js'
 import { snippets } from './snippets/snippets.js';
 import { directories } from './directories/directories.js';
 import { editor } from './editor/editor.js';
 
-angular.module('evercode', [ngRedux, angular_ui_router])
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider) => {
     $urlRouterProvider.otherwise('/main');
     $stateProvider
