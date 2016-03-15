@@ -18,7 +18,7 @@ var secret = 'shhh! it\'s a secret';
 Promise.promisifyAll(utils);
 
 let checkReqAuthorization = (req, res, next) => {
-	let token = req.header['x-access-token'];
+	let token = req.headers['x-access-token'];
 	redisClient.get(token, (err, result) => {
 		if(err || result === undefined) {
 			res.status(401).send('Unauthorized');
@@ -49,13 +49,15 @@ module.exports = (app, express) => {
 	app.route('/signin')
 		.post((req,res) => {
 			let {email, password} = req.body;
+			let token;
 			  //Do some comparing
 			Users.checkCredentialsAync(email, password) 
 			.then((userData) => {
-				let token = jwt.sign({email}, secret);
+				token = jwt.sign(email, secret);
 				addReqTokenToRedisAsync(token)
 				.then((replies) => {
 					//should we send user data on success?
+					console.log(token);
 					res.status(201).send(token);
 				})
 				.catch((err) => {
@@ -72,13 +74,14 @@ module.exports = (app, express) => {
 	app.route('/signup')
 		.post((req, res) => {
 			let {email, password} = req.body;
+			let token;
 			////Do some saving
 			Users.makeUserAsync({
 				email:email, 
 				_password: password
 			})
 			.then((userData) => {
-				let token = jwt.sign({email}, secret);
+				token = jwt.sign(email, secret);
 				return addReqTokenToRedisAsync(token)
 			})
 			.then((reddisReplies) => {
@@ -92,8 +95,9 @@ module.exports = (app, express) => {
 		});
 
 	app.route('/logout')
+		let token;
 		.get((req, res) => {
-			let token = req.header['x-access-token'];
+			token = req.header['x-access-token'];
 			removeReqTokenFromRedisAsync(token)
 			.then((replies) => {
 				res.status(200).send(token);
