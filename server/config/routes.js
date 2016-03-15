@@ -38,7 +38,7 @@ let addReqTokenToRedisAsync = (token) => {
 
 let removeReqTokenFromRedisAsync = (token) => {
 	return new Promise((resolve, reject) => {
-		redisclient.del(token, (err, replies) => {
+		redisClient.del(token, (err, replies) => {
 			err ? reject(err) : resolve(replies);
 		});
 	});
@@ -51,7 +51,7 @@ module.exports = (app, express) => {
 			let {email, password} = req.body;
 			let token;
 			  //Do some comparing
-			Users.checkCredentialsAync(email, password) 
+			Users.checkCredentialsAsync(email, password) 
 			.then((userData) => {
 				token = jwt.sign({email}, secret);
 				addReqTokenToRedisAsync(token)
@@ -85,12 +85,12 @@ module.exports = (app, express) => {
 
 	app.route('/logout')
 		.get((req, res) => {
-			let token = req.header['x-access-token'];
+			let token = req.headers['x-access-token'];
 			removeReqTokenFromRedisAsync(token)
 			.then(() => res.status(200).send(token))
 			.catch((err) => {
 				console.log(err);
-				res.send(500).send(err);
+				res.status(500).send(err);
 			});
 		});
 
@@ -106,7 +106,7 @@ module.exports = (app, express) => {
 				}
 			}).catch((err) => {
 				console.log(err);
-				res.send(500).send(err);
+				res.status(500).send(err);
 			})
 		})
 		.post((req, res) => {
@@ -115,7 +115,7 @@ module.exports = (app, express) => {
 				res.status(201).send(snippet)
 			}).catch((err) => {
 				console.log(err);
-				res.send(500).send(err);
+				res.status(500).send(err);
 			})
 		})
 		.delete((req,res) => {
@@ -128,7 +128,7 @@ module.exports = (app, express) => {
 				}
 			}).catch((err) => {
 					console.log(err);
-					res.send(500).send(err);
+					res.status(500).send(err);
 				})
 		})
 		.put((req,res) => {
@@ -141,7 +141,7 @@ module.exports = (app, express) => {
 					}
 				}).catch((err) => {
 					console.log(err);
-					res.send(500).send(err);
+					res.status(500).send(err);
 				})
 		});
 
@@ -158,7 +158,7 @@ module.exports = (app, express) => {
 					}
 		  	}).catch((err) => {
 		  		console.log(err);
-		  		res.send(500).send(err);
+		  		res.status(500).send(err);
 		  	})
 		});
 

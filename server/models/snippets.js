@@ -97,7 +97,7 @@ Snippet.makeRootFolder = (email, callback) => {
 }
 
 Snippet.removeSnippet = (_id, callback) => {
-  Snippet.findOne({email: email}).remove(callback);
+  Snippet.findOne({_id}).remove(callback);
 }
 
 
