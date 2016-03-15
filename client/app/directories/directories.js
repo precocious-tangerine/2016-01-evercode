@@ -39,8 +39,8 @@ class DirectoriesCtrl {
 
     return {
       fileTree,
-      selectedFolder
-      // folders
+      selectedFolder,
+      folders
     };
   }
 
