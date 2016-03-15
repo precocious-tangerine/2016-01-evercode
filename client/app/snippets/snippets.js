@@ -1,5 +1,4 @@
 import * as Actions from '../redux/actions.js';
-import R from 'ramda';
 
 export const snippets = (url) => {
   return {
@@ -7,40 +6,15 @@ export const snippets = (url) => {
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require('./snippets.html'),
-    scope: {
-      content: '='
-    },
     access: { restricted: true }
   };
 }
 
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders) {
+    $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.Folders = Folders;
     this.Snippets = Snippets;
-    $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
-    if(R.empty(this.selectedFolder)) {
-      console.log('this is being triggered');
-      this.folderName = this.selectedFolder.value;
-      this.visibleChildren = [];
-      this.filePath;
-      this.selectedFolder.children.forEach( (child) => {
-        if(typeof child.value === 'string' || child.value.name !== '.config') {
-          const childLocal = child;
-          visibleChildren.push(childLocal);
-        } else {
-          var configPath = child.value.name;
-          this.filePath = configPath.substring(0, configPath - 7);
-        }
-      });
-    } else {
-      this.folderName = 'No selected folder';
-      this.filePath = '';
-      this.visibleChildren = [];
-    }
-    // this.data = {};
-    // this.data.snippets = [{ name: 'Redux' }, { name: 'Express' }, { name: 'Login' }, { name: 'Auth' }, { name: 'Navbar' }];
-    // this.Snippets = Snippets;
   }
   copySnippet(snippet) {
     this.Snippets.getSnippet({ snippetId: snippet._id });
@@ -56,8 +30,16 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
+    const visibleFolders = !state.selectedFolder ? null : state.selectedFolder.children.filter(function(element){
+      return typeof element.value === 'string' 
+    });
+    const visibleSnippets = !state.selectedFolder ? null : state.selectedFolder.children.filter(function(element){
+      return typeof element.value !== 'string' && element.value.name !== '.config'
+    })
+
     return {
-      selectedFolder: state.selectedFolder
+      visibleSnippets,
+      visibleFolders
     };
   }
   
