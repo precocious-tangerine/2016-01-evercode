@@ -30,12 +30,27 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
-    const visibleFolders = !state.selectedFolder ? null : state.selectedFolder.children.filter(element => (typeof element.value === 'string'));
-    const visibleSnippets = !state.selectedFolder ? null : state.selectedFolder.children.filter(element => (typeof element.value !== 'string' && element.value.name !== '.config'));
-
+    let visibleFolders = [], visibleSnippets = [];
+    let filePath = '', folderName = '';
+    if (state.selectedFolder.value) {
+      state.selectedFolder.children.forEach(child => {
+        if(typeof child.value === 'string') {
+          visibleFolders.push(child);
+        } else if(child.value.name !== '.config') {
+          visibleSnippets.push(child);
+        }
+      });
+      filePath = state.selectedFolder.filePath;
+      folderName = state.selectedFolder.value;
+    } else {
+      filePath = '';
+      folderName = 'No Folder Selected';
+    }
     return {
       visibleSnippets,
-      visibleFolders
+      visibleFolders,
+      filePath,
+      folderName
     };
   }
 
