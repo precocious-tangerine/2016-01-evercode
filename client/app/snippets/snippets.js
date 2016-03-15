@@ -1,4 +1,5 @@
 import * as Actions from '../redux/actions.js';
+import R from 'ramda';
 
 export const snippets = (url) => {
   return {
@@ -6,7 +7,9 @@ export const snippets = (url) => {
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require('./snippets.html'),
-    scope: {},
+    scope: {
+      content: '='
+    },
     access: { restricted: true }
   };
 }
@@ -14,18 +17,25 @@ export const snippets = (url) => {
 class SnippetsCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
-    this.folderName = this.selectedFolder.value;
-    
-    this.visibleChildren = [];
-    this.filePath;
-    this.selectedFolder.children.forEach( (child) => {
-      if(typeof child.value === 'string' || child.value.name !== '.config') {
-        visibleChildren.push(Object.assign({},child));
-      } else {
-        var configPath = child.value.name;
-        this.filePath = configPath.substring(0, configPath - 7);
-      }
-    });
+    if(R.empty(this.selectedFolder)) {
+      console.log('this is being triggered');
+      this.folderName = this.selectedFolder.value;
+      this.visibleChildren = [];
+      this.filePath;
+      this.selectedFolder.children.forEach( (child) => {
+        if(typeof child.value === 'string' || child.value.name !== '.config') {
+          const childLocal = child;
+          visibleChildren.push(childLocal);
+        } else {
+          var configPath = child.value.name;
+          this.filePath = configPath.substring(0, configPath - 7);
+        }
+      });
+    } else {
+      this.folderName = 'No selected folder';
+      this.filePath = '';
+      this.visibleChildren = [];
+    }
     // this.data = {};
     // this.data.snippets = [{ name: 'Redux' }, { name: 'Express' }, { name: 'Login' }, { name: 'Auth' }, { name: 'Navbar' }];
     // this.Snippets = Snippets;
