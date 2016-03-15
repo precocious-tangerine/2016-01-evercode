@@ -28,7 +28,7 @@ let checkReqAuthorization = (req, res, next) => {
 	});
 }
 
-let addReqTokenToRedis = (token) => {
+let addReqTokenToRedisAsync = (token) => {
 	return new Promise((resolve, reject) => {
 		redisClient.mset([token, true], (err, replies) => {
 			err ? reject(err) : resolve(replies);
@@ -36,7 +36,7 @@ let addReqTokenToRedis = (token) => {
 	});
 }
 
-let removeReqTokenFromRedis = (token) => {
+let removeReqTokenFromRedisAsync = (token) => {
 	return new Promise((resolve, reject) => {
 		redisclient.del(token, (err, replies) => {
 			err ? reject(err) : resolve(replies);
@@ -48,25 +48,25 @@ module.exports = (app, express) => {
 
 	app.route('/signin')
 		.post((req,res) => {
-			console.log(req.body);
 			let {email, password} = req.body;
 			  //Do some comparing
-			Users.checkCredentials(email, password, (userData) => {
-				if(userData) {
-					let token = jwt.sign({email}, secret);
-					addReqTokenToRedis(token)
-					.then((replies) => {
-						//should we send user data on success?
-						res.status(201).send(token);
-					})
-					.catch((err) => {
-						console.log(err);
-						res.status(500).send(err);
-					});
-				} else {
-					res.status(401).send('Unauthorized');
-				}
+			Users.checkCredentialsAync(email, password) 
+			.then((userData) => {
+				let token = jwt.sign({email}, secret);
+				addReqTokenToRedisAsync(token)
+				.then((replies) => {
+					//should we send user data on success?
+					res.status(201).send(token);
+				})
+				.catch((err) => {
+					console.log(err);
+					res.status(500).send(err);
+				});
 			})
+			.catch((err) => {
+				console.log(err);
+				res.status(401).send('Unauthorized');
+			});
 		});
 
 	app.route('/signup')
@@ -79,30 +79,30 @@ module.exports = (app, express) => {
 			})
 			.then((userData) => {
 				let token = jwt.sign({email}, secret);
-				return addReqTokenToRedis(token)
+				return addReqTokenToRedisAsync(token)
 			})
-			.then((replies) => {
+			.then((reddisReplies) => {
 				// can also send userData
 				return res.status(201).send(token)
 			})
 			.catch((err) => {
 				console.log(err);
 				return res.status(500).send(err);
-			})
+			});
 		});
 
 	app.route('/logout')
 		.get((req, res) => {
 			let token = req.header['x-access-token'];
-			removeReqTokenFromRedis(token)
+			removeReqTokenFromRedisAsync(token)
 			.then((replies) => {
 				res.status(200).send(token);
 			})
 			.catch((err) => {
 				res.send(500).send(err);
-			})
+			});
 
-		})
+		});
 
 	app.route('/api/snippets')
 		.get((req, res) => {
@@ -184,7 +184,7 @@ module.exports = (app, express) => {
 	app.get('/auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
-			addReqTokenToRedis(token)
+			addReqTokenToRedisAsync(token)
 			.then((replies) => {
 				res.status(201).send(token)
 			})
