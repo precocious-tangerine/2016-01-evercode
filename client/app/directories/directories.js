@@ -13,19 +13,17 @@ export const directories = () => {
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    this.Folders = Folders;
-    this.data = {};
-    this.data.folders = [{ name: 'React' }, { name: 'Angular' }, { name: 'Meteor' }, { name: 'Amber' }, { name: 'Backbone' }];
-    this.folder = {};
     Folders.getTestFileTree();
+    this.Folders = Folders;
+    this.folder = {};
   }
 
   addFolder() {
     this.Folders.addFolder({ path: this.folder.name });
     this.folder.name = '';
   }
-  changeActiveTab(tabName) {
-
+  changeActiveTab(folder) {
+    this.Folders.selectFolder(folder);
   }
 
   removeFolder(name) {
@@ -34,9 +32,7 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     const { fileTree, selectedFolder } = state;
-    const folders = !fileTree.children ? null : fileTree.children.map(function(folder) {
-      return folder.value;
-    })
+    const folders = !fileTree.children ? null : fileTree.children.filter(folder => (folder.children.length > 0));
 
     return {
       fileTree,
