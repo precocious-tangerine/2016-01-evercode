@@ -1,5 +1,3 @@
-import * as Actions from '../redux/actions.js';
-import ui_codemirror from 'angular-ui-codemirror';
 
 export const editor = () => {
   return {
@@ -14,17 +12,11 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, $scope) {
-    this.editorOptions = {
-      lineWrapping: true,
-      lineNumbers: true,
-      readOnly: 'nocursor',
-      mode: 'xml',
-      value: 'hello'
-    };
-    this.tags = ['angular', 'directives', 'javascript'];
+  constructor($ngRedux, $scope, Snippets) {
+    this.tags = ['angular','directives','javascript'];
+    this.Snippets = Snippets;
 
-    const unsubscribe = $ngRedux.connect(this.mapStateToThis, Actions)(this);
+    const unsubscribe = $ngRedux.connect(this.mapStateToThis)(this);
     $scope.$on('$destroy', unsubscribe);
   }
 
@@ -35,10 +27,6 @@ class EditorCtrl {
   }
 
   updateSnippet(name, value) {
-    return this.$http({
-      method: 'PUT',
-      url: '/snippets',
-      data: { name, value }
-    });
+    this.Snippets.updateSnippet({ name, value })
   }
 }
