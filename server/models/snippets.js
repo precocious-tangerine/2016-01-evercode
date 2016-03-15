@@ -46,7 +46,7 @@ Snippet.getSnippetsByUser = (email, callback) => {
 			if(Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
 			 	callback(null, foundSnippets);
 			} else {
-			  callback(new Error('no e-mails found', null);
+			  callback(new Error('no e-mails found'), null);
 			}
 		})
 		.catch(callback);
