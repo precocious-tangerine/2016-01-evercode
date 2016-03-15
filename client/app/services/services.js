@@ -15,7 +15,7 @@ export class Folders {
           method: 'GET',
           url: '/api/user/snippets'
         }).then(res => {
-          dispatch(setFileTree(res.data.tree));
+          dispatch(Actions.setFileTree(res.data.tree));
         })
       },
 
@@ -24,9 +24,7 @@ export class Folders {
           method: 'GET',
           url: 'api/test-folder-tree'
         }).then(res => {
-          console.log('got snippets');
-          window.testTree = convertToTree(res.data);
-          dispatch(setFileTree(convertToTree(res.data)));
+          dispatch(Actions.setFileTree(convertToTree(res.data)));
         })
       },
 
