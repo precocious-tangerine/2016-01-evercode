@@ -106,6 +106,7 @@ module.exports = (app, express) => {
 
 	app.route('/api/snippets')
 		.get((req, res) => {
+			console.log(req.param("_id"), typeof req.param("_id"));
 			Snippets.getSnippetAsync(req.param("_id"))
 				.then((snippet) => {
 					if (snippet) {
@@ -143,7 +144,7 @@ module.exports = (app, express) => {
 				})
 		})
 		.put((req,res) => {
-			Snippets.updateSnippetAsync(req.body.snippetId, req.body)
+			Snippets.updateSnippetAsync(req.body.snippetId, req.body.value)
 				.then((snippet) => {
 					if (snippet) {
 						res.status(201).send(snippet);
@@ -158,12 +159,12 @@ module.exports = (app, express) => {
 
 	app.route('/api/user/snippets/')
 		.get((req, res) => {
-			var email = jwt.verify(req.token, secret);
+			var email = jwt.verify(req.headers.token, secret);
 			var filepath = req.path;
 			return Snippets.getSnippetByFilepathAsync(email, filepath)
 				.then((results) => {
 			  		if (Array.isArray(results) && results.length > 0) {
-						res.status(200).send(results)
+						res.status(200).send(results);
 					} else {
 						res.status(404).send("Snippets not Found");
 					}
@@ -171,9 +172,7 @@ module.exports = (app, express) => {
 			  	.catch((err) => {
 			  		res.send(500).send(err);
 			  	})
-		})
-
-	}
+		});
 
 	app.route('/auth/github/failure')
 		.get((req, res) => {
