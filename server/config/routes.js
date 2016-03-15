@@ -95,9 +95,8 @@ module.exports = (app, express) => {
 		});
 
 	app.route('/logout')
-		let token;
 		.get((req, res) => {
-			token = req.header['x-access-token'];
+			let token = req.header['x-access-token'];
 			removeReqTokenFromRedisAsync(token)
 			.then((replies) => {
 				res.status(200).send(token);
