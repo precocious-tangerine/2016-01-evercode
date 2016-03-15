@@ -20,7 +20,7 @@ class Tree {
     this.parent = null;
   }
   findChild(value) {
-    return R.find(R.equals(value), this.children);
+    return R.find(R.whereEq({value}), this.children);
   }
 }
 let insertIntoTreeRoot = (tree, filePathArrReverse) => {
