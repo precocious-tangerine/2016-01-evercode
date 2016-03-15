@@ -42,7 +42,6 @@ let removeReqTokenFromRedisAsync = (token) => {
 }
 
 module.exports = (app, express) => {
-
   app.route('/signin')
     .post((req, res) => {
       let { email, password } = req.body;
@@ -146,9 +145,15 @@ module.exports = (app, express) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
       let filepath = req.body.path;
       return Snippets.getSnippetByFilepathAsync(email, filepath)
-        .then((results) => {
-          if (Array.isArray(results) && results.length > 0) {
-            res.status(200).send(results);
+        .then((dbSnippets) => {
+          console.log(dbSnippets);
+            if (Array.isArray(dbSnippets) && dbSnippets.length > 0) {
+            var fileTreeList = {};
+            dbSnippets.forEach((node){
+              fileTreeList[node.filePath] = node;
+            });
+            var userFileTree = folderTree.convertToTree(fileTreeList);
+            res.status(200).send(userFileTree);
           } else {
             res.status(404).send("Snippets not Found");
           }
@@ -210,5 +215,4 @@ module.exports = (app, express) => {
       });
       res.send(snippetObj);
     });
-
 }
