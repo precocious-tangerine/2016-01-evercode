@@ -27,7 +27,7 @@ class SnippetsCtrl {
 
 
   mapStateToThis(state) {
-    const { selectedSnippet } = state;
-    return { selectedSnippet };
+    const { selectedFolder } = state;
+    return { selectedFolder };
   };
 }
