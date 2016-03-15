@@ -14,6 +14,8 @@ var redisClient = redis.createClient();
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
+var snippetsArray = require('./testSnippetArray.js').testSnippets;
+var folderTree = require('./folderTree.js');
 
 Promise.promisifyAll(utils);
 
@@ -177,4 +179,18 @@ module.exports = (app, express) => {
 				res.status(500).send('Error');
 			});
 		});
+
+
+
+	app.route('/api/test-folder-tree')
+		.get((req, res) => {
+			var snippetObj = {};
+			snippetsArray.forEach((snippet) => {
+				snippetObj[snippet.filePath] = snippet;
+			});
+			res.send(snippetObj);
+		});
 }
+
+
+
