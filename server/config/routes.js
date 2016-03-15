@@ -105,6 +105,8 @@ module.exports = (app, express) => {
         })
     })
     .post((req, res) => {
+      let email = jwt.verify(req.headers.token, secret);
+      req.body.createdby = email;
       Snippets.makeSnippetAsync(req.body)
         .then((snippet) => {
           res.status(201).send(snippet)
@@ -115,9 +117,9 @@ module.exports = (app, express) => {
     })
     .delete((req, res) => {
       Snippets.removeSnippetAsync(req.body.snippetId)
-        .then((snippet) => {
-          if (snippet) {
-            res.status(201).send(snippet);
+        .then((response) => {
+          if (response) {
+            res.status(201).send(response);
           } else {
             res.status(404).send("Snippet not Found");
           }
@@ -149,7 +151,7 @@ module.exports = (app, express) => {
           console.log(dbSnippets);
             if (Array.isArray(dbSnippets) && dbSnippets.length > 0) {
             var fileTreeList = {};
-            dbSnippets.forEach((node){
+            dbSnippets.forEach((node) => {
               fileTreeList[node.filePath] = node;
             });
             var userFileTree = folderTree.convertToTree(fileTreeList);
