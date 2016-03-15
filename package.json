@@ -34,6 +34,7 @@
   "devDependencies": {
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.5.0",
     "chai": "^3.4.1",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^1.0.4",
@@ -42,7 +43,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
+    "test": "mocha test --compilers js:babel-core/register",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
     "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client"
