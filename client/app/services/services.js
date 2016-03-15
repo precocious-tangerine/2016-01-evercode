@@ -93,6 +93,10 @@ export class Snippets {
           url: '/api/snippets',
           data: { snippetId }
         });
+      },
+
+      changeSnippet(snippetObj) {
+        dispatch(Actions.setSelectedSnippet(snippetObj));
       }
     }
   }
