@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let _ = require('lodash');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
+let Snippets = Promise.promisifyAll(require('./snippets.js'));
 
 let userSchema = mongoose.Schema({
   _password: {type: String},
@@ -49,10 +50,6 @@ let userSchema = mongoose.Schema({
     private_repos: { type: Number },
     collaborators: { type: Number },
   },
-  directories: { 
-    type: mongoose.Schema.Types.Mixed, 
-    default: {'mySnippets': 'root'}
-  },
   snippets: { type: mongoose.Schema.Types.Mixed },
 });
 
@@ -60,7 +57,7 @@ let User = mongoose.model('User',userSchema);
 
 User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
-  
+  console.log("making new user" , pw, callback);
   // email based login
   if (typeof pw === 'string' && pw !== ''){
     return bcrypt.genSaltAsync(13)
@@ -69,11 +66,20 @@ User.makeUser = (userObj, callback) => {
       })
       .then((hash) => {
         userObj._password = hash;
+        return Snippets.makeRootFolderAsync(userObj.email);
+      })
+      .then((rootFolder) => {
+        console.log("rootFolder", rootFolder);
+        console.log("userObj", userObj);
+        userObj.snippets = {};
+        userObj.snippets[rootFolder._id] = rootFolder;
+        console.log(userObj);
         return User.create(userObj);
       })
       .then((result) => {
-        console.log("test makeUser result", result);
-        callback(result);
+        console.log("result", result);
+        console.log("final result");
+        return callback(result);
       })
       .catch((err) => {
         console.log("Error:", err);
@@ -84,7 +90,6 @@ User.makeUser = (userObj, callback) => {
   if (typeof userObj.id === 'number') {
     return User.create(userObj)
       .then((result) => {
-        console.log("test makeUser result - no pw", result);
         callback(result);
         return
       })
@@ -112,15 +117,18 @@ User.checkCredentials = (email, attempt, callback) => {
   let userData = {};
   return User.findOne({email: email})
     .then((foundUser) => {
-      userData = foundUser.toObject();
-      return bcrypt.compareAsync(attempt,foundUser._password);
+      if (foundUser){
+        userData = foundUser.toObject();
+        return bcrypt.compareAsync(attempt,foundUser._password);
+      }
+      return new Error("Email not found");
     })
     .then((success) => {
       if (success){
         delete userData._password;
-        callback(userData);
+        return callback(userData);
       }
-      return new Error();
+      return new Error("Incorrect Password");
     })
     .catch((err) => {
       console.log("error", err);
