@@ -1,13 +1,11 @@
 <ul class="snippets side-nav col s12 m3 l3">
   <h3>{{snippets.folderName}}</h3>
   <h5>{{snippets.filePath}}</h5>
-  <li class="snippet" ng-repeat="child in snippets.visibleChildren">
-  	<div ng-if="typeof child.value === 'object'"
+  <li class="snippet" ng-repeat="child in snippets.visibleSnippets">
     <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.grabAndChangeSnippet(child.value)">{{child.value.name}}</a>
-    </div>
-    <div ng-if="typeof child.value === 'string'">
-    <a class="waves-effect waves-teal" ng-click="snippets.Folder.selectFolder(child)">{{child.value}}</a>
-    </div>
+  </li>
+  <li class="snippet" ng-repeat="child in snippets.visibleFolders">
+    <a ui-sref=".snippets" class="waves-effect waves-teal" ng-click="snippets.grabAndChangeSnippet(child.value)">{{child.value}}</a>
   </li>
 </ul>
 <div class="col s9 m9 l9 editor" ui-view></div>
