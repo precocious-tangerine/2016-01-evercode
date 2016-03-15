@@ -15,7 +15,9 @@ export const snippets = (url) => {
 }
 
 class SnippetsCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, Snippets, Folders) {
+    this.Folders = Folders;
+    this.Snippets = Snippets;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     if(R.empty(this.selectedFolder)) {
       console.log('this is being triggered');
@@ -47,19 +49,16 @@ class SnippetsCtrl {
   favoriteSnippet(snippet) {
     this.Snippets.updateSnippet({ snippetId: snippet._id, value: {favorite: true} });
   }
+
+  grabAndChangeSnippet(snippetObj) {
+    this.Snippets.getSnippet(snippetObj._id)
+    .then(this.Snippets.changeSnippet);
+  }
+
   mapStateToThis(state) {
     return {
       selectedFolder: state.selectedFolder
     };
   }
-  mapDispatchToThis(dispatch) {
-    return {
-      changeFolder(folderNode) {
-        dispatch(Actions.setSselectedFolder(folderNode));
-      },
-      changeSnippet(snippetObj) {
-        dispatch(Actions.setSelectedSnippet(snippetObj));
-      }
-    };
-  }
+  
 }

@@ -3,10 +3,10 @@
   <h5>{{snippets.filePath}}</h5>
   <li class="snippet" ng-repeat="child in snippets.visibleChildren">
   	<div ng-if="typeof child.value === 'object'"
-    <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.changeSnippet(child.value)">{{child.value.name}}</a>
+    <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.grabAndChangeSnippet(child.value)">{{child.value.name}}</a>
     </div>
     <div ng-if="typeof child.value === 'string'">
-    <a class="waves-effect waves-teal" ng-click="snippets.changeFolder(child)">{{child.value}}</a>
+    <a class="waves-effect waves-teal" ng-click="snippets.Folder.selectFolder(child)">{{child.value}}</a>
     </div>
   </li>
 </ul>
