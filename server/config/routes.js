@@ -18,7 +18,7 @@ var secret = 'shhh! it\'s a secret';
 Promise.promisifyAll(utils);
 
 let checkReqAuthorization = (req, res, next) => {
-	let token = req.header['x-access-token'];
+	let token = req.headers['x-access-token'];
 	redisClient.get(token, (err, result) => {
 		if(err || result === undefined) {
 			res.status(401).send('Unauthorized');
@@ -28,7 +28,7 @@ let checkReqAuthorization = (req, res, next) => {
 	});
 }
 
-let addReqTokenToRedis = (token) => {
+let addReqTokenToRedisAsync = (token) => {
 	return new Promise((resolve, reject) => {
 		redisClient.mset([token, true], (err, replies) => {
 			err ? reject(err) : resolve(replies);
@@ -36,9 +36,9 @@ let addReqTokenToRedis = (token) => {
 	});
 }
 
-let removeReqTokenFromRedis = (token) => {
+let removeReqTokenFromRedisAsync = (token) => {
 	return new Promise((resolve, reject) => {
-		redisclient.del(token, (err, replies) => {
+		redisClient.del(token, (err, replies) => {
 			err ? reject(err) : resolve(replies);
 		});
 	});
@@ -48,99 +48,87 @@ module.exports = (app, express) => {
 
 	app.route('/signin')
 		.post((req,res) => {
-			console.log(req.body);
 			let {email, password} = req.body;
+			let token;
 			  //Do some comparing
-			Users.checkCredentials(email, password, (userData) => {
-				if(userData) {
-					let token = jwt.sign({email}, secret);
-					addReqTokenToRedis(token)
-					.then((replies) => {
-						//should we send user data on success?
-						res.status(201).send(token);
-					})
-					.catch((err) => {
-						console.log(err);
-						res.status(500).send(err);
-					});
-				} else {
-					res.status(401).send('Unauthorized');
-				}
-			})
+			Users.checkCredentialsAsync(email, password) 
+			.then((userData) => {
+				token = jwt.sign({email}, secret);
+				addReqTokenToRedisAsync(token)
+				.then((replies) => {
+					res.status(201).send(token);
+				}).catch((err) => {
+					console.log(err);
+					res.status(500).send(err);
+				});
+			}).catch((err) => {
+				console.log(err);
+				res.status(401).send('Unauthorized');
+			});
 		});
 
 	app.route('/signup')
 		.post((req, res) => {
 			let {email, password} = req.body;
-			////Do some saving
-			Users.makeUserAsync({
-				email:email, 
-				_password: password
-			})
+			let token;
+			Users.makeUserAsync({email,_password: password})
 			.then((userData) => {
-				let token = jwt.sign({email}, secret);
-				return addReqTokenToRedis(token)
+				token = jwt.sign({email}, secret);
+				return addReqTokenToRedisAsync(token)
 			})
-			.then((replies) => {
-				// can also send userData
-				return res.status(201).send(token)
-			})
+			.then(() => res.status(201).send(token))
 			.catch((err) => {
 				console.log(err);
-				return res.status(500).send(err);
-			})
+				res.status(500).send(err);
+			});
 		});
 
 	app.route('/logout')
 		.get((req, res) => {
-			let token = req.header['x-access-token'];
-			removeReqTokenFromRedis(token)
-			.then((replies) => {
-				res.status(200).send(token);
-			})
+			let token = req.headers['x-access-token'];
+			removeReqTokenFromRedisAsync(token)
+			.then(() => res.status(200).send(token))
 			.catch((err) => {
-				res.send(500).send(err);
-			})
-
-		})
+				console.log(err);
+				res.status(500).send(err);
+			});
+		});
 
 	app.route('/api/snippets')
 		.get((req, res) => {
 			console.log(req.param("_id"), typeof req.param("_id"));
 			Snippets.getSnippetAsync(req.param("_id"))
-				.then((snippet) => {
-					if (snippet) {
-						res.status(200).send(snippet)
-					} else {
-						res.status(404).send("Snippet not Found");
-					}
-				})
-				.catch((err) => {
-					res.send(500).send(err);
-				})
-		})
-
-		.post((req, res) => {
-			Snippets.makeSnippetAsync(req.body)
-				.then((snippet) => {
-					res.status(201).send(snippet)
-				})
-				.catch((err) => {
-					res.send(500).send(err);
+			.then((snippet) => {
+				if (snippet) {
+					res.status(200).send(snippet)
+				} else {
+					res.status(404).send("Snippet not Found");
+				}
+			}).catch((err) => {
+				console.log(err);
+				res.status(500).send(err);
 			})
 		})
-
+		.post((req, res) => {
+			Snippets.makeSnippetAsync(req.body)
+			.then((snippet) => {
+				res.status(201).send(snippet)
+			}).catch((err) => {
+				console.log(err);
+				res.status(500).send(err);
+			})
+		})
 		.delete((req,res) => {
 			Snippets.removeSnippetAsync(req.body.snippetId)
-				.then((snippet) => {
-					if (snippet) {
-						res.status(201).send(snippet);
-					} else {
-						res.status(404).send("Snippet not Found");
-					}
-				})
-				.catch((err) => {
-					res.send(500).send(err);
+			.then((snippet) => {
+				if (snippet) {
+					res.status(201).send(snippet);
+				} else {
+					res.status(404).send("Snippet not Found");
+				}
+			}).catch((err) => {
+					console.log(err);
+					res.status(500).send(err);
 				})
 		})
 		.put((req,res) => {
@@ -151,16 +139,16 @@ module.exports = (app, express) => {
 					} else {
 						res.status(404).send("Snippet not Found");
 					}
-				})
-				.catch((err) => {
-					res.send(500).send(err);
+				}).catch((err) => {
+					console.log(err);
+					res.status(500).send(err);
 				})
 		});
 
 	app.route('/api/user/snippets/')
 		.get((req, res) => {
-			var email = jwt.verify(req.headers.token, secret);
-			var filepath = req.path;
+			let email = jwt.verify(req.headers.token, secret);
+			let filepath = req.path;
 			return Snippets.getSnippetByFilepathAsync(email, filepath)
 				.then((results) => {
 			  		if (Array.isArray(results) && results.length > 0) {
@@ -168,26 +156,22 @@ module.exports = (app, express) => {
 					} else {
 						res.status(404).send("Snippets not Found");
 					}
-			  	})
-			  	.catch((err) => {
-			  		res.send(500).send(err);
-			  	})
+		  	}).catch((err) => {
+		  		console.log(err);
+		  		res.status(500).send(err);
+		  	})
 		});
 
 	app.route('/auth/github/failure')
-		.get((req, res) => {
-			res.status(401).send('Unauthorized');
-		});
+		.get((__,res) => res.status(401).send('Unauthorized'));
 
 	app.get('/auth/github', passport.authenticate('github'));
 
 	app.get('/auth/github/callback',
 		passport.authenticate('github', {failureRedirect:'/auth/github/failure'}),(req, res) => {
 			let token = jwt.sign({username: req.user.profile.username}, secret);
-			addReqTokenToRedis(token)
-			.then((replies) => {
-				res.status(201).send(token)
-			})
+			addReqTokenToRedisAsync(token)
+			.then(() => res.status(201).send(token))
 			.catch((err) => {
 				console.log(err);
 				res.status(500).send('Error');
