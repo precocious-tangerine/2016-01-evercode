@@ -1,5 +1,5 @@
 'use strict';
-let R = require('ramda');
+import R from 'ramda';
 
 class Tree {
   constructor(value) {
@@ -20,7 +20,7 @@ class Tree {
     this.parent = null;
   }
   findChild(value) {
-    return R.find(R.equals(value), this.children);
+    return R.find(R.whereEq({value}), this.children);
   }
 }
 let insertIntoTreeRoot = (tree, filePathArrReverse) => {
@@ -40,14 +40,18 @@ let insertIntoTreeRoot = (tree, filePathArrReverse) => {
 }
 
 
-module.exports.convertToTree = function(snippetObj) {
+let convertToTree = function(snippetObj) {
   let keyValues = R.toPairs(snippetObj);
+  console.log(keyValues);
   let filePaths = keyValues.map( (keyValue) => {
-   let folders = keyValue[0].split('/'); 
-   folders[folders.length - 1] = keyValue[1];
-   return R.reverse(folders);
+    let folders = keyValue[0].split('/'); 
+    folders[folders.length - 1] = keyValue[1];
+    return R.reverse(folders);
   });
   let userTree = new Tree(null);
   filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath) );
   return userTree;
 };
+
+export default convertToTree;
+

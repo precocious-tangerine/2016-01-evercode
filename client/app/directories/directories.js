@@ -17,6 +17,7 @@ class DirectoriesCtrl {
     this.data = {};
     this.data.folders = [{ name: 'React' }, { name: 'Angular' }, { name: 'Meteor' }, { name: 'Amber' }, { name: 'Backbone' }];
     this.folder = {};
+    Folders.getTestFileTree();
   }
 
   addFolder() {

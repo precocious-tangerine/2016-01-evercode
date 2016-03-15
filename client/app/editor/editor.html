@@ -2,18 +2,19 @@
 <div>
   <tags data="tags"></tags>
 </div>
-<form name="snippetForm" ng-submit="editor.addSnippet()" novalidate>
+<form name="snippetForm" ng-submit="editor.updateSnippet()" novalidate>
   <div class="form-group">
     <input placeholder="New Snippet" type="text" class='form-control' ng-model='editor.snippet.name' />
   </div>
   <button type="submit" class="waves-effect waves-light btn">Save Snippet</button>
 </form>
 <div ng-model='editor.content' ui-codemirror="{
-                        lineNumbers: true,
-                        theme:'twilight',
-                        lineWrapping : true,
-                        mode: 'xml'
-                      }">
+                      lineNumbers: true,
+                      indentWithTabs: true,
+                      theme:'eclipse',
+                      lineWrapping : true,
+                      mode: 'javascript'
+                    }">
 </div>
 <div>
   Annotations
