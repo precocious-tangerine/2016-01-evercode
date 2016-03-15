@@ -18,7 +18,7 @@ let Snippet = mongoose.model('Snippet', snippetSchema);
 
 Snippet.makeSnippet = (snippetObj, callback) => {
 	Snippet.create(snippetObj)
-	  .then((result)=> callback(null, result));
+	  .then((result)=> callback(null, result))
 	  .catch(callback);
 }
 
@@ -30,7 +30,7 @@ Snippet.getSnippet = (_id, callback) => {
 
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
 	Snippet.findOne({email,filepath})
-		.then(snippetObj => callback(null, snippetObj));
+		.then(snippetObj => callback(null, snippetObj))
 		.catch(callback);
 }
 

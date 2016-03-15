@@ -115,13 +115,8 @@ User.checkCredentials = (email, attempt, callback) => {
 
 User.updateUser = (email, newProps, callback) => {
  newProps._updatedAt = new Date();
- return User.update({email}, newProps, { multi: false }, (err, raw) => {
-      if (raw) {
-          callback(null, raw);
-      } else {
-        callback(err, null);
-      }
-    });
+ return User.update({email}, newProps, { multi: false },
+  (err, raw) => raw ? callback(null, raw) : callback(err, null));
 }
 
 User.removeUser = (email, callback) => {
