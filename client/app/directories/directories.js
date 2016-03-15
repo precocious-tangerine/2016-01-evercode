@@ -33,7 +33,7 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     const { fileTree, selectedFolder } = state;
-    const folders = fileTree.children.map(function(folder) {
+    const folders = !fileTree.children ? null : fileTree.children.map(function(folder) {
       return folder.value;
     })
 

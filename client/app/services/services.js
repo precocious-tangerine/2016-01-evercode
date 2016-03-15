@@ -11,7 +11,7 @@ export class Folders {
       getFileTree() {
         return this.$http({
           method: 'GET',
-          url: '/api/fileTree'
+          url: '/api/user/snippets'
         }).then(res => {
           dispatch(setFileTree(res.data.tree));
         })
@@ -20,7 +20,7 @@ export class Folders {
       addFolder(folder) {
         return this.$http({
           method: 'POST',
-          url: '/folders',
+          url: '/api/folders',
           data: folder
         }).then(res => {
           this.getFileTree();
@@ -29,8 +29,8 @@ export class Folders {
 
       removeFolder(folder) {
         return this.$http({
-          method: 'POST',
-          url: '/folders/remove',
+          method: 'DELETE',
+          url: '/api/folders',
           data: folder
         }).then(res => {
           this.getFileTree();
@@ -41,34 +41,42 @@ export class Folders {
 }
 
 export class Snippets {
-  constructor($http, ngRedux) {
+  constructor($http, $ngRedux) {
     this.$http = $http;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
 
   mapDispatchToThis(dispatch) {
     return {
+
+      getSnippet(snippetId) {
+        return this.$http({
+          method: 'GET',
+          url: '/api/snippets?snippetId=' + snippetId
+        });
+      },
+
       addSnippet(snippet) {
         return this.$http({
           method: 'POST',
-          url: '/snippets',
+          url: '/api/snippets',
           data: snippet
         });
       },
 
-      updateSnippet(name, value) {
+      updateSnippet(snippetId, value) {
         return this.$http({
           method: 'PUT',
-          url: '/snippets',
-          data: { name, value }
+          url: '/api/snippets',
+          data: { snippetId, value }
         });
       },
 
-      removeSnippet(snippet) {
+      removeSnippet(snippetId) {
         return this.$http({
-          method: 'POST',
-          url: '/snippets/remove',
-          data: snippet
+          method: 'DELETE',
+          url: '/api/snippets',
+          data: { snippetId }
         });
       }
     }
