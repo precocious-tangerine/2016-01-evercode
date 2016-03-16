@@ -12,9 +12,10 @@ export const snippets = (url) => {
 
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders) {
-    $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
+    $ngRedux.connect(this.mapStateToThis)(this);
     this.Folders = Folders;
     this.Snippets = Snippets;
+    Folders.testSelectedFolder();
   }
   copySnippet(snippet) {
     this.Snippets.getSnippet({ snippetId: snippet._id });
@@ -30,29 +31,30 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
-    // let visibleFolders = [],
-    //   visibleSnippets = [];
-    // let filePath = '',
-    //   folderName = '';
-    // if (state.selectedFolder.value) {
-    //   state.selectedFolder.children.forEach(child => {
-    //     if (typeof child.value === 'string') {
-    //       visibleFolders.push(child);
-    //     } else if (child.value.name !== '.config') {
-    //       visibleSnippets.push(child);
-    //     }
-    //   });
-    //   filePath = state.selectedFolder.filePath;
-    //   folderName = state.selectedFolder.value;
-    // } else {
-    //   filePath = '';
-    //   folderName = 'No Folder Selected';
-    // }
+    let {selectedFolder, snippetMap} = state;
+    let visibleFolders = [], visibleSnippets = [];
+    let filePath = '', folderName = '';
+    let selectedFolderObj = snippetMap[selectedFolder];
+    if (selectedFolderObj) {
+      selectedFolderObj.children.forEach(childKey => {
+        let child = snippetMap[childKey];
+        if (typeof child === 'string') {
+          visibleFolders.push(child);
+        } else if (child.value.name !== '.config') {
+          visibleSnippets.push(child);
+        }
+      });
+      filePath = selectedFolder
+      folderName = selectedFolderObj.value;
+    } else {
+      filePath = '';
+      folderName = 'No Folder Selected';
+    }
     return {
-      // visibleSnippets,
-      // visibleFolders,
-      // filePath,
-      // folderName
+      visibleSnippets,
+      visibleFolders,
+      filePath,
+      folderName
     };
   }
 
