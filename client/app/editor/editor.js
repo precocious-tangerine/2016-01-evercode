@@ -22,8 +22,13 @@ class EditorCtrl {
       lineWrapping: true,
       mode: 'javascript'
     };
-    this.tags = ['angular', 'directives', 'javascript'];
+    this.tag;
     this.content = this.content || 'hello world';
+    this.addTag = true;
+  }
+
+  toggleTag() {
+    this.addTag = !this.addTag
   }
 
   addSnippet() {

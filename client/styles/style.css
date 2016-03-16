@@ -10,17 +10,20 @@
 
 .main {
   position: relative;
-  /*width: 140px;*/
-  height: 100vh;
+  width: 15vw;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
+.folders {
+  padding: 5px;
+  font-size: 1.5em;
+}
+
 .snippets {
   position: relative;
   width: 200px;
-  height: 100vh;
   left: 0;
   right: 0;
   bottom: 0;
@@ -62,11 +65,15 @@
   clear: both;
 }
 
+.tags input {
+  max-width: 100px;
+}
+
+.toggle-tag {
+  display: none;
+}
+
 .tag {
   margin-left: 10px
   float: left;
-}
-
-.add-tag {
-  display: none;
 }
