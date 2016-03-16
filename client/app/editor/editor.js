@@ -28,6 +28,10 @@ class EditorCtrl {
     this.showAnnotation = true;
   }
 
+  toggleFolderFile() {
+    $('.fixed-action-btn').openFAB();
+  }
+
   toggleTag() {
     console.log('toggleTag', this.addTag);
     this.addTag = !this.addTag
