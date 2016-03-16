@@ -54,7 +54,8 @@ class SnippetsCtrl {
       visibleSnippets,
       visibleFolders,
       filePath,
-      folderName
+      folderName,
+      selectedFolder
     };
   }
 
