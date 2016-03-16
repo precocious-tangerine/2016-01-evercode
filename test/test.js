@@ -142,22 +142,25 @@ describe('the User Model - updateUser', function () {
   };
 
   before(function(done) {
-    User.create(testUser)
+    var testUpdateUser = function () {
+      User.create(testUser)
       .then(function(returnedUser) {
         testUser = returnedUser;
         User.updateUser(testUser.email, userUpdates ,function(err, result) {
           updateResult = result;
-            User.find({_id: testUser._id}, function(err, returnedUser) {
-              testUser = returnedUser;
-              returneduser.remove();
-              done();
-            })
+          User.findOne({_id: testUser._id}, function(err, returnedUser) {
+            tempUser = returnedUser;
+            done();
+          })
         });
       })
       .catch(function(err){
         console.log(err);
         done()
       }) 
+    }
+
+    removeTestUser(testUpdateUser);
     
   });
   
@@ -165,29 +168,32 @@ describe('the User Model - updateUser', function () {
     expect(updateResult).to.be.an('object');
   });
 
-  it('should update the document in the database', function() {
+  it('should report updating the document from the database', function() {
     expect(updateResult).to.have.property('n')
       .that.equals(1);
   });
   
-  it('should have a hashed _password property ', function () {
-    expect(tempUser).to.have.property('_password')
+  it('should update properties', function () {
+    expect(tempUser).to.have.property('bio')
       .that.is.a('string')
-      .and.not.equal('just testing');
+      .and.equal('I am a test');
   });
 });
 
 describe('the User Model - removeUser', function () {
+
+  var tempUser;
+  var deleteResult;
   before(function(done) {
     var testUser = {
       email: 'test@chai.com',
       _password: 'just testing'
     };
-    var deleteResult;
 
-    User.create(testUser)
+    var testRemoveUser = function () {
+      User.create(testUser)
       .then(function(returnedUser){
-        testUser = returnedUser;
+        tempUser = returnedUser;
         User.removeUser(testUser._id ,function(err, result) {
           deleteResult = result;
           done();
@@ -196,20 +202,26 @@ describe('the User Model - removeUser', function () {
       .catch(function(err){
         console.log(err);
         done()
-      }) 
+      })
+    }
+
+    removeTestUser(testRemoveUser);
+
   });
   
   it('should return a results object', function() {
-    expect(deleteResult).to.be.an('object');
+    expect(deleteResult).to.be.an('object')
+      .that.has.property('ok');
   });
 
   it('should report removal from the database', function() {
-    expect(updateResult).to.have.property('n')
+    expect(deleteResult).to.have.property('n')
       .that.equals(1);
   });
   
   it('should not be able to find the test user', function (done) {
-    User.find({_id: testUser._id}, function(err, result){
+    User.findOne({_id: tempUser._id}, function(err, result){
+      console.log("finding test user after delete", err,result)
       expect(result).to.be.null;
       done();
       if (result) {
