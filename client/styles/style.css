@@ -10,8 +10,8 @@
 
 .main {
   position: relative;
-  width: 140px;
-  height: 100%;
+  /*width: 140px;*/
+  height: 100vh;
   left: 0;
   right: 0;
   bottom: 0;
@@ -20,7 +20,7 @@
 .snippets {
   position: relative;
   width: 200px;
-  height: 100%;
+  height: 100vh;
   left: 0;
   right: 0;
   bottom: 0;
@@ -34,6 +34,38 @@
   bottom: 0;
 }
 
+.editor form {
+  display: block;
+}
+
 .editor input {
-  width: 150px;
+  width: auto;
+  font-size: 3em;
+  float: left;
+}
+
+.CodeMirror {
+  border: 2px solid #eee;
+  margin-top: 10px;
+  height: 70vh;
+}
+
+.annotations {
+  border-left: 2px solid grey;
+  min-height: 70vh;
+}
+
+.annotations > textarea {
+  height: 60vh;
+}
+
+.tags {
+  clear: both;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.add-tag {
+  display: none;
 }

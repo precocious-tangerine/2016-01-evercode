@@ -1,21 +1,29 @@
-<h3>Editor View</h3>
-<div>
-  <tags data="tags"></tags>
-</div>
+<nav>
+  <div class="nav-wrapper">
+    <div class="col s12">
+      <a href="#!" class="breadcrumb">First</a>
+      <a href="#!" class="breadcrumb">Second</a>
+      <a href="#!" class="breadcrumb">Third</a>
+    </div>
+  </div>
+</nav>
+
 <form name="snippetForm" ng-submit="editor.updateSnippet()" novalidate>
   <div class="form-group">
-    <input placeholder="New Snippet" type="text" class='form-control' ng-model='editor.snippet.name' />
+    <input placeholder="Name Your Snippet" type="text" class='form-control snippet-title' ng-model='editor.snippet.name' />
   </div>
-  <button type="submit" class="waves-effect waves-light btn">Save Snippet</button>
+  <button type="submit" class="waves-effect waves-light btn save-snippet">Save Snippet</button>
 </form>
-<div ng-model='editor.content' ui-codemirror="{
-                      lineNumbers: true,
-                      indentWithTabs: true,
-                      theme:'eclipse',
-                      lineWrapping : true,
-                      mode: 'javascript'
-                    }">
+<div class='tags'>
+  <span>TAGS: </span><span style="margin-left: 10px" class='chip' ng-repeat="tag in editor.tags">{{ tag }}</span>
+  <span style="margin-left: 10px" class='chip'>+</span>
+  <span><input placeholder="Add tag" type="text" class='add-tag' ng-model='editor.snippet.tag'/></span>
 </div>
-<div>
-  Annotations
+<div class="col s9 code-mirror" ng-model='editor.content' ui-codemirror='editor.editorOptions'>
+</div>
+<div class="col s3 annotations">
+  <h5>Annotations</h5>
+  <hr>
+  <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippet.annotation' />
+
 </div>

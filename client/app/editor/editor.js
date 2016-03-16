@@ -15,11 +15,11 @@ class EditorCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.snippet = {};
     this.editorOptions = {
-      lineWrapping: true,
       lineNumbers: true,
-      readOnly: 'nocursor',
-      mode: 'xml',
-      value: 'hello'
+      indentWithTabs: true,
+      theme:'eclipse',
+      lineWrapping : true,
+      mode: 'javascript'
     };
     this.tags = ['angular', 'directives', 'javascript'];
     this.Snippets = Snippets;
@@ -28,7 +28,6 @@ class EditorCtrl {
   addSnippet() {
     this.Snippets.addSnippet({ name: this.snippet.name, content: this.content })
     this.snippet.name = '';
-    this.content = '';
   };
 
   updateSnippet() {
