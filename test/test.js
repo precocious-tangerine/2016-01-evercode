@@ -4,7 +4,7 @@ require('babel-polyfill');
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
-mongoose.connect('mongodb://127.0.0.1/everCode');
+mongoose.connect('mongodb://127.0.0.1/everCodeTest');
 
 //////////////////////////////////////////////////////////
 //                   User Model                         //
@@ -34,23 +34,28 @@ describe('the User Model - basics', function () {
 });
 
 describe('the User Model - makeUser', function () {
-  var testUser = {
-    email: 'test@chai.com',
-    _password: 'just testing'
-  };
   var tempUser;
   before(function(done) {
-    User.find({email: 'test@chai.com'}, function(err, result) {
-      if (typeof result === 'object') {
-        result.remove();
+    var testUser = {
+      email: 'test@chai.com',
+      _password: 'just testing'
+    };
+
+    User.findOne({email: 'test@chai.com'}, function(err, result) {
+      if (result) {
+        result.remove(testMakeUser);
+      } else {
+        testMakeUser();
       }
     });
 
-    User.makeUser(testUser, function(err, returnedUser) {
-      tempUser = returnedUser;
-      returnedUser.remove();
-      done();
-    });
+    var testMakeUser = function() {
+      User.makeUser(testUser, function(err, returnedUser) {
+        tempUser = returnedUser;
+        returnedUser.remove();
+        done();
+      });
+    }
   });
   
   it('should return an object', function() {
@@ -65,8 +70,8 @@ describe('the User Model - makeUser', function () {
     expect(tempUser).to.have.property('email', 'test@chai.com')
       .that.is.a('string');
   });
-  it('should not have an _password property ', function () {
-    expect(tempUser).to.not.have.property('_password')
+  it('should have a hashed _password property ', function () {
+    expect(tempUser).to.have.property('_password')
       .that.is.a('string')
       .and.not.equal('just testing');
   });
@@ -74,21 +79,21 @@ describe('the User Model - makeUser', function () {
 
 describe('the User Model - getUser', function () {
 
-  before(function(done) {
-  var testUser = {
-    email: 'test@chai.com',
-    _password: 'just testing'
-  };
   var tempUser;
+  before(function(done) {
+    var testUser = {
+      email: 'test@chai.com',
+      _password: 'just testing'
+    };
 
-  User.find({email: 'test@chai.com'}, function(err, result) {
-    if (typeof result === 'object') {
-      result.remove();
-    }
-  });
+    User.find({email: 'test@chai.com'}, function(err, result) {
+      if (result.errmsg) {
+        result.remove();
+      }
+    });
 
     User.makeUser(testUser, function(err, returnedUser) {
-      tempUser = returnedUser;
+      testUser = returnedUser;
       returnedUser.remove();
       done();
     });
@@ -118,20 +123,30 @@ describe('the User Model - getUser', function () {
 
 describe('the User Model - updateUser', function () {
 
+  var tempUser;
   var updateResult;
   var userUpdates = {
     bio: 'I am a test',
   }
 
   before(function(done) {
-    User.updateUser(testUser._id, userUpdates ,function(err, result) {
-      updateResult = result;
-        User.find({_id: testUser._id}, function(err, returnedUser) {
-          testUser = returnedUser;
-          returneduser.remove();
-          done();
-        })
-    });
+    User.create(testUser)
+      .then(function(returnedUser) {
+        testUser = returnedUser;
+        User.updateUser(testUser._id, userUpdates ,function(err, result) {
+          updateResult = result;
+            User.find({_id: testUser._id}, function(err, returnedUser) {
+              testUser = returnedUser;
+              returneduser.remove();
+              done();
+            })
+        });
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      }) 
+    
   });
   
   it('should return a results object', function() {
