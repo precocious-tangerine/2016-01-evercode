@@ -34,11 +34,7 @@
   bottom: 0;
 }
 
-.editor form {
-  display: block;
-}
-
-.editor input {
+.snippet-title input {
   width: auto;
   font-size: 3em;
   float: left;
@@ -60,10 +56,15 @@
 }
 
 .tags {
-  clear: both;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 10px;
+  clear: both;
+}
+
+.tag {
+  margin-left: 10px
+  float: left;
 }
 
 .add-tag {
