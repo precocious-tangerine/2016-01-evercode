@@ -4,11 +4,24 @@ export const setSnippetMap = (snippetMap) => {
     snippetMap
   };
 }
+export const addSnippetMap = (filePath, snippetMapNode) => {
+  return {
+    type: 'ADD_SNIPPET_MAP',
+    snippetMapNode,
+    filePath
+  };
+}
+export const removeSnippetMap = (filePath) => {
+  return {
+    type: 'REMOVE_SNIPPET_MAP',
+    filePath
+  };
+}
 //Handling which snippet is currently selected
-export const setSelectedSnippet = (snippet) => {
+export const setSelectedSnippet = (snippetPath) => {
   return {
     type: 'SET_SELECTED_SNIPPET',
-    file
+    snippetPath
   };
 };
 export const removeSelectedSnippet = () => {
@@ -19,10 +32,10 @@ export const removeSelectedSnippet = () => {
 
 
 //Handling which folder is currently selected
-export const setSselectedFolder = (folder) => {
+export const setSselectedFolder = (folderPath) => {
   return {
     type: 'SET_SELECTED_FOLDER',
-    folder
+    folderPath
   };
 };
 export const removeSelectedFolder = () => {
@@ -32,19 +45,19 @@ export const removeSelectedFolder = () => {
 };
 
 
-//Handling adding/removing snippets to main file tree
-export const addSnippetToFileTree = (snippet) => {
-  return {
-    type: 'ADD_NEW_SNIPPET',
-    snippet
-  };
-};
-export const removeSnippetFileTree = (snippet) => {
-  return {
-    type: 'REMOVE_SNIPPET',
-    snippet
-  };
-};
+// //Handling adding/removing snippets to main file tree
+// export const addSnippetToFileTree = (snippet) => {
+//   return {
+//     type: 'ADD_NEW_SNIPPET',
+//     snippet
+//   };
+// };
+// export const removeSnippetFileTree = (snippet) => {
+//   return {
+//     type: 'REMOVE_SNIPPET',
+//     snippet
+//   };
+// };
 
 // export const addFolderToFileTree = (folder) => {
 // 	return {
@@ -60,9 +73,9 @@ export const removeSnippetFileTree = (snippet) => {
 // };
 
 //Set file tree snippet
-export const setFileTree = (fileTree) => {
-  return {
-    type: 'SET_FILE_TREE',
-    fileTree
-  };
-};
+// export const setFileTree = (fileTree) => {
+//   return {
+//     type: 'SET_FILE_TREE',
+//     fileTree
+//   };
+// };

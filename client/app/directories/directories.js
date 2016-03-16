@@ -32,15 +32,15 @@ class DirectoriesCtrl {
   }
 
   mapStateToThis(state) {
-    const { fileTree, selectedFolder, snippetMap } = state;
-    const folders = !fileTree.children ? null : fileTree.children.filter(folder => (folder.children.length > 0));
-    const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
+    window.statePeek = state;
+    const {selectedFolder, snippetMap } = state;
+    // const folders = !fileTree.children ? null : fileTree.children.filter(folder => (folder.children.length > 0));
+    // const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
     return {
-      fileTree,
       selectedFolder,
-      folders,
-      snippetMap,
-      snippetArr
+      //folders,
+      snippetMap
+      //snippetArr
      
     };
   }

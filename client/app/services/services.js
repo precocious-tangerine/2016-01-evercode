@@ -15,8 +15,18 @@ export class Folders {
           method: 'GET',
           url: '/api/user/snippets'
         }).then(res => {
-          dispatch(Actions.setSnippetMap(res.data));
-          dispatch(Actions.setFileTree(convertToTree(res.data)));
+          var snippetMap = {};
+          convertToTree(res.data, (treeNode) => {
+            let {value, filePath} = treeNode
+            let children = treeNode.children.map((child) => child.filePath);
+            let parent = tree.parent ? tree.parent.filePath : null;
+            snippetMap[filePath] = {value, filePath, children, parent}; 
+          });
+
+          Actions.setSnippetMap(snippetMap);
+
+          //dispatch(Actions.setSnippetMap(res.data));
+
         })
       },
 
@@ -25,8 +35,18 @@ export class Folders {
           method: 'GET',
           url: 'api/test-folder-tree'
         }).then(res => {
-          dispatch(Actions.setSnippetMap(res.data));
-          dispatch(Actions.setFileTree(convertToTree(res.data)));
+          var snippetMap = {};
+          convertToTree(res.data, (treeNode) => {
+            let {value, filePath} = treeNode
+            let children = treeNode.children.map((child) => child.filePath);
+            let parent = treeNode.parent ? treeNode.parent.filePath : null;
+            snippetMap[filePath] = {value, filePath, children, parent}; 
+          });
+          Actions.setSnippetMap(snippetMap);
+
+
+          // dispatch(Actions.setSnippetMap(res.data));
+          // dispatch(Actions.setFileTree(convertToTree(res.data)));
         })
       },
 

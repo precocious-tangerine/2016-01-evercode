@@ -24,7 +24,10 @@ class Tree {
     return R.find(R.whereEq({value}), this.children);
   }
 }
-let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr) => {
+let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
+  if(callback === undefined) {
+    callback = () => {};
+  }
   if(filePathArrReverse.length !== 0) {
     let currValue = filePathArrReverse.pop();
     let nextValue = filePathArrReverse[filePathArrReverse.length -1];
@@ -36,12 +39,13 @@ let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr) => {
       tree.children.push(childNode);
       childNode.parent = tree;
     }
-    insertIntoTreeRoot(childNode, filePathArrReverse, tree.filePath);
+    callback(tree);
+    insertIntoTreeRoot(childNode, filePathArrReverse, tree.filePath, callback);
   }
 }
 
 
-let convertToTree = function(snippetObj) {
+let convertToTree = function(snippetObj, callback) {
   let keyValues = R.toPairs(snippetObj);
   let filePaths = keyValues.map( (keyValue) => {
     let folders = keyValue[0].split('/'); 
@@ -49,7 +53,7 @@ let convertToTree = function(snippetObj) {
     return R.reverse(folders);
   });
   let userTree = new Tree(null);
-  filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath, '') );
+  filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath, '', callback) );
   return userTree;
 };
 
