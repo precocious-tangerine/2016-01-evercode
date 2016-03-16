@@ -16,6 +16,10 @@
   bottom: 0;
 }
 
+.search-results {
+  z-index: 2;
+}
+
 .folders {
   padding: 5px;
   font-size: 1.5em;
@@ -82,9 +86,9 @@
   float: left;
 }
 
-.add-button {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
+.folder-name {
+  margin-left: 5px;
 }
+
+
 
