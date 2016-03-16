@@ -13,7 +13,7 @@ export const directories = () => {
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    Folders.getTestFileTree();
+    Folders.getFileTree();
     this.Folders = Folders;
     this.folder = {};
     // window.snippetArr = this.snippetArr;

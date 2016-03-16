@@ -21,7 +21,6 @@ export const removeSnippetMap = (filePath) => {
 export const setSelectedSnippet = (snippetPath) => {
   return {
     type: 'SET_SELECTED_SNIPPET',
-    snippetPath
   };
 };
 export const removeSelectedSnippet = () => {

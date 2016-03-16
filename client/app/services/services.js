@@ -27,7 +27,6 @@ export class Folders {
           dispatch(Actions.setSnippetMap(snippetMap));
 
           //dispatch(Actions.setSnippetMap(res.data));
-
         })
       },
 
@@ -107,7 +106,7 @@ export class Snippets {
       getSnippet(snippetId) {
         return this.$http({
           method: 'GET',
-          url: '/api/snippets?snippetId=' + snippetId
+          url: '/api/snippets?_id=' + snippetId
         });
       },
 
@@ -174,7 +173,6 @@ export class Auth {
             url: '/signin',
             data: user
           }).then(token => {
-            console.log(token);
             this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })
@@ -190,7 +188,6 @@ export class Auth {
             url: '/signup',
             data: user
           }).then(token => {
-            console.log(token);
             this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })

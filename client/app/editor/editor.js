@@ -39,11 +39,11 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    this.Snippets.addSnippet({ name: this.snippet.name, content: this.content, filePath: this.filePath })
+    console.log('path', this.path);
+    this.Snippets.addSnippet({ name: this.snippet.name, data: this.content, filePath: this.path+'/'+name })
   };
 
   updateSnippet() {
-    console.log('updateSnippet', this)
     this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
   }
 

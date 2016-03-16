@@ -105,8 +105,8 @@ module.exports = (app, express) => {
         })
     })
     .post((req, res) => {
-      let email = jwt.verify(req.headers.token, secret);
-      req.body.createdby = email;
+      let email = jwt.verify(req.headers['x-access-token'], secret).email;
+      req.body.createdBy = email;
       Snippets.makeSnippetAsync(req.body)
         .then((snippet) => {
           res.status(201).send(snippet)
@@ -145,16 +145,14 @@ module.exports = (app, express) => {
   app.route('/api/user/snippets/')
     .get((req, res) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
-      let filepath = req.body.path;
-      return Snippets.getSnippetByFilepathAsync(email, filepath)
-        .then((dbSnippets) => {
-          console.log(dbSnippets);
-            if (Array.isArray(dbSnippets) && dbSnippets.length > 0) {
-            var fileTreeList = {};
-            dbSnippets.forEach((node) => {
-              fileTreeList[node.filePath] = node;
+      return Snippets.getSnippetsByUserAsync(email)
+        .then((results) => {
+          if (Array.isArray(results) && results.length > 0) {
+            var fileTreeObj = {};
+            results.forEach((node) => {
+              fileTreeObj[node.filePath] = node;
             });
-            res.status(200).send(fileTreeList);
+            res.status(200).send(fileTreeObj);
           } else {
             res.status(404).send("Snippets not Found");
           }
@@ -167,7 +165,7 @@ module.exports = (app, express) => {
   app.route('/api/folders/')
     .post((req, res) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
-      let path = `email/${req.body.folder}`;
+      let path = `${email}/${req.body.folder}`;
       Snippets.makeSubFolderAsync(email, path)
         .then((folder) => {
           res.status(201).send(folder)

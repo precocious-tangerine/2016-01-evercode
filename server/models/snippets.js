@@ -36,11 +36,11 @@ Snippet.removeSnippet = (_id, callback) => {
   Snippet.findOne({_id: mongoose.Types.ObjectId(_id) }).remove(callback);
 }
 
-Snippet.getSnippetByFilepath = (email, filepath, callback) => {
-  Snippet.findOne({ email, filepath })
-    .then(snippetObj => callback(null, snippetObj))
-    .catch(callback);
-}
+// Snippet.getSnippetByFilepath = (email, filepath, callback) => {
+//   Snippet.findOne({ email, filepath })
+//     .then(snippetObj => callback(null, snippetObj))
+//     .catch(callback);
+// }
 
 Snippet.getSnippetsByUser = (email, callback) => {
   Snippet.find({ createdBy: email })
@@ -54,27 +54,27 @@ Snippet.getSnippetsByUser = (email, callback) => {
     .catch(callback);
 }
 
-Snippet.getSnippetInfoByUser = (email, callback) => {
-  Snippet.find({ createdBy: email }, '-data')
-    .then((foundSnippets) => {
-      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
-        callback(null, foundSnippets);
-      } else {
-        callback(new Error('you have no files'), null);
-      }
-    }).catch(callback);
-}
+// Snippet.getSnippetInfoByUser = (email, callback) => {
+//   Snippet.find({ createdBy: email }, '-data')
+//     .then((foundSnippets) => {
+//       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+//         callback(null, foundSnippets);
+//       } else {
+//         callback(new Error('you have no files'), null);
+//       }
+//     }).catch(callback);
+// }
 
-Snippet.getSnippetInfoByFolder = (email, folder, callback) => {
-  Snippet.find({ email, filePath: folder + /.+/igm }, '-data')
-    .then((foundSnippets) => {
-      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
-        callback(null, foundSnippets);
-      } else {
-        callback(new Error('password invalid'), null);
-      }
-    }).catch(callback);
-}
+// Snippet.getSnippetInfoByFolder = (email, folder, callback) => {
+//   Snippet.find({ email, filePath: folder + /.+/igm }, '-data')
+//     .then((foundSnippets) => {
+//       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+//         callback(null, foundSnippets);
+//       } else {
+//         callback(new Error('password invalid'), null);
+//       }
+//     }).catch(callback);
+// }
 
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
   Snippet.find({ email, filePath: folder + /.+/igm })
