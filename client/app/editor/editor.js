@@ -13,32 +13,34 @@ export const editor = () => {
 class EditorCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.Snippets = Snippets;
     this.snippet = {};
     this.editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
-      theme:'eclipse',
-      lineWrapping : true,
+      theme: 'eclipse',
+      lineWrapping: true,
       mode: 'javascript'
     };
     this.tags = ['angular', 'directives', 'javascript'];
-    this.Snippets = Snippets;
+    this.content = this.content || 'hello world';
   }
 
   addSnippet() {
-    this.Snippets.addSnippet({ name: this.snippet.name, content: this.content })
-    this.snippet.name = '';
+    this.Snippets.addSnippet({ name: this.snippet.name, content: this.content, filePath: this.filePath })
   };
 
   updateSnippet() {
     console.log('updateSnippet', this)
-    this.Snippets.updateSnippet(this.selectedSnippet._id, this.content);
+    this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
   }
 
   mapStateToThis(state) {
+    const path = state.selectedFolder.filePath;
     const { selectedSnippet } = state;
     const content = selectedSnippet.data;
     return {
+      path,
       selectedSnippet,
       content
     };

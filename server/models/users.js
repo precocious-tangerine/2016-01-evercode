@@ -6,14 +6,14 @@ let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let Snippets = Promise.promisifyAll(require('./snippets.js'));
 
 let userSchema = mongoose.Schema({
-  _password: {type: String},
-  _createdAt: {type: Date, default: new Date()},
-  _updatedAt: {type: Date, default: new Date()},
-  login: { type: String},
-  id: { type: Number},
+  _password: { type: String },
+  _createdAt: { type: Date, default: new Date() },
+  _updatedAt: { type: Date, default: new Date() },
+  login: { type: String },
+  id: { type: Number },
   avatar_url: { type: String },
   gravatar_id: { type: String },
-  url: { type: String},
+  url: { type: String },
   html_url: { type: String },
   followers_url: { type: Number },
   following_url: { type: Number },
@@ -30,7 +30,7 @@ let userSchema = mongoose.Schema({
   company: { type: String },
   blog: { type: String },
   location: { type: String },
-  email: { type: String, required: true, unique: true, dropDups: true},
+  email: { type: String, required: true, unique: true, dropDups: true },
   hireable: { type: Boolean },
   bio: { type: String },
   public_repos: { type: Number },
@@ -44,7 +44,7 @@ let userSchema = mongoose.Schema({
   private_gists: { type: Number },
   disk_usage: { type: Number },
   collaborators: { type: String },
-  plan:{
+  plan: {
     name: { type: String },
     space: { type: String },
     private_repos: { type: Number },
@@ -53,14 +53,14 @@ let userSchema = mongoose.Schema({
   snippets: { type: mongoose.Schema.Types.Mixed },
 });
 
-let User = mongoose.model('User',userSchema);
+let User = mongoose.model('User', userSchema);
 
 User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
   // email based login
-  if (typeof pw === 'string' && pw !== ''){
+  if (typeof pw === 'string' && pw !== '') {
     return bcrypt.genSaltAsync(13)
-      .then((salt) => bcrypt.hashAsync(pw, salt)) 
+      .then((salt) => bcrypt.hashAsync(pw, salt))
       .then((hash) => {
         userObj._password = hash;
         return Snippets.makeRootFolderAsync(userObj.email);
@@ -73,7 +73,7 @@ User.makeUser = (userObj, callback) => {
       .then(result => callback(null, result))
       .catch(callback);
   } else if (typeof userObj.id === 'number') {
-  // OAuth based login (no supplied password)
+    // OAuth based login (no supplied password)
     return User.create(userObj)
       .then(result => callback(null, result))
       .catch(callback);
@@ -83,7 +83,7 @@ User.makeUser = (userObj, callback) => {
 }
 
 User.getUser = (email, callback) => {
-  return User.findOne({email: email})
+  return User.findOne({ email: email })
     .then((userObj) => {
       userObj = userObj.toObject();
       callback(null, userObj);
@@ -92,21 +92,21 @@ User.getUser = (email, callback) => {
 }
 
 User.checkCredentials = (email, attempt, callback) => {
-// TODO password verification
+  // TODO password verification
   let userData = {};
-  return User.findOne({email: email})
+  return User.findOne({ email: email })
     .then((foundUser) => {
       if (foundUser) {
         userData = foundUser.toObject();
-        return bcrypt.compareAsync(attempt,foundUser._password)
-        .then((success) => {
-          if (success){
-            delete userData._password;
-            callback(null, userData);
-          } else {
-            callback(new Error("Incorrect Password"), null);
-          }
-        }).catch(callback);
+        return bcrypt.compareAsync(attempt, foundUser._password)
+          .then((success) => {
+            if (success) {
+              delete userData._password;
+              callback(null, userData);
+            } else {
+              callback(new Error("Incorrect Password"), null);
+            }
+          }).catch(callback);
       } else {
         callback(new Error("Email not found"), null);
       }
@@ -114,12 +114,12 @@ User.checkCredentials = (email, attempt, callback) => {
 }
 
 User.updateUser = (email, newProps, callback) => {
- newProps._updatedAt = new Date();
- User.update({email}, newProps, { multi: false }, callback);
+  newProps._updatedAt = new Date();
+  User.update({ email }, newProps, { multi: false }, callback);
 }
 
 User.removeUser = (email, callback) => {
-  User.findOne({email}).remove(callback);
+  User.findOne({ email }).remove(callback);
 }
 
 module.exports = User;
