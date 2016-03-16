@@ -26,6 +26,15 @@ Snippet.getSnippet = (_id, callback) => {
     .catch(callback);
 }
 
+Snippet.updateSnippet = (_id, newProps, callback) => {
+  newProps._updatedAt = new Date();
+  Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
+}
+
+Snippet.removeSnippet = (_id, callback) => {
+  Snippet.findOne({_id: mongoose.Types.ObjectId(_id) }).remove(callback);
+}
+
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
   Snippet.findOne({ email, filepath })
     .then(snippetObj => callback(null, snippetObj))
@@ -75,15 +84,6 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
         callback(new Error('password invalid'), null);
       }
     }).catch(callback);
-}
-
-Snippet.updateSnippet = (_id, newProps, callback) => {
-  newProps._updatedAt = new Date();
-  Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
-}
-
-Snippet.removeSnippet = (_id, callback) => {
-  Snippet.findOne({_id: mongoose.Types.ObjectId(_id) }).remove(callback);
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
