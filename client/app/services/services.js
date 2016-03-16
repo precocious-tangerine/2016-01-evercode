@@ -23,7 +23,7 @@ export class Folders {
             snippetMap[filePath] = {value, filePath, children, parent}; 
           });
 
-          Actions.setSnippetMap(snippetMap);
+          dispatch(Actions.setSnippetMap(snippetMap));
 
           //dispatch(Actions.setSnippetMap(res.data));
 
@@ -42,12 +42,15 @@ export class Folders {
             let parent = treeNode.parent ? treeNode.parent.filePath : null;
             snippetMap[filePath] = {value, filePath, children, parent}; 
           });
-          Actions.setSnippetMap(snippetMap);
+          dispatch(Actions.setSnippetMap(snippetMap));
 
 
           // dispatch(Actions.setSnippetMap(res.data));
           // dispatch(Actions.setFileTree(convertToTree(res.data)));
         })
+      },
+      testSelectedFolder() {
+        dispatch(Actions.setSselectedFolder('/testuser/folder1'));
       },
 
       addFolder(folder) {
