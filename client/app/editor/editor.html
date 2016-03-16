@@ -16,7 +16,8 @@
 </div>
 <div class="col m9 s12 code-mirror" ng-model='editor.content' ui-codemirror='editor.editorOptions'>
 </div>
-<div class="col m3 s12 annotations">
+<span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleAnnotation()"><i class="material-icons">add</i></span>
+<div ng-class="editor.showAnnotation ? 'toggle-annotation' : 'col m3 s12 annotations'">
   <h5>Annotations</h5>
   <hr>
   <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippet.annotation' />

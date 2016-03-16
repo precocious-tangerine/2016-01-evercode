@@ -25,10 +25,17 @@ class EditorCtrl {
     this.tag;
     this.content = this.content || 'hello world';
     this.addTag = true;
+    this.showAnnotation = true;
   }
 
   toggleTag() {
+    console.log('toggleTag', this.addTag);
     this.addTag = !this.addTag
+  }
+
+  toggleAnnotation() {
+    console.log('toggleAnnotation', this.showAnnotation);
+    this.showAnnotation = !this.showAnnotation;
   }
 
   addSnippet() {

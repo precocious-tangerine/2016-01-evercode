@@ -73,6 +73,10 @@
   display: none;
 }
 
+.toggle-annotation {
+  display: none;
+}
+
 .tag {
   margin-left: 10px
   float: left;
