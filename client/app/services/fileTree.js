@@ -29,14 +29,14 @@ let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr) => {
     let currValue = filePathArrReverse.pop();
     let nextValue = filePathArrReverse[filePathArrReverse.length -1];
     tree.value = tree.value ? tree.value : currValue;
+    tree.filePath = filePathAttr + '/' + (tree.value.name || tree.value);
     let childNode = tree.findChild(nextValue);
-    let newFilePath = filePathAttr + tree.value + '/';
     if(childNode === undefined && typeof tree.value === 'string') {
-      childNode = new Tree(null, newFilePath);
+      childNode = new Tree(null);
       tree.children.push(childNode);
       childNode.parent = tree;
     }
-    insertIntoTreeRoot(childNode, filePathArrReverse, newFilePath);
+    insertIntoTreeRoot(childNode, filePathArrReverse, tree.filePath);
   }
 }
 
