@@ -11,6 +11,17 @@ mongoose.connect('mongodb://127.0.0.1/everCodeTest');
 //////////////////////////////////////////////////////////
 var User = require('../server/models/users');
 
+var removeTestUser = function(callback){
+  User.findOne({email: 'test@chai.com'}, function(err, result) {
+    console.log("removeTestUser", err, result)
+    if (result) {
+      result.remove(callback);
+    } else {
+      callback();
+    }
+  });
+}
+
 describe('the User Model - basics', function () {
   it('should have makeUser function', function () {
     expect(User.makeUser).to.be.a('function');
@@ -41,21 +52,15 @@ describe('the User Model - makeUser', function () {
       _password: 'just testing'
     };
 
-    User.findOne({email: 'test@chai.com'}, function(err, result) {
-      if (result) {
-        result.remove(testMakeUser);
-      } else {
-        testMakeUser();
-      }
-    });
-
     var testMakeUser = function() {
       User.makeUser(testUser, function(err, returnedUser) {
         tempUser = returnedUser;
-        returnedUser.remove();
         done();
+        returnedUser.remove();
       });
     }
+
+    removeTestUser(testMakeUser);
   });
   
   it('should return an object', function() {
@@ -86,22 +91,25 @@ describe('the User Model - getUser', function () {
       _password: 'just testing'
     };
 
-    User.find({email: 'test@chai.com'}, function(err, result) {
-      if (result.errmsg) {
-        result.remove();
-      }
-    });
+    var testGetUser = function() {
+      User.create(testUser)
+        .then(function(returnedUser) {
+          console.log("create test user", returnedUser);
+          testUser = returnedUser;
+          User.getUser(testUser.email ,function(err, result) {
+            console.log("getUser result", err, result);
+            tempUser = result;
+            done();
+          })
+        })
+        .catch(function(err){
+          console.log(err);
+          done()
+        }) 
+    }
 
-    User.makeUser(testUser, function(err, returnedUser) {
-      testUser = returnedUser;
-      returnedUser.remove();
-      done();
-    });
+    removeTestUser(testGetUser);
 
-    User.getUser(testUser._id, function(err, returnedUser) {
-      tempUser = returnedUser;
-      done();
-    });
   });
   
   it('should return an object', function() {
@@ -116,8 +124,8 @@ describe('the User Model - getUser', function () {
     expect(tempUser).to.have.property('email', 'test@chai.com')
       .that.is.a('string');
   });
-  it('should have a password property', function () {
-    expect(tempUser).to.not.have.property('_password')
+  it('should have an _password property', function () {
+    expect(tempUser).to.have.property('_password')
   });
 });
 
@@ -128,12 +136,16 @@ describe('the User Model - updateUser', function () {
   var userUpdates = {
     bio: 'I am a test',
   }
+  var testUser = {
+     email: 'test@chai.com',
+    _password: 'just testing'
+  };
 
   before(function(done) {
     User.create(testUser)
       .then(function(returnedUser) {
         testUser = returnedUser;
-        User.updateUser(testUser._id, userUpdates ,function(err, result) {
+        User.updateUser(testUser.email, userUpdates ,function(err, result) {
           updateResult = result;
             User.find({_id: testUser._id}, function(err, returnedUser) {
               testUser = returnedUser;
@@ -158,9 +170,10 @@ describe('the User Model - updateUser', function () {
       .that.equals(1);
   });
   
-  it('should have an updated bio property that is a string', function () {
-    expect(tempUser).to.have.property('bio', 'I am a test')
-      .that.is.a('string');
+  it('should have a hashed _password property ', function () {
+    expect(tempUser).to.have.property('_password')
+      .that.is.a('string')
+      .and.not.equal('just testing');
   });
 });
 
