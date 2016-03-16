@@ -44,8 +44,18 @@ const modifyFileTree = (state = { snippets: [], folders: [] }, action) => {
   }
 }
 
+const modifySnippetMap = (state = {}, action) => {
+  switch(action.type) {
+    case 'SET_SNIPPET_MAP':
+      return action.snippetMap;
+    default:
+      return state;
+  }
+}
+
 export const finalReducer = combineReducers({
   selectedSnippet: modifySelectedSnippet,
   selectedFolder: modifySelectedFolder,
-  fileTree: modifyFileTree
+  fileTree: modifyFileTree,
+  snippetMap: modifySnippetMap
 });

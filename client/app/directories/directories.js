@@ -16,6 +16,7 @@ class DirectoriesCtrl {
     Folders.getTestFileTree();
     this.Folders = Folders;
     this.folder = {};
+    // window.snippetArr = this.snippetArr;
   }
 
   addFolder() {
@@ -31,13 +32,16 @@ class DirectoriesCtrl {
   }
 
   mapStateToThis(state) {
-    const { fileTree, selectedFolder } = state;
+    const { fileTree, selectedFolder, snippetMap } = state;
     const folders = !fileTree.children ? null : fileTree.children.filter(folder => (folder.children.length > 0));
-
+    const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
     return {
       fileTree,
       selectedFolder,
-      folders
+      folders,
+      snippetMap,
+      snippetArr
+     
     };
   }
 
