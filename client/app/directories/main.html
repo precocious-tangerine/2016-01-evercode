@@ -3,10 +3,10 @@
     <h4> Ever:code </h4>
     <li class="search">
       <div class="search-wrapper card">
-        <input data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..."/>
-        <div ng-hide= "!search" class="search-results">
+        <input id='search-bar' data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..."/>
+        <div class="search-results">
           <ul id="dropdown1">
-            <li ng-hide = "!search" ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
+            <li ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
               {{snippet.name}}
             </li>
           </ul>
@@ -27,4 +27,18 @@
   </ul>
   <div class="col s12 m10 l10" ui-view>
   </div>
+  <script>
+    $('#search-bar').keyup(function(event) {
+      if(event.target.value == '') {
+        $('.search-results').slideUp();
+      } else {
+        $('.search-results').slideDown();
+      }
+    });
+  </script>
+  <style>
+    .search-results {
+      diplay:none;
+    }
+  </style>
 </div>
