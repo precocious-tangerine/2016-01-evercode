@@ -30,13 +30,15 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
-    let visibleFolders = [], visibleSnippets = [];
-    let filePath = '', folderName = '';
+    let visibleFolders = [],
+      visibleSnippets = [];
+    let filePath = '',
+      folderName = '';
     if (state.selectedFolder.value) {
       state.selectedFolder.children.forEach(child => {
-        if(typeof child.value === 'string') {
+        if (typeof child.value === 'string') {
           visibleFolders.push(child);
-        } else if(child.value.name !== '.config') {
+        } else if (child.value.name !== '.config') {
           visibleSnippets.push(child);
         }
       });

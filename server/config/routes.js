@@ -2,7 +2,6 @@
 var passport = require('passport');
 var Promise = require('bluebird');
 
-var utils = require('./utils');
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
@@ -14,8 +13,6 @@ var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
 var snippetsArray = require('./testSnippetArray.js').testSnippets;
-
-Promise.promisifyAll(utils);
 
 let checkReqAuthorization = (req, res, next) => {
   let token = req.headers['x-access-token'];
@@ -96,8 +93,7 @@ module.exports = (app, express) => {
 
   app.route('/api/snippets')
     .get((req, res) => {
-      console.log(req.param("_id"), typeof req.param("_id"));
-      Snippets.getSnippetAsync(req.param("_id"))
+      Snippets.getSnippetAsync(req.query["_id"])
         .then((snippet) => {
           if (snippet) {
             res.status(200).send(snippet)
@@ -147,8 +143,8 @@ module.exports = (app, express) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
-      let email = jwt.verify(req.headers.token, secret);
-      let filepath = req.path;
+      let email = jwt.verify(req.headers['x-access-token'], secret).email;
+      let filepath = req.body.path;
       return Snippets.getSnippetByFilepathAsync(email, filepath)
         .then((results) => {
           if (Array.isArray(results) && results.length > 0) {
@@ -164,8 +160,9 @@ module.exports = (app, express) => {
 
   app.route('/api/folders/')
     .post((req, res) => {
-      let email = jwt.verify(req.headers.token, secret);
-      Snippets.makeSubFolderAsync(email, req.body.path)
+      let email = jwt.verify(req.headers['x-access-token'], secret).email;
+      let path = `email/${req.body.folder}`;
+      Snippets.makeSubFolderAsync(email, path)
         .then((folder) => {
           res.status(201).send(folder)
         }).catch((err) => {
@@ -174,8 +171,9 @@ module.exports = (app, express) => {
         })
     })
     .delete((req, res) => {
-      let email = jwt.verify(req.headers.token, secret);
-      Snippets.removeFolderAsync(email, req.body.folder)
+      let email = jwt.verify(req.headers['x-access-token'], secret).email;
+      let path = `email/${req.body.folder}`;
+      Snippets.removeFolderAsync(email, path)
         .then((result) => {
           if (result) {
             res.status(201).send("Succesfully removed");

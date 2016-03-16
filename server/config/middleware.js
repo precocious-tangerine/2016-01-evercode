@@ -4,12 +4,11 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 var config = require('../config');
-var utils = require('./utils');
 
 passport.use(new GitHubStrategy({
   clientID: config.githubClientId,
   clientSecret: config.githubSecret,
-  callbackURL: config.serverUrl+ '/auth/github/callback'
+  callbackURL: config.serverUrl + '/auth/github/callback'
 }, (accessToken, refreshToken, profile, done) => {
   done(null, {
     accessToken: accessToken,
@@ -27,7 +26,7 @@ passport.deserializeUser((user, done) => {
 
 module.exports = (app, express) => {
   app.use(morgan('dev'));
-  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -38,4 +37,3 @@ module.exports = (app, express) => {
   app.use(passport.session());
   app.use('/', express.static(__dirname + '/../../client'));
 };
-
