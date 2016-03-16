@@ -16,7 +16,6 @@ class DirectoriesCtrl {
     Folders.getFileTree();
     this.Folders = Folders;
     this.folder = {};
-    // window.snippetArr = this.snippetArr;
   }
 
   addFolder() {

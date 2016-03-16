@@ -32,7 +32,7 @@ let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
     let currValue = filePathArrReverse.pop();
     let nextValue = filePathArrReverse[filePathArrReverse.length -1];
     tree.value = tree.value ? tree.value : currValue;
-    tree.filePath = filePathAttr + '/' + (tree.value.name || tree.value);
+    tree.filePath = filePathAttr + (tree.value.name || tree.value)+ '/';
     let childNode = tree.findChild(nextValue);
     if(childNode === undefined && typeof tree.value === 'string') {
       childNode = new Tree(null);

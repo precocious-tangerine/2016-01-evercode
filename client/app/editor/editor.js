@@ -39,8 +39,7 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    console.log('path', this.path);
-    this.Snippets.addSnippet({ name: this.snippet.name, data: this.content, filePath: this.path+'/'+name })
+    this.Snippets.addSnippet({ name: this.snippet.name, data: this.content, filePath: this.path+this.snippet.name })
   };
 
   updateSnippet() {

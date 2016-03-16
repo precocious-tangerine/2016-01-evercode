@@ -94,8 +94,9 @@ export class Folders {
 }
 
 export class Snippets {
-  constructor($http, $ngRedux) {
+  constructor($http, $ngRedux, Folders) {
     this.$http = $http;
+    this.Folders = Folders;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     window.Snippets = this;
   }
@@ -109,7 +110,6 @@ export class Snippets {
           url: '/api/snippets?_id=' + snippetId
         });
       },
-
       addSnippet(snippetObj) {
         // let {filePath} = snippetObj
         // return this.$http({
@@ -159,7 +159,7 @@ export class Snippets {
 }
 
 export class Auth {
-  constructor($http, $location, $window, Folders, $ngRedux) {
+  constructor($http, $location, $window, $ngRedux) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.$http = $http;
     this.$location = $location;
