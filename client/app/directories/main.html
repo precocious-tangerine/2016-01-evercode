@@ -3,8 +3,14 @@
     <h4> Ever:code </h4>
     <li class="search">
       <div class="search-wrapper card">
-        <input id="search" />
-        <div class="search-results"></div>
+        <input data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..."/>
+        <div ng-hide= "!search" class="search-results">
+          <ul id="dropdown1">
+            <li ng-hide = "!search" ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
+              {{snippet.name}}
+            </li>
+          </ul>
+        </div>
       </div>
     </li>
     <li>

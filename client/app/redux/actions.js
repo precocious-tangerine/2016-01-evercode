@@ -1,3 +1,9 @@
+export const setSnippetMap = (snippetMap) => {
+  return {
+    type: 'SET_SNIPPET_MAP',
+    snippetMap
+  };
+}
 //Handling which snippet is currently selected
 export const setSelectedSnippet = (snippet) => {
   return {
