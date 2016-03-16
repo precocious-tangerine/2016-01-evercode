@@ -10,17 +10,20 @@
 
 .main {
   position: relative;
-  /*width: 140px;*/
-  height: 100vh;
+  width: 15vw;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
+.folders {
+  padding: 5px;
+  font-size: 1.5em;
+}
+
 .snippets {
   position: relative;
   width: 200px;
-  height: 100vh;
   left: 0;
   right: 0;
   bottom: 0;
@@ -34,11 +37,7 @@
   bottom: 0;
 }
 
-.editor form {
-  display: block;
-}
-
-.editor input {
+.snippet-title input {
   width: auto;
   font-size: 3em;
   float: left;
@@ -60,12 +59,25 @@
 }
 
 .tags {
-  clear: both;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 10px;
+  clear: both;
 }
 
-.add-tag {
+.tags input {
+  max-width: 100px;
+}
+
+.toggle-tag {
   display: none;
+}
+
+.toggle-annotation {
+  display: none;
+}
+
+.tag {
+  margin-left: 10px
+  float: left;
 }

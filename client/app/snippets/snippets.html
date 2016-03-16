@@ -1,11 +1,13 @@
-<ul class="snippets col s12 m2 l2">
-  <h5>{{snippets.folderName}}</h5>
-  <h5>{{snippets.filePath}}</h5>
+<ul class="snippets side-nav col s12 m2 l2">
+  <h6>{{snippets.folderName}}</h6>
+  <h6>{{snippets.filePath}}</h6>
   <li class="snippet" ng-repeat="snippet in snippets.visibleSnippets">
     <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.grabAndChangeSnippet(snippet)">{{snippet.value.name}}</a>
   </li>
   <li class="folders" ng-repeat="folder in snippets.visibleFolders">
     <a class="waves-effect waves-teal" ng-click="snippets.Folders.selectFolder(folder)">{{folder.value}}</a>
+    <span class='chip waves-effect waves-teal teal'><i class="small material-icons">note_add</i></a></span>
+    <span class='chip waves-effect waves-teal teal'><i class="small material-icons">tab</i></a></span>
   </li>
 </ul>
 <div class="col s10 editor" ui-view></div>
