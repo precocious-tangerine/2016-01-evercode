@@ -13,7 +13,6 @@ var User = require('../server/models/users');
 
 var removeTestUser = function(callback){
   User.findOne({email: 'test@chai.com'}, function(err, result) {
-    console.log("removeTestUser", err, result)
     if (result) {
       result.remove(callback);
     } else {
@@ -80,6 +79,14 @@ describe('the User Model - makeUser', function () {
       .that.is.a('string')
       .and.not.equal('just testing');
   });
+  it('should have a snippets object', function(){
+    expect(tempUser).to.have.property('snippets')
+      .that.is.an('object')
+  });
+  it('should have a root folder in the snippets object', function(){
+    expect(Object.keys(tempUser.snippets)).to.be.length(1);
+  });
+
 });
 
 describe('the User Model - getUser', function () {
@@ -94,16 +101,13 @@ describe('the User Model - getUser', function () {
     var testGetUser = function() {
       User.create(testUser)
         .then(function(returnedUser) {
-          console.log("create test user", returnedUser);
           testUser = returnedUser;
           User.getUser(testUser.email ,function(err, result) {
-            console.log("getUser result", err, result);
             tempUser = result;
             done();
           })
         })
         .catch(function(err){
-          console.log(err);
           done()
         }) 
     }
@@ -237,7 +241,18 @@ describe('the User Model - removeUser', function () {
 //////////////////////////////////////////////////////////
 var Snippet = require('../server/models/snippets');
 
-describe('the Snippet Model - basics', function () {
+var removeTestSnippet = function(callback){
+  Snippet.findOne({data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets'}, function(err, result) {
+    console.log("removeTestSnippet", err, result)
+    if (result) {
+      result.remove(callback);
+    } else {
+      callback();
+    }
+  });
+}
+
+describe('the Snippet Model - Snippet basics', function () {
   it('should have makeSnippet function', function () {
     expect(Snippet.makeSnippet).to.be.a('function');
   });
@@ -254,6 +269,75 @@ describe('the Snippet Model - basics', function () {
     expect(Snippet.removeSnippet).to.be.a('function');
   });
 });
+
+describe('the Snippet Model - makeSnippet', function (){
+
+})
+
+describe('the Snippet Model - getSnippet', function (){
+
+})
+
+describe('the Snippet Model - updateSnippet', function (){
+
+})
+
+describe('the Snippet Model - removeSnippet', function (){
+
+})
+
+describe('the Snippet Model - Folder basics', function () {
+
+  it('should have a makeSubFolder function', function () {
+    expect(Snippet.makeSubFolder).to.be.a('function');
+  });
+
+  it('should have a makeRootFolder function', function () {
+    expect(Snippet.makeRootFolder).to.be.a('function');
+  });
+
+  it('should have a removeFolder function', function () {
+    expect(Snippet.makeRootFolder).to.be.a('function');
+  });
+
+});
+
+describe('the Snippet Model - makeSubFolder', function (){
+
+})
+
+describe('the Snippet Model - makeRootFolder', function (){
+
+})
+
+describe('the Snippet Model - removeFolder', function (){
+
+})
+
+describe('the Snippet Model - Snippet Getters', function(){
+
+it('should have a getSnippetByFilepath function', function(){
+  expect(Snippet.getSnippetByFilepath).to.be.a('function');
+})
+
+it('should have a getSnippetsByUser function', function(){
+  expect(Snippet.getSnippetsByUser).to.be.a('function');
+})
+
+it('should have a getSnippetInfoByUser function', function(){
+  expect(Snippet.getSnippetInfoByUser).to.be.a('function');
+})
+
+it('should have a getSnippetInfoByFolder function', function(){
+  expect(Snippet.getSnippetInfoByFolder).to.be.a('function');
+})
+
+it('should have a getSnippetsByFolder function', function(){
+  expect(Snippet.getSnippetsByFolder).to.be.a('function');
+})
+
+
+})
 
 
 //////////////////////////////////////////////////////////
