@@ -9,7 +9,7 @@ let snippetSchema = mongoose.Schema({
   name: { type: String, required: true },
   filePath: { type: String, required: true },
   tags: { type: mongoose.Schema.Types.Mixed, default: {} },
-  public: { type: Boolean},
+  public: { type: Boolean, default: true},
   shareUrl: { type: String},
 });
 
