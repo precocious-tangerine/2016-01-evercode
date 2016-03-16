@@ -194,8 +194,9 @@ describe('the User Model - removeUser', function () {
       User.create(testUser)
       .then(function(returnedUser){
         tempUser = returnedUser;
-        User.removeUser(testUser._id ,function(err, result) {
+        User.removeUser(testUser.email ,function(err, result) {
           deleteResult = result;
+          console.log("deleteResult",deleteResult);
           done();
         })
       })
@@ -210,12 +211,12 @@ describe('the User Model - removeUser', function () {
   });
   
   it('should return a results object', function() {
-    expect(deleteResult).to.be.an('object')
+    expect(deleteResult.result).to.be.an('object')
       .that.has.property('ok');
   });
 
   it('should report removal from the database', function() {
-    expect(deleteResult).to.have.property('n')
+    expect(deleteResult.result).to.have.property('n')
       .that.equals(1);
   });
   
@@ -231,17 +232,25 @@ describe('the User Model - removeUser', function () {
   });
 });
 
-
 //////////////////////////////////////////////////////////
 //                   Snippet Model                      //
 //////////////////////////////////////////////////////////
 var Snippet = require('../server/models/snippets');
 
-describe('the Snippet Model', function () {
-  it('should have make, get, update and remove functions', function () {
+describe('the Snippet Model - basics', function () {
+  it('should have makeSnippet function', function () {
     expect(Snippet.makeSnippet).to.be.a('function');
+  });
+
+  it('should have getSnippet function', function () {
     expect(Snippet.getSnippet).to.be.a('function');
+  });
+
+  it('should have updateSnippet function', function () {
     expect(Snippet.updateSnippet).to.be.a('function');
+  });
+
+  it('should have a removeSnippet function', function () {
     expect(Snippet.removeSnippet).to.be.a('function');
   });
 });
