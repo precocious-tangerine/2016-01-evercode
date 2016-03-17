@@ -88,11 +88,11 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath }, callback);
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath+'/.config' }, callback);
 }
 
 Snippet.makeRootFolder = (email, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email  }, callback);
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email+'/.config'  }, callback);
 }
 
 Snippet.removeFolder = (email, folder, callback) => {
