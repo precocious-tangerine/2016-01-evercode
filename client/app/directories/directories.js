@@ -12,6 +12,7 @@ export const directories = () => {
 
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
+    window.directoriesStuff = this;
     $ngRedux.connect(this.mapStateToThis)(this);
     Folders.getFileTree();
     this.Folders = Folders;
@@ -35,10 +36,21 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder } = state;
-    let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
-    let snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
+    let visibleFolders, snippetArr = [];
+
+    Object.keys(snippetMap).forEach(key => {
+      let snippetVal = snippetMap[key].value
+      if(snippetVal === 'object') {
+        if(snippetVal.name === '.config' || snippetVal.name === '/.config') {
+          snippetArr.push(snippetVal.value);
+        }
+      } else {
+        visibleFolders.push(snippetVal);
+      }
+    });
+
     return {
-      folders,
+      visibleFolders,
       snippetMap,
       snippetArr,
       selectedFolder
