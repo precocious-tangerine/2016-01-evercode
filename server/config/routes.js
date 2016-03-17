@@ -12,8 +12,6 @@ var redisClient = redis.createClient();
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
-var snippetsArray = require('../../client/app/services/testSnippetArray.js');
-
 let checkReqAuthorization = (req, res, next) => {
   let token = req.headers['x-access-token'];
   redisClient.get(token, (err, result) => {
@@ -168,7 +166,6 @@ module.exports = (app, express) => {
       let path = req.body.path;
       Snippets.makeSubFolderAsync(email, path)
         .then((folder) => {
-          console.log('folder', folder);
           res.status(201).send(folder)
         }).catch((err) => {
           console.log(err);
@@ -205,11 +202,5 @@ module.exports = (app, express) => {
           console.log(err);
           res.status(500).send('Error');
         });
-    });
-
-  app.route('/api/test-folder-tree')
-    .get((req, res) => {
-     
-      res.send(snippetsArray);
     });
 }

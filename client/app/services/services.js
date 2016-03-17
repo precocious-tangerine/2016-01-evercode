@@ -21,20 +21,6 @@ export class Folders {
           })
       },
 
-      getTestFileTree() {
-        return this.$http({
-          method: 'GET',
-          url: 'api/test-folder-tree'
-        }).then(res => {
-          var snippetMap = convertToTree(res.data);
-          dispatch(Actions.setSnippetMap(snippetMap));
-        })
-      },
-      
-      testSelectedFolder() {
-        dispatch(Actions.setSselectedFolder('/testuser/folder1'));
-      },
-
       addFolder(folder) {
         return this.$http({
           method: 'POST',
