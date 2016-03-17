@@ -1,13 +1,22 @@
-<ul class="snippets side-nav col s12 m2 l2">
-  <h6>{{snippets.folderName}}</h6>
-  <h6>{{snippets.filePath}}</h6>
-  <li class="snippet" ng-repeat="snippet in snippets.visibleSnippets">
-    <a ui-sref=".editor" class="waves-effect waves-teal" ng-click="snippets.grabAndChangeSnippet(snippet.filePath)">{{snippet.value.name}}</a>
-  </li>
-  <li class="folders" ng-repeat="folder in snippets.visibleFolders">
-    <a class="waves-effect waves-teal" ng-click="snippets.Folders.selectFolder(folder.filePath)">{{folder.value}}</a>
-    <span class='chip waves-effect waves-teal teal'><i class="small material-icons">note_add</i></a></span>
-    <span class='chip waves-effect waves-teal teal'><i class="small material-icons">tab</i></a></span>
-  </li>
+<ul ng-show="snippets.selectedFolder.value" class="snippets side-nav col s12 m2 l2">
+  <div class="col s12">
+    <span class="add-button col s6 center-align">
+      <a class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add a snippet"><i class="material-icons">note_add</i></a>
+    </span>
+    <span class="add-button col s6 center-align">
+      <a class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add a folder"><i class="material-icons">tab</i></a>
+    </span>
+  </div>
+  <div class="collection col s12">
+    <a class="waves-effect waves-teal collection-item center-align" ng-repeat="folder in snippets.visibleFolders" ng-click="snippets.Folders.selectFolder(folder)">
+      <div class="row valign-wrapper">
+        <i class="valign tiny material-icons">tab</i>
+        <span class="valign folder-name">
+          {{folder.value}}
+        </span>
+      </div>
+    </a>
+    <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-repeat="snippet in snippets.visibleSnippets" ng-click="snippets.grabAndChangeSnippet(snippet)">{{snippet.value.name}}</a>
+  </div>
 </ul>
 <div class="col s10 editor" ui-view></div>

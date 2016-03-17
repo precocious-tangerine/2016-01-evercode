@@ -16,6 +16,10 @@
   bottom: 0;
 }
 
+.search-results {
+  z-index: 2;
+}
+
 .folders {
   padding: 5px;
   font-size: 1.5em;
@@ -81,3 +85,10 @@
   margin-left: 10px
   float: left;
 }
+
+.folder-name {
+  margin-left: 5px;
+}
+
+
+
