@@ -29,7 +29,6 @@ class EditorCtrl {
   }
 
   toggleTag() {
-    console.log('toggleTag', this.addTag);
     this.addTag = !this.addTag
   }
 

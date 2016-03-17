@@ -165,7 +165,7 @@ module.exports = (app, express) => {
   app.route('/api/folders/')
     .post((req, res) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
-      let path = `${email}/${req.body.folder}`;
+      let path = req.body.path;
       Snippets.makeSubFolderAsync(email, path)
         .then((folder) => {
           res.status(201).send(folder)
@@ -176,7 +176,7 @@ module.exports = (app, express) => {
     })
     .delete((req, res) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
-      let path = `email/${req.body.folder}`;
+      let path = `${email}/${req.body.folder}`;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {
           if (result) {

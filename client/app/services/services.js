@@ -16,17 +16,24 @@ export class Folders {
           method: 'GET',
           url: '/api/user/snippets'
         }).then(res => {
+          var snippetObj = {};
+          res.data.forEach((snippet) => {
+            snippetObj[snippet.filePath] = snippet;
+          });
           var snippetMap = {};
-          convertToTree(res.data, (treeNode) => {
-            let {value, filePath} = treeNode
-            let children = treeNode.children.map((child) => child.filePath);
-            let parent = tree.parent ? tree.parent.filePath : null;
-            snippetMap[filePath] = {value, filePath, children, parent}; 
+          convertToTree(snippetObj, (treeNode) => {
+            let { value, filePath } = treeNode;
+            let children = treeNode.children.map(function(child) {
+              return child.filePath;
+            });
+            let parent = treeNode.parent ? treeNode.parent.filePath : null;
+            snippetMap[filePath] = { value, filePath, children, parent };
+            if (snippetMap.__root === undefined || snippetMap.__root.value === value) {
+              snippetMap.__root = { value, filePath, children, parent };
+            }
           });
 
           dispatch(Actions.setSnippetMap(snippetMap));
-
-          //dispatch(Actions.setSnippetMap(res.data));
         })
       },
 
@@ -37,12 +44,9 @@ export class Folders {
         }).then(res => {
           var snippetMap = convertToTree(res.data);
           dispatch(Actions.setSnippetMap(snippetMap));
-
-
-          // dispatch(Actions.setSnippetMap(res.data));
-          // dispatch(Actions.setFileTree(convertToTree(res.data)));
         })
       },
+      
       testSelectedFolder() {
         dispatch(Actions.setSselectedFolder('/testuser/folder1'));
       },
