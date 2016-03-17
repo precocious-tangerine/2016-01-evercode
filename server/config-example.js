@@ -1,5 +1,5 @@
 module.exports = {
-	serverUrl: 'http://localhost:3000',
-	githubClientId: '',
-	githubSecret: '',
+  serverUrl: 'http://localhost:3000',
+  githubClientId: '',
+  githubSecret: '',
 }

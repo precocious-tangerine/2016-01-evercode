@@ -16,9 +16,9 @@ export class Folders {
           method: 'GET',
           url: '/api/user/snippets'
         }).then(res => {
-            var snippetMap = convertToTree(res.data);
-            dispatch(Actions.setSnippetMap(snippetMap));
-          })
+          var snippetMap = convertToTree(res.data);
+          dispatch(Actions.setSnippetMap(snippetMap));
+        })
       },
 
       addFolder(folder) {
@@ -57,9 +57,9 @@ export class Folders {
         //   url: '/api/folders',
         //   data: folderPath
         // }).then(res => {
-          dispatch(Actions.removeSnippetMap(folderPath));
-          dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
-          dispatch(Actions.removeSnippetMap(folderPath + '.config'));
+        dispatch(Actions.removeSnippetMap(folderPath));
+        dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
+        dispatch(Actions.removeSnippetMap(folderPath + '.config'));
         // })
       }
     }
@@ -90,12 +90,12 @@ export class Snippets {
         });
       },
       addSnippet(snippetObj) {
-        let {filePath} = snippetObj
+        let { filePath } = snippetObj
         return this.$http({
           method: 'POST',
           url: '/api/snippets',
           data: snippetObj
-        }).then( (res) => {
+        }).then((res) => {
           this.Folders.getFileTree();
           // dispatch(Actions.addSnippetMap(filePath, snippetObj));
         });
@@ -108,7 +108,7 @@ export class Snippets {
         //   url: '/api/snippets',
         //   data: { snippetId, value }
         // }).then( () => {
-          dispatch(Actions.addSnippetMap(filePath, snippetObj));
+        dispatch(Actions.addSnippetMap(filePath, snippetObj));
         // });
       },
 
@@ -119,7 +119,7 @@ export class Snippets {
         //   url: '/api/snippets',
         //   data: { snippetId }
         // }).then(() => {
-          dispatch(Actions.removeSnippetMap(snippetFilePath));
+        dispatch(Actions.removeSnippetMap(snippetFilePath));
         // });
       },
 

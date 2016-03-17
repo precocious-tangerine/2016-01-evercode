@@ -9,8 +9,8 @@ let snippetSchema = mongoose.Schema({
   name: { type: String, required: true },
   filePath: { type: String, required: true },
   tags: { type: mongoose.Schema.Types.Mixed, default: {} },
-  public: { type: Boolean, default: true},
-  shareUrl: { type: String},
+  public: { type: Boolean, default: true },
+  shareUrl: { type: String },
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);
@@ -33,7 +33,7 @@ Snippet.updateSnippet = (_id, newProps, callback) => {
 }
 
 Snippet.removeSnippet = (_id, callback) => {
-  Snippet.findOne({_id: mongoose.Types.ObjectId(_id) }).remove(callback);
+  Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
 }
 
 // Snippet.getSnippetByFilepath = (email, filepath, callback) => {
@@ -88,11 +88,11 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath+'/.config' }, callback);
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath + '/.config' }, callback);
 }
 
 Snippet.makeRootFolder = (email, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email+'/.config'  }, callback);
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email + '/.config' }, callback);
 }
 
 Snippet.removeFolder = (email, folder, callback) => {
