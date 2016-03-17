@@ -1,18 +1,22 @@
-<form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()" novalidate>
-  <div class="form-group snippet-title">
-    <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetObj.name' />
-  </div>
-  <button type="submit" class="waves-effect waves-light btn save-snippet">{{editor.buttonText}}</button>
-</form>
-<div ng-show="editor.selectedSnippet" class='tags'>
-  <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
+
+<div class="row">
+  <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()" novalidate>
+    <div class="form-group snippet-title">
+      <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetObj.name' />
+    </div>
+    <button type="submit" class="waves-effect waves-light btn save-snippet">{{editor.buttonText}}</button>
+  </form>
+  <div ng-show="editor.selectedSnippet" class='tags'>
+    <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
   <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
   <span ng-show="editor.addTag">
     <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
       <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
     </form>
   </span>
+  </div>
 </div>
+
 <div class="right-align">
   <a class="waves-effect waves-light btn" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
 </div>
