@@ -13,7 +13,7 @@
     <li class="search">
       <div class="input-field card col s12">
         <i class="material-icons prefix">search</i>
-        <input id="icon_prefix" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..." />
+        <input id="search-bar" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..." />
         <div class="search-results">
           <ul id="dropdown1">
             <li ng-hide="!search" ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
