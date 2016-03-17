@@ -12,7 +12,6 @@ export const directories = () => {
 
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
-    window.directoriesStuff = this;
     $ngRedux.connect(this.mapStateToThis)(this);
     Folders.getFileTree();
     this.Folders = Folders;
