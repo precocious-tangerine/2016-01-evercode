@@ -154,8 +154,7 @@ module.exports = (app, express) => {
             dbSnippets.forEach((node) => {
               fileTreeList[node.filePath] = node;
             });
-            var userFileTree = folderTree.convertToTree(fileTreeList);
-            res.status(200).send(userFileTree);
+            res.status(200).send(fileTreeList);
           } else {
             res.status(404).send("Snippets not Found");
           }
