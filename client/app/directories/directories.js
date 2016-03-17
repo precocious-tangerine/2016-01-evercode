@@ -13,7 +13,7 @@ export const directories = () => {
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    Folders.getFileTree();
+    Folders.getTestFileTree();
     this.Folders = Folders;
     this.folder = {};
     this.snippetArr = [];
@@ -25,6 +25,7 @@ class DirectoriesCtrl {
     this.folder.name = '';
   }
   changeActiveTab(folderPath) {
+    console.log('folderPath', folderPath);
     this.Folders.selectFolder(folderPath);
   }
 
@@ -34,7 +35,7 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     const { snippetMap, selectedFolder } = state;
-    const folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folderName => !folderName.endsWith('.config/')).map(el => (snippetMap[el]));
+    const folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
     const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
     return {
       folders,

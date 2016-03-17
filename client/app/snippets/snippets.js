@@ -37,6 +37,7 @@ class SnippetsCtrl {
     let visibleFolders = [],
       visibleSnippets = [];
     let selectedFolderObj = snippetMap[selectedFolder];
+    console.log('selectedFolder', selectedFolderObj);
     if (selectedFolderObj) {
       selectedFolderObj.children.forEach(childKey => {
         let child = snippetMap[childKey];

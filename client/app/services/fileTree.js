@@ -1,6 +1,6 @@
 'use strict';
 import R from 'ramda';
-//var R = require('ramda');
+
 class Tree {
   constructor(value, filePathAttr) {
     this.parent = null;
@@ -15,26 +15,26 @@ class Tree {
     this.children.push(new Tree(value));
   }
   deleteChild(value) {
-    this.children = this.children.filter(child => !R.equals(child,value));
+    this.children = this.children.filter(child => !R.equals(child, value));
   }
   deleteParent() {
     this.parent = null;
   }
   findChild(value) {
-    return R.find(R.whereEq({value}), this.children);
+    return R.find(R.whereEq({ value }), this.children);
   }
 }
 let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
-  if(callback === undefined) {
+  if (callback === undefined) {
     callback = () => {};
   }
-  if(filePathArrReverse.length !== 0) {
+  if (filePathArrReverse.length !== 0) {
     let currValue = filePathArrReverse.pop();
-    let nextValue = filePathArrReverse[filePathArrReverse.length -1];
+    let nextValue = filePathArrReverse[filePathArrReverse.length - 1];
     tree.value = tree.value ? tree.value : currValue;
-    tree.filePath = filePathAttr + (tree.value.name || tree.value)+ '/';
+    tree.filePath = filePathAttr + (tree.value.name || tree.value) + '/';
     let childNode = tree.findChild(nextValue);
-    if(childNode === undefined && typeof tree.value === 'string') {
+    if (childNode === undefined && typeof tree.value === 'string') {
       childNode = new Tree(null);
       tree.children.push(childNode);
       childNode.parent = tree;
@@ -44,24 +44,30 @@ let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
   }
 }
 
-
 let convertToTree = function(snippetObj) {
   let keyValues = R.toPairs(snippetObj);
-  let filePaths = keyValues.map( (keyValue) => {
+  let filePaths = keyValues.map((keyValue) => {
     let folders = keyValue[0].split('/');
     folders[0] ? null : folders.shift();
     folders[folders.length - 1] ? null : folders.pop();
     folders[folders.length - 1] = keyValue[1];
     return R.reverse(folders);
   });
-  console.log('filePaths is ', filePaths);
   let userTree = new Tree(null);
-  var userTreeMap = {};
-  filePaths.forEach( (filePath) => {
-    insertIntoTreeRoot(userTree, filePath, '', node => userTreeMap[node.filePath] = node);
+  let userTreeMapCopy = {};
+  filePaths.forEach((filePath) => {
+    insertIntoTreeRoot(userTree, filePath, '', node => {
+      userTreeMapCopy[node.filePath] = node;
+    });
+  })
+  userTreeMapCopy.__root = userTree;
+  let userTreeMap = {};
+  Object.keys(userTreeMapCopy).forEach(key => {
+    Object.assign(userTreeMap[key] = {}, {value: userTreeMapCopy[key].value, filePath: userTreeMapCopy[key].filePath});   
+    userTreeMap[key].children = userTreeMapCopy[key].children.map(tree => tree.filePath);
+    userTreeMap[key].parent = userTreeMapCopy[key].parent ? userTreeMapCopy[key].parent.filePath : null;
   })
   return userTreeMap;
 };
 
 export default convertToTree;
-//module.exports.convertToTree = convertToTree;
