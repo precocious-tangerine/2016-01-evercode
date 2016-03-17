@@ -41,18 +41,23 @@ export class Folders {
         //   url: '/api/folders',
         //   data: folder
         // }).then(snippetConfig => {
+          let snippetConfig = {
+            filePath: 'testuser/folderA/.config',
+            value: 'test1'
+          };
+
           let filePath = snippetConfig.filePath;
           let filePaths = filePath.split("/");
 
-          let folderName = filePaths(filePaths.length - 2);
+          let folderName = filePaths[filePaths.length - 2];
           let parentFolderPath = filePaths.slice(0, filePaths.length - 3).join('/');
           let folderPath = filePaths.slice(0, filePaths.length - 1).join('/');
-          Actions.addSnippetMap(folderPath, {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath});
+          dispatch(Actions.addSnippetMap(folderPath, {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath}));
 
 
-          let snippetConfigName = filePaths(filePaths.length - 1);
+          let snippetConfigName = filePaths[filePaths.length - 1];
           let parentFolder = folderPath;
-          Actions.addSnippetMap(filePath, {value: snippetConfig, parent: folderPath, children: [], filePath: filePath});
+          dispatch(Actions.addSnippetMap(filePath, {value: snippetConfig, parent: folderPath, children: [], filePath: filePath}));
 
         // })
       },
@@ -68,6 +73,8 @@ export class Folders {
         //   data: folderPath
         // }).then(res => {
           dispatch(Actions.removeSnippetMap(folderPath));
+          dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
+          dispatch(Actions.removeSnippetMap(folderPath + '.config'));
         // })
       }
     }
