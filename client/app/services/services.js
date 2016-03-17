@@ -36,14 +36,7 @@ export class Folders {
           method: 'GET',
           url: 'api/test-folder-tree'
         }).then(res => {
-          var snippetMap = {};
-          convertToTree(res.data, (treeNode) => {
-            let {value, filePath} = treeNode
-            let children = treeNode.children.map((child) => child.filePath);
-            let parent = treeNode.parent ? treeNode.parent.filePath : null;
-            snippetMap[filePath] = {value, filePath, children, parent}; 
-          });
-
+          var snippetMap = convertToTree(res.data);
           dispatch(Actions.setSnippetMap(snippetMap));
 
 

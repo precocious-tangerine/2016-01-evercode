@@ -1,6 +1,6 @@
 'use strict';
 import R from 'ramda';
-
+//var R = require('ramda');
 class Tree {
   constructor(value, filePathAttr) {
     this.parent = null;
@@ -50,10 +50,11 @@ let convertToTree = function(snippetObj) {
   let filePaths = keyValues.map( (keyValue) => {
     let folders = keyValue[0].split('/');
     folders[0] ? null : folders.shift();
-    folders[folders.length -1] ? null : folders.pop();
+    folders[folders.length - 1] ? null : folders.pop();
     folders[folders.length - 1] = keyValue[1];
     return R.reverse(folders);
   });
+  console.log('filePaths is ', filePaths);
   let userTree = new Tree(null);
   var userTreeMap = {};
   filePaths.forEach( (filePath) => {
@@ -63,4 +64,4 @@ let convertToTree = function(snippetObj) {
 };
 
 export default convertToTree;
-
+//module.exports.convertToTree = convertToTree;
