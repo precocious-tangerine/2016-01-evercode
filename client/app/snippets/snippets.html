@@ -4,9 +4,14 @@
       <a ui-sref=".editor" class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add a snippet"><i class="material-icons">note_add</i></a>
     </span>
     <span class="add-button col s6 center-align">
-      <a class="btn-flat tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add a folder"><i class="material-icons">tab</i></a>
+      <a class="btn-flat tooltipped" data-position="bottom" ng-click="snippets.toggleInput()" data-delay="50" data-tooltip="Add a folder"><i class="material-icons">tab</i></a>
     </span>
   </div>
+  <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addSubFolder()" novalidate>
+    <div class="form-group">
+      <input placeholder="New Subfolder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="snippets.subFolder.name" />
+    </div>
+  </form>
   <div class="collection col s12">
     <a class="waves-effect waves-teal collection-item center-align" ng-repeat="folder in snippets.visibleFolders" ng-click="snippets.Folders.selectFolder(folder)">
       <div class="row valign-wrapper">

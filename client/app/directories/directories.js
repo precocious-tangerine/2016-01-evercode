@@ -20,10 +20,11 @@ class DirectoriesCtrl {
   }
 
   addFolder() {
-    let path = this.selectedFolder ? this.selectedFolder + '/' + this.folder.name : this.snippetMap.__root.value + '/' + this.folder.name;
+    let path = this.snippetMap.__root.value + '/' + this.folder.name;
     this.Folders.addFolder({ path: path });
     this.folder.name = '';
   }
+
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
   }

@@ -15,7 +15,21 @@ class SnippetsCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Folders = Folders;
     this.Snippets = Snippets;
+    this.folderInput = false;
   }
+
+  addSubFolder() {
+    if(this.selectedFolder){
+    let path = this.selectedFolder + '/' + this.folder.name;
+    this.Folders.addFolder({ path: path });
+    this.subFolder.name = '';
+    }
+  }
+
+  toggleInput() {
+    this.folderInput = !this.folderInput;
+  }
+
   copySnippet(snippet) {
     this.Snippets.getSnippet({ snippetId: snippet._id });
   }
