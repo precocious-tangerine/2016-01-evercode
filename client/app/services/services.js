@@ -16,19 +16,9 @@ export class Folders {
           method: 'GET',
           url: '/api/user/snippets'
         }).then(res => {
-          var snippetMap = {};
-          convertToTree(res.data, (treeNode) => {
-            let {value, filePath} = treeNode
-            let children = treeNode.children.map((child) => child.filePath);
-            let parent = tree.parent ? tree.parent.filePath : null;
-            snippetMap[filePath] = {value, filePath, children, parent}; 
-          });
-
-          dispatch(Actions.setSnippetMap(snippetMap));
-
-          //dispatch(Actions.setSnippetMap(res.data));
-
-        })
+            var snippetMap = convertToTree(res.data);
+            dispatch(Actions.setSnippetMap(snippetMap));
+          })
       },
 
       getTestFileTree() {
@@ -38,12 +28,9 @@ export class Folders {
         }).then(res => {
           var snippetMap = convertToTree(res.data);
           dispatch(Actions.setSnippetMap(snippetMap));
-
-
-          // dispatch(Actions.setSnippetMap(res.data));
-          // dispatch(Actions.setFileTree(convertToTree(res.data)));
         })
       },
+      
       testSelectedFolder() {
         dispatch(Actions.setSselectedFolder('/testuser/folder1'));
       },
@@ -95,8 +82,9 @@ export class Folders {
 }
 
 export class Snippets {
-  constructor($http, $ngRedux) {
+  constructor($http, $ngRedux, Folders) {
     this.$http = $http;
+    this.Folders = Folders;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     window.Snippets = this;
   }
@@ -107,10 +95,9 @@ export class Snippets {
       getSnippet(snippetId) {
         return this.$http({
           method: 'GET',
-          url: '/api/snippets?snippetId=' + snippetId
+          url: '/api/snippets?_id=' + snippetId
         });
       },
-
       addSnippet(snippetObj) {
         // let {filePath} = snippetObj
         // return this.$http({
@@ -160,7 +147,7 @@ export class Snippets {
 }
 
 export class Auth {
-  constructor($http, $location, $window, Folders, $ngRedux) {
+  constructor($http, $location, $window, $ngRedux) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.$http = $http;
     this.$location = $location;
@@ -174,7 +161,6 @@ export class Auth {
             url: '/signin',
             data: user
           }).then(token => {
-            console.log(token);
             this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })
@@ -190,7 +176,6 @@ export class Auth {
             url: '/signup',
             data: user
           }).then(token => {
-            console.log(token);
             this.$window.localStorage.setItem('com.evercode', token.data);
             this.$location.path('/main');
           })

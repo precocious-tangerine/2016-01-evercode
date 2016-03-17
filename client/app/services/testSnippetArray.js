@@ -117,9 +117,4 @@ testSnippets2.forEach(function(obj) {
     objs[obj.filePath] = obj;
 });
 
-
-
-
-
 module.exports = objs;
-    

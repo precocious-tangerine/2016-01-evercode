@@ -29,7 +29,6 @@ class EditorCtrl {
   }
 
   toggleTag() {
-    console.log('toggleTag', this.addTag);
     this.addTag = !this.addTag
   }
 
@@ -39,11 +38,10 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    this.Snippets.addSnippet({ name: this.snippet.name, content: this.content, filePath: this.filePath })
+    this.Snippets.addSnippet({ name: this.snippet.name, data: this.content, filePath: this.path+this.snippet.name })
   };
 
   updateSnippet() {
-    console.log('updateSnippet', this)
     this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
   }
 

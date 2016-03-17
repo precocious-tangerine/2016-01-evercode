@@ -16,32 +16,32 @@ class DirectoriesCtrl {
     Folders.getTestFileTree();
     this.Folders = Folders;
     this.folder = {};
-    // window.snippetArr = this.snippetArr;
+    this.snippetArr = [];
   }
 
   addFolder() {
-    this.Folders.addFolder({ folder: this.folder.name });
+    let path = this.selectedFolder ? this.selectedFolder + '/' + this.folder.name : this.snippetMap.__root.value.filePath + '/' + this.folder.name;
+    this.Folders.addFolder({ path: path });
     this.folder.name = '';
   }
-  changeActiveTab(folder) {
-    this.Folders.selectFolder(folder);
+  changeActiveTab(folderPath) {
+    console.log('folderPath', folderPath);
+    this.Folders.selectFolder(folderPath);
   }
 
-  removeFolder(name) {
-    this.Folders.removeFolder({ name: name });
+  removeFolder(folderPath) {
+    this.Folders.removeFolder(folderPath);
   }
 
   mapStateToThis(state) {
-    window.statePeek = state;
-    const {selectedFolder, snippetMap } = state;
-    // const folders = !fileTree.children ? null : fileTree.children.filter(folder => (folder.children.length > 0));
-    // const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
+    const { snippetMap, selectedFolder } = state;
+    const folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
+    const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
     return {
-      selectedFolder,
-      //folders,
-      snippetMap
-      //snippetArr
-     
+      folders,
+      snippetMap,
+      snippetArr,
+      selectedFolder
     };
   }
 
