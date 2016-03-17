@@ -36,21 +36,21 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder } = state;
-    let visibleFolders, snippetArr = [];
 
+    let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
+    
+    let snippetArr =  [];
     Object.keys(snippetMap).forEach(key => {
       let snippetVal = snippetMap[key].value
-      if(snippetVal === 'object') {
-        if(snippetVal.name === '.config' || snippetVal.name === '/.config') {
-          snippetArr.push(snippetVal.value);
+      if(typeof snippetVal === 'object') {
+        if(snippetVal.name !== '.config' && snippetVal.name !== '/.config') {
+          snippetArr.push(snippetVal);
         }
-      } else {
-        visibleFolders.push(snippetVal);
       }
     });
 
     return {
-      visibleFolders,
+      folders,
       snippetMap,
       snippetArr,
       selectedFolder
