@@ -86,7 +86,6 @@ describe('the User Model - makeUser', function () {
   it('should have a root folder in the snippets object', function(){
     expect(Object.keys(tempUser.snippets)).to.be.length(1);
   });
-
 });
 
 describe('the User Model - getUser', function () {
@@ -243,7 +242,6 @@ var Snippet = require('../server/models/snippets');
 
 var removeTestSnippet = function(callback){
   Snippet.findOne({data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets'}, function(err, result) {
-    console.log("removeTestSnippet", err, result)
     if (result) {
       result.remove(callback);
     } else {
@@ -272,18 +270,248 @@ describe('the Snippet Model - Snippet basics', function () {
 
 describe('the Snippet Model - makeSnippet', function (){
 
+  var tempSnippet;
+  before(function(done) {
+
+    var testSnippet = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+      filePath: 'test@chai.com/',
+      name: 'test.snip'
+    };
+
+    var testMakeSnippet = function() {
+      Snippet.makeSnippet(testSnippet, function(err, returnedSnippet) {
+        console.log("making test snippet", err, returnedSnippet);
+        tempSnippet = returnedSnippet;
+        done();
+        returnedSnippet.remove();
+      });
+    }
+
+    removeTestSnippet(testMakeSnippet);
+  });
+
+
+  it('should return an object', function() {
+    expect(tempSnippet).to.be.an('object');
+  });
+
+  it('should have a unique id called _id', function() {
+    expect(tempSnippet).to.have.property('_id');
+  });
+
+  it('should have a property called _createdAt that is a Date', function() {
+    expect(tempSnippet).to.have.property('_createdAt');
+  });
+
+  it('should have a property called _updatedAt At that is a Date', function() {
+    expect(tempSnippet).to.have.property('_updatedAt');
+  });
+  
+  it('should have an createdBy property that is a string', function () {
+    expect(tempSnippet).to.have.property('createdBy', 'test@chai.com')
+      .that.is.a('string');
+  });
+
+  it('should have a data property that is a string', function () {
+    expect(tempSnippet).to.have.property('data')
+      .that.is.a('string');
+  });
+
+  it('should have a filePath property that is a string', function () {
+    expect(tempSnippet).to.have.property('filePath')
+      .that.is.a('string');
+  });
+
+  it('should have a name property that is a string', function () {
+    expect(tempSnippet).to.have.property('name', 'test.snip')
+      .that.is.a('string');
+  });
+
+  it('should have a public property that is a boolean and defaulted to true', function () {
+    expect(tempSnippet).to.have.property('public', true)
+      .that.is.a('boolean');
+  });
 })
 
 describe('the Snippet Model - getSnippet', function (){
 
+  var tempSnippet;
+  before(function(done) {
+
+    var testSnippet = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+      filePath: 'test@chai.com/',
+      name: 'test.snip'
+    };
+
+    var testGetSnippet = function() {
+      Snippet.create(testSnippet)
+        .then(function(returnedSnippet) {
+          testSnippet = returnedSnippet;
+          Snippet.getSnippet(testSnippet._id ,function(err, result) {
+            tempSnippet = result;
+            done();
+          })
+        })
+        .catch(function(err){
+          done()
+        }) 
+    }
+
+    removeTestSnippet(testGetSnippet);
+  });
+
+
+  it('should return an object', function() {
+    expect(tempSnippet).to.be.an('object');
+  });
+
+  it('should have a unique id called _id', function() {
+    expect(tempSnippet).to.have.property('_id');
+  });
+  
+  it('should have an createdBy property that is a string', function () {
+    expect(tempSnippet).to.have.property('createdBy', 'test@chai.com')
+      .that.is.a('string');
+  });
+
+  it('should have a data property that is a string', function () {
+    expect(tempSnippet).to.have.property('data')
+      .that.is.a('string');
+  });
+
+  it('should have a filePath property that is a string', function () {
+    expect(tempSnippet).to.have.property('filePath')
+      .that.is.a('string');
+  });
+
+  it('should have a name property that is a string', function () {
+    expect(tempSnippet).to.have.property('name', 'test.snip')
+      .that.is.a('string');
+  });
+
+  it('should have a public property that is a boolean and defaulted to true', function () {
+    expect(tempSnippet).to.have.property('public', true)
+      .that.is.a('boolean');
+  });
 })
 
 describe('the Snippet Model - updateSnippet', function (){
 
+  var tempSnippet;
+  var updateResult;
+  var oldSnippet;
+  var snippetUpdates = {
+    filePath: 'test@chai.com/updates/updatedtest.snip',
+    name:'updatedtest.snip'
+  }
+  var testSnippet = {
+    createdBy: 'test@chai.com',
+    data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+    filePath: 'test@chai.com/test.snip',
+    name: 'test.snip'
+  };
+
+  before(function(done) {
+    var testUpdateSnippet = function () {
+      Snippet.create(testSnippet)
+      .then(function(returnedSnippet) {
+        oldSnippet = returnedSnippet;
+        Snippet.updateSnippet(returnedSnippet._id, snippetUpdates ,function(err, result) {
+          updateResult = result;
+          Snippet.findOne({_id: returnedSnippet._id}, function(err, returnedSnippet) {
+            tempSnippet = returnedSnippet;
+            done();
+          })
+        });
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      }) 
+    }
+
+    removeTestSnippet(testUpdateSnippet);
+    
+  });
+  
+  it('should return a results object', function() {
+    expect(updateResult).to.be.an('object');
+  });
+
+  it('should report updating the document from the database', function() {
+    expect(updateResult).to.have.property('n')
+      .that.equals(1);
+  });
+  
+  it('should update properties', function () {
+    expect(tempSnippet).to.have.property('filePath','test@chai.com/updates/updatedtest.snip')
+      .that.is.a('string');
+    expect(tempSnippet).to.have.property('name','updatedtest.snip')
+      .that.is.a('string');
+  });
+
+  it('should change the _updatedAt property of the document in the database', function() {
+    expect(tempSnippet).to.have.property('_updatedAt')
+      .that.is.not.equal(oldSnippet._updatedAt);
+  });
 })
 
 describe('the Snippet Model - removeSnippet', function (){
 
+  var tempSnippet;
+  var deleteResult;
+  before(function(done) {
+    var testSnippet = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+      filePath: 'test@chai.com/test.snip',
+      name: 'test.snip'
+    };
+
+    var testRemoveSnippet = function () {
+      Snippet.create(testSnippet)
+      .then(function(returnedSnippet){
+        tempSnippet = returnedSnippet;
+        Snippet.removeSnippet(returnedSnippet._id ,function(err, result) {
+          deleteResult = result;
+          console.log("deleteResult",deleteResult);
+          done();
+        })
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      })
+    }
+
+    removeTestSnippet(testRemoveSnippet);
+
+  });
+
+  it('should return a results object', function() {
+    expect(deleteResult.result).to.be.an('object')
+      .that.has.property('ok');
+  });
+
+  it('should report removal from the database', function() {
+    expect(deleteResult.result).to.have.property('n')
+      .that.equals(1);
+  });
+  
+  it('should not be able to find the test snippet', function (done) {
+    Snippet.findOne({_id: tempSnippet._id}, function(err, result){
+      console.log("finding test snippet after delete", err,result)
+      expect(result).to.be.null;
+      done();
+      if (result) {
+        result.remove();
+      }
+    });
+  });
 })
 
 describe('the Snippet Model - Folder basics', function () {
