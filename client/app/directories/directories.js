@@ -13,14 +13,15 @@ export const directories = () => {
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    Folders.getTestFileTree();
+    Folders.getFileTree();
     this.Folders = Folders;
     this.folder = {};
     this.snippetArr = [];
   }
 
   addFolder() {
-    let path = this.selectedFolder ? this.selectedFolder + '/' + this.folder.name : this.snippetMap.__root.value.filePath + '/' + this.folder.name;
+    let path = this.selectedFolder ? this.selectedFolder + '/' + this.folder.name : this.snippetMap.__root.value + '/' + this.folder.name;
+    console.log('path', path);
     this.Folders.addFolder({ path: path });
     this.folder.name = '';
   }
@@ -34,9 +35,11 @@ class DirectoriesCtrl {
   }
 
   mapStateToThis(state) {
-    const { snippetMap, selectedFolder } = state;
-    const folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
-    const snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
+    let { snippetMap, selectedFolder } = state;
+    console.log('root', snippetMap.__root);
+    let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
+    console.log('new folders', folders);
+    let snippetArr = Object.keys(snippetMap).map(key => snippetMap[key]);
     return {
       folders,
       snippetMap,

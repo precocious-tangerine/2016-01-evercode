@@ -37,11 +37,9 @@ class SnippetsCtrl {
     let visibleFolders = [],
       visibleSnippets = [];
     let selectedFolderObj = snippetMap[selectedFolder];
-    console.log('selectedFolder', selectedFolderObj);
     if (selectedFolderObj) {
       selectedFolderObj.children.forEach(childKey => {
         let child = snippetMap[childKey];
-        console.log('child', child);
         if (typeof child.value === 'string') {
           visibleFolders.push(child);
         } else if (child.value.name !== '.config') {

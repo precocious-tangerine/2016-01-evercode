@@ -168,6 +168,7 @@ module.exports = (app, express) => {
       let path = req.body.path;
       Snippets.makeSubFolderAsync(email, path)
         .then((folder) => {
+          console.log('folder', folder);
           res.status(201).send(folder)
         }).catch((err) => {
           console.log(err);

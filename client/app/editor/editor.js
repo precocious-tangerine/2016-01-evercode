@@ -38,19 +38,25 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    this.Snippets.addSnippet({ name: this.snippet.name, data: this.content, filePath: this.path+this.snippet.name })
-  };
+    let snippet = {
+      name: this.snippet.name,
+      data: this.content,
+      filePath: this.path + this.snippet.name
+    };
+    this.Snippets.addSnippet(snippet);
+  }
 
   updateSnippet() {
     this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
   }
 
   mapStateToThis(state) {
-    const path = state.selectedFolder.filePath;
-    const { selectedSnippet } = state;
-    const content = selectedSnippet.data;
+    let { selectedFolder, selectedSnippet, snippetMap } = state;
+    let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
+    let content = !selectedSnippet ? null : snippetMap[selectedSnippet].value.data;
     return {
       path,
+      snippetMap,
       selectedSnippet,
       content
     };
