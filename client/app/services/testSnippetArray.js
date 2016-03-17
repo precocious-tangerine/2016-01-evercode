@@ -1,4 +1,4 @@
-module.exports.testSnippets = 	
+var testSnippets = 	
 [ { _createdAt: 'today',
     _updatedAt: 'now',
     createdBy: 'testuser',
@@ -69,4 +69,57 @@ module.exports.testSnippets =
     filePath: 'testuser/folder1/subfolder2/.config',
     labels: 'important',
     sharUrl: 'not supported' } ];
+
+var invalidTestSnippets2 = [{
+ __v: 0,
+ _createdAt: "2016-03-17T02:05:25.124Z",
+ _id: "56ea10eebbd40eaf258988b1",
+ _updatedAt: "2016-03-17T02:05:25.124Z",
+ createdBy: "test@mail.com",
+ data: "..",
+ filePath: "test@mail.com",
+ name: ".config"
+}, {
+ __v: 0,
+ _createdAt: "2016-03-17T02:05:25.124Z",
+ _id: "56ea10fbbbd40eaf258988b3",
+ _updatedAt: "2016-03-17T02:05:25.124Z",
+ createdBy: "test@mail.com",
+ data: "..",
+ filePath: "test@mail.com/hello",
+ name: ".config"
+}];
+
+var testSnippets2 = [{
+ __v: 0,
+ _createdAt: "2016-03-17T02:05:25.124Z",
+ _id: "56ea10eebbd40eaf258988b1",
+ _updatedAt: "2016-03-17T02:05:25.124Z",
+ createdBy: "test@mail.com",
+ data: "..",
+ filePath: "test@mail.com/.config",
+ name: ".config"
+}, {
+ __v: 0,
+ _createdAt: "2016-03-17T02:05:25.124Z",
+ _id: "56ea10fbbbd40eaf258988b3",
+ _updatedAt: "2016-03-17T02:05:25.124Z",
+ createdBy: "test@mail.com",
+ data: "..",
+ filePath: "test@mail.com/hello/.config",
+ name: ".config"
+}];
+
+
+
+var objs = {};
+testSnippets2.forEach(function(obj) {
+    objs[obj.filePath] = obj;
+});
+
+
+
+
+
+module.exports = objs;
     

@@ -12,7 +12,7 @@ var redisClient = redis.createClient();
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
-var snippetsArray = require('./testSnippetArray.js').testSnippets;
+var snippetsArray = require('../../client/app/services/testSnippetArray.js');
 
 let checkReqAuthorization = (req, res, next) => {
   let token = req.headers['x-access-token'];
@@ -210,10 +210,7 @@ module.exports = (app, express) => {
 
   app.route('/api/test-folder-tree')
     .get((req, res) => {
-      var snippetObj = {};
-      snippetsArray.forEach((snippet) => {
-        snippetObj[snippet.filePath] = snippet;
-      });
-      res.send(snippetObj);
+     
+      res.send(snippetsArray);
     });
 }

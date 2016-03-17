@@ -49,9 +49,11 @@ const modifySnippetMap = (state = {}, action) => {
     case 'SET_SNIPPET_MAP':
       return action.snippetMap;
     case 'ADD_SNIPPET_MAP':
-      return 'Fix this on line 52';
+      return Object.assign({}, state, {[action.filePath]: action.snippetMapNode});
     case 'REMOVE_SNIPPET_MAP':
-      return 'Fix this on line 54';
+      let newMap = Object.assign({}, state);
+      delete newMap[action.filePath]
+      return newMap;
     default:
       return state;
   }
