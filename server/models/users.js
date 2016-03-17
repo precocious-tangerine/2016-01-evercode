@@ -92,12 +92,12 @@ User.getUser = (email, callback) => {
 }
 
 User.updateUser = (email, newProps, callback) => {
- newProps._updatedAt = new Date();
- User.update({email}, newProps, { multi: false }, callback);
+  newProps._updatedAt = new Date();
+  User.update({ email }, newProps, { multi: false }, callback);
 }
 
 User.removeUser = (email, callback) => {
-  User.findOne({email}).remove(callback);
+  User.findOne({ email }).remove(callback);
 }
 
 User.checkCredentials = (email, attempt, callback) => {

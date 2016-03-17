@@ -63,7 +63,7 @@ let convertToTree = function(snippetObj) {
   userTreeMapCopy.__root = userTree;
   let userTreeMap = {};
   Object.keys(userTreeMapCopy).forEach(key => {
-    Object.assign(userTreeMap[key] = {}, {value: userTreeMapCopy[key].value, filePath: userTreeMapCopy[key].filePath});   
+    Object.assign(userTreeMap[key] = {}, { value: userTreeMapCopy[key].value, filePath: userTreeMapCopy[key].filePath });
     userTreeMap[key].children = userTreeMapCopy[key].children.map(tree => tree.filePath);
     userTreeMap[key].parent = userTreeMapCopy[key].parent ? userTreeMapCopy[key].parent.filePath : null;
   })

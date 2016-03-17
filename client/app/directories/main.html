@@ -4,7 +4,7 @@
       <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
     </div>
     <div class="center">
-      <a href="#!" class="breadcrumb">{{directories.selectedFolder.filePath || "username"}}</a>
+      <a href="#!" class="breadcrumb">{{directories.selectedFolder || "username"}}</a>
     </div>
   </div>
 </nav>
@@ -13,7 +13,7 @@
     <li class="search">
       <div class="input-field card col s12">
         <i class="material-icons prefix">search</i>
-        <input id="icon_prefix" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..."/>
+        <input id="icon_prefix" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..." />
         <div class="search-results">
           <ul id="dropdown1">
             <li ng-hide="!search" ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
@@ -38,17 +38,17 @@
   <div class="col s12 m10 l10" ui-view>
   </div>
   <script>
-    $('#search-bar').keyup(function(event) {
-      if(event.target.value == '') {
-        $('.search-results').slideUp();
-      } else {
-        $('.search-results').slideDown();
-      }
-    });
+  $('#search-bar').keyup(function(event) {
+    if (event.target.value == '') {
+      $('.search-results').slideUp();
+    } else {
+      $('.search-results').slideDown();
+    }
+  });
   </script>
   <style>
-    .search-results {
-      diplay:none;
-    }
+  .search-results {
+    diplay: none;
+  }
   </style>
 </div>

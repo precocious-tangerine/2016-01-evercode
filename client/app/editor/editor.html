@@ -5,7 +5,7 @@
   <button type="submit" class="waves-effect waves-light btn save-snippet">Save Snippet</button>
 </form>
 <div class='tags'>
-  <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.selectedSnippet.tags">{{ tag }}</span>
+  <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[selectedSnippet].tags">{{ tag }}</span>
   <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
   <span ng-class="editor.addTag ? 'toggle-tag' : ''">
     <form name="tagForm" ng-submit="editor.updateSnippet()" novalidate>

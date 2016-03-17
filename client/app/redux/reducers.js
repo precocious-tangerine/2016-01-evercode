@@ -14,7 +14,7 @@ const modifySelectedSnippet = (state = '', action) => {
 const modifySelectedFolder = (state = '', action) => {
   switch (action.type) {
     case 'SET_SELECTED_FOLDER':
-    return action.folderPath;
+      return action.folderPath;
     case 'REMOVE_SELECTED_FOLDER':
       return '';
     default:
@@ -45,11 +45,12 @@ const modifySelectedFolder = (state = '', action) => {
 // }
 
 const modifySnippetMap = (state = {}, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_SNIPPET_MAP':
       return action.snippetMap;
     case 'ADD_SNIPPET_MAP':
-      return Object.assign({}, state, {[action.filePath]: action.snippetMapNode});
+      return Object.assign({}, state, {
+        [action.filePath]: action.snippetMapNode });
     case 'REMOVE_SNIPPET_MAP':
       let newMap = Object.assign({}, state);
       delete newMap[action.filePath]

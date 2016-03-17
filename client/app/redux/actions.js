@@ -12,12 +12,12 @@ export const addSnippetMap = (filePath, snippetMapNode) => {
   };
 }
 export const removeSnippetMap = (filePath) => {
-  return {
-    type: 'REMOVE_SNIPPET_MAP',
-    filePath
-  };
-}
-//Handling which snippet is currently selected
+    return {
+      type: 'REMOVE_SNIPPET_MAP',
+      filePath
+    };
+  }
+  //Handling which snippet is currently selected
 export const setSelectedSnippet = (snippetPath) => {
   return {
     type: 'SET_SELECTED_SNIPPET',
@@ -60,16 +60,16 @@ export const removeSelectedFolder = () => {
 // };
 
 // export const addFolderToFileTree = (folder) => {
-// 	return {
-// 		type: 'ADD_NEW_FOLDER'
-// 		folder
-// 	};
+//  return {
+//    type: 'ADD_NEW_FOLDER'
+//    folder
+//  };
 // };
 // export const removeFolderFileTree = (folder) => {
-// 	return {
-// 		type: 'REMOVE_FOLDER';
-// 		folder
-// 	};
+//  return {
+//    type: 'REMOVE_FOLDER';
+//    folder
+//  };
 // };
 
 //Set file tree snippet
