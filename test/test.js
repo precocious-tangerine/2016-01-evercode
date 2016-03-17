@@ -199,7 +199,6 @@ describe('the User Model - removeUser', function () {
         tempUser = returnedUser;
         User.removeUser(testUser.email ,function(err, result) {
           deleteResult = result;
-          console.log("deleteResult",deleteResult);
           done();
         })
       })
@@ -225,7 +224,6 @@ describe('the User Model - removeUser', function () {
   
   it('should not be able to find the test user', function (done) {
     User.findOne({_id: tempUser._id}, function(err, result){
-      console.log("finding test user after delete", err,result)
       expect(result).to.be.null;
       done();
       if (result) {
@@ -282,7 +280,6 @@ describe('the Snippet Model - makeSnippet', function (){
 
     var testMakeSnippet = function() {
       Snippet.makeSnippet(testSnippet, function(err, returnedSnippet) {
-        console.log("making test snippet", err, returnedSnippet);
         tempSnippet = returnedSnippet;
         done();
         returnedSnippet.remove();
@@ -478,7 +475,6 @@ describe('the Snippet Model - removeSnippet', function (){
         tempSnippet = returnedSnippet;
         Snippet.removeSnippet(returnedSnippet._id ,function(err, result) {
           deleteResult = result;
-          console.log("deleteResult",deleteResult);
           done();
         })
       })
@@ -503,8 +499,7 @@ describe('the Snippet Model - removeSnippet', function (){
   });
   
   it('should not be able to find the test snippet', function (done) {
-    Snippet.findOne({_id: tempSnippet._id}, function(err, result){
-      console.log("finding test snippet after delete", err,result)
+    Snippet.findOne({_id: tempSnippet._id}, function(err, result) {
       expect(result).to.be.null;
       done();
       if (result) {
