@@ -45,16 +45,21 @@ let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
 }
 
 
-let convertToTree = function(snippetObj, callback) {
+let convertToTree = function(snippetObj) {
   let keyValues = R.toPairs(snippetObj);
   let filePaths = keyValues.map( (keyValue) => {
-    let folders = keyValue[0].split('/'); 
+    let folders = keyValue[0].split('/');
+    folders[0] ? null : folders.shift();
+    folders[folders.length -1] ? null : folders.pop();
     folders[folders.length - 1] = keyValue[1];
     return R.reverse(folders);
   });
   let userTree = new Tree(null);
-  filePaths.forEach( (filePath) => insertIntoTreeRoot(userTree, filePath, '', callback) );
-  return userTree;
+  var userTreeMap = {};
+  filePaths.forEach( (filePath) => {
+    insertIntoTreeRoot(userTree, filePath, '', node => userTreeMap[node.filePath] = node);
+  })
+  return userTreeMap;
 };
 
 export default convertToTree;
