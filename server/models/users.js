@@ -91,6 +91,15 @@ User.getUser = (email, callback) => {
     .catch(callback);
 }
 
+User.updateUser = (email, newProps, callback) => {
+ newProps._updatedAt = new Date();
+ User.update({email}, newProps, { multi: false }, callback);
+}
+
+User.removeUser = (email, callback) => {
+  User.findOne({email}).remove(callback);
+}
+
 User.checkCredentials = (email, attempt, callback) => {
   // TODO password verification
   let userData = {};
@@ -111,15 +120,6 @@ User.checkCredentials = (email, attempt, callback) => {
         callback(new Error("Email not found"), null);
       }
     })
-}
-
-User.updateUser = (email, newProps, callback) => {
-  newProps._updatedAt = new Date();
-  User.update({ email }, newProps, { multi: false }, callback);
-}
-
-User.removeUser = (email, callback) => {
-  User.findOne({ email }).remove(callback);
 }
 
 module.exports = User;

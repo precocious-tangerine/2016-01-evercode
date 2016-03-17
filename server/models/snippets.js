@@ -8,8 +8,9 @@ let snippetSchema = mongoose.Schema({
   data: { type: String, required: true },
   name: { type: String, required: true },
   filePath: { type: String, required: true },
-  labels: { type: mongoose.Schema.Types.Mixed, default: {} },
-  shareUrl: { type: String },
+  tags: { type: mongoose.Schema.Types.Mixed, default: {} },
+  public: { type: Boolean, default: true},
+  shareUrl: { type: String},
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);
@@ -26,6 +27,14 @@ Snippet.getSnippet = (_id, callback) => {
     .catch(callback);
 }
 
+Snippet.updateSnippet = (_id, newProps, callback) => {
+  newProps._updatedAt = new Date();
+  Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
+}
+
+Snippet.removeSnippet = (_id, callback) => {
+  Snippet.findOne({_id: mongoose.Types.ObjectId(_id) }).remove(callback);
+}
 
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
   Snippet.findOne({ email, filepath })
@@ -44,7 +53,6 @@ Snippet.getSnippetsByUser = (email, callback) => {
     })
     .catch(callback);
 }
-
 
 Snippet.getSnippetInfoByUser = (email, callback) => {
   Snippet.find({ createdBy: email }, '-data')
@@ -79,21 +87,12 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
     }).catch(callback);
 }
 
-Snippet.updateSnippet = (_id, newProps, callback) => {
-  newProps._updatedAt = new Date();
-  Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
-}
-
 Snippet.makeSubFolder = (email, filepath, callback) => {
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath + "/" }, callback);
 }
 
 Snippet.makeRootFolder = (email, callback) => {
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email + "/" }, callback);
-}
-
-Snippet.removeSnippet = (_id, callback) => {
-  Snippet.findOne({ _id }).remove(callback);
 }
 
 Snippet.removeFolder = (email, folder, callback) => {
