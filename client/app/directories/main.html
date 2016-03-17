@@ -38,11 +38,8 @@
   <div class="col s12 m10 l10" ui-view>
   </div>
   <script>
-  console.log('script loading');
   $('#search-bar').keyup(function(event) {
-    console.log('fired');
     if (event.target.value == '') {
-      console.log('event triggered');
       $('.search-results').slideUp();
     } else {
       $('.search-results').slideDown();
