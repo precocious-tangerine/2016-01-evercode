@@ -42,7 +42,6 @@ let removeReqTokenFromRedisAsync = (token) => {
 }
 
 module.exports = (app, express) => {
-
   app.route('/signin')
     .post((req, res) => {
       let { email, password } = req.body;
@@ -106,6 +105,8 @@ module.exports = (app, express) => {
         })
     })
     .post((req, res) => {
+      let email = jwt.verify(req.headers.token, secret);
+      req.body.createdby = email;
       Snippets.makeSnippetAsync(req.body)
         .then((snippet) => {
           res.status(201).send(snippet)
@@ -116,9 +117,9 @@ module.exports = (app, express) => {
     })
     .delete((req, res) => {
       Snippets.removeSnippetAsync(req.body.snippetId)
-        .then((snippet) => {
-          if (snippet) {
-            res.status(201).send(snippet);
+        .then((response) => {
+          if (response) {
+            res.status(201).send(response);
           } else {
             res.status(404).send("Snippet not Found");
           }
@@ -146,9 +147,14 @@ module.exports = (app, express) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
       let filepath = req.body.path;
       return Snippets.getSnippetByFilepathAsync(email, filepath)
-        .then((results) => {
-          if (Array.isArray(results) && results.length > 0) {
-            res.status(200).send(results);
+        .then((dbSnippets) => {
+          console.log(dbSnippets);
+            if (Array.isArray(dbSnippets) && dbSnippets.length > 0) {
+            var fileTreeList = {};
+            dbSnippets.forEach((node) => {
+              fileTreeList[node.filePath] = node;
+            });
+            res.status(200).send(fileTreeList);
           } else {
             res.status(404).send("Snippets not Found");
           }
