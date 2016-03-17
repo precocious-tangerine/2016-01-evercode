@@ -13,7 +13,7 @@
     </div>
   </form>
   <div class="collection col s12">
-    <a class="waves-effect waves-teal collection-item center-align" ng-repeat="folder in snippets.visibleFolders" ng-click="snippets.Folders.selectFolder(folder)">
+    <a class="waves-effect waves-teal collection-item center-align" ng-repeat="folder in snippets.visibleFolders" ng-click="snippets.changeActiveTab(folder.filePath)">
       <div class="row valign-wrapper">
         <i class="valign tiny material-icons">tab</i>
         <span class="valign folder-name">

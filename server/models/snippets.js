@@ -10,7 +10,8 @@ let snippetSchema = mongoose.Schema({
   filePath: { type: String, required: true },
   tags: { type: mongoose.Schema.Types.Mixed, default: {} },
   public: { type: Boolean, default: true },
-  shareUrl: { type: String },
+  favorite: { type: Boolean, default: false },
+  shareUrl: { type: String }
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);

@@ -20,10 +20,14 @@ class SnippetsCtrl {
 
   addSubFolder() {
     if(this.selectedFolder){
-    let path = this.selectedFolder + '/' + this.folder.name;
+    let path = this.selectedFolder + this.subFolder.name;
     this.Folders.addFolder({ path: path });
     this.subFolder.name = '';
     }
+  }
+
+  changeActiveTab(folderPath) {
+    this.Folders.selectFolder(folderPath);
   }
 
   toggleInput() {
@@ -64,7 +68,8 @@ class SnippetsCtrl {
     return {
       visibleSnippets,
       visibleFolders,
-      selectedFolderObj
+      selectedFolderObj,
+      selectedFolder
     };
   }
 
