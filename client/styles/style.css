@@ -90,5 +90,10 @@
   margin-left: 5px;
 }
 
+.center a {
+  display: inline;
+}
 
-
+.center a:hover {
+  background-color: transparent;
+}
