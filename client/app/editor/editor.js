@@ -39,12 +39,12 @@ class EditorCtrl {
     if (this.selectedSnippet) {
       let objectToUpdate = this.snippetMap[this.selectedSnippet].value;
       let _id = objectToUpdate._id;
-      objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + this.snippetObj.name + '/';
+      objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent  + '/' + this.snippetObj.name;
       Object.assign(objectToUpdate, { data: this.snippetObj.data, name: this.snippetObj.name });
       delete objectToUpdate._id;
       this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate });
     } else {
-      this.snippetObj.filePath = this.path + this.snippetObj.name;
+      this.snippetObj.filePath = this.path  + '/' + this.snippetObj.name;
       this.Snippets.addSnippet(this.snippetObj);
     }
   }
