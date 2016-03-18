@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  position: relative;
   height: auto;
   width: auto;
   left: 0;
@@ -8,12 +8,9 @@
   bottom: 0;
 }
 
-.main {
+main {
   position: relative;
-  width: 15vw;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  margin-left: 68px;
 }
 
 .search-results {
@@ -100,6 +97,10 @@
 
 #nav-mobile {
   line-height: 3em;
+  width: 66px;
+  left: 0;
+  margin:0px;
+  padding:0px;
 }
 
 #search-icon {
@@ -109,4 +110,35 @@
 #add-folder-icon {
   margin: 0px;
 }
+
+.icon {
+  width: 2rem;
+}
+
+.collapsible > li {
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.collapsible-header {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nav-link {
+  margin: 0px;
+  padding-left: 0px;
+}
+
+.collapsible-body {
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding: 0px;
+
+}
+
 
