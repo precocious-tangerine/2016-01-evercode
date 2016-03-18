@@ -1,60 +1,68 @@
-//The following functions will mutate their arguments
+//The following functions will mutate their arguments (maybe not anymore)
 
-export const insertNode = (tree, filePath, node) => {
-    tree = Object.assign({}, tree, {__root: tree.__root});
-    let folders = filePath.split('/').filter(a => a).concat(node);
-    let allOK = folders.reduce((prevPath, currItem) => {
-      if(typeof currItem === 'object') {
-        tree[prevPath].value = currItem
-        return true
-      } else {
-        let currPath = prevPath + '/' + currItem;
-        let parentObj = tree[prevPath], currObj = tree[currPath];
-        if(prevPath && !parentObj) { 
-          tree[prevPath] = {filePath: prevPath, children: []}
-        }
-        if(parentObj && parentObj.children.indexOf(currPath) === -1) {
-          tree[prevPath].children.push(currPath);
-        }
-        tree[currPath] = currObj ? currObj : {children: []};
-        tree[currPath].parent = prevPath;
-        tree[currPath].value = currItem;
-        tree[currPath].filePath = currPath;
-        if(tree.__root === undefined) {
-          Object.defineProperty(tree, '__root', {
-            value: tree[currPath]
-          });
-        }
-        return currPath;
-      }         
-    }, "");
-    return allOK ? tree : throw new Error('Error parsing flepath');
-  }
+export const insertNode = (origTree, filePath, node) => {
+  let tree = Object.assign({}, origTree, {__root: origTree.__root});
+  let folders = filePath.split('/').filter(a => a).concat(node);
+  let allOK = folders.reduce((prevPath, currItem) => {
+    console.log('prevPath is ' + prevPath + ' currItem is ' + currItem);
+    if(typeof currItem === 'object') {
+      tree[prevPath].value = currItem
+      return true
+    } else {
+      let currPath = prevPath + '/' + currItem;
+      let parentObj = tree[prevPath], currObj = tree[currPath];
+      if(prevPath && !parentObj) { 
+        tree[prevPath] = {filePath: prevPath, children: []}
+      }
+      if(parentObj && parentObj.children.indexOf(currPath) === -1) {
+        tree[prevPath].children.push(currPath);
+      }
+      tree[currPath] = currObj ? currObj : {children: []};
+      tree[currPath].parent = prevPath;
+      tree[currPath].value = currItem;
+      tree[currPath].filePath = currPath;
+      if(tree.__root === undefined) {
+        Object.defineProperty(tree, '__root', {
+          value: tree[currPath]
+        });
+      }
+      return currPath;
+    }         
+  }, "");
+  return allOK ? tree : new Error('Error parsing filepath');
+}
 
-export const deleteNode = (tree, filePath) => {
-    tree = Object.assign({}, tree, {__root: tree.__root});
-    let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
-    let parent = getParent(tree, filePath);
-    childrenPaths.forEach(childPath => {
-      delete tree[childPath];
-    });
-    parent.children = parent.children.filter(childPath => childPath !== filePath);
-    return tree;
-  }
+export const deleteNode = (origTree, filePath) => {
+  tree = Object.assign({}, origTree, {__root: origTree.__root});
+  let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
+  let parent = getParent(tree, filePath);
+  childrenPaths.forEach(childPath => {
+    delete tree[childPath];
+  });
+  parent.children = parent.children.filter(childPath => childPath !== filePath);
+  return tree;
+}
+
+export const updateNode = (origTree, origFilePath, updatedFilePath, updatedNode) => {
+  let tree = Object.assign({}, origTree);
+  let nodeToUpdate = Object.assign({}, tree[origFilePath], updatedNode);
+  tree = deleteNode(tree, origFilePath);
+  return insertNode(tree, updatedFilePath, nodeToUpdate);
+}
 
 
 //The following functions do not mutate their arguments
 
 export const convertToTree = (snippetObj) => {
   let userTreeMap = Object.keys(snippetObj).reduce( (prevTree, key) => {
-    return insertNode(prevTree, key);
+    return insertNode(prevTree, key, snippetObj[key]);
   }, {})
   return userTreeMap
 }
 
 export let getParent = (tree, filePath) => {
     let parentPath = tree[filePath].parent
-    return Object.assign(tree[parentPath]);
+    return parentPath ? Object.assign({}, tree[parentPath]) : null;
   }
 export let getChildren = (tree, filePath, showConfigs) => {
     let children = tree[filePath].children.map(childPath => Object.assign({},tree[childPath]));

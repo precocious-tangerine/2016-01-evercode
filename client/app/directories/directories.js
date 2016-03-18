@@ -1,3 +1,5 @@
+import * as FT from '../services/fileTree.js';
+
 export const directories = () => {
   return {
     url: '/main',
@@ -12,11 +14,13 @@ export const directories = () => {
 
 class DirectoriesCtrl {
   constructor($ngRedux, Folders) {
+
     $ngRedux.connect(this.mapStateToThis)(this);
     Folders.getFileTree();
     this.Folders = Folders;
     this.folder = {};
     this.snippetArr = [];
+    window.dir = this;
   }
 
   addFolder() {
