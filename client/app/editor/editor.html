@@ -8,7 +8,7 @@
   <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}</span>
   <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
   <span ng-show="editor.addTag">
-    <form name="tagForm" ng-submit="editor.addOrUpdateSnippet(editor.tag)" novalidate>
+    <form name="tagForm" ng-submit="editor.addOrUpdateSnippet()" novalidate>
       <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
     </form>
   </span>
