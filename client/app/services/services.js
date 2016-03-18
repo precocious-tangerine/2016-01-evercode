@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import convertToTree from './fileTree.js';
+import {convertToTree} from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
