@@ -44,14 +44,11 @@ class TreeMap {
     if(children.length === 0) {
       return [];
     } else {
-      return children.reduce(function (results, child) {
+      return children.reduce((results, child) => {
         let childPath = child.filePath;
-        console.log('returned ', childPath);
         let children = this.getChildren(childPath);
-        console.log('this is ', this);
-        console.log('children are ', children);
         return results.concat(child, children);  
-      }.bind(this), []);
+      }, []);
     }
   }
   deleteNode(filePath) {
