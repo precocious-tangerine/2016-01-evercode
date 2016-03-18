@@ -1,3 +1,5 @@
+//The following functions will mutate their arguments
+
 export const insertNode = (tree, filePath, node) => {
     let folders = filePath.split('/').filter(a => a).concat(node);
     return folders.reduce((prevPath, currItem) => {
@@ -26,11 +28,32 @@ export const insertNode = (tree, filePath, node) => {
       }         
     }, "");
   }
-export const getParent = (tree, filePath) => {
+
+export const deleteNode = (tree, filePath) => {
+    let childrenPaths = getAllChildren(tree, filePath).map(child => child.filePath);
+    let parent = getParent(tree, filePath);
+    childrenPaths.forEach(childPath => {
+      delete tree[childPath];
+    });
+    parent.children = parent.children.filter(childPath => childPath !== filePath);
+  }
+
+
+//The following functions do not mutate their arguments
+
+export const convertToTree = (snippetObj) => {
+  let userTreeMap = {};
+  Object.keys(snippetObj).forEach((key) => {
+    insertNode(userTreeMap, key, snippetObj[key]);
+  })
+  return userTreeMap
+}
+
+export let getParent = (tree, filePath) => {
     let parentPath = tree[filePath].parent
     return tree[parentPath];
   }
-export const getChildren = (tree, filePath, showConfigs) => {
+export let getChildren = (tree, filePath, showConfigs) => {
     let children = tree[filePath].children.map(childPath => tree[childPath]);
     if(!showConfigs) {
       return children.filter(child => child.value.name !== '.config');
@@ -38,7 +61,7 @@ export const getChildren = (tree, filePath, showConfigs) => {
       return children;
     }
   }
-export const getAllParents = (tree, filePath) => {
+export let getAllParents = (tree, filePath) => {
     let results = [], parent = true;
     while (parent = getParent(tree, filePath)) {
       results.push(parent);
@@ -47,7 +70,7 @@ export const getAllParents = (tree, filePath) => {
     return results;
   }
 
-export const getAllChildren = (tree, filePath, showConfigs) => {
+export let getAllChildren = (tree, filePath, showConfigs) => {
     let children = getChildren(tree, filePath, showConfigs);
     if(children.length === 0) {
       return [];
@@ -59,22 +82,15 @@ export const getAllChildren = (tree, filePath, showConfigs) => {
       }, []);
     }
   }
-export const deleteNode = (tree, filePath) => {
-    let childrenPaths = getAllChildren(tree, filePath).map(child => child.filePath);
-    let parent = getParent(tree, filePath);
-    childrenPaths.forEach(childPath => {
-      delete tree[childPath];
-    });
-    parent.children = parent.children.filter(childPath => childPath !== filePath);
+
+export const createBoundMethods = (...args) => {
+  return {
+    parent: getParent.bind(null,...args),
+    children: getChildren.bind(null,...args),
+    parents: getAllParents.bind(null,...args),
+    allChildren: getAllChildren.bind(null,...args)
   }
 
-
-export const convertToTree = (snippetObj) => {
-  let userTreeMap = {};
-  Object.keys(snippetObj).forEach((key) => {
-    insertNode(userTreeMap, key, snippetObj[key]);
-  })
-  return userTreeMap
 }
 
 
