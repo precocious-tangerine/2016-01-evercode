@@ -1,18 +1,25 @@
-<nav>
-  <div class="nav-wrapper">
-    <div class="left center-align col s4">
-      <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
+<header>
+  <nav class ="top-nav">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
+      </div>
+      <div class="center">
+        <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
+        <a ui-sref='signout' class='right'><i class="material-icons left">power_settings_new</i>Logout</a>
+      </div>
     </div>
-    <ul class="center">
-      <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-      <a ui-sref='signout' class='right'><i class="material-icons left">power_settings_new</i>Logout</a>
-    </ul>
-  </div>
-</nav>
-<div class="row">
-  <ul id="nav-mobile" class="left side-nav col s12 m2 l2 main collapsible">
+  </nav>
+  <ul id="nav-mobile" class="side-nav fixed collapsible">
+    <li class="row">
+      <div class="collapsible-header">
+        <img class="icon" src = "https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png" />
+      </div>
+      <div class="collapsible-body">
+      </div>
+    </li>
 
-    <li class="search">
+    <li class="search row">
       <div class="collapsible-header">
         <i id="search-icon" class="material-icons center">search</i>
       </div>
@@ -28,7 +35,7 @@
       </div>
     </li>
 
-    <li>
+    <li class="row">
       <div class="collapsible-header">
           <i id="add-folder-icon" class="material-icons center">library_add</i>
       </div>
@@ -41,38 +48,49 @@
       </div>
     </li>
 
-    <li>
+    <li class="row">
       <div class="collapsible-header">
-        <a href="#/favorites" class="waves-effect waves-teal">Favorites</a>
+        <a href="#/favorites" class="waves-effect waves-teal nav-link" style ="padding-left: 0px">
+          <i class="material-icons">loyalty</i>
+        </a>
       </div>
       <div class="input-field collapsible-body">
         Favorite snippets?
       </div>
     </li>
-    <li class="folder" ng-repeat="folder in directories.folders">
+    <li class="folder row" ng-repeat="folder in directories.folders">
       <div class="collapsible-header">
-        <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">{{folder.value}}</a>
-         <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+        <a class="waves-effect waves-teal nav-link" style ="padding-left: 0px" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
+          <i class="material-icons">library_books</i>
+          
+        </a>
       </div>
       <div class="input-field collapsible-body">
-        snippets?
+        {{folder.value}}
+        <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
       </div>
     </li>
   </ul>
-  <div class="col s12 m10 l10" ui-view>
+</header>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l12" ui-view>
+      </div>
+      <script>
+      $('#search-bar').keyup(function(event) {
+        if (event.target.value == '') {
+          $('.search-results').slideUp();
+        } else {
+          $('.search-results').slideDown();
+        }
+      });
+      </script>
+      <style>
+      .search-results {
+        diplay: none;
+      }
+      </style>
+    </div>
   </div>
-  <script>
-  $('#search-bar').keyup(function(event) {
-    if (event.target.value == '') {
-      $('.search-results').slideUp();
-    } else {
-      $('.search-results').slideDown();
-    }
-  });
-  </script>
-  <style>
-  .search-results {
-    diplay: none;
-  }
-  </style>
-</div>
+</main>
