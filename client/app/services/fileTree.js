@@ -28,24 +28,29 @@ class TreeMap {
     return this[parentPath];
   }
   getChildren(filePath) {
-    let children = this[filePath].children;
-    return children.map(childPath => {this[childPath]});
+    return this[filePath].children.map(childPath => this[childPath]);
   }
   getAllParents(filePath) {
-    let results = [], parent;
+    let results = [], parent = true;
     while (parent = this.getParent(filePath)) {
       results.push(parent);
+      filePath = parent.filePath;
     }
-    return parent;
+    return results;
   }
   getAllChildren(filePath) {
+    console.log('called with ', filePath);
     let children = this.getChildren(filePath);
     if(children.length === 0) {
       return [];
     } else {
-      return children.reduce((results, child) => {
+      return children.reduce(function (results, child) {
         let childPath = child.filePath;
-        return results.concat(child, this.getChildren[childPath]);  
+        console.log('returned ', childPath);
+        let children = this.getChildren(childPath);
+        console.log('this is ', this);
+        console.log('children are ', children);
+        return results.concat(child, children);  
       }.bind(this), []);
     }
   }
