@@ -1,4 +1,3 @@
-import * as FT from '../services/fileTree.js';
 export const directories = () => {
   return {
     url: '/main',
@@ -36,7 +35,7 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder } = state;
-    let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
+    let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config')).map(el => (snippetMap[el]));
     let snippetArr =  [];
     Object.keys(snippetMap).forEach(key => {
       let snippetVal = snippetMap[key].value

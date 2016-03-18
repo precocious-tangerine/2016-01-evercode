@@ -1,25 +1,25 @@
 <form name="snippetForm" ng-submit="editor.addOrUpdateSnippet()" novalidate>
   <div class="form-group snippet-title">
-    <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetName' />
+    <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetObj.name' />
   </div>
   <button type="submit" class="waves-effect waves-light btn save-snippet">{{editor.buttonText}}</button>
 </form>
 <div class='tags'>
   <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}</span>
   <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
-  <span ng-class="!editor.addTag ? 'toggle-tag' : ''">
-    <form name="tagForm" ng-submit="editor.updateSnippet()" novalidate>
-      <input placeholder="Add tag" type="text" ng-model='editor.snippet.tag'/>
+  <span ng-show="editor.addTag">
+    <form name="tagForm" ng-submit="editor.addOrUpdateSnippet(editor.tag)" novalidate>
+      <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
     </form>
   </span>
 </div>
 <div class="right-align">
   <a class="waves-effect waves-light btn" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
 </div>
-<div ng-class="!editor.showAnnotation ? 'col s12 code-mirror' : 'col m9 s12 code-mirror'" ng-model='editor.snippet.content' ui-codemirror='editor.editorOptions'>
+<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror='editor.editorOptions'>
 </div>
-<div ng-class="!editor.showAnnotation ? 'toggle-annotation' : 'col m3 s12 annotations'">
+<div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
   <h5>Annotations</h5>
   <hr>
-  <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippet.annotation' />
+  <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
 </div>

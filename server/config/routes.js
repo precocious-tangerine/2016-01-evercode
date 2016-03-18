@@ -136,9 +136,15 @@ module.exports = (app, express) => {
     })
     .put((req, res) => {
       Snippets.updateSnippetAsync(req.body.snippetId, req.body.value)
-        .then((snippet) => {
-          if (snippet) {
-            res.status(201).send(snippet);
+        .then((success) => {
+          if (success) {
+            Snippets.getSnippetAsync(req.body.snippetId).then((snippet) => {
+              if(snippet){
+                res.status(201).send(snippet);
+              } else {
+                res.status(404).send("Snippet not Found");
+              }
+            })
           } else {
             res.status(404).send("Snippet not Found");
           }

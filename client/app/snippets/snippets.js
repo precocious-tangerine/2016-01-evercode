@@ -1,8 +1,8 @@
 import * as Actions from '../redux/actions.js';
 
-export const snippets = (url) => {
+export const snippets = (url, templateUrl) => {
   return {
-    url: url,
+    url: templateUrl,
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require(`.${url}.html`),
@@ -20,7 +20,7 @@ class SnippetsCtrl {
 
   addSubFolder() {
     if (this.selectedFolder) {
-      let path = this.selectedFolder + this.subFolder.name;
+      let path = this.selectedFolder  + '/' + this.subFolder.name;
       this.Folders.addFolder({ path: path });
       this.subFolder.name = '';
     }

@@ -14,7 +14,6 @@ class EditorCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
-    this.snippet = {};
     this.editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -22,13 +21,13 @@ class EditorCtrl {
       lineWrapping: true,
       mode: 'javascript'
     };
-    this.tag;
-    this.addTag = true;
-    this.showAnnotation = true;
+    this.tag = '';
+    this.addTag = false;
+    this.showAnnotation = false;
   }
 
   toggleTag() {
-    this.addTag = !this.addTag
+    this.addTag = !this.addTag;
   }
 
   toggleAnnotation() {
@@ -37,31 +36,32 @@ class EditorCtrl {
   }
 
   addOrUpdateSnippet() {
-    if (selectedSnippet) {
-      this.Snippets.updateSnippet({ _id: this.snippetMap[this.selectedSnippet].value._id, data: this.content });
+    if (this.selectedSnippet) {
+      let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
+      let _id = objectToUpdate._id;
+      objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
+      Object.assign(objectToUpdate, { data: this.snippetObj.data, name: this.snippetObj.name });
+      delete objectToUpdate._id;
+      this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate });
     } else {
-      let snippet = {
-        name: this.snippet.name,
-        data: this.content,
-        filePath: this.path + this.snippet.name
-      };
-      this.Snippets.addSnippet(snippet);
+      this.snippetObj.filePath = this.path + '/' + this.snippetObj.name;
+      this.Snippets.addSnippet(this.snippetObj);
     }
   }
 
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
-    let content = !selectedSnippet ? '' : snippetMap[selectedSnippet].value.data;
-    let snippetName = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
+    let snippetObj = {};
+    snippetObj.data = !selectedSnippet ? '' : snippetMap[selectedSnippet].value.data;
+    snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     return {
       path,
       snippetMap,
       selectedSnippet,
-      content,
       buttonText,
-      snippetName
+      snippetObj
     };
   }
 }
