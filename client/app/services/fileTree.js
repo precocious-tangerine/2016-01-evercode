@@ -1,73 +1,80 @@
-'use strict';
-import R from 'ramda';
+class TreeMap {
+  insertNode(filePath, node) {
+    let context = this;
+    let folders = filePath.split('/').filter(a => a).concat(node);
+    return folders.reduce((prevPath, currItem) => {
+      if(typeof currItem === 'object') {
+        this[prevPath].value = currItem
+        return true
+      } else {
 
-class Tree {
-  constructor(value, filePathAttr) {
-    this.parent = null;
-    this.value = value;
-    this.children = [];
-    this.filePath = filePathAttr || '';
+        let currPath = prevPath + '/' + currItem;
+        let parentObj = context[prevPath], currObj = context[currPath];
+        if(prevPath && !parentObj) { 
+          context[prevPath] = {filePath: prevPath, children: []}
+        }
+        if(parentObj && parentObj.children.indexOf(currPath) === -1) {
+          context[prevPath].children.push(currPath);
+        }
+        context[currPath] = currObj ? currObj : {children: []};
+        context[currPath].parent = prevPath;
+        context[currPath].value = currItem;
+        context[currPath].filePath = currPath;
+        if(this.getRoot.__root === undefined) {
+          this.getRoot.__root = currPath;  
+        }
+        return currPath;
+      }         
+    }, "");
   }
-  addParent(value) {
-    this.parent = new Tree(value);
+  getRoot() {
+    return this[this.getRoot.__root];
   }
-  addChild(value) {
-    this.children.push(new Tree(value));
+  getParent(filePath) {
+    let parentPath = this[filePath].parent
+    return this[parentPath];
   }
-  deleteChild(value) {
-    this.children = this.children.filter(child => !R.equals(child, value));
+  getChildren(filePath) {
+    return this[filePath].children.map(childPath => this[childPath]);
   }
-  deleteParent() {
-    this.parent = null;
-  }
-  findChild(value) {
-    return R.find(R.whereEq({ value }), this.children);
-  }
-}
-let insertIntoTreeRoot = (tree, filePathArrReverse, filePathAttr, callback) => {
-  if (callback === undefined) {
-    callback = () => {};
-  }
-  if (filePathArrReverse.length !== 0) {
-    let currValue = filePathArrReverse.pop();
-    let nextValue = filePathArrReverse[filePathArrReverse.length - 1];
-    tree.value = tree.value ? tree.value : currValue;
-    tree.filePath = filePathAttr + (tree.value.name || tree.value) + '/';
-    let childNode = tree.findChild(nextValue);
-    if (childNode === undefined && typeof tree.value === 'string') {
-      childNode = new Tree(null);
-      tree.children.push(childNode);
-      childNode.parent = tree;
+  getAllParents(filePath) {
+    let results = [], parent = true;
+    while (parent = this.getParent(filePath)) {
+      results.push(parent);
+      filePath = parent.filePath;
     }
-    callback(tree);
-    insertIntoTreeRoot(childNode, filePathArrReverse, tree.filePath, callback);
+    return results;
+  }
+  getAllChildren(filePath) {
+    console.log('called with ', filePath);
+    let children = this.getChildren(filePath);
+    if(children.length === 0) {
+      return [];
+    } else {
+      return children.reduce((results, child) => {
+        let childPath = child.filePath;
+        let children = this.getChildren(childPath);
+        return results.concat(child, children);  
+      }, []);
+    }
+  }
+  deleteNode(filePath) {
+    let childrenPaths = this.getAllChildren(filePath).map(child => child.filePath);
+    let parent = this.getParent(filePath);
+    childrenPaths.forEach(childPath => {
+      delete this[childPath];
+    });
+    parent.children = parent.children.filter(childPath => childPath !== filePath);
   }
 }
 
 let convertToTree = function(snippetObj) {
-  let keyValues = R.toPairs(snippetObj);
-  let filePaths = keyValues.map((keyValue) => {
-    let folders = keyValue[0].split('/');
-    folders[0] ? null : folders.shift();
-    folders[folders.length - 1] ? null : folders.pop();
-    folders[folders.length - 1] = keyValue[1];
-    return R.reverse(folders);
-  });
-  let userTree = new Tree(null);
-  let userTreeMapCopy = {};
-  filePaths.forEach((filePath) => {
-    insertIntoTreeRoot(userTree, filePath, '', node => {
-      userTreeMapCopy[node.filePath] = node;
-    });
+  let userTreeMap = new TreeMap();
+  Object.keys(snippetObj).forEach((key) => {
+    userTreeMap.insertNode(key, snippetObj[key]);
   })
-  userTreeMapCopy.__root = userTree;
-  let userTreeMap = {};
-  Object.keys(userTreeMapCopy).forEach(key => {
-    Object.assign(userTreeMap[key] = {}, { value: userTreeMapCopy[key].value, filePath: userTreeMapCopy[key].filePath });
-    userTreeMap[key].children = userTreeMapCopy[key].children.map(tree => tree.filePath);
-    userTreeMap[key].parent = userTreeMapCopy[key].parent ? userTreeMapCopy[key].parent.filePath : null;
-  })
-  return userTreeMap;
-};
+  return userTreeMap
+}
+
 
 export default convertToTree;
