@@ -1,8 +1,8 @@
-<form name="snippetForm" ng-submit="editor.addSnippet()" novalidate>
+<form name="snippetForm" ng-submit="editor.addOrUpdateSnippet()" novalidate>
   <div class="form-group snippet-title">
-    <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippet.name' />
+    <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetName' />
   </div>
-  <button type="submit" class="waves-effect waves-light btn save-snippet">Save Snippet</button>
+  <button type="submit" class="waves-effect waves-light btn save-snippet">{{editor.buttonText}}</button>
 </form>
 <div class='tags'>
   <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[selectedSnippet].tags">{{ tag }}</span>

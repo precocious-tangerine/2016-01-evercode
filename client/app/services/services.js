@@ -1,7 +1,6 @@
 import * as Actions from '../redux/actions.js';
 import convertToTree from './fileTree.js';
 
-
 export class Folders {
   constructor($http, $ngRedux) {
     window.Folders = this;
@@ -125,6 +124,10 @@ export class Snippets {
 
       changeSelectedSnippet(snippetFilePath) {
         dispatch(Actions.setSelectedSnippet(snippetFilePath));
+      },
+
+      deselectSnippet() {
+        dispatch(Actions.removeSelectedSnippet());
       }
     }
   }
@@ -185,7 +188,7 @@ export class Auth {
         return this.$http({
           method: 'GET',
           url: '/signout'
-        }).then(function() {
+        }).then(res => {
           this.$window.localStorage.removeItem('com.evercode');
           this.$location.path('/signin');
         })

@@ -5,7 +5,7 @@ export const snippets = (url) => {
     url: url,
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
-    template: require('./snippets.html'),
+    template: require(`.${url}.html`),
     access: { restricted: true }
   };
 }
@@ -19,15 +19,23 @@ class SnippetsCtrl {
   }
 
   addSubFolder() {
-    if(this.selectedFolder){
-    let path = this.selectedFolder + '/' + this.folder.name;
-    this.Folders.addFolder({ path: path });
-    this.subFolder.name = '';
+    if (this.selectedFolder) {
+      let path = this.selectedFolder + this.subFolder.name;
+      this.Folders.addFolder({ path: path });
+      this.subFolder.name = '';
     }
+  }
+
+  changeActiveTab(folderPath) {
+    this.Folders.selectFolder(folderPath);
   }
 
   toggleInput() {
     this.folderInput = !this.folderInput;
+  }
+
+  deselectSnippet() {
+    this.Snippets.deselectSnippet();
   }
 
   copySnippet(snippet) {
@@ -64,7 +72,8 @@ class SnippetsCtrl {
     return {
       visibleSnippets,
       visibleFolders,
-      selectedFolderObj
+      selectedFolderObj,
+      selectedFolder
     };
   }
 

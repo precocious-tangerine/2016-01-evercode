@@ -3,9 +3,10 @@
     <div class="left center-align col s4">
       <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
     </div>
-    <div class="center">
+    <ul class="center">
       <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-    </div>
+      <a ui-sref='signout' class='right'><i class="material-icons left">power_settings_new</i>Logout</a>
+    </ul>
   </div>
 </nav>
 <div class="row">
@@ -30,7 +31,7 @@
         </div>
       </form>
     </li>
-    <li class="bold active"><a href="#/favorites" class="waves-effect waves-teal">Favorites</a></li>
+    <li class="folder"><a ui-sref=".favorites" class="waves-effect waves-teal">Favorites</a></li>
     <li class="folder" ng-repeat="folder in directories.folders">
       <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">{{folder.value}}</a>
     </li>
