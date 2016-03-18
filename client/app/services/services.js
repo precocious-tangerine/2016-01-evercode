@@ -100,9 +100,6 @@ export class Snippets {
       },
 
       updateSnippet(snippetObj) {
-        let snippetId = snippetObj._id;
-        let value = { content: snippetObj.data, tags: snippetObj.tag };
-        console.log('services updateSnippet',value);
         return this.$http({
           method: 'PUT',
           url: '/api/snippets',
