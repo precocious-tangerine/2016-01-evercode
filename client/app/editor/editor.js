@@ -38,7 +38,7 @@ class EditorCtrl {
 
   addOrUpdateSnippet() {
     if (selectedSnippet) {
-      this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
+      this.Snippets.updateSnippet({ _id: this.snippetMap[this.selectedSnippet].value._id, data: this.content });
     } else {
       let snippet = {
         name: this.snippet.name,
@@ -48,7 +48,6 @@ class EditorCtrl {
       this.Snippets.addSnippet(snippet);
     }
   }
-
 
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;

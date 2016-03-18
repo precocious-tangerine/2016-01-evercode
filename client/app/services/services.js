@@ -100,15 +100,17 @@ export class Snippets {
         });
       },
 
-      updateSnippet(snippetObj) {
-        let snippetId = snippetObj;
-        // return this.$http({
-        //   method: 'PUT',
-        //   url: '/api/snippets',
-        //   data: { snippetId, value }
-        // }).then( () => {
-        dispatch(Actions.addSnippetMap(filePath, snippetObj));
-        // });
+      updateSnippet(snippetObj, filePath) {
+        let snippetId = snippetObj._id;
+        let value = { content: snippetObj.data, tags: snippetObj.tag };
+        return this.$http({
+          method: 'PUT',
+          url: '/api/snippets',
+          data: { snippetId, value }
+        }).then( (response) => {
+          console.log('updateSnippet response: ', response);
+        // dispatch(Actions.addSnippetMap(filePath, snippetObj));
+        });
       },
 
       removeSnippet(snippetFilePath) {
