@@ -124,6 +124,10 @@ export class Snippets {
 
       changeSelectedSnippet(snippetFilePath) {
         dispatch(Actions.setSelectedSnippet(snippetFilePath));
+      },
+
+      deselectSnippet() {
+        dispatch(Actions.removeSelectedSnippet());
       }
     }
   }

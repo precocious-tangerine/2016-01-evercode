@@ -19,10 +19,10 @@ class SnippetsCtrl {
   }
 
   addSubFolder() {
-    if(this.selectedFolder){
-    let path = this.selectedFolder + this.subFolder.name;
-    this.Folders.addFolder({ path: path });
-    this.subFolder.name = '';
+    if (this.selectedFolder) {
+      let path = this.selectedFolder + this.subFolder.name;
+      this.Folders.addFolder({ path: path });
+      this.subFolder.name = '';
     }
   }
 
@@ -32,6 +32,10 @@ class SnippetsCtrl {
 
   toggleInput() {
     this.folderInput = !this.folderInput;
+  }
+
+  deselectSnippet() {
+    this.Snippets.deselectSnippet();
   }
 
   copySnippet(snippet) {

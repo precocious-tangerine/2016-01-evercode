@@ -23,7 +23,6 @@ class EditorCtrl {
       mode: 'javascript'
     };
     this.tag;
-    this.content = this.content || 'hello world';
     this.addTag = true;
     this.showAnnotation = true;
   }
@@ -37,28 +36,33 @@ class EditorCtrl {
     this.showAnnotation = !this.showAnnotation;
   }
 
-  addSnippet() {
-    let snippet = {
-      name: this.snippet.name,
-      data: this.content,
-      filePath: this.path + this.snippet.name
-    };
-    this.Snippets.addSnippet(snippet);
+  addOrUpdateSnippet() {
+    if (selectedSnippet) {
+      this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
+    } else {
+      let snippet = {
+        name: this.snippet.name,
+        data: this.content,
+        filePath: this.path + this.snippet.name
+      };
+      this.Snippets.addSnippet(snippet);
+    }
   }
 
-  updateSnippet() {
-    this.Snippets.updateSnippet({ _id: this.selectedSnippet._id, data: this.content });
-  }
 
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
-    let content = !selectedSnippet ? null : snippetMap[selectedSnippet].value.data;
+    let content = !selectedSnippet ? '' : snippetMap[selectedSnippet].value.data;
+    let snippetName = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
+    let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
     return {
       path,
       snippetMap,
       selectedSnippet,
-      content
+      content,
+      buttonText,
+      snippetName
     };
   }
 }
