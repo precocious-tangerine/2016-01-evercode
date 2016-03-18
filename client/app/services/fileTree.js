@@ -1,8 +1,9 @@
 //The following functions will mutate their arguments
 
 export const insertNode = (tree, filePath, node) => {
+    tree = Object.assign({}, tree, {__root: tree.__root});
     let folders = filePath.split('/').filter(a => a).concat(node);
-    return folders.reduce((prevPath, currItem) => {
+    let allOK = folders.reduce((prevPath, currItem) => {
       if(typeof currItem === 'object') {
         tree[prevPath].value = currItem
         return true
@@ -27,34 +28,36 @@ export const insertNode = (tree, filePath, node) => {
         return currPath;
       }         
     }, "");
+    return allOK ? tree : throw new Error('Error parsing flepath');
   }
 
 export const deleteNode = (tree, filePath) => {
-    let childrenPaths = getAllChildren(tree, filePath).map(child => child.filePath);
+    tree = Object.assign({}, tree, {__root: tree.__root});
+    let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
     let parent = getParent(tree, filePath);
     childrenPaths.forEach(childPath => {
       delete tree[childPath];
     });
     parent.children = parent.children.filter(childPath => childPath !== filePath);
+    return tree;
   }
 
 
 //The following functions do not mutate their arguments
 
 export const convertToTree = (snippetObj) => {
-  let userTreeMap = {};
-  Object.keys(snippetObj).forEach((key) => {
-    insertNode(userTreeMap, key, snippetObj[key]);
-  })
+  let userTreeMap = Object.keys(snippetObj).reduce( (prevTree, key) => {
+    return insertNode(prevTree, key);
+  }, {})
   return userTreeMap
 }
 
 export let getParent = (tree, filePath) => {
     let parentPath = tree[filePath].parent
-    return tree[parentPath];
+    return Object.assign(tree[parentPath]);
   }
 export let getChildren = (tree, filePath, showConfigs) => {
-    let children = tree[filePath].children.map(childPath => tree[childPath]);
+    let children = tree[filePath].children.map(childPath => Object.assign({},tree[childPath]));
     if(!showConfigs) {
       return children.filter(child => child.value.name !== '.config');
     } else {
