@@ -33,13 +33,14 @@ export const insertNode = (origTree, filePath, node) => {
 }
 
 export const deleteNode = (origTree, filePath) => {
-  tree = Object.assign({}, origTree, {__root: origTree.__root});
+  let tree = Object.assign({}, origTree, {__root: origTree.__root});
   let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
   let parent = getParent(tree, filePath);
   childrenPaths.forEach(childPath => {
     delete tree[childPath];
   });
   parent.children = parent.children.filter(childPath => childPath !== filePath);
+  delete tree[filePath];
   return tree;
 }
 

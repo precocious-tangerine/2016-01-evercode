@@ -17,7 +17,16 @@ export const removeSnippetMap = (filePath) => {
       filePath
     };
   }
+
+export const updateSnippetMap = (oldFilePath, updateFilePath, updateNode) => {
+  return {
+    type: 'UPDATE_SNIPPET_MAP',
+    oldFilePath,
+    updateFilePath,
+    updateNode
+  };
   //Handling which snippet is currently selected
+}
 export const setSelectedSnippet = (snippetPath) => {
   return {
     type: 'SET_SELECTED_SNIPPET',

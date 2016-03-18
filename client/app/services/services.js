@@ -27,6 +27,7 @@ export class Folders {
           data: folder
         }).then(snippet => {
           this.getFileTree();
+          Actions.dispatch()
           // console.log('snippet', snippet);
           // let filePath = snippet.data.filePath;
           // let filePaths = filePath.split("/");
