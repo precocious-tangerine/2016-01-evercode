@@ -20,15 +20,12 @@ class TreeMap {
         context[currPath].parent = prevPath;
         context[currPath].value = currItem;
         context[currPath].filePath = currPath;
-        if(this.getRoot.__root === undefined) {
-          this.getRoot.__root = currPath;  
+        if(context.__root === undefined) {
+          context.__root = context[currPath];  
         }
         return currPath;
       }         
     }, "");
-  }
-  getRoot() {
-    return this[this.getRoot.__root];
   }
   getParent(filePath) {
     let parentPath = this[filePath].parent
