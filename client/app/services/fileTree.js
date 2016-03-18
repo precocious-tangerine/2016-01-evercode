@@ -1,81 +1,80 @@
-class TreeMap {
-  insertNode(filePath, node) {
-    let context = this;
+export const insertNode = (tree, filePath, node) => {
     let folders = filePath.split('/').filter(a => a).concat(node);
     return folders.reduce((prevPath, currItem) => {
       if(typeof currItem === 'object') {
-        this[prevPath].value = currItem
+        tree[prevPath].value = currItem
         return true
       } else {
-
         let currPath = prevPath + '/' + currItem;
-        let parentObj = context[prevPath], currObj = context[currPath];
+        let parentObj = tree[prevPath], currObj = tree[currPath];
         if(prevPath && !parentObj) { 
-          context[prevPath] = {filePath: prevPath, children: []}
+          tree[prevPath] = {filePath: prevPath, children: []}
         }
         if(parentObj && parentObj.children.indexOf(currPath) === -1) {
-          context[prevPath].children.push(currPath);
+          tree[prevPath].children.push(currPath);
         }
-        context[currPath] = currObj ? currObj : {children: []};
-        context[currPath].parent = prevPath;
-        context[currPath].value = currItem;
-        context[currPath].filePath = currPath;
-        if(context.__root === undefined) {
-          context.__root = context[currPath];  
+        tree[currPath] = currObj ? currObj : {children: []};
+        tree[currPath].parent = prevPath;
+        tree[currPath].value = currItem;
+        tree[currPath].filePath = currPath;
+        if(tree.__root === undefined) {
+          Object.defineProperty(tree, '__root', {
+            value: tree[currPath]
+          });
         }
         return currPath;
       }         
     }, "");
   }
-  getParent(filePath) {
-    let parentPath = this[filePath].parent
-    return this[parentPath];
+export const getParent = (tree, filePath) => {
+    let parentPath = tree[filePath].parent
+    return tree[parentPath];
   }
-  getChildren(filePath, hideConfigs) {
-    let children = this[filePath].children.map(childPath => this[childPath]);
-    if(hideConfigs) {
+export const getChildren = (tree, filePath, showConfigs) => {
+    let children = tree[filePath].children.map(childPath => tree[childPath]);
+    if(!showConfigs) {
       return children.filter(child => child.value.name !== '.config');
     } else {
       return children;
     }
   }
-  getAllParents(filePath) {
+export const getAllParents = (tree, filePath) => {
     let results = [], parent = true;
-    while (parent = this.getParent(filePath)) {
+    while (parent = getParent(tree, filePath)) {
       results.push(parent);
       filePath = parent.filePath;
     }
     return results;
   }
-  getAllChildren(filePath, hideConfigs) {
-    let children = this.getChildren(filePath, hideConfigs);
+
+export const getAllChildren = (tree, filePath, showConfigs) => {
+    let children = getChildren(tree, filePath, showConfigs);
     if(children.length === 0) {
       return [];
     } else {
       return children.reduce((results, child) => {
         let childPath = child.filePath;
-        let children = this.getChildren(childPath, hideConfigs);
+        let children = getChildren(tree, childPath, showConfigs);
         return results.concat(child, children);  
       }, []);
     }
   }
-  deleteNode(filePath) {
-    let childrenPaths = this.getAllChildren(filePath).map(child => child.filePath);
-    let parent = this.getParent(filePath);
+export const deleteNode = (tree, filePath) => {
+    let childrenPaths = getAllChildren(tree, filePath).map(child => child.filePath);
+    let parent = getParent(tree, filePath);
     childrenPaths.forEach(childPath => {
-      delete this[childPath];
+      delete tree[childPath];
     });
     parent.children = parent.children.filter(childPath => childPath !== filePath);
   }
-}
 
-let convertToTree = function(snippetObj) {
-  let userTreeMap = new TreeMap();
+
+export const convertToTree = (snippetObj) => {
+  let userTreeMap = {};
   Object.keys(snippetObj).forEach((key) => {
-    userTreeMap.insertNode(key, snippetObj[key]);
+    insertNode(userTreeMap, key, snippetObj[key]);
   })
   return userTreeMap
 }
 
 
-export default convertToTree;
