@@ -2,7 +2,11 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1/everCode');
+if(process.env.EVERCODE_MONGODB_1_PORT_27017_TCP_ADDR ) {
+	mongoose.connect(process.env.EVERCODE_MONGODB_1_PORT_27017_TCP_ADDR + ':27017' + '/everCode' );
+} else {
+	mongoose.connect('mongodb://127.0.0.1:27017/everCode');
+}
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);
