@@ -4,7 +4,7 @@
       <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
     </div>
     <div class="center">
-      <a href="#!" class="breadcrumb">{{directories.selectedFolder || "username"}}</a>
+      <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
     </div>
   </div>
 </nav>
