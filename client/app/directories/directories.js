@@ -1,4 +1,3 @@
-import * as FT from '../services/fileTree.js';
 export const directories = () => {
   return {
     url: '/main',

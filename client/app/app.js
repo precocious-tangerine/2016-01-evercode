@@ -15,7 +15,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror'])
     $urlRouterProvider.otherwise('/main');
     $stateProvider
       .state('main', directories())
-      .state('main.snippets', snippets('/snippets'))
+      .state('main.snippets', snippets('/snippets', '/donkey'))
       .state('main.favorites', snippets('/favorites'))
       .state('main.snippets.editor', editor())
       .state('login', createAuthCtrl('/signin'))
