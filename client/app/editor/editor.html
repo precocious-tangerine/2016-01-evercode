@@ -16,9 +16,9 @@
 <div class="right-align">
   <a class="waves-effect waves-light btn" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
 </div>
-<div ng-class="!editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror='editor.editorOptions'>
+<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror='editor.editorOptions'>
 </div>
-<div ng-class="!editor.showAnnotation ? 'toggle-annotation' : 'col m3 s12 annotations'">
+<div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
   <h5>Annotations</h5>
   <hr>
   <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
