@@ -93,3 +93,20 @@
 .center a:hover {
   background-color: transparent;
 }
+
+.side-nav {
+  line-height: 3em;
+}
+
+#nav-mobile {
+  line-height: 3em;
+}
+
+#search-icon {
+  margin: 0px;
+}
+
+#add-folder-icon {
+  margin: 0px;
+}
+
