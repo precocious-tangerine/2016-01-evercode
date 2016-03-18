@@ -7,6 +7,7 @@ class TreeMap {
         this[prevPath].value = currItem
         return true
       } else {
+
         let currPath = prevPath + '/' + currItem;
         let parentObj = context[prevPath], currObj = context[currPath];
         if(prevPath && !parentObj) { 
@@ -19,9 +20,15 @@ class TreeMap {
         context[currPath].parent = prevPath;
         context[currPath].value = currItem;
         context[currPath].filePath = currPath;
+        if(this.getRoot.__root === undefined) {
+          this.getRoot.__root = currPath;  
+        }
         return currPath;
       }         
     }, "");
+  }
+  getRoot() {
+    return this[this.getRoot.__root];
   }
   getParent(filePath) {
     let parentPath = this[filePath].parent
