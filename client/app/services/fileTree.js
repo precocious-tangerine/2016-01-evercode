@@ -34,8 +34,13 @@ class TreeMap {
     let parentPath = this[filePath].parent
     return this[parentPath];
   }
-  getChildren(filePath) {
-    return this[filePath].children.map(childPath => this[childPath]);
+  getChildren(filePath, hideConfigs) {
+    let children = this[filePath].children.map(childPath => this[childPath]);
+    if(hideConfigs) {
+      return children.filter(child => child.value.name !== '.config');
+    } else {
+      return children;
+    }
   }
   getAllParents(filePath) {
     let results = [], parent = true;
@@ -45,15 +50,14 @@ class TreeMap {
     }
     return results;
   }
-  getAllChildren(filePath) {
-    console.log('called with ', filePath);
-    let children = this.getChildren(filePath);
+  getAllChildren(filePath, hideConfigs) {
+    let children = this.getChildren(filePath, hideConfigs);
     if(children.length === 0) {
       return [];
     } else {
       return children.reduce((results, child) => {
         let childPath = child.filePath;
-        let children = this.getChildren(childPath);
+        let children = this.getChildren(childPath, hideConfigs);
         return results.concat(child, children);  
       }, []);
     }
