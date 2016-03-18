@@ -26,6 +26,7 @@ class DirectoriesCtrl {
   }
 
   changeActiveTab(folderPath) {
+    console.log('path: ', folderPath);
     this.Folders.selectFolder(folderPath);
   }
 
