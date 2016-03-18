@@ -26,7 +26,6 @@ class DirectoriesCtrl {
   }
 
   changeActiveTab(folderPath) {
-    console.log('path: ', folderPath);
     this.Folders.selectFolder(folderPath);
   }
 
@@ -47,9 +46,10 @@ class DirectoriesCtrl {
       }
     });
     let convertPath = (path) => {
-      var result = [];
+      let result = [];
       while(snippetMap[path]) {
-        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
+        let urlPath = snippetMap[path].parent ? '.snippets' : 'main';
+        result.unshift([snippetMap[path].value, snippetMap[path].filePath, urlPath]);
         path = snippetMap[path].parent;
       }
       return result
