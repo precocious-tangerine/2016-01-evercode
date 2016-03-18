@@ -10,10 +10,13 @@
   </div>
 </nav>
 <div class="row">
-  <ul id="nav-mobile" class="side-nav col s12 m2 l2 main">
+  <ul id="nav-mobile" class="left side-nav col s12 m2 l2 main collapsible">
+
     <li class="search">
-      <div class="input-field card col s12">
-        <i class="material-icons prefix">search</i>
+      <div class="collapsible-header">
+        <i id="search-icon" class="material-icons center">search</i>
+      </div>
+      <div class="input-field collapsible-body">
         <input id="search-bar" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..." />
         <div class="search-results">
           <ul id="dropdown1">
@@ -24,19 +27,36 @@
         </div>
       </div>
     </li>
+
     <li>
-      <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
-        <div class="form-group">
-          <input placeholder="New Folder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="directories.folder.name" />
-        </div>
-      </form>
+      <div class="collapsible-header">
+          <i id="add-folder-icon" class="material-icons center">library_add</i>
+      </div>
+      <div class="input-field collapsible-body">
+        <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
+          <div class="form-group">
+            <input placeholder="New Folder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="directories.folder.name" />
+          </div>
+        </form>
+      </div>
     </li>
-    <li class="folder"><a ui-sref=".favorites" class="waves-effect waves-teal">Favorites</a></li>
+
+    <li>
+      <div class="collapsible-header">
+        <a href="#/favorites" class="waves-effect waves-teal">Favorites</a>
+      </div>
+      <div class="input-field collapsible-body">
+        Favorite snippets?
+      </div>
+    </li>
     <li class="folder" ng-repeat="folder in directories.folders">
-      <span>
+      <div class="collapsible-header">
         <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">{{folder.value}}</a>
-      </span>
-      <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+         <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+      </div>
+      <div class="input-field collapsible-body">
+        snippets?
+      </div>
     </li>
   </ul>
   <div class="col s12 m10 l10" ui-view>
