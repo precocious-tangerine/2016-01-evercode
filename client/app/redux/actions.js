@@ -18,12 +18,12 @@ export const removeSnippetMap = (filePath) => {
     };
   }
 
-export const updateSnippetMap = (oldFilePath, updateFilePath, updateNode) => {
+export const updateSnippetMap = (oldFilePath, updateFilePath, updateNodeValues) => {
   return {
     type: 'UPDATE_SNIPPET_MAP',
     oldFilePath,
     updateFilePath,
-    updateNode
+    updateNodeValues
   };
   //Handling which snippet is currently selected
 }

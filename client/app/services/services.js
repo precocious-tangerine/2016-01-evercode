@@ -3,6 +3,7 @@ import {convertToTree} from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
+    window.Folders = this;
     this.$http = $http;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
@@ -20,30 +21,15 @@ export class Folders {
         })
       },
 
-      addFolder(folder) {
-        return this.$http({
-          method: 'POST',
-          url: '/api/folders',
-          data: folder
-        }).then(snippet => {
-          this.getFileTree();
-          Actions.dispatch()
-          // console.log('snippet', snippet);
-          // let filePath = snippet.data.filePath;
-          // let filePaths = filePath.split("/");
-
-          // let folderName = filePaths[filePaths.length - 2];
-          // let parentFolderPath = filePaths.slice(0, filePaths.length - 3).join('/');
-          // let folderPath = filePaths.slice(0, filePaths.length - 1).join('/');
-          // dispatch(Actions.addSnippetMap(folderPath, {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath}));
-          // if(filePaths.length === 3 && filePaths[2] === '.config'){
-          //   dispatch(Actions.addSnippetMap('__root', {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath}));
-          // }
-          // let snippetConfigName = filePaths[filePaths.length - 1];
-          // let parentFolder = folderPath;
-          // dispatch(Actions.addSnippetMap(filePath, {value: snippet.data, parent: folderPath, children: [], filePath: filePath}));
-
-        })
+      addFolder(folderPath) {
+        // return this.$http({
+        //   method: 'POST',
+        //   url: '/api/folders',
+        //   data: folder
+        // }).then(snippet => {
+     
+          dispatch(Actions.addSnippetMap(folderPath, {value: {name: '.config'}}))
+        //}
       },
 
       selectFolder(folderPath) {
@@ -56,10 +42,8 @@ export class Folders {
         //   url: '/api/folders',
         //   data: folderPath
         // }).then(res => {
-        dispatch(Actions.removeSnippetMap(folderPath));
-        dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
-        dispatch(Actions.removeSnippetMap(folderPath + '.config'));
         // })
+        dispatch(Actions.removeSnippetMap(folderPath));
       }
     }
   }
@@ -77,6 +61,7 @@ export class Snippets {
     this.$http = $http;
     this.Folders = Folders;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
+    window.hello123 = this;
   }
 
   mapDispatchToThis(dispatch) {
@@ -88,16 +73,17 @@ export class Snippets {
           url: '/api/snippets?_id=' + snippetId
         });
       },
-      addSnippet(snippetObj) {
-        let { filePath } = snippetObj
-        return this.$http({
-          method: 'POST',
-          url: '/api/snippets',
-          data: snippetObj
-        }).then((res) => {
-          this.Folders.getFileTree();
-          // dispatch(Actions.addSnippetMap(filePath, snippetObj));
-        });
+      addSnippet(filePath, snippetObj) {
+        // let { filePath } = snippetObj
+        // return this.$http({
+        //   method: 'POST',
+        //   url: '/api/snippets',
+        //   data: snippetObj
+        // }).then((res) => {
+        //   this.Folders.getFileTree();
+        //   // dispatch(Actions.addSnippetMap(filePath, snippetObj));
+        // });
+        dispatch(Actions.addSnippetMap(filePath, {value: {name: 'test123'}}));
       },
 
       updateSnippet(snippetObj) {
@@ -110,6 +96,7 @@ export class Snippets {
           this.Folders.getFileTree(res.data.filePath);
           // dispatch(Actions.addSnippetMap(filePath, snippetObj));
        });
+
       },
 
       removeSnippet(snippetFilePath) {

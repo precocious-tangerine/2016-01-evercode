@@ -32,8 +32,8 @@ const modifySnippetMap = (state = {}, action) => {
     case 'REMOVE_SNIPPET_MAP':
       return deleteNode(state, action.filePath);
     case 'UPDATE_SNIPPET_MAP':
-      let {oldFilePath, updateFilePath, updateNode} = action;
-      return updateNode(state, oldFilePath, updateFilePath, updateNode);
+      let {oldFilePath, updateFilePath, updateNodeValues} = action;
+      return updateNode(state, oldFilePath, updateFilePath, updateNodeValues);
     default:
       return state;
   }
