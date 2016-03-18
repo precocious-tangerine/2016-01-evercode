@@ -35,7 +35,6 @@ class DirectoriesCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder } = state;
-    window.snippetMapPeek = snippetMap
     let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
     let snippetArr =  [];
     Object.keys(snippetMap).forEach(key => {
