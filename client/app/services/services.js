@@ -184,7 +184,7 @@ export class Auth {
         return this.$http({
           method: 'GET',
           url: '/signout'
-        }).then(function() {
+        }).then(res => {
           this.$window.localStorage.removeItem('com.evercode');
           this.$location.path('/signin');
         })

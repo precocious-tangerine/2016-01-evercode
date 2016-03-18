@@ -1,0 +1,9 @@
+<ul ng-show="snippets.selectedFolderObj" class="snippets side-nav col s12 m2 l2">
+  <div class="col s12">
+    <span>Favorites</span>
+  </div>
+  <div class="collection col s12">
+    <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-repeat="snippet in snippets.visibleSnippets" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">{{snippet.value.name}}</a>
+  </div>
+</ul>
+<div class="col s10 editor" ui-view></div>

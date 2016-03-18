@@ -1,7 +1,6 @@
 'use strict';
 const Promise = require('bluebird');
 let mongoose = require('mongoose');
-let _ = require('lodash');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let Snippets = Promise.promisifyAll(require('./snippets.js'));
 
