@@ -36,7 +36,6 @@ class DirectoriesCtrl {
   mapStateToThis(state) {
     let { snippetMap, selectedFolder } = state;
     let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config/')).map(el => (snippetMap[el]));
-    
     let snippetArr =  [];
     Object.keys(snippetMap).forEach(key => {
       let snippetVal = snippetMap[key].value
@@ -46,12 +45,21 @@ class DirectoriesCtrl {
         }
       }
     });
-
+    let convertPath = (path) => {
+      var result = [];
+      while(snippetMap[path]) {
+        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
+        path = snippetMap[path].parent;
+      }
+      return result
+    }
+    let breadcrumbPath = convertPath(selectedFolder);
     return {
       folders,
       snippetMap,
       snippetArr,
-      selectedFolder
+      selectedFolder,
+      breadcrumbPath
     };
   }
 
