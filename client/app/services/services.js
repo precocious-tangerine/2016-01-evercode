@@ -105,13 +105,11 @@ export class Snippets {
       },
 
       removeSnippet(snippetObj) {
-        console.log('removeSnippet -> snippetObj: ', snippetObj.value._id)
         return this.$http({
           method: 'DELETE',
           url: '/api/snippets',
           params: {snippetId: snippetObj.value._id}
         }).then((response) => {
-          console.log('removed', response)
           this.Folders.getFileTree();
           // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
         });

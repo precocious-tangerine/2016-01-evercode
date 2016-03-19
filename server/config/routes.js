@@ -132,8 +132,6 @@ module.exports = (app, express) => {
         })
     })
     .delete((req, res) => {
-      console.log('removeSnippetAsync: ', req.query, req.params);
-      
       Snippets.removeSnippetAsync(req.query.snippetId)
         .then((response) => {
           if (response) {

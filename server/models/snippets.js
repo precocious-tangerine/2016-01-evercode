@@ -81,7 +81,6 @@ Snippet.getSnippetsByUser = (email, callback) => {
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
   Snippet.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
     .then((foundSnippets) => {
-      console.log('======================', foundSnippets);
       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
         callback(null, foundSnippets);
       } else {

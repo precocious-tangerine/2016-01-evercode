@@ -54,7 +54,7 @@ class SnippetsCtrl {
     this.Snippets.removeSnippet(snippetObj);
   }
 
-  removeFolderAndChildren(folderPath) {
+  removeFolder(folderPath) {
     this.Folders.removeFolder(folderPath);
   }
 
