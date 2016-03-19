@@ -58,8 +58,8 @@
           </div>
         </li>
 
-        <li>
-          <div ng-repeat="folder in directories.folders" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
+        <li ng-repeat="folder in directories.folders" ui-sref=".snippets">
+          <div ng-click="directories.changeActiveTab(folder.filePath)" >
             <a href="#snippets-modal" class="modal-trigger">
               {{folder.value}}
             </a>
