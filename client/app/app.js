@@ -11,7 +11,9 @@ import { directories } from './directories/directories.js';
 import { editor } from './editor/editor.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
-angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer])
+import ngclipboard from 'ngclipboard';
+
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, ngclipboard])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
     $authProvider.oauth2({
