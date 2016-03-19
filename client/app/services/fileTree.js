@@ -38,7 +38,8 @@ export const deleteNode = (origTree, filePath) => {
   childrenPaths.forEach(childPath => {
     delete tree[childPath];
   });
-  parent.children = parent.children.filter(childPath => childPath !== filePath);
+  parent.children.splice(parent.children.indexOf(filePath), 1);
+  // parent.children = parent.children.filter(childPath => childPath !== filePath);
   delete tree[filePath];
   return tree;
 }

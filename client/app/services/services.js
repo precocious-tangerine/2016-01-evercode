@@ -40,7 +40,7 @@ export class Folders {
           url: '/api/folders',
           params: { filePath: folderPath }
         }).then(response => {
-          this.getFileTree();
+          dispatch(Actions.removeSnippetMap(folderPath))
         })
 
         // return this.$http({
