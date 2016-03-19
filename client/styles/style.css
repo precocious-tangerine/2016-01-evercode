@@ -97,7 +97,8 @@ main {
 }
 
 #slide-out {
-  line-height: 1.5em;
+  font-size: 1.2rem;
+  color: #3D3D3D;
   width: 240px;
   margin:0px;
   padding:0px;
