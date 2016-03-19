@@ -33,7 +33,10 @@
     </li>
     <li class="folder"><a ui-sref=".favorites" class="waves-effect waves-teal">Favorites</a></li>
     <li class="folder" ng-repeat="folder in directories.folders">
-      <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">{{folder.value}}</a>
+      <span>
+        <a class="waves-effect waves-teal" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">{{folder.value}}</a>
+      </span>
+      <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
     </li>
   </ul>
   <div class="col s12 m10 l10" ui-view>

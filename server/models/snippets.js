@@ -1,5 +1,6 @@
 'use strict';
 let mongoose = require('mongoose');
+let Promise = require('bluebird');
 
 let snippetSchema = mongoose.Schema({
   _createdAt: { type: Date, default: new Date() },
@@ -78,7 +79,7 @@ Snippet.getSnippetsByUser = (email, callback) => {
 // }
 
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
-  Snippet.find({ email, filePath: folder + /.+/igm })
+  Snippet.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
     .then((foundSnippets) => {
       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
         callback(null, foundSnippets);
@@ -89,6 +90,7 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
+  filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath + '/.config' }, callback);
 }
 
@@ -101,11 +103,13 @@ Snippet.removeFolder = (email, folder, callback) => {
     if (err) {
       callback(err);
     } else {
-      let allErr = null;
-      snippets.forEach(snippet => {
-        Snippet.removeSnippet(snippet._id, err => allErr = err);
-      });
-      callback(allErr);
+      var removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
+      var promiseArray = snippets.map( snip => removeSnippetAsync(snip._id))
+      Promise.all(promiseArray)
+        .then(response => {
+          callback(null, response)
+        })
+        .catch(callback);
     }
   })
 }

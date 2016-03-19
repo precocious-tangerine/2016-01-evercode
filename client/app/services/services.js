@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import {convertToTree} from './fileTree.js';
+import {convertToTree, getAllChildren} from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -34,14 +34,24 @@ export class Folders {
         dispatch(Actions.setSselectedFolder(folderPath));
       },
 
-      removeFolder(folder) {
+      removeFolder(folderPath) {
         return this.$http({
           method: 'DELETE',
           url: '/api/folders',
-          data: folder
-        }).then(res => {
-          dispatch(Actions.removeSnippetMap(folder.filePath));
+          params: {filePath: folderPath}
+        }).then(response => {
+          this.getFileTree();
         })
+
+        // return this.$http({
+        //   method: 'DELETE',
+        //   url: '/api/folders',
+        //   data: folderPath
+        // }).then(res => {
+        // dispatch(Actions.removeSnippetMap(folderPath));
+        // dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
+        // dispatch(Actions.removeSnippetMap(folderPath + '.config'));
+        // })
       }
     }
   }
@@ -98,9 +108,10 @@ export class Snippets {
         return this.$http({
           method: 'DELETE',
           url: '/api/snippets',
-          data: {snippetId: snippetObj.value.snippetId}
-        }).then(() => {
-          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          params: {snippetId: snippetObj.value._id}
+        }).then((response) => {
+          this.Folders.getFileTree();
+          // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
         });
       },
 

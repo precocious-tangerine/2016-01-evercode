@@ -50,8 +50,12 @@ class SnippetsCtrl {
     this.Snippets.changeSelectedSnippet(snippetPath);
   }
 
-  removeSnippet(snippetPath) {
-    this.Snippets.removeSnippet(snippetPath);
+  removeSnippet(snippetObj) {
+    this.Snippets.removeSnippet(snippetObj);
+  }
+
+  removeFolder(folderPath) {
+    this.Folders.removeFolder(folderPath);
   }
 
   mapStateToThis(state) {

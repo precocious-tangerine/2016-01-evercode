@@ -132,7 +132,7 @@ module.exports = (app, express) => {
         })
     })
     .delete((req, res) => {
-      Snippets.removeSnippetAsync(req.body.snippetId)
+      Snippets.removeSnippetAsync(req.query.snippetId)
         .then((response) => {
           if (response) {
             res.status(201).send(response);
@@ -198,7 +198,7 @@ module.exports = (app, express) => {
     })
     .delete((req, res) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
-      let path = `${email}/${req.body.folder}`;
+      let path = req.query.filePath;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {
           if (result) {
