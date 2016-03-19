@@ -1,15 +1,16 @@
 var express = require('express');
 var app = express();
+var config = require('./config.js');
+
 var mongoose = require('mongoose');
+mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
 
-if(process.env.EVERCODE_MONGODB_1_PORT_27017_TCP_ADDR ) {
-	mongoose.connect(process.env.EVERCODE_MONGODB_1_PORT_27017_TCP_ADDR + ':27017' + '/everCode' );
-} else {
-	mongoose.connect('mongodb://127.0.0.1:27017/everCode');
-}
+var redis = require('redis');
+var redisClient;
+redisClient = redis.createClient(config.redisHost, config.redisPort);
 
-require(__dirname + '/config/middleware.js')(app, express);
-require(__dirname + '/config/routes.js')(app, express);
+require(__dirname + '/config/middleware.js')(app, express, mongoose, redisClient);
+require(__dirname + '/config/routes.js')(app, express, mongoose, redisClient);
 const port = process.env.PORT || 3000;
 
 

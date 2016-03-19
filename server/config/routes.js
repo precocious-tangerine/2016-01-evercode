@@ -1,5 +1,5 @@
 "use strict";
-// var passport = require('passport');
+var passport = require('passport');
 var Promise = require('bluebird');
 var request = require('request');
 var qs = require('querystring');
@@ -8,16 +8,7 @@ var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
 
-var redis = require('redis');
-var redisClient;
-if (process.env.REDIS_PORT_6379_TCP_PORT || process.env.REDIS_PORT_6379_TCP_ADDR) {
-  redisClient = redis.createClient(
-    process.env.REDIS_PORT_6379_TCP_PORT,
-    process.env.REDIS_PORT_6379_TCP_ADDR
-  );
-} else {
-  redisClient = redis.createClient()
-}
+
 
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
@@ -30,34 +21,36 @@ let createJWT = (user) => {
   return jwt.sign(payload, secret);
 }
 
-let checkReqAuthorization = (req, res, next) => {
-  let token = req.headers.authorization;
-  redisClient.get(token, (err, result) => {
-    if (err || result === undefined) {
-      res.status(401).send('Unauthorized');
-    } else {
-      next();
-    }
-  });
-}
 
-let addReqTokenToRedisAsync = (token) => {
-  return new Promise((resolve, reject) => {
-    redisClient.mset([token, true], (err, replies) => {
-      err ? reject(err) : resolve(replies);
+
+module.exports = (app, express, mongoose, redisClient) => {
+  let checkReqAuthorization = (req, res, next) => {
+    let token = req.headers.authorization;
+    redisClient.get(token, (err, result) => {
+      if (err || result === undefined) {
+        res.status(401).send('Unauthorized');
+      } else {
+        next();
+      }
     });
-  });
-}
+  }
 
-let removeReqTokenFromRedisAsync = (token) => {
-  return new Promise((resolve, reject) => {
-    redisClient.del(token, (err, replies) => {
-      err ? reject(err) : resolve(replies);
+  let addReqTokenToRedisAsync = (token) => {
+    return new Promise((resolve, reject) => {
+      redisClient.mset([token, true], (err, replies) => {
+        err ? reject(err) : resolve(replies);
+      });
     });
-  });
-}
+  }
 
-module.exports = (app, express) => {
+  let removeReqTokenFromRedisAsync = (token) => {
+    return new Promise((resolve, reject) => {
+      redisClient.del(token, (err, replies) => {
+        err ? reject(err) : resolve(replies);
+      });
+    });
+  }
+  
   app.route('/signin')
     .post((req, res) => {
       let { email, password } = req.body;
