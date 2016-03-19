@@ -6,7 +6,7 @@ var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
 var jwt = require('jsonwebtoken');
-var secret = 'shhh! it\'s a secret';
+var secret = config.secretToken;
 
 let createJWT = (user) => {
   var payload = {
@@ -154,10 +154,6 @@ module.exports = (app, express) => {
           res.status(500).send(err);
         })
     })
-
-  app.route('/auth/github/failure')
-    .get((__, res) => res.status(401).send('Unauthorized'));
-
 
   app.post('/auth/github', (req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
