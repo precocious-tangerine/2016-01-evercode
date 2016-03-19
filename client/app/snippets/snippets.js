@@ -42,8 +42,11 @@ class SnippetsCtrl {
     this.Snippets.getSnippet({ snippetId: snippet._id });
   }
 
-  favoriteSnippet(snippet) {
-    this.Snippets.updateSnippet({ snippetId: snippet._id, value: { favorite: true } });
+  toggleFavorite(snippet) {
+    console.log('favorited snippet', snippet);
+    let _id = snippet.value._id;
+    let favorite = !snippet.value.favorite;
+    this.Snippets.updateSnippet({ snippetId: _id, value: { favorite: favorite } }, snippet.filePath);
   }
 
   changeSelectedSnippet(snippetPath) {

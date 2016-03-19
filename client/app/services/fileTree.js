@@ -4,7 +4,6 @@ export const insertNode = (origTree, filePath, node) => {
   let tree = Object.assign({}, origTree, {__root: origTree.__root});
   let folders = filePath.split('/').filter(a => a).concat(node);
   let allOK = folders.reduce((prevPath, currItem) => {
-    console.log('prevPath is ' + prevPath + ' currItem is ' + currItem);
     if(typeof currItem === 'object') {
       tree[prevPath].value = currItem
       return true

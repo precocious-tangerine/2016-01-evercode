@@ -35,33 +35,33 @@ class EditorCtrl {
     this.showAnnotation = !this.showAnnotation;
   }
 
-  removeTag(tag) {
-    this.tagToRemove = tag;
-    this.addOrUpdateSnippet();
-    this.tagToRemove = '';
+  removeOrAddTag(tagToRemove) {
+    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
+    if (this.tag) {
+      objectToUpdate.tags.push(this.tag);
+      this.tag = '';
+      this.toggleTag();
+    }
+    if (tagToRemove) {
+      objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(this.tagToRemove), 1);
+      this.tagToRemove = '';
+    }
+    let _id = objectToUpdate._id;
+    delete objectToUpdate._id;
+    this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate });
   }
 
-  addOrUpdateSnippet() {
-    if (this.selectedSnippet) {
-      let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
-      let _id = objectToUpdate._id;
-      let tags = objectToUpdate.tags;
-      if(this.tag) {
-        tags.push(this.tag);
-      };
-      if(this.tagToRemove) {
-        tags.splice(tags.indexOf(this.tagToRemove), 1);
-      };
-      objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
-      Object.assign(objectToUpdate, { data: this.snippetObj.data, name: this.snippetObj.name });
-      delete objectToUpdate._id;
-      this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate });
-    } else {
-      this.snippetObj.filePath = this.path + '/' + this.snippetObj.name;
-      this.Snippets.addSnippet(this.snippetObj);
-    }
-    this.tag = '';
-    this.toggleTag();
+  updateSnippet() {
+    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name });
+    objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
+    let _id = objectToUpdate._id;
+    delete objectToUpdate._id;
+    this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate });
+  }
+
+  addSnippet() {
+    this.snippetObj.filePath = this.path + '/' + this.snippetObj.name;
+    this.Snippets.addSnippet(this.snippetObj);
   }
 
   mapStateToThis(state) {
