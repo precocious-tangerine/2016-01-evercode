@@ -26,39 +26,22 @@ export class Folders {
           url: '/api/folders',
           data: folder
         }).then(snippet => {
-          this.getFileTree();
-          // console.log('snippet', snippet);
-          // let filePath = snippet.data.filePath;
-          // let filePaths = filePath.split("/");
-
-          // let folderName = filePaths[filePaths.length - 2];
-          // let parentFolderPath = filePaths.slice(0, filePaths.length - 3).join('/');
-          // let folderPath = filePaths.slice(0, filePaths.length - 1).join('/');
-          // dispatch(Actions.addSnippetMap(folderPath, {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath}));
-          // if(filePaths.length === 3 && filePaths[2] === '.config'){
-          //   dispatch(Actions.addSnippetMap('__root', {value: folderName, parent: parentFolderPath, children: [], filePath: folderPath}));
-          // }
-          // let snippetConfigName = filePaths[filePaths.length - 1];
-          // let parentFolder = folderPath;
-          // dispatch(Actions.addSnippetMap(filePath, {value: snippet.data, parent: folderPath, children: [], filePath: filePath}));
-
-        })
+          dispatch(Actions.addSnippetMap(snippet.data.filePath, snippet.data));
+        });
       },
 
       selectFolder(folderPath) {
         dispatch(Actions.setSselectedFolder(folderPath));
       },
 
-      removeFolder(folderPath) {
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/folders',
-        //   data: folderPath
-        // }).then(res => {
-        dispatch(Actions.removeSnippetMap(folderPath));
-        dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
-        dispatch(Actions.removeSnippetMap(folderPath + '.config'));
-        // })
+      removeFolder(folder) {
+        return this.$http({
+          method: 'DELETE',
+          url: '/api/folders',
+          data: folder
+        }).then(res => {
+          dispatch(Actions.removeSnippetMap(folder.filePath));
+        })
       }
     }
   }
@@ -94,8 +77,7 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
-          this.Folders.getFileTree();
-          // dispatch(Actions.addSnippetMap(filePath, snippetObj));
+          dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
         });
       },
 
@@ -109,17 +91,17 @@ export class Snippets {
           this.Folders.getFileTree(res.data.filePath);
           // dispatch(Actions.addSnippetMap(filePath, snippetObj));
        });
+
       },
 
-      removeSnippet(snippetFilePath) {
-        let snippetId = this.snippetMap[snippetFilePath].value.snippetId;
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/snippets',
-        //   data: { snippetId }
-        // }).then(() => {
-        dispatch(Actions.removeSnippetMap(snippetFilePath));
-        // });
+      removeSnippet(snippetObj) {
+        return this.$http({
+          method: 'DELETE',
+          url: '/api/snippets',
+          data: {snippetId: snippetObj.value.snippetId}
+        }).then(() => {
+          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+        });
       },
 
       changeSelectedSnippet(snippetFilePath) {
