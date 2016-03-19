@@ -1,21 +1,10 @@
 "use strict";
-// var passport = require('passport');
 var Promise = require('bluebird');
 var request = require('request');
 var qs = require('querystring');
-
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
-
-var mongoose = require('mongoose');
-var config = require('./config.js');
-mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
-
-var redis = require('redis');
-var redisClient;
-
-
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
@@ -27,32 +16,6 @@ let createJWT = (user) => {
   return jwt.sign(payload, secret);
 }
 
-let checkReqAuthorization = (req, res, next) => {
-  let token = req.headers.authorization;
-  redisClient.get(token, (err, result) => {
-    if (err || result === undefined) {
-      res.status(401).send('Unauthorized');
-    } else {
-      next();
-    }
-  });
-}
-
-let addReqTokenToRedisAsync = (token) => {
-  return new Promise((resolve, reject) => {
-    redisClient.mset([token, true], (err, replies) => {
-      err ? reject(err) : resolve(replies);
-    });
-  });
-}
-
-let removeReqTokenFromRedisAsync = (token) => {
-  return new Promise((resolve, reject) => {
-    redisClient.del(token, (err, replies) => {
-      err ? reject(err) : resolve(replies);
-    });
-  });
-}
 
 module.exports = (app, express) => {
   app.route('/signin')
@@ -212,19 +175,6 @@ module.exports = (app, express) => {
   app.route('/auth/github/failure')
     .get((__, res) => res.status(401).send('Unauthorized'));
 
-  // app.get('/auth/github', passport.authenticate('github'));
-
-  // app.get('/auth/github/callback',
-  //   passport.authenticate('github', { failureRedirect: '/auth/github/failure' }), (req, res) => {
-  //     console.log('callback stuff happening');
-  //     let token = createJWT({ _id: req.user.profile._id });
-  //     addReqTokenToRedisAsync(token)
-  //       .then(() => res.status(201).send(token))
-  //       .catch((err) => {
-  //         console.log(err);
-  //         res.status(500).send('Error');
-  //       });
-  //   });
 
   app.post('/auth/github', (req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
