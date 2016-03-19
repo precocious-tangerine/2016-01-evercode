@@ -24,13 +24,17 @@ class DirectoriesCtrl {
 
   toggleSideNav() {
     if (this.sideNavOpen){
-      $('#slide-out').animate({left:'105%'},200, function(){
+      $('#slide-out').animate({left:'-105%'},200, function(){
         $('#slide-out').sideNav('hide');
       })
       this.sideNavOpen = false;
     } else {
       $('#slide-out').animate({left:'66'},200, function(){
         $('#slide-out').sideNav('show');
+        $('#sidenav-overlay').click(function(){
+          $('#slide-out').animate({left:'-105%'},200)
+          this.sideNavOpen = false;
+        })
       })
       this.sideNavOpen = true;
     } 
