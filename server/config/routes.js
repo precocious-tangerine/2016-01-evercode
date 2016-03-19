@@ -26,13 +26,7 @@ module.exports = (app, express) => {
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
           token = createJWT({ email });
-          addReqTokenToRedisAsync(token)
-            .then((replies) => {
-              res.status(201).send(token);
-            }).catch((err) => {
-              console.log(err);
-              res.status(500).send(err);
-            });
+          res.status(201).send(token);
         }).catch((err) => {
           console.log(err);
           res.status(401).send('Unauthorized');
@@ -46,25 +40,14 @@ module.exports = (app, express) => {
       Users.makeUserAsync({ email, _password: password })
         .then((userData) => {
           token = createJWT({ email });
-          return addReqTokenToRedisAsync(token)
+          res.status(201).send(token);
         })
-        .then(() => res.status(201).send(token))
         .catch((err) => {
           console.log(err);
           res.status(500).send(err);
         });
     });
 
-  app.route('/signout')
-    .get((req, res) => {
-      let token = req.headers.authorization;
-      removeReqTokenFromRedisAsync(token)
-        .then(() => res.status(200).send(token))
-        .catch((err) => {
-          console.log(err);
-          res.status(500).send(err);
-        });
-    });
 
   app.route('/api/snippets')
     .get((req, res) => {
@@ -185,6 +168,7 @@ module.exports = (app, express) => {
       client_secret: config.githubSecret,
       redirect_uri: req.body.redirectUri
     };
+    let token;
     // Step 1. Exchange authorization code for access token.
     request.get({ url: accessTokenUrl, qs: params }, (err, response, accessToken) => {
       accessToken = qs.parse(accessToken);
@@ -192,46 +176,89 @@ module.exports = (app, express) => {
       // Step 2. Retrieve profile information about the current user.
       request.get({ url: userApiUrl, qs: accessToken, headers: headers, json: true }, (err, response, profile) => {
         // Step 3a. Link user accounts.
-        if (req.header('Authorization')) {
-          Users.findOne({ github: profile.id }, (err, existingUser) => {
-            if (existingUser) {
-              return res.status(409).send({ message: 'There is already a GitHub account that belongs to you' });
-            }
-            var token = req.header('Authorization').split(' ')[1];
-            var payload = jwt.decode(token, secret);
-            Users.findById(payload.sub, (err, user) => {
-              if (!user) {
-                return res.status(400).send({ message: 'User not found' });
-              }
-              user.email = user.email || profile.email;
-              user.github = profile.id;
-              user.avatar_url = user.avatar_url || profile.avatar_url;
-              user.name = user.name || profile.name;
-              user.save(() => {
-                var token = createJWT(user);
-                addReqTokenToRedisAsync(token).then(() => res.send({ token: token }))
-              });
-            });
-          });
-        } else {
-          // Step 3b. Create a new user account or return an existing one.
-          Users.findOne({ github: profile.id }, (err, existingUser) => {
-            if (existingUser) {
-              var token = createJWT(existingUser);
-              return res.send({ token: token });
-            }
-            var user = new User();
-            user.email = user.email || profile.email;
-            user.github = profile.id;
-            user.avatar_url = profile.avatar_url;
-            user.name = profile.name;
-            user.save(() => {
-              var token = createJWT(user);
-              res.send({ token: token });
-            });
-          });
-        }
+        Users.findOne({ email: profile.email}, (err, existingUser) => {
+          if(existingUser) {
+            token = createJWT({ email: existingUser.email });
+            res.status(201).send(token);
+          } else {
+            let {email, github, avatar_url, name, id} = profile
+            Users.makeUserAsync({email, github, avatar_url, name, github: '' + id})
+            .then((userObj) => {
+              token = createJWT({ email: existingUser.email });
+              res.status(201).send(token);
+            })
+            .catch(done);
+          }
+        });
       });
     });
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//         if (req.header('Authorization')) {
+//           Users.findOne({ github: profile.id }, (err, existingUser) => {
+//             if (existingUser) {
+//               return res.status(409).send({ message: 'There is already a GitHub account that belongs to you' });
+//             }
+//             var token = req.header('Authorization').split(' ')[1];
+//             var payload = jwt.decode(token, secret);
+//             Users.findById(payload.sub, (err, user) => {
+//               if (!user) {
+//                 return res.status(400).send({ message: 'User not found' });
+//               }
+//               user.email = user.email || profile.email;
+//               user.github = profile.id;
+//               user.avatar_url = user.avatar_url || profile.avatar_url;
+//               user.name = user.name || profile.name;
+//               user.save(() => {
+//                 var token = createJWT(user);
+//                 res.send({ token: token });
+//               });
+//             });
+//           });
+//         } else {
+//           // Step 3b. Create a new user account or return an existing one.
+//           Users.findOne({ github: profile.id }, (err, existingUser) => {
+//             if (existingUser) {
+//               var token = createJWT(existingUser);
+//               return res.send({ token: token });
+//             }
+//             var user = new User();
+//             user.email = user.email || profile.email;
+//             user.github = profile.id;
+//             user.avatar_url = profile.avatar_url;
+//             user.name = profile.name;
+//             user.save(() => {
+//               var token = createJWT(user);
+//               res.send({ token: token });
+//             });
+//           });
+//         }
+//       });
+//     });
+//   });
+// }

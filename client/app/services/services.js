@@ -179,13 +179,9 @@ export class Auth {
       },
 
       signout() {
-        return this.$http({
-          method: 'GET',
-          url: '/signout'
-        }).then(res => {
+      
           this.$window.localStorage.removeItem('satellizer_token');
           this.$location.path('/signin');
-        })
       }
     }
   }
