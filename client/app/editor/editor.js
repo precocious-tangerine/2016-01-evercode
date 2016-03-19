@@ -60,7 +60,7 @@ class EditorCtrl {
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
     let snippetObj = {};
-    snippetObj.data = !selectedSnippet ? '' : snippetMap[selectedSnippet].value.data;
+    snippetObj.data = !selectedSnippet ? ' ' : snippetMap[selectedSnippet].value.data;
     snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     return {
       path,

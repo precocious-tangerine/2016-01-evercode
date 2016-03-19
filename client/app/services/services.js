@@ -40,7 +40,7 @@ export class Folders {
           return this.$http({
             method: 'DELETE',
             url: '/api/folders',
-            data: node.filePath
+            params: {filePath: node.filePath}
           })
         })
         Promise.all(promiseArray).then(deleted => {
@@ -108,12 +108,15 @@ export class Snippets {
       },
 
       removeSnippet(snippetObj) {
+        console.log('removeSnippet -> snippetObj: ', snippetObj.value._id)
         return this.$http({
           method: 'DELETE',
           url: '/api/snippets',
-          data: {snippetId: snippetObj.value.snippetId}
-        }).then(() => {
-          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          params: {snippetId: snippetObj.value._id}
+        }).then((response) => {
+          console.log('removed', response)
+          this.Folders.getFileTree();
+          // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
         });
       },
 

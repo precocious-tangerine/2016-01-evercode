@@ -132,7 +132,9 @@ module.exports = (app, express) => {
         })
     })
     .delete((req, res) => {
-      Snippets.removeSnippetAsync(req.body.snippetId)
+      console.log('removeSnippetAsync: ', req.query, req.params);
+      
+      Snippets.removeSnippetAsync(req.query.snippetId)
         .then((response) => {
           if (response) {
             res.status(201).send(response);
@@ -198,7 +200,7 @@ module.exports = (app, express) => {
     })
     .delete((req, res) => {
       let email = jwt.verify(req.headers['x-access-token'], secret).email;
-      let path = req.body.folder;
+      let path = req.query.filePath;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {
           if (result) {

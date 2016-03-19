@@ -34,6 +34,7 @@ Snippet.updateSnippet = (_id, newProps, callback) => {
 }
 
 Snippet.removeSnippet = (_id, callback) => {
+  console.log('id:::::::::::::::', _id);
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
 }
 

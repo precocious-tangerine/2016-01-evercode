@@ -50,8 +50,9 @@ class SnippetsCtrl {
     this.Snippets.changeSelectedSnippet(snippetPath);
   }
 
-  removeSnippet(snippetPath) {
-    this.Snippets.removeSnippet(snippetPath);
+  removeSnippet(snippetObj) {
+    console.log('snippetObj', snippetObj);
+    this.Snippets.removeSnippet(snippetObj);
   }
 
   removeFolderAndChildren(folderPath) {
