@@ -27,7 +27,7 @@ export class Folders {
           data: folder
         }).then(snippet => {
           dispatch(Actions.addSnippetMap(snippet.filePath, snippet));
-        }
+        });
       },
 
       selectFolder(folderPath) {
@@ -70,14 +70,14 @@ export class Snippets {
           url: '/api/snippets?_id=' + snippetId
         });
       },
-      addSnippet(filePath, snippetObj) {
+      addSnippet(snippetObj) {
         let { filePath } = snippetObj
         return this.$http({
           method: 'POST',
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
-          dispatch(Actions.addSnippetMap(snippet.filePath, snippet));
+          dispatch(Actions.addSnippetMap(snippetObj.filePath, snippetObj));
         });
       },
 
