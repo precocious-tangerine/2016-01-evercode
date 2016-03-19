@@ -19,11 +19,15 @@ let createJWT = (user) => {
 
 
 module.exports = (app, express, redisClient) => {
-  app.route('/get-session')
-    .get((req, res) => {
-      res.send(JSON.stringify(req.session.passport.user));
-    })
+  
   app.route('/signin')
+    .get((req,res) => {
+      if(req.isAuthenticated()) {
+        res.status(200).send(createJWT(req.session));
+      } else {
+        res.status(404).send('Not Authorized');
+      }
+    })
     .post(passport.authenticate('signin', { failureRedirect: '/'}), (req, res) =>{
        res.send(createJWT(req.session));
       });
