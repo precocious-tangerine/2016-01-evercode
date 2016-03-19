@@ -23,6 +23,7 @@
       </div>
     </a>
     <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-repeat="snippet in snippets.visibleSnippets" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">{{snippet.value.name}}
+    <i ng-click="snippets.toggleFavorite(snippet)" class="valign tiny material-icons">star border</i>
     <i ng-click="snippets.removeSnippet(snippet)" class="valign tiny material-icons">delete</i>
     </a>
 

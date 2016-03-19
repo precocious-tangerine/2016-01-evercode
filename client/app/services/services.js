@@ -88,6 +88,7 @@ export class Snippets {
           data: snippetObj
         }).then((res) => {
           dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
+          dispatch(Actions.setSelectedSnippet(res.data.filePath));
         });
       },
 
