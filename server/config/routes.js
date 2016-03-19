@@ -1,5 +1,4 @@
 "use strict";
-var passport = require('passport');
 var Promise = require('bluebird');
 var request = require('request');
 var qs = require('querystring');
@@ -7,9 +6,6 @@ var qs = require('querystring');
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
-
-
-
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
 
@@ -23,27 +19,27 @@ let createJWT = (user) => {
 
 
 
-module.exports = (app, express, redisClient) => {
+module.exports = (app, express, redisClient, passport) => {
+  app.route('/get-session')
+    .get((req, res) => {
+      res.send(JSON.stringify(req.session.passport.user));
+    })
   app.route('/signin')
-    .post((req, res) => {
-      passport.authenticate('signin', { failureRedirect: '/'}), (req, res) =>{
+    .post(passport.authenticate('signin', { failureRedirect: '/'}), (req, res) =>{
        res.send(createJWT(req.session));
-      }
-    });
+      });
 
   app.route('/signup')
-    .post((req, res) => {
-      passport.authenticate('signup', { failureRedirect: '/'}), (req, res) => {
+    .post(passport.authenticate('signup', { failureRedirect: '/'}), (req, res) => {
         res.send(createJWT(req.session));
-      }
-    });
+      });
 
   app.route('/signout')
     .get((req, res) => {
       req.logout();
       res.redirect('/');
     });
-    
+
   app.route('/auth/github/failure')
     .get((__, res) => res.status(401).send('Unauthorized'));
 
@@ -52,7 +48,6 @@ module.exports = (app, express, redisClient) => {
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/auth/github/failure' }), (req, res) => {
       res.send(createJWT(req.session));
-      });
     });
 
   app.route('/api/snippets')
@@ -70,7 +65,7 @@ module.exports = (app, express, redisClient) => {
         })
     })
     .post((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.session.email;
       req.body.createdBy = email;
       Snippets.makeSnippetAsync(req.body)
         .then((snippet) => {
@@ -115,8 +110,7 @@ module.exports = (app, express, redisClient) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
-      let token = jwt.verify(req.headers.authorization, secret);
-      return Snippets.getSnippetsByUserAsync(token.email)
+      return Snippets.getSnippetsByUserAsync(req.session.email)
         .then((results) => {
           if (Array.isArray(results) && results.length > 0) {
             var fileTreeObj = {};
@@ -135,9 +129,8 @@ module.exports = (app, express, redisClient) => {
 
   app.route('/api/folders/')
     .post((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
       let path = req.body.path;
-      Snippets.makeSubFolderAsync(email, path)
+      Snippets.makeSubFolderAsync(req.session.email, path)
         .then((folder) => {
           res.status(201).send(folder)
         }).catch((err) => {
@@ -146,7 +139,7 @@ module.exports = (app, express, redisClient) => {
         })
     })
     .delete((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.session.email;
       let path = `${email}/${req.body.folder}`;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {

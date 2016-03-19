@@ -1,23 +1,17 @@
 'use strict';
+var Promise = require('bluebird');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
-var RedisStore = require('connect-redis');
+var RedisStore = require('connect-redis')(session);
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-module.exports = (app, express, redisClient) => {
+module.exports = (app, express, redisClient, passport) => {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
@@ -26,10 +20,10 @@ module.exports = (app, express, redisClient) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
-  app.use(express.session({
-    store: new RedisStore({
+  app.use(session({
+    store: (new RedisStore({
       client: redisClient
-    }),
+    })),
     secret: 'ssshhhhhhh',
     saveUninitialized: false,
     resave: false
@@ -49,11 +43,10 @@ module.exports = (app, express, redisClient) => {
   passport.use('signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    session: true
   },(email, password, done) => {
     Users.checkCredentialsAsync(email, password)
       .then((userData) => {
-        done(null, user);
+        done(null, userData);
       }).catch((err) => {
         console.log(err);
         done(err);
@@ -63,11 +56,10 @@ module.exports = (app, express, redisClient) => {
   passport.use('signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    session: true
   }, (email, password, done) => {
     Users.makeUserAsync({ email, _password: password })
       .then((userData) => {
-        done(null, user);
+        done(null, userData);
       })
       .catch((err) => {
         console.log(err);
@@ -75,6 +67,14 @@ module.exports = (app, express, redisClient) => {
       });
 
   }))
+  
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
 
   app.use(passport.initialize());
   app.use(passport.session());

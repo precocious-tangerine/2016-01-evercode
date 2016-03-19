@@ -7,10 +7,12 @@ mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
 
 var redis = require('redis');
 var redisClient;
-redisClient = redis.createClient(config.redisHost, config.redisPort);
+redisClient = redis.createClient( config.redisPort, config.redisHost);
 
-require(__dirname + '/config/middleware.js')(app, express, redisClient);
-require(__dirname + '/config/routes.js')(app, express, redisClient);
+var passport = require('passport');
+
+require(__dirname + '/config/middleware.js')(app, express, redisClient, passport);
+require(__dirname + '/config/routes.js')(app, express, redisClient, passport);
 const port = process.env.PORT || 3000;
 
 
