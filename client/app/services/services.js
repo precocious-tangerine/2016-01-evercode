@@ -26,7 +26,7 @@ export class Folders {
           url: '/api/folders',
           data: folder
         }).then(snippet => {
-          dispatch(Actions.addSnippetMap(snippet.filePath, snippet));
+          dispatch(Actions.addSnippetMap(snippet.data.filePath, snippet.data));
         });
       },
 
@@ -77,7 +77,7 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
-          dispatch(Actions.addSnippetMap(snippetObj.filePath, snippetObj));
+          dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
         });
       },
 
