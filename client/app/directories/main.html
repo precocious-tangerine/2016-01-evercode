@@ -60,8 +60,10 @@
 
         <li>
           <div ng-repeat="folder in directories.folders" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
-            {{folder.value}}
-             <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+            <a href="#snippets-modal" class="modal-trigger">
+              {{folder.value}}
+            </a>
+            <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
           </div>
         </li>
       </ul>
