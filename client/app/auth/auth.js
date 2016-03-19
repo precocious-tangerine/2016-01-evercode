@@ -10,15 +10,18 @@ export const createAuthCtrl = (url) => {
 }
 
 class AuthCtrl {
-  constructor(Auth, $auth) {
+  constructor(Auth, $auth, $state) {
     this.user = {};
     this.failed = true;
     this.Auth = Auth;
     this.$auth = $auth;
+    this.$state = $state;
   }
 
   githubAuth() {
-    this.$auth.authenticate('github');
+    this.$auth.authenticate('github').then(() => {
+      this.$state.go('main');
+    })
   };
 
   signin(boolean) {
@@ -32,7 +35,6 @@ class AuthCtrl {
     this.failed = true;
     if (boolean) {
       this.Auth.signup(this.user);
-
     }
   }
 

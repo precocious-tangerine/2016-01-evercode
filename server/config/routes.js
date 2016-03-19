@@ -251,7 +251,7 @@ module.exports = (app, express) => {
               return res.status(409).send({ message: 'There is already a GitHub account that belongs to you' });
             }
             var token = req.header('Authorization').split(' ')[1];
-            var payload = jwt.decode(token, config.TOKEN_SECRET);
+            var payload = jwt.decode(token, secret);
             Users.findById(payload.sub, (err, user) => {
               if (!user) {
                 return res.status(400).send({ message: 'User not found' });
