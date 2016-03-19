@@ -40,9 +40,13 @@ module.exports = (app, express) => {
         done(null, existingUser);
       } else {
         profile = JSON.parse(profile._raw);
-        Object.keys(profile).forEach(function(key) {
-          console.log('Key: ', key, ' value: ', profile[key], ' type: ', typeof profile[key])
-        });
+        profile.github = profile.id + '';
+        delete profile.id;
+        profile.location = profile.location || 'private';
+        profile.hireable = !!profile.hireable;
+        profile.bio = profile.bio || 'private';
+        profile.followers = '' + profile.followers;
+        profile.following = '' + profile.following;
         Users.makeUserAsync(profile)
         .then((userObj) => done(null, userObj))
         .catch(done);
