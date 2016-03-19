@@ -23,13 +23,13 @@ main {
   font-size: 1.5em;
 }
 
-.snippets {
+/*.snippets {
   position: relative;
   width: 200px;
   left: 0;
   right: 0;
   bottom: 0;
-}
+}*/
 
 .editor {
   position: relative;
@@ -128,6 +128,7 @@ main {
 
 #nav-mobile > li {
   padding: 0px;
+  padding-left: 15px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
