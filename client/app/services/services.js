@@ -3,7 +3,6 @@ import {convertToTree} from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
-    window.Folders = this;
     this.$http = $http;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
@@ -21,29 +20,28 @@ export class Folders {
         })
       },
 
-      addFolder(folderPath) {
-        // return this.$http({
-        //   method: 'POST',
-        //   url: '/api/folders',
-        //   data: folder
-        // }).then(snippet => {
-     
-          dispatch(Actions.addSnippetMap(folderPath, {value: {name: '.config'}}))
-        //}
+      addFolder(folder) {
+        return this.$http({
+          method: 'POST',
+          url: '/api/folders',
+          data: folder
+        }).then(snippet => {
+          dispatch(Actions.addSnippetMap(snippet.filePath, snippet));
+        }
       },
 
       selectFolder(folderPath) {
         dispatch(Actions.setSselectedFolder(folderPath));
       },
 
-      removeFolder(folderPath) {
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/folders',
-        //   data: folderPath
-        // }).then(res => {
-        // })
-        dispatch(Actions.removeSnippetMap(folderPath));
+      removeFolder(folder) {
+        return this.$http({
+          method: 'DELETE',
+          url: '/api/folders',
+          data: folder
+        }).then(res => {
+          dispatch(Actions.removeSnippetMap(folder.filePath));
+        })
       }
     }
   }
@@ -61,7 +59,6 @@ export class Snippets {
     this.$http = $http;
     this.Folders = Folders;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
-    window.hello123 = this;
   }
 
   mapDispatchToThis(dispatch) {
@@ -74,16 +71,14 @@ export class Snippets {
         });
       },
       addSnippet(filePath, snippetObj) {
-        // let { filePath } = snippetObj
-        // return this.$http({
-        //   method: 'POST',
-        //   url: '/api/snippets',
-        //   data: snippetObj
-        // }).then((res) => {
-        //   this.Folders.getFileTree();
-        //   // dispatch(Actions.addSnippetMap(filePath, snippetObj));
-        // });
-        dispatch(Actions.addSnippetMap(filePath, {value: {name: 'test123'}}));
+        let { filePath } = snippetObj
+        return this.$http({
+          method: 'POST',
+          url: '/api/snippets',
+          data: snippetObj
+        }).then((res) => {
+          dispatch(Actions.addSnippetMap(snippet.filePath, snippet));
+        });
       },
 
       updateSnippet(snippetObj) {
@@ -99,15 +94,14 @@ export class Snippets {
 
       },
 
-      removeSnippet(snippetFilePath) {
-        let snippetId = this.snippetMap[snippetFilePath].value.snippetId;
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/snippets',
-        //   data: { snippetId }
-        // }).then(() => {
-        dispatch(Actions.removeSnippetMap(snippetFilePath));
-        // });
+      removeSnippet(snippetObj) {
+        return this.$http({
+          method: 'DELETE',
+          url: '/api/snippets',
+          data: {snippetId: snippetObj.value.snippetId}
+        }).then(() => {
+          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+        });
       },
 
       changeSelectedSnippet(snippetFilePath) {
