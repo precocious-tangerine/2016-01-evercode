@@ -35,17 +35,15 @@ export class Folders {
       },
 
       removeFolder(folderPath) {
-        var children = getAllChildren(this.snippetMap, folderPath, true);
-        var promiseArray = children.map((node) => {
-          return this.$http({
-            method: 'DELETE',
-            url: '/api/folders',
-            params: {filePath: node.filePath}
-          })
+        return this.$http({
+          method: 'DELETE',
+          url: '/api/folders',
+          params: {filePath: folderPath}
+        }).then(response => {
+          console.log('response from deleting folder: ', response);
+          this.getFileTree();
         })
-        Promise.all(promiseArray).then(deleted => {
-          dispatch(Actions.removeSnippetMap(folderPath));
-        });
+
         // return this.$http({
         //   method: 'DELETE',
         //   url: '/api/folders',
