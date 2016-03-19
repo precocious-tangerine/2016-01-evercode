@@ -175,13 +175,13 @@ module.exports = (app, express) => {
         Users.findOne({ email: profile.email}, (err, existingUser) => {
           if(existingUser) {
             token = createJWT({ email: existingUser.email });
-            res.status(201).send(token);
+            res.status(201).send({token: token});
           } else {
             let {email, github, avatar_url, name, id} = profile
             Users.makeUserAsync({email, github, avatar_url, name, github: '' + id})
             .then((userObj) => {
               token = createJWT({ email: existingUser.email });
-              res.status(201).send(token);
+              res.status(201).send({token: token});
             })
             .catch(done);
           }
