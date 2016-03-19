@@ -51,7 +51,6 @@ class SnippetsCtrl {
   }
 
   removeSnippet(snippetObj) {
-    console.log('snippetObj', snippetObj);
     this.Snippets.removeSnippet(snippetObj);
   }
 
