@@ -1,7 +1,11 @@
 'use strict';
 var morgan = require('morgan');
+var Promise = require('bluebird');
 var bodyParser = require('body-parser');
 var config = require('../config');
+var mongoose = require('mongoose');
+var nev = Promise.promisifyAll(require('email-navigation')(mongoose));
+var User = require('../models/users.js');
 
 
 module.exports = (app, express) => {
