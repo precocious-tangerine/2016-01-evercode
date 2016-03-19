@@ -20,6 +20,7 @@ class DirectoriesCtrl {
     this.folder = {};
     this.snippetArr = [];
     this.sideNavOpen = false;
+    this.snippetModalOpen = false;
   }
 
   toggleSideNav() {
@@ -40,6 +41,20 @@ class DirectoriesCtrl {
     } 
   }
 
+  toggleModal() {
+
+    if (this.snippetModalOpen){
+      console.log("modal closal")
+      $('#snippets-modal').closeModal();
+      this.snippetModalOpen = false;
+    } else {
+      console.log("modal lodal")
+      $('.modal-trigger').leanModal();
+      $('#snippets-modal').openModal();
+      this.snippetModalOpen = true;
+    } 
+  }
+
   addFolder() {
     let path = this.snippetMap.__root.value + '/' + this.folder.name;
     this.Folders.addFolder({ path: path });
@@ -48,7 +63,8 @@ class DirectoriesCtrl {
 
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
-     $('#snippet-modal').leanModal();
+    this.toggleSideNav();
+    this.toggleModal();
   }
 
   removeFolder(folderPath) {
