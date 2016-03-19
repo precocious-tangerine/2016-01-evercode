@@ -65,7 +65,7 @@ module.exports = (app, express, redisClient, passport) => {
         })
     })
     .post((req, res) => {
-      let email = req.session.email;
+      let email = req.session.passport.user.email;
       req.body.createdBy = email;
       Snippets.makeSnippetAsync(req.body)
         .then((snippet) => {
@@ -110,7 +110,7 @@ module.exports = (app, express, redisClient, passport) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
-      return Snippets.getSnippetsByUserAsync(req.session.email)
+      return Snippets.getSnippetsByUserAsync(req.session.passport.user.email)
         .then((results) => {
           if (Array.isArray(results) && results.length > 0) {
             var fileTreeObj = {};
@@ -130,7 +130,7 @@ module.exports = (app, express, redisClient, passport) => {
   app.route('/api/folders/')
     .post((req, res) => {
       let path = req.body.path;
-      Snippets.makeSubFolderAsync(req.session.email, path)
+      Snippets.makeSubFolderAsync(req.session.passport.user.email, path)
         .then((folder) => {
           res.status(201).send(folder)
         }).catch((err) => {
@@ -139,7 +139,7 @@ module.exports = (app, express, redisClient, passport) => {
         })
     })
     .delete((req, res) => {
-      let email = req.session.email;
+      let email = req.session.passport.user.email;
       let path = `${email}/${req.body.folder}`;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {
