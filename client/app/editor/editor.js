@@ -22,6 +22,7 @@ class EditorCtrl {
       mode: 'javascript'
     };
     this.tag = '';
+    this.tagToRemove = '';
     this.addTag = false;
     this.showAnnotation = false;
   }
@@ -31,8 +32,13 @@ class EditorCtrl {
   }
 
   toggleAnnotation() {
-    console.log('toggleAnnotation', this.showAnnotation);
     this.showAnnotation = !this.showAnnotation;
+  }
+
+  removeTag(tag) {
+    this.tagToRemove = tag;
+    this.addOrUpdateSnippet();
+    this.tagToRemove = '';
   }
 
   addOrUpdateSnippet() {
@@ -42,6 +48,9 @@ class EditorCtrl {
       let tags = objectToUpdate.tags;
       if(this.tag) {
         tags.push(this.tag);
+      };
+      if(this.tagToRemove) {
+        tags.splice(tags.indexOf(this.tagToRemove), 1);
       };
       objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
       Object.assign(objectToUpdate, { data: this.snippetObj.data, name: this.snippetObj.name });
