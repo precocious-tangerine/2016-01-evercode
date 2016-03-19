@@ -10,6 +10,7 @@ let userSchema = mongoose.Schema({
   _updatedAt: { type: Date, default: new Date() },
   login: { type: String },
   id: { type: Number },
+  github: {type: String},
   avatar_url: { type: String },
   gravatar_id: { type: String },
   url: { type: String },

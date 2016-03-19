@@ -24,10 +24,13 @@
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "path": "^0.12.7",
+    "querystring": "^0.2.0",
     "ramda": "^0.19.1",
     "raw-loader": "^0.5.1",
     "redis": "^2.5.0-1",
     "redux-logger": "^2.6.1",
+    "request": "^2.69.0",
+    "satellizer": "^0.14.0",
     "source-map-loader": "^0.1.5",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
