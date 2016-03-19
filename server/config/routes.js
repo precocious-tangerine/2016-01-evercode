@@ -245,3 +245,13 @@ module.exports = (app, express) => {
   //     });
   //   });
   // });
+
+
+   // profile = JSON.parse(profile._raw);
+        // profile.github = profile.id + '';
+        // delete profile.id;
+        // profile.location = profile.location || 'private';
+        // profile.hireable = !!profile.hireable;
+        // profile.bio = profile.bio || 'private';
+        // profile.followers = '' + profile.followers;
+        // profile.following = '' + profile.following;

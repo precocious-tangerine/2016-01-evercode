@@ -39,15 +39,8 @@ module.exports = (app, express) => {
       if(existingUser) {
         done(null, existingUser);
       } else {
-        profile = JSON.parse(profile._raw);
-        profile.github = profile.id + '';
-        delete profile.id;
-        profile.location = profile.location || 'private';
-        profile.hireable = !!profile.hireable;
-        profile.bio = profile.bio || 'private';
-        profile.followers = '' + profile.followers;
-        profile.following = '' + profile.following;
-        Users.makeUserAsync(profile)
+        let {email, github, avatar_url, name, id} = profile
+        Users.makeUserAsync({email, github, avatar_url, name, github: '' + id})
         .then((userObj) => done(null, userObj))
         .catch(done);
       }
