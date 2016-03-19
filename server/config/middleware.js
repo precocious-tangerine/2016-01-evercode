@@ -35,9 +35,18 @@ module.exports = (app, express) => {
     clientSecret: config.githubSecret,
     callbackURL: config.serverUrl + '/auth/github/callback',
   }, (accessToken, refreshToken, profile, done) => {
-    done(null, {
-      accessToken: accessToken,
-      profile: profile
+    Users.findOne({ github: profile.id }, (err, existingUser) => {
+      if(existingUser) {
+        done(null, existingUser);
+      } else {
+        profile = JSON.parse(profile._raw);
+        Object.keys(profile).forEach(function(key) {
+          console.log('Key: ', key, ' value: ', profile[key], ' type: ', typeof profile[key])
+        });
+        Users.makeUserAsync(profile)
+        .then((userObj) => done(null, userObj))
+        .catch(done);
+      }
     });
   }));
 
