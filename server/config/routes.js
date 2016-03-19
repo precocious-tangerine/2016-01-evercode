@@ -2,7 +2,7 @@
 var Promise = require('bluebird');
 var request = require('request');
 var qs = require('querystring');
-
+var passport = require('passport');
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
@@ -18,8 +18,7 @@ let createJWT = (user) => {
 }
 
 
-
-module.exports = (app, express, redisClient, passport) => {
+module.exports = (app, express, redisClient) => {
   app.route('/get-session')
     .get((req, res) => {
       res.send(JSON.stringify(req.session.passport.user));

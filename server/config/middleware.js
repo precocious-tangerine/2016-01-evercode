@@ -8,10 +8,10 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
+var passport = require('passport');
 
 
-
-module.exports = (app, express, redisClient, passport) => {
+module.exports = (app, express, redisClient) => {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());

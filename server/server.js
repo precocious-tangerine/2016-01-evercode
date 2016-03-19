@@ -9,10 +9,8 @@ var redis = require('redis');
 var redisClient;
 redisClient = redis.createClient( config.redisPort, config.redisHost);
 
-var passport = require('passport');
-
-require(__dirname + '/config/middleware.js')(app, express, redisClient, passport);
-require(__dirname + '/config/routes.js')(app, express, redisClient, passport);
+require(__dirname + '/config/middleware.js')(app, express, redisClient);
+require(__dirname + '/config/routes.js')(app, express, redisClient);
 const port = process.env.PORT || 3000;
 
 
