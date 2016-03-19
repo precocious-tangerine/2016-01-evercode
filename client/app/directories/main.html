@@ -8,68 +8,100 @@
         <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
         <a ui-sref='signout' class='right'><i class="material-icons left">power_settings_new</i>Logout</a>
       </div>
+      <ul id="slide-out" class="side-nav">
+
+        <li>
+          <span class="center">ever:code</span>
+        </li>
+
+        <li>
+          <div class="input-field">
+            <input 
+              id="search-bar" 
+              data-activates="dropdown1" 
+              type="text" 
+              ng-model="search" 
+              placeHolder="Search..." 
+            />
+            <div class="search-results">
+              <ul id="dropdown1">
+                <li 
+                  ng-hide="!search" 
+                  ng-repeat="snippet in directories.snippetArr | filter:{name:search}"
+                >
+                  {{snippet.name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="input-field">
+            <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
+              <div class="form-group">
+                <input 
+                  placeholder="New Folder" 
+                  type="text" class="validate form-control" 
+                  maxlength="20" 
+                  ng-minlength="1" 
+                  ng-model="directories.folder.name" 
+                />
+              </div>
+            </form>
+          </div>
+        </li>
+
+        <li>
+          <div ng-repeat="folder in directories.folders" class="nav-icon" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
+            {{folder.value}}
+             <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+          </div>
+        </li>
+      </ul>
+      <a href="#" data-activates="slide-out" class="button-collapse right"><i class="mdi-navigation-menu"></i></a>
     </div>
   </nav>
-  <ul id="nav-mobile" class="side-nav fixed collapsible">
-    <li class="row">
-      <div class="collapsible-header">
-        <img class="icon" src = "https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png" />
-      </div>
-      <div class="collapsible-body">
-      </div>
-    </li>
-
-    <li class="search row">
-      <div class="collapsible-header">
-        <i id="search-icon" class="material-icons center">search</i>
-      </div>
-      <div class="input-field collapsible-body">
-        <input id="search-bar" data-activates="dropdown1" type="text" ng-model="search" placeHolder="Search..." />
-        <div class="search-results">
-          <ul id="dropdown1">
-            <li ng-hide="!search" ng-repeat="snippet in directories.snippetArr | filter:{name:search}">
-              {{snippet.name}}
-            </li>
-          </ul>
+  <ul id="nav-mobile" class="side-nav fixed">
+      <li class="row" ng-click="directories.toggleSideNav()">
+        <div class="nav-icon">
+          <a href='#' style="padding-left: 0px">
+            <img class="icon button-collapse mdi-navigation-menu"
+              data-activates="slide-out"
+              src="https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png"
+             />
+          </a>
         </div>
-      </div>
-    </li>
+      </li>
 
-    <li class="row">
-      <div class="collapsible-header">
-          <i id="add-folder-icon" class="material-icons center">library_add</i>
-      </div>
-      <div class="input-field collapsible-body">
-        <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
-          <div class="form-group">
-            <input placeholder="New Folder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="directories.folder.name" />
-          </div>
-        </form>
-      </div>
-    </li>
+      <li class="search row" ng-click="directories.toggleSideNav()">
+        <div class="nav-icon">
+          <i id="search-icon" class="material-icons center">search</i>
+        </div>
+      </li>
 
-    <li class="row">
-      <div class="collapsible-header">
-        <a href="#/favorites" class="waves-effect waves-teal nav-link" style ="padding-left: 0px">
-          <i class="material-icons">loyalty</i>
-        </a>
-      </div>
-      <div class="input-field collapsible-body">
-        Favorite snippets?
-      </div>
-    </li>
-    <li class="folder row" ng-repeat="folder in directories.folders">
-      <div class="collapsible-header">
-        <a class="waves-effect waves-teal nav-link" style ="padding-left: 0px" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
-          <i class="material-icons">library_books</i>
-          
-        </a>
-      </div>
-      <div class="input-field collapsible-body">
-        {{folder.value}}
-        <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
-      </div>
-    </li>
+      <li class="row" ng-click="directories.toggleSideNav()">
+        <div class="nav-icon">
+          <a href="#/favorites" class="waves-effect waves-teal nav-link" style="padding-left: 0px">
+            <i class="material-icons">star_rate</i>
+          </a>
+        </div>
+      </li>
+      
+      <li class="row" ng-click="directories.toggleSideNav()">
+        <div class="nav-icon">
+            <i id="add-folder-icon" class="material-icons center">library_add</i>
+        </div>
+      </li>
+
+      <li class="folder row" ng-click="directories.toggleSideNav()">
+        <div class="nav-icon">
+          <a class="waves-effect waves-teal nav-link" style="padding-left: 0px" >
+            <i class="material-icons">library_books</i>
+          </a>
+        </div>
+      </li>
+
   </ul>
 </header>
 <main>
