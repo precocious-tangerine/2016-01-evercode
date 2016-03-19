@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import {convertToTree} from './fileTree.js';
+import {convertToTree, getAllChildren} from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -34,14 +34,27 @@ export class Folders {
         dispatch(Actions.setSselectedFolder(folderPath));
       },
 
-      removeFolder(folder) {
-        return this.$http({
-          method: 'DELETE',
-          url: '/api/folders',
-          data: folder
-        }).then(res => {
-          dispatch(Actions.removeSnippetMap(folder.filePath));
+      removeFolder(folderPath) {
+        var children = getAllChildren(this.snippetMap, folderPath, true);
+        var promiseArray = children.map((node) => {
+          return this.$http({
+            method: 'DELETE',
+            url: '/api/folders',
+            data: node.filePath
+          })
         })
+        Promise.all(promiseArray).then(deleted => {
+          dispatch(Actions.removeSnippetMap(folderPath));
+        });
+        // return this.$http({
+        //   method: 'DELETE',
+        //   url: '/api/folders',
+        //   data: folderPath
+        // }).then(res => {
+        // dispatch(Actions.removeSnippetMap(folderPath));
+        // dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
+        // dispatch(Actions.removeSnippetMap(folderPath + '.config'));
+        // })
       }
     }
   }

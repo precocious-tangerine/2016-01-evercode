@@ -197,8 +197,8 @@ module.exports = (app, express) => {
         })
     })
     .delete((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
-      let path = `${email}/${req.body.folder}`;
+      let email = jwt.verify(req.headers['x-access-token'], secret).email;
+      let path = req.body.folder;
       Snippets.removeFolderAsync(email, path)
         .then((result) => {
           if (result) {

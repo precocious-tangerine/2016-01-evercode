@@ -54,6 +54,10 @@ class SnippetsCtrl {
     this.Snippets.removeSnippet(snippetPath);
   }
 
+  removeFolderAndChildren(folderPath) {
+    this.Folders.removeFolder(folderPath);
+  }
+
   mapStateToThis(state) {
     let { selectedFolder, snippetMap } = state;
     let visibleFolders = [],
