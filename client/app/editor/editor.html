@@ -27,8 +27,9 @@
   <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()">Annotate<i class="material-icons right">comment</i></a>
 </div> 
 
-<div ng-class="!editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.content' ui-codemirror='editor.editorOptions'>
+<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.content' ui-codemirror='editor.editorOptions'>
 </div>
+
 <div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
   <h5>Annotations</h5>
   <hr>
