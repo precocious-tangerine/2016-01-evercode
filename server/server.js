@@ -5,8 +5,8 @@ var config = require('./config.js');
 
 mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
 
-require(__dirname + '/config/middleware.js')(app, express);
-require(__dirname + '/config/routes.js')(app, express);
+require(__dirname + '/config/middleware.js')(app, express, mongoose);
+require(__dirname + '/config/routes.js')(app, express, mongoose);
 const port = process.env.PORT || 3000;
 
 

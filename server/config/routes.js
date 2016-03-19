@@ -8,16 +8,13 @@ var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
 
+var mongoose = require('mongoose');
+var config = require('./config.js');
+mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
+
 var redis = require('redis');
 var redisClient;
-if (process.env.REDIS_PORT_6379_TCP_PORT || process.env.REDIS_PORT_6379_TCP_ADDR) {
-  redisClient = redis.createClient(
-    process.env.REDIS_PORT_6379_TCP_PORT,
-    process.env.REDIS_PORT_6379_TCP_ADDR
-  );
-} else {
-  redisClient = redis.createClient()
-}
+
 
 var jwt = require('jsonwebtoken');
 var secret = 'shhh! it\'s a secret';
