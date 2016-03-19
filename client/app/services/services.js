@@ -149,8 +149,10 @@ export class Auth {
             method: 'POST',
             url: '/signin',
             data: user
-          }).then(token => {
+          }).then((token, userInfo) => {
+            let obj = {name: 'MaxKroshka', email: 'test@mail.com'};
             this.$window.localStorage.setItem('satellizer_token', token.data);
+            dispatch(Actions.setActiveUser(user));
             this.$location.path('/main');
           })
           .catch(error => {
@@ -164,13 +166,6 @@ export class Auth {
             method: 'POST',
             url: '/signup',
             data: user
-          }).then(token => {
-            this.$window.localStorage.setItem('satellizer_token', token.data);
-            this.$location.path('/main');
-          })
-          .catch(error => {
-            this.failed = false;
-            console.error(error);
           });
       },
 
@@ -179,9 +174,9 @@ export class Auth {
       },
 
       signout() {
-      
-          this.$window.localStorage.removeItem('satellizer_token');
-          this.$location.path('/signin');
+        this.$window.localStorage.removeItem('satellizer_token');
+        dispatch(Actions.removeActiveUser());
+        this.$location.path('/signin');
       }
     }
   }

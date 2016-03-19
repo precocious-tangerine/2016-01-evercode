@@ -34,7 +34,15 @@ class AuthCtrl {
   signup(boolean) {
     this.failed = true;
     if (boolean) {
-      this.Auth.signup(this.user);
+      this.Auth.signup(this.user)
+        .then(res => {
+          console.log('signed up');
+          // modal with message to check email
+        })
+        .catch(error => {
+          this.failed = false;
+          console.error(error);
+        });
     }
   }
 

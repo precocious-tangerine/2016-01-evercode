@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {insertNode, deleteNode, updateNode} from '../services/fileTree.js';
+import { insertNode, deleteNode, updateNode } from '../services/fileTree.js';
 
 const modifySelectedSnippet = (state = '', action) => {
   switch (action.type) {
@@ -21,7 +21,7 @@ const modifySelectedFolder = (state = '', action) => {
     default:
       return state;
   }
-}
+};
 
 const modifySnippetMap = (state = {}, action) => {
   switch (action.type) {
@@ -32,15 +32,28 @@ const modifySnippetMap = (state = {}, action) => {
     case 'REMOVE_SNIPPET_MAP':
       return deleteNode(state, action.filePath);
     case 'UPDATE_SNIPPET_MAP':
-      let {oldFilePath, updateFilePath, updateNodeValues} = action;
+      let { oldFilePath, updateFilePath, updateNodeValues } = action;
       return updateNode(state, oldFilePath, updateFilePath, updateNodeValues);
     default:
       return state;
   }
-}
+};
+
+const modifyActiveUser = (state = {}, action) => {
+  console.log('action', action);
+  switch (action.type) {
+    case 'SET_ACTIVE_USER':
+      return action.user;
+    case 'REMOVE_ACTIVE_USER':
+      return '';
+    default:
+      return state;
+  }
+};
 
 export const finalReducer = combineReducers({
   selectedSnippet: modifySelectedSnippet,
   selectedFolder: modifySelectedFolder,
-  snippetMap: modifySnippetMap
+  snippetMap: modifySnippetMap,
+  activeUser: modifyActiveUser
 });
