@@ -9,9 +9,19 @@ import { Folders, Auth, Snippets } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { directories } from './directories/directories.js';
 import { editor } from './editor/editor.js';
+import satellizer from 'satellizer';
+import config from './../../server/config.js';
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer])
+  .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
-angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror'])
-  .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider) => {
+    $authProvider.oauth2({
+      name: 'github',
+      url: '/auth/github',
+      clientId: config.githubClientId,
+      redirectUri: window.location.origin,
+      authorizationEndpoint: 'https://github.com/login/oauth/authorize'
+    });
+
     $urlRouterProvider.otherwise('/main');
     $stateProvider
       .state('main', directories())
@@ -38,9 +48,9 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror'])
   .factory('AttachTokens', ($window) => {
     var attach = {
       request: (object) => {
-        var jwt = $window.localStorage.getItem('com.evercode');
+        var jwt = $window.localStorage.getItem('satellizer_token');
         if (jwt) {
-          object.headers['x-access-token'] = jwt;
+          object.headers['Authorization'] = jwt;
         }
         object.headers['Allow-Control-Allow-Origin'] = '*';
         return object;

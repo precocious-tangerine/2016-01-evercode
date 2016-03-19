@@ -138,7 +138,7 @@ export class Auth {
             url: '/signin',
             data: user
           }).then(token => {
-            this.$window.localStorage.setItem('com.evercode', token.data);
+            this.$window.localStorage.setItem('satellizer_token', token.data);
             this.$location.path('/main');
           })
           .catch(error => {
@@ -153,7 +153,7 @@ export class Auth {
             url: '/signup',
             data: user
           }).then(token => {
-            this.$window.localStorage.setItem('com.evercode', token.data);
+            this.$window.localStorage.setItem('satellizer_token', token.data);
             this.$location.path('/main');
           })
           .catch(error => {
@@ -163,7 +163,7 @@ export class Auth {
       },
 
       isAuth() {
-        return !!this.$window.localStorage.getItem('com.evercode');
+        return !!this.$window.localStorage.getItem('satellizer_token');
       },
 
       signout() {
@@ -171,7 +171,7 @@ export class Auth {
           method: 'GET',
           url: '/signout'
         }).then(res => {
-          this.$window.localStorage.removeItem('com.evercode');
+          this.$window.localStorage.removeItem('satellizer_token');
           this.$location.path('/signin');
         })
       }

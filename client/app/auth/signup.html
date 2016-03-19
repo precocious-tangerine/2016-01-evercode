@@ -2,9 +2,6 @@
   <div class="col s4 offset-s4 col-centered">
     <div id='signup'>
       <h2>Sign Up</h2>
-      <div class="github">
-        <a href="/auth/github">Sign Up with Github</a>
-      </div>
       <form name="userForm" ng-submit="authCtrl.signup(userForm.$valid)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
           <input type='text' name='email' placeholder='Email' class='form-control' ng-model='authCtrl.user.email' ng-minlength="3" ng-maxlength="25" required>

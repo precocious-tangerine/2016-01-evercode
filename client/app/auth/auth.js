@@ -10,11 +10,16 @@ export const createAuthCtrl = (url) => {
 }
 
 class AuthCtrl {
-  constructor(Auth) {
+  constructor(Auth, $auth) {
     this.user = {};
     this.failed = true;
     this.Auth = Auth;
+    this.$auth = $auth;
   }
+
+  githubAuth() {
+    this.$auth.authenticate('github');
+  };
 
   signin(boolean) {
     this.failed = true;
