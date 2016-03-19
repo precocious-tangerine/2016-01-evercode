@@ -18,8 +18,8 @@ let createJWT = (user) => {
 }
 
 
-module.exports = (app, express, redisClient) => {
-  
+module.exports = (app, express) => {
+
   app.route('/signin')
     .get((req,res) => {
       if(req.isAuthenticated()) {

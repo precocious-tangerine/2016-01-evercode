@@ -11,7 +11,7 @@ var Users = Promise.promisifyAll(require('../models/users'));
 var passport = require('passport');
 
 
-module.exports = (app, express, redisClient) => {
+module.exports = (app, express) => {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
@@ -22,7 +22,8 @@ module.exports = (app, express, redisClient) => {
   });
   app.use(session({
     store: (new RedisStore({
-      client: redisClient
+      port: config.redisPort,
+      host: config.redisHost
     })),
     secret: 'ssshhhhhhh',
     saveUninitialized: false,

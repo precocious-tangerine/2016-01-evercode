@@ -5,12 +5,8 @@ var config = require('./config.js');
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
 
-var redis = require('redis');
-var redisClient;
-redisClient = redis.createClient( config.redisPort, config.redisHost);
-
-require(__dirname + '/config/middleware.js')(app, express, redisClient);
-require(__dirname + '/config/routes.js')(app, express, redisClient);
+require(__dirname + '/config/middleware.js')(app, express);
+require(__dirname + '/config/routes.js')(app, express);
 const port = process.env.PORT || 3000;
 
 
