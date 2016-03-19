@@ -45,7 +45,7 @@ const modifyActiveUser = (state = {}, action) => {
     case 'SET_ACTIVE_USER':
       return action.user;
     case 'REMOVE_ACTIVE_USER':
-      return '';
+      return {};
     default:
       return state;
   }
