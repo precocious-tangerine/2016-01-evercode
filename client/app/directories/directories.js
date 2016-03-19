@@ -48,6 +48,7 @@ class DirectoriesCtrl {
 
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
+     $('#snippet-modal').leanModal();
   }
 
   removeFolder(folderPath) {
