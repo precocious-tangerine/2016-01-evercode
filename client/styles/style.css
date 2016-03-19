@@ -39,6 +39,11 @@ main {
   bottom: 0;
 }
 
+.editor-row {
+  padding-bottom: 3;
+  margin:0;
+}
+
 .snippet-title input {
   width: auto;
   font-size: 3em;
