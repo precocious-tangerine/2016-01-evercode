@@ -1,28 +1,8 @@
 'use strict';
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var GitHubStrategy = require('passport-github').Strategy;
 var config = require('../config');
 
-passport.use(new GitHubStrategy({
-  clientID: config.githubClientId,
-  clientSecret: config.githubSecret,
-  callbackURL: config.serverUrl + '/auth/github/callback'
-}, (accessToken, refreshToken, profile, done) => {
-  done(null, {
-    accessToken: accessToken,
-    profile: profile
-  });
-}));
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 module.exports = (app, express) => {
   app.use(morgan('dev'));
@@ -33,7 +13,5 @@ module.exports = (app, express) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
-  app.use(passport.initialize());
-  app.use(passport.session());
   app.use('/', express.static(__dirname + '/../../client'));
 };
