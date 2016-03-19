@@ -15,8 +15,8 @@ let userSchema = mongoose.Schema({
   gravatar_id: { type: String },
   url: { type: String },
   html_url: { type: String },
-  followers_url: { type: Number },
-  following_url: { type: Number },
+  followers_url: { type: String },
+  following_url: { type: String },
   gists_url: { type: String },
   starred_url: { type: String },
   subscriptions_url: { type: String },
@@ -72,7 +72,7 @@ User.makeUser = (userObj, callback) => {
       })
       .then(result => callback(null, result))
       .catch(callback);
-  } else if (typeof userObj.id === 'number') {
+  } else if (userObj.github) {
     // OAuth based login (no supplied password)
     return User.create(userObj)
       .then(result => callback(null, result))
