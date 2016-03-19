@@ -62,8 +62,8 @@
           <div ng-click="directories.changeActiveTab(folder.filePath)" >
             <a href="#snippets-modal" class="modal-trigger">
               {{folder.value}}
+              <i ng-click="directories.removeFolder(folder.filePath)" class="valign right tiny material-icons">delete</i>
             </a>
-            <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
           </div>
         </li>
       </ul>
