@@ -40,7 +40,6 @@ export class Folders {
           url: '/api/folders',
           params: {filePath: folderPath}
         }).then(response => {
-          console.log('response from deleting folder: ', response);
           this.getFileTree();
         })
 

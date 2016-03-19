@@ -79,8 +79,9 @@ Snippet.getSnippetsByUser = (email, callback) => {
 // }
 
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
-  Snippet.find({ createdBy: email, filePath: new RegExp(folder +'.', 'igm') })
+  Snippet.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
     .then((foundSnippets) => {
+      console.log('======================', foundSnippets);
       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
         callback(null, foundSnippets);
       } else {
@@ -90,6 +91,7 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
 }
 
 Snippet.makeSubFolder = (email, filepath, callback) => {
+  filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath + '/.config' }, callback);
 }
 

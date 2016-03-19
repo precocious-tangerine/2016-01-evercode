@@ -32,6 +32,7 @@ class DirectoriesCtrl {
   }
 
   removeFolder(folderPath) {
+    console.log('asdkfj;lasdjf', folderPath);
     this.Folders.removeFolder(folderPath);
   }
 
