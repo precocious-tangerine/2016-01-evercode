@@ -126,30 +126,15 @@ main {
   width: 2rem;
 }
 
-.collapsible > li {
+#nav-mobile > li {
   padding: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
-}
-
-.collapsible-header {
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
 }
 
 .nav-link {
   margin: 0px;
   padding-left: 0px;
-}
-
-.collapsible-body {
-  margin-right: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  padding: 0px;
-
 }
 
 
