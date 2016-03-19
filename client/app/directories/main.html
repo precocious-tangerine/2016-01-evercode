@@ -6,7 +6,7 @@
       </div>
       <div class="center">
         <a ng-repeat="path in directories.breadcrumbPath" ui-sref={{path[2]}} ng-click="directories.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-        <a ui-sref='signout' class='right'><i class="material-icons left">power_settings_new</i>Logout</a>
+        <a ui-sref='signout' class='right'><i class="material-icons">power_settings_new</i>Logout</a>
       </div>
       <ul id="slide-out" class="side-nav">
 
@@ -37,6 +37,12 @@
         </li>
 
         <li>
+          <a href='#'>
+            Favorites
+          </a>
+        </li>
+
+        <li>
           <div class="input-field">
             <form name="folderForm" ng-submit="directories.addFolder()" novalidate>
               <div class="form-group">
@@ -53,13 +59,12 @@
         </li>
 
         <li>
-          <div ng-repeat="folder in directories.folders" class="nav-icon" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
+          <div ng-repeat="folder in directories.folders" ng-click="directories.changeActiveTab(folder.filePath)" ui-sref=".snippets">
             {{folder.value}}
              <i ng-click="directories.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
           </div>
         </li>
       </ul>
-      <a href="#" data-activates="slide-out" class="button-collapse right"><i class="mdi-navigation-menu"></i></a>
     </div>
   </nav>
   <ul id="nav-mobile" class="side-nav fixed">
