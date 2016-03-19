@@ -63,11 +63,6 @@ User.makeUser = (userObj, callback) => {
       .then((salt) => bcrypt.hashAsync(pw, salt))
       .then((hash) => {
         userObj._password = hash;
-        return Snippets.makeRootFolderAsync(userObj.email);
-      })
-      .then((rootFolder) => {
-        userObj.snippets = {};
-        userObj.snippets[rootFolder._id] = rootFolder;
         return User.create(userObj);
       })
       .then(result => callback(null, result))

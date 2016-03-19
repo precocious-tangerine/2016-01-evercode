@@ -25,8 +25,9 @@ module.exports = (app, express) => {
       //Do some comparing
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
+          let user = {name: userData.name, avatar_url: userData.avatar_url};
           token = createJWT({ email });
-          res.status(201).send(token);
+          res.status(201).send({token: token, user: user});
         }).catch((err) => {
           console.log(err);
           res.status(401).send('Unauthorized');
@@ -172,18 +173,20 @@ module.exports = (app, express) => {
       // Step 2. Retrieve profile information about the current user.
       request.get({ url: userApiUrl, qs: accessToken, headers: headers, json: true }, (err, response, profile) => {
         // Step 3a. Link user accounts.
-        Users.findOne({ email: profile.email}, (err, existingUser) => {
-          if(existingUser) {
-            token = createJWT({ email: existingUser.email });
-            res.status(201).send(token);
-          } else {
-            let {email, github, avatar_url, name, id} = profile
-            Users.makeUserAsync({email, github, avatar_url, name, github: '' + id})
-            .then((userObj) => {
-              token = createJWT({ email: existingUser.email });
-              res.status(201).send(token);
+        Users.findOne({ email: profile.email }, (err, existingUser) => {
+          if (existingUser) {
+            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, name: profile.name }).then((success) => {
+              var token = createJWT({ email: existingUser.email });
+              res.send({ token: token });
             })
-            .catch(done);
+          } else {
+            let { email, github, avatar_url, name, id } = profile;
+            Users.makeUserAsync({ email, github, avatar_url, name, github: '' + id })
+              .then((userObj) => {
+                token = createJWT({ email: existingUser.email });
+                res.status(201).send({ token });
+              })
+              .catch(done);
           }
         });
       });

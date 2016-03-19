@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import {convertToTree, getAllChildren} from './fileTree.js';
+import { convertToTree, getAllChildren } from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -38,7 +38,7 @@ export class Folders {
         return this.$http({
           method: 'DELETE',
           url: '/api/folders',
-          params: {filePath: folderPath}
+          params: { filePath: folderPath }
         }).then(response => {
           this.getFileTree();
         })
@@ -101,7 +101,7 @@ export class Snippets {
           dispatch(Actions.removeSelectedSnippet());
           this.Folders.getFileTree(res.data.filePath);
           // dispatch(Actions.addSnippetMap(filePath, snippetObj));
-       });
+        });
 
       },
 
@@ -109,7 +109,7 @@ export class Snippets {
         return this.$http({
           method: 'DELETE',
           url: '/api/snippets',
-          params: {snippetId: snippetObj.value._id}
+          params: { snippetId: snippetObj.value._id }
         }).then((response) => {
           this.Folders.getFileTree();
           // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
@@ -149,8 +149,9 @@ export class Auth {
             method: 'POST',
             url: '/signin',
             data: user
-          }).then(token => {
-            this.$window.localStorage.setItem('satellizer_token', token.data);
+          }).then((res) => {
+            this.$window.localStorage.setItem('satellizer_token', res.data.token);
+            dispatch(Actions.setActiveUser(res.data.user));
             this.$location.path('/main');
           })
           .catch(error => {
@@ -161,17 +162,10 @@ export class Auth {
 
       signup(user) {
         return this.$http({
-            method: 'POST',
-            url: '/signup',
-            data: user
-          }).then(token => {
-            this.$window.localStorage.setItem('satellizer_token', token.data);
-            this.$location.path('/main');
-          })
-          .catch(error => {
-            this.failed = false;
-            console.error(error);
-          });
+          method: 'POST',
+          url: '/signup',
+          data: user
+        });
       },
 
       isAuth() {
@@ -179,9 +173,9 @@ export class Auth {
       },
 
       signout() {
-      
-          this.$window.localStorage.removeItem('satellizer_token');
-          this.$location.path('/signin');
+        this.$window.localStorage.removeItem('satellizer_token');
+        dispatch(Actions.removeActiveUser());
+        this.$location.path('/signin');
       }
     }
   }
