@@ -111,8 +111,9 @@ export class Snippets {
           url: '/api/snippets',
           params: { snippetId: snippetObj.value._id }
         }).then((response) => {
-          this.Folders.getFileTree();
-          // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          // this.Folders.getFileTree();
+          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          dispatch(Actions.removeSelectedSnippet());
         });
       },
 

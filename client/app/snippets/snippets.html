@@ -9,36 +9,31 @@
         <a class="btn-flat tooltipped" data-position="bottom" ng-click="snippets.toggleInput()" data-delay="50" data-tooltip="Add a folder"><i class="material-icons">tab</i></a>
       </span>
     </div>
-
     <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addSubFolder()" novalidate>
       <div class="form-group">
         <input id="snippet-name-input"placeholder="New Subfolder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="snippets.subFolder.name" />
       </div>
     </form>
-
-    <div class="collection col s12">
-      <a class="waves-effect waves-teal collection-item" 
-        ng-repeat="folder in snippets.visibleFolders"
-        ng-click="snippets.changeActiveTab(folder.filePath)"
-      >
-        <span class="valign folder-name">
+  </div>
+  <div class="collection col s12">
+    <a class="collection-item center-align" ng-repeat="folder in snippets.visibleFolders">
+      <div class="row valign-wrapper">
+        <i class="valign tiny material-icons">tab</i>
+        <span ng-click="snippets.changeActiveTab(folder.filePath)" class="valign folder-name">
           {{folder.value}}
         </span>
-        <i ng-click="snippets.removeFolder(folder.filePath)" class="valign right tiny material-icons">delete</i>
-        <i class="valign right tiny material-icons">tab</i>
-      </a>
-      <a ui-sref=".editor" class="waves-effect waves-teal collection-item" 
-        ng-repeat="snippet in snippets.visibleSnippets"
-        ng-click="snippets.changeSelectedSnippet(snippet.filePath)"
-      >
-        <span >
+        <i ng-click="snippets.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
+      </div>
+    </a>
+    <a class="collection-item" ng-repeat="snippet in snippets.visibleSnippets" >
+      <div class="row valign-wrapper">
+        <span ui-sref=".editor" ng-click="snippets.changeSelectedSnippet(snippet.filePath)" class="valign">
           {{snippet.value.name}}
         </span>
-        <i ng-click="snippets.removeSnippet(snippet)" class="valign right tiny material-icons">delete</i>
-        <i ng-click="snippets.toggleFavorite(snippet)" class="valign right tiny material-icons">star border</i>
-      </a>
-    </div>
-    
+        <i ng-click="snippets.toggleFavorite(snippet)" class="valign tiny material-icons">star border</i>
+        <i ng-click="snippets.removeSnippet(snippet)" class="valign tiny material-icons">delete</i>
+      </div>
+    </a>
   </div>
 </div>
 <div class="col s12 editor" ui-view></div>
