@@ -177,16 +177,21 @@ module.exports = (app, express) => {
           if (existingUser) {
             Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, name: profile.name }).then((success) => {
               var token = createJWT({ email: existingUser.email });
-              res.send({ token: token });
+              let user = { name: existingUser.name, avatar_url: existingUser.avatar_url };
+              res.status(201).send({ token: token, user: user });
             })
           } else {
             let { email, github, avatar_url, name, id } = profile;
             Users.makeUserAsync({ email, github, avatar_url, name, github: '' + id })
               .then((userObj) => {
-                token = createJWT({ email: existingUser.email });
-                res.status(201).send({ token });
+                token = createJWT({ email: userObj.email });
+                let user = { name: userObj.name, avatar_url: userObj.avatar_url };
+                res.status(201).send({ token: token, user: user });
               })
-              .catch(done);
+              .catch((err) => {
+                console.log(err);
+                res.status(401).send('Unauthorized');
+              });
           }
         });
       });

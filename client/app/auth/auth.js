@@ -19,7 +19,8 @@ class AuthCtrl {
   }
 
   githubAuth() {
-    this.$auth.authenticate('github').then(() => {
+    this.$auth.authenticate('github').then((res) => {
+      this.Auth.addUserInfo(res.data.user);
       this.$state.go('main');
     })
   };

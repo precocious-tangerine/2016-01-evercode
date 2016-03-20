@@ -168,6 +168,10 @@ export class Auth {
         });
       },
 
+      addUserInfo(user){
+        dispatch(Actions.setActiveUser(user));
+      },
+
       isAuth() {
         return !!this.$window.localStorage.getItem('satellizer_token');
       },
