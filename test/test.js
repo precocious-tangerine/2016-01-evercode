@@ -522,7 +522,6 @@ describe('the Snippet Model - Folder basics', function () {
   it('should have a removeFolder function', function () {
     expect(Snippet.makeRootFolder).to.be.a('function');
   });
-
 });
 
 describe('the Snippet Model - makeSubFolder', function (){
@@ -539,27 +538,25 @@ describe('the Snippet Model - removeFolder', function (){
 
 describe('the Snippet Model - Snippet Getters', function(){
 
-it('should have a getSnippetByFilepath function', function(){
-  expect(Snippet.getSnippetByFilepath).to.be.a('function');
-})
+  it('should have a getSnippetByFilepath function', function(){
+    expect(Snippet.getSnippetByFilepath).to.be.a('function');
+  })
 
-it('should have a getSnippetsByUser function', function(){
-  expect(Snippet.getSnippetsByUser).to.be.a('function');
-})
+  it('should have a getSnippetsByUser function', function(){
+    expect(Snippet.getSnippetsByUser).to.be.a('function');
+  })
 
-it('should have a getSnippetInfoByUser function', function(){
-  expect(Snippet.getSnippetInfoByUser).to.be.a('function');
-})
+  it('should have a getSnippetInfoByUser function', function(){
+    expect(Snippet.getSnippetInfoByUser).to.be.a('function');
+  })
 
-it('should have a getSnippetInfoByFolder function', function(){
-  expect(Snippet.getSnippetInfoByFolder).to.be.a('function');
-})
+  it('should have a getSnippetInfoByFolder function', function(){
+    expect(Snippet.getSnippetInfoByFolder).to.be.a('function');
+  })
 
-it('should have a getSnippetsByFolder function', function(){
-  expect(Snippet.getSnippetsByFolder).to.be.a('function');
-})
-
-
+  it('should have a getSnippetsByFolder function', function(){
+    expect(Snippet.getSnippetsByFolder).to.be.a('function');
+  })
 })
 
 //////////////////////////////////////////////////////////
@@ -569,7 +566,7 @@ it('should have a getSnippetsByFolder function', function(){
 var Annotation = require('../server/models/snippet');
 
 var removeTestAnnotation = function(callback){
-  Annotation.findOne({data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet'}, function(err, result) {
+  Annotation.findOne({data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations'}, function(err, result) {
     if (result) {
       result.remove(callback);
     } else {
@@ -578,7 +575,19 @@ var removeTestAnnotation = function(callback){
   });
 }
 
+var testAnnotationSnippet;
+
+Snippet.create(testSnippet)
+  .then(function(returnedSnippet) {
+    testAnnotationSnippet = returnedSnippet;
+  })
+  .catch(function(err){
+    done()
+  }) 
+
+
 describe('the Annotation Model - Annotation basics', function () {
+
   it('should have makeAnnotation function', function () {
     expect(Annotation.makeAnnotation).to.be.a('function');
   });
@@ -594,6 +603,15 @@ describe('the Annotation Model - Annotation basics', function () {
   it('should have a removeAnnotation function', function () {
     expect(Annotation.removeAnnotation).to.be.a('function');
   });
+
+  it('should have a getBySnippet function', function () {
+    expect(Annotation.getBySnippet).to.be.a('function');
+  });
+
+  it('should have a removeBySnippet function', function () {
+    expect(Annotation.removeBySnippet).to.be.a('function');
+  });
+  
 });
 
 describe('the Annotation Model - makeAnnotation', function (){
@@ -602,10 +620,11 @@ describe('the Annotation Model - makeAnnotation', function (){
   before(function(done) {
 
     var testAnnotation = {
-      createdBy: 'test@chai.com',
-      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
-      filePath: 'test@chai.com/',
-      name: 'test.snip'
+      _sid: testAnnotationSnippet._id +'',
+      _createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
+      start: 0,
+      end: 1,
     };
 
     var testMakeAnnotation = function() {
@@ -628,6 +647,11 @@ describe('the Annotation Model - makeAnnotation', function (){
     expect(tempAnnotation).to.have.property('_id');
   });
 
+  it('should have a unique id called _sid that is a String', function() {
+    expect(tempAnnotation).to.have.property('_sid')
+      .that.is.a('string');
+  });
+
   it('should have a property called _createdAt that is a Date', function() {
     expect(tempAnnotation).to.have.property('_createdAt');
   });
@@ -636,8 +660,8 @@ describe('the Annotation Model - makeAnnotation', function (){
     expect(tempAnnotation).to.have.property('_updatedAt');
   });
   
-  it('should have an createdBy property that is a string', function () {
-    expect(tempAnnotation).to.have.property('createdBy', 'test@chai.com')
+  it('should have a property called _createdBy is a string', function () {
+    expect(tempAnnotation).to.have.property('_createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
@@ -646,20 +670,16 @@ describe('the Annotation Model - makeAnnotation', function (){
       .that.is.a('string');
   });
 
-  it('should have a filePath property that is a string', function () {
-    expect(tempAnnotation).to.have.property('filePath')
-      .that.is.a('string');
+  it('should have a start property that is a number', function () {
+    expect(tempAnnotation).to.have.property('start')
+      .that.is.a('number');
   });
 
-  it('should have a name property that is a string', function () {
-    expect(tempAnnotation).to.have.property('name', 'test.snip')
-      .that.is.a('string');
+  it('should have an end property that is a number', function () {
+    expect(tempAnnotation).to.have.property('end')
+      .that.is.a('number');
   });
 
-  it('should have a public property that is a boolean and defaulted to true', function () {
-    expect(tempAnnotation).to.have.property('public', true)
-      .that.is.a('boolean');
-  });
 })
 
 describe('the Annotation Model - getAnnotation', function (){
@@ -669,7 +689,7 @@ describe('the Annotation Model - getAnnotation', function (){
 
     var testAnnotation = {
       createdBy: 'test@chai.com',
-      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
       filePath: 'test@chai.com/',
       name: 'test.snip'
     };
@@ -737,7 +757,7 @@ describe('the Annotation Model - updateAnnotation', function (){
   }
   var testAnnotation = {
     createdBy: 'test@chai.com',
-    data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+    data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
     filePath: 'test@chai.com/test.snip',
     name: 'test.snip'
   };
@@ -794,7 +814,7 @@ describe('the Annotation Model - removeAnnotation', function (){
   before(function(done) {
     var testAnnotation = {
       createdBy: 'test@chai.com',
-      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
       filePath: 'test@chai.com/test.snip',
       name: 'test.snip'
     };
@@ -828,7 +848,7 @@ describe('the Annotation Model - removeAnnotation', function (){
       .that.equals(1);
   });
   
-  it('should not be able to find the test snippet', function (done) {
+  it('should not be able to find the test annotation', function (done) {
     Annotation.findOne({_id: tempSnippet._id}, function(err, result) {
       expect(result).to.be.null;
       done();

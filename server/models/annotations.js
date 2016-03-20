@@ -7,8 +7,8 @@ let annotationSchema = mongoose.Schema({
   _createdAt:{type: Date, default: new Date()},
   _updatedAt:{type: Date, default: new Date()},
   _sid:{type: String, require: true},
-  start: {type: Number, min:0},
-  end:{type: Number},
+  start: {type: Number, require: true, min:0},
+  end:{type: Number, require: true},
   data:{type: String},
 });
 
