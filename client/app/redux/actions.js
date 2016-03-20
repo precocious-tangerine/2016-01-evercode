@@ -12,11 +12,11 @@ export const addSnippetMap = (filePath, snippetMapNode) => {
   };
 }
 export const removeSnippetMap = (filePath) => {
-    return {
-      type: 'REMOVE_SNIPPET_MAP',
-      filePath
-    };
-  }
+  return {
+    type: 'REMOVE_SNIPPET_MAP',
+    filePath
+  };
+}
 
 export const updateSnippetMap = (oldFilePath, updateFilePath, updateNodeValues) => {
   return {

@@ -40,7 +40,6 @@ const modifySnippetMap = (state = {}, action) => {
 };
 
 const modifyActiveUser = (state = {}, action) => {
-  console.log('action', action);
   switch (action.type) {
     case 'SET_ACTIVE_USER':
       return action.user;
