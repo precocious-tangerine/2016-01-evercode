@@ -25,13 +25,13 @@
         <i ng-click="snippets.removeFolder(folder.filePath)" class="valign tiny material-icons">delete</i>
       </div>
     </a>
-    <a class="collection-item" ng-repeat="snippet in snippets.visibleSnippets" >
+    <a class="collection-item center-align" ng-repeat="snippet in snippets.visibleSnippets" >
       <div class="row valign-wrapper">
         <span ui-sref=".editor" ng-click="snippets.changeSelectedSnippet(snippet.filePath)" class="valign">
           {{snippet.value.name}}
         </span>
-        <i ng-click="snippets.toggleFavorite(snippet)" class="valign tiny material-icons">star border</i>
         <i ng-click="snippets.removeSnippet(snippet)" class="valign tiny material-icons">delete</i>
+        <i ng-click="snippets.toggleFavorite(snippet)" class="valign tiny material-icons">star</i>
       </div>
     </a>
   </div>
