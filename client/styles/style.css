@@ -44,6 +44,10 @@ main {
   margin:0;
 }
 
+/*.top-nav {
+  margin-left: 66;
+}*/
+
 .snippet-title input {
   width: auto;
   font-size: 3em;

@@ -36,6 +36,7 @@ class SnippetsCtrl {
 
   deselectSnippet() {
     this.Snippets.deselectSnippet();
+    $('#snippets-modal').closeModal();
   }
 
   copySnippet(snippet) {

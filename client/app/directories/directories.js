@@ -35,6 +35,10 @@ class DirectoriesCtrl {
           $('#slide-out').animate({left:'-105%'},200)
           this.sideNavOpen = false;
         })
+        $('.drag-target').click(function(){
+          $('#slide-out').animate({left:'-105%'},200)
+          this.sideNavOpen = false;
+        })
       })
       this.sideNavOpen = true;
     } 
