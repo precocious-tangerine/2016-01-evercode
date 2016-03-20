@@ -51,6 +51,7 @@ class SnippetsCtrl {
 
   changeSelectedSnippet(snippetPath) {
     this.Snippets.changeSelectedSnippet(snippetPath);
+    $('#snippets-modal').closeModal();
   }
 
   removeSnippet(snippetObj) {
