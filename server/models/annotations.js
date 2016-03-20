@@ -37,7 +37,7 @@ Annotation.removeAnnotation = (_id, callback) => {
   Annotation.findOne({ _id }).remove(callback);
 }
 
-Annotation.getAnnotationsBySnippet = (_sid, callback) => {
+Annotation.getBySnippet = (_sid, callback) => {
   Annotation.find({ _sid: _sid })
     .then((foundAnnotations) => {
       if (Array.isArray(foundAnnotations) && foundAnnotations.length !== 0) {
@@ -49,16 +49,8 @@ Annotation.getAnnotationsBySnippet = (_sid, callback) => {
     .catch(callback);
 }
 
-Annotation.removeAnnotationsBySnippet = (_sid, callback) => {
-  Annotation.delete({ _sid: _sid })
-    .then((foundAnnotations) => {
-      if (Array.isArray(foundAnnotations) && foundAnnotations.length !== 0) {
-        callback(null, foundAnnotations);
-      } else {
-        callback(new Error('no annotations found'), null);
-      }
-    })
-    .catch(callback);
+Annotation.removeBySnippet = (_sid, callback) => {
+  Annotation.remove({ _sid: _sid }, callback);
 }
 
 module.exports = User;
