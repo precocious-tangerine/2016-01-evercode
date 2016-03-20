@@ -79,7 +79,7 @@ describe('the User Model - makeUser', function () {
       .that.is.a('string')
       .and.not.equal('just testing');
   });
-  it('should have a snippets object', function(){
+  it('should have a snippet object', function(){
     expect(tempUser).to.have.property('snippets')
       .that.is.an('object')
   });
@@ -561,6 +561,284 @@ it('should have a getSnippetsByFolder function', function(){
 
 
 })
+
+//////////////////////////////////////////////////////////
+//                 Annotations Model                    //
+//////////////////////////////////////////////////////////
+
+var Annotation = require('../server/models/snippet');
+
+var removeTestAnnotation = function(callback){
+  Annotation.findOne({data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet'}, function(err, result) {
+    if (result) {
+      result.remove(callback);
+    } else {
+      callback();
+    }
+  });
+}
+
+describe('the Annotation Model - Annotation basics', function () {
+  it('should have makeAnnotation function', function () {
+    expect(Annotation.makeAnnotation).to.be.a('function');
+  });
+
+  it('should have getAnnotation function', function () {
+    expect(Annotation.getAnnotation).to.be.a('function');
+  });
+
+  it('should have updateAnnotation function', function () {
+    expect(Annotation.updateAnnotation).to.be.a('function');
+  });
+
+  it('should have a removeAnnotation function', function () {
+    expect(Annotation.removeAnnotation).to.be.a('function');
+  });
+});
+
+describe('the Annotation Model - makeAnnotation', function (){
+
+  var tempAnnotation;
+  before(function(done) {
+
+    var testAnnotation = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+      filePath: 'test@chai.com/',
+      name: 'test.snip'
+    };
+
+    var testMakeAnnotation = function() {
+      Annotation.makeAnnotation(testAnnotation, function(err, returnedAnnotation) {
+        tempAnnotation = returnedAnnotation;
+        done();
+        returnedAnnotation.remove();
+      });
+    }
+
+    removeTestAnnotation(testMakeAnnotation);
+  });
+
+
+  it('should return an object', function() {
+    expect(tempAnnotation).to.be.an('object');
+  });
+
+  it('should have a unique id called _id', function() {
+    expect(tempAnnotation).to.have.property('_id');
+  });
+
+  it('should have a property called _createdAt that is a Date', function() {
+    expect(tempAnnotation).to.have.property('_createdAt');
+  });
+
+  it('should have a property called _updatedAt At that is a Date', function() {
+    expect(tempAnnotation).to.have.property('_updatedAt');
+  });
+  
+  it('should have an createdBy property that is a string', function () {
+    expect(tempAnnotation).to.have.property('createdBy', 'test@chai.com')
+      .that.is.a('string');
+  });
+
+  it('should have a data property that is a string', function () {
+    expect(tempAnnotation).to.have.property('data')
+      .that.is.a('string');
+  });
+
+  it('should have a filePath property that is a string', function () {
+    expect(tempAnnotation).to.have.property('filePath')
+      .that.is.a('string');
+  });
+
+  it('should have a name property that is a string', function () {
+    expect(tempAnnotation).to.have.property('name', 'test.snip')
+      .that.is.a('string');
+  });
+
+  it('should have a public property that is a boolean and defaulted to true', function () {
+    expect(tempAnnotation).to.have.property('public', true)
+      .that.is.a('boolean');
+  });
+})
+
+describe('the Annotation Model - getAnnotation', function (){
+
+  var tempAnnotation;
+  before(function(done) {
+
+    var testAnnotation = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+      filePath: 'test@chai.com/',
+      name: 'test.snip'
+    };
+
+    var testGetAnnotation = function() {
+      Annotation.create(testAnnotation)
+        .then(function(returnedAnnotation) {
+          testAnnotation = returnedAnnotation;
+          Annotation.getAnnotation(testAnnotation._id ,function(err, result) {
+            tempAnnotation = result;
+            done();
+          })
+        })
+        .catch(function(err){
+          done()
+        }) 
+    }
+
+    removeTestAnnotation(testGetAnnotation);
+  });
+
+
+  it('should return an object', function() {
+    expect(tempAnnotation).to.be.an('object');
+  });
+
+  it('should have a unique id called _id', function() {
+    expect(tempAnnotation).to.have.property('_id');
+  });
+  
+  it('should have an createdBy property that is a string', function () {
+    expect(tempAnnotation).to.have.property('createdBy', 'test@chai.com')
+      .that.is.a('string');
+  });
+
+  it('should have a data property that is a string', function () {
+    expect(tempAnnotation).to.have.property('data')
+      .that.is.a('string');
+  });
+
+  it('should have a filePath property that is a string', function () {
+    expect(tempAnnotation).to.have.property('filePath')
+      .that.is.a('string');
+  });
+
+  it('should have a name property that is a string', function () {
+    expect(tempAnnotation).to.have.property('name', 'test.snip')
+      .that.is.a('string');
+  });
+
+  it('should have a public property that is a boolean and defaulted to true', function () {
+    expect(tempAnnotation).to.have.property('public', true)
+      .that.is.a('boolean');
+  });
+})
+
+describe('the Annotation Model - updateAnnotation', function (){
+
+  var tempAnnotation;
+  var updateResult;
+  var oldAnnotation;
+  var snippetUpdates = {
+    filePath: 'test@chai.com/updates/updatedtest.snip',
+    name:'updatedtest.snip'
+  }
+  var testAnnotation = {
+    createdBy: 'test@chai.com',
+    data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+    filePath: 'test@chai.com/test.snip',
+    name: 'test.snip'
+  };
+
+  before(function(done) {
+    var testUpdateAnnotation = function () {
+      Annotation.create(testAnnotation)
+      .then(function(returnedAnnotation) {
+        oldAnnotation = returnedAnnotation;
+        Annotation.updateAnnotation(returnedAnnotation._id, snippetUpdates ,function(err, result) {
+          updateResult = result;
+          Annotation.findOne({_id: returnedAnnotation._id}, function(err, returnedAnnotation) {
+            tempAnnotation = returnedAnnotation;
+            done();
+          })
+        });
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      }) 
+    }
+
+    removeTestAnnotation(testUpdateAnnotation);
+    
+  });
+  
+  it('should return a results object', function() {
+    expect(updateResult).to.be.an('object');
+  });
+
+  it('should report updating the document from the database', function() {
+    expect(updateResult).to.have.property('n')
+      .that.equals(1);
+  });
+  
+  it('should update properties', function () {
+    expect(tempAnnotation).to.have.property('filePath','test@chai.com/updates/updatedtest.snip')
+      .that.is.a('string');
+    expect(tempAnnotation).to.have.property('name','updatedtest.snip')
+      .that.is.a('string');
+  });
+
+  it('should change the _updatedAt property of the document in the database', function() {
+    expect(tempAnnotation).to.have.property('_updatedAt')
+      .that.is.not.equal(oldAnnotation._updatedAt);
+  });
+})
+
+describe('the Annotation Model - removeAnnotation', function (){
+
+  var tempAnnotation;
+  var deleteResult;
+  before(function(done) {
+    var testAnnotation = {
+      createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of snippet',
+      filePath: 'test@chai.com/test.snip',
+      name: 'test.snip'
+    };
+
+    var testRemoveAnnotation = function () {
+      Annotation.create(testAnnotation)
+      .then(function(returnedAnnotation){
+        tempAnnotation = returnedAnnotation;
+        Annotation.removeAnnotation(returnedAnnotation._id ,function(err, result) {
+          deleteResult = result;
+          done();
+        })
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      })
+    }
+
+    removeTestAnnotation(testRemoveAnnotation);
+
+  });
+
+  it('should return a results object', function() {
+    expect(deleteResult.result).to.be.an('object')
+      .that.has.property('ok');
+  });
+
+  it('should report removal from the database', function() {
+    expect(deleteResult.result).to.have.property('n')
+      .that.equals(1);
+  });
+  
+  it('should not be able to find the test snippet', function (done) {
+    Annotation.findOne({_id: tempSnippet._id}, function(err, result) {
+      expect(result).to.be.null;
+      done();
+      if (result) {
+        result.remove();
+      }
+    });
+  });
+})
+
 
 //////////////////////////////////////////////////////////
 //                   User Routes                        //
