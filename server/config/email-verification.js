@@ -21,13 +21,9 @@ nev.configureAsync({
   passwordFieldName: '_password',
 })
 
-nev.generateTempUserModel(User, (err, tempUser) => {
-  if(err) {
-    console.log('err in tempUser', err);
-  } else {
-    console.log('created tempUser', tempUser);
-  }
-});
+nev.generateTempUserModelAsync(User)
+  .then(tempUser => console.log('created tempUser', tempUser))
+  .catch(err => console.log('err in tempUser', err));
 
 
 
