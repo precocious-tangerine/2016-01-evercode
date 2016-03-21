@@ -53,4 +53,4 @@ Annotation.removeBySnippet = (_sid, callback) => {
   Annotation.remove({ _sid: _sid }, callback);
 }
 
-module.exports = User;
+module.exports = Annotation;

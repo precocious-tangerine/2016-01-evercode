@@ -575,6 +575,13 @@ var removeTestAnnotation = function(callback){
   });
 }
 
+var testSnippet = {
+  createdBy: 'test@chai.com',
+  data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+  filePath: 'test@chai.com/test.snip',
+  name: 'test.snip'
+};
+
 var testAnnotationSnippet;
 
 Snippet.create(testSnippet)
