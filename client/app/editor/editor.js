@@ -22,7 +22,6 @@ class EditorCtrl {
       mode: 'javascript'
     };
     this.tag = '';
-    this.tagToRemove = '';
     this.addTag = false;
     this.showAnnotation = false;
   }
@@ -43,8 +42,7 @@ class EditorCtrl {
       this.toggleTag();
     }
     if (tagToRemove) {
-      objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(this.tagToRemove), 1);
-      this.tagToRemove = '';
+      objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
     }
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
