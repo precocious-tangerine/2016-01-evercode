@@ -19,7 +19,37 @@ class DirectoriesCtrl {
     this.Folders = Folders;
     this.folder = {};
     this.snippetArr = [];
+    this.sideNavOpen = false;
   }
+
+  toggleSideNav() {
+    if (this.sideNavOpen){
+      $('#slide-out').animate({left:'-105%'},200, function(){
+        $('#slide-out').sideNav('hide');
+      })
+      this.sideNavOpen = false;
+    } else {
+      $('#slide-out').animate({left:'66'},200, function(){
+        $('#slide-out').sideNav('show');
+        $('#sidenav-overlay').click(function(){
+          $('#slide-out').animate({left:'-105%'},200)
+          this.sideNavOpen = false;
+        })
+        $('.drag-target').click(function(){
+          $('#slide-out').animate({left:'-105%'},200)
+          this.sideNavOpen = false;
+        })
+      })
+      this.sideNavOpen = true;
+    } 
+  }
+
+
+
+  openModal() {
+      $('.modal-trigger').leanModal();
+      $('#snippets-modal').openModal();
+  } 
 
   addFolder() {
     let path = this.snippetMap.__root.value + '/' + this.folder.name;
@@ -29,6 +59,8 @@ class DirectoriesCtrl {
 
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
+    this.toggleSideNav();
+    this.openModal();
   }
 
   removeFolder(folderPath) {
@@ -47,6 +79,7 @@ class DirectoriesCtrl {
         }
       }
     });
+
     let convertPath = (path) => {
       let result = [];
       while(snippetMap[path]) {
@@ -57,6 +90,7 @@ class DirectoriesCtrl {
       return result
     }
     let breadcrumbPath = convertPath(selectedFolder);
+
     return {
       folders,
       snippetMap,

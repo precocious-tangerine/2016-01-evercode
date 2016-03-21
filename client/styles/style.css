@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  position: relative;
   height: auto;
   width: auto;
   left: 0;
@@ -8,12 +8,10 @@
   bottom: 0;
 }
 
-.main {
+main {
   position: relative;
-  width: 15vw;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  margin-left: 68px;
+  zindex:0;
 }
 
 .search-results {
@@ -25,13 +23,13 @@
   font-size: 1.5em;
 }
 
-.snippets {
+/*.snippets {
   position: relative;
   width: 200px;
   left: 0;
   right: 0;
   bottom: 0;
-}
+}*/
 
 .editor {
   position: relative;
@@ -40,6 +38,15 @@
   right: 0;
   bottom: 0;
 }
+
+.editor-row {
+  padding-bottom: 3;
+  margin:0;
+}
+
+/*.top-nav {
+  margin-left: 66;
+}*/
 
 .snippet-title input {
   width: auto;
@@ -93,3 +100,55 @@
 .center a:hover {
   background-color: transparent;
 }
+
+.side-nav {
+  line-height: 3em;
+}
+
+#slide-out {
+  font-size: 1.2rem;
+  color: #3D3D3D;
+  width: 240px;
+  margin:0px;
+  padding:0px;
+  z-index:999;
+}
+
+#nav-mobile {
+  line-height: 3em;
+  width: 66px;
+  left: 0;
+  margin:0px;
+  padding:0px;
+  z-index: 999;
+}
+
+#search-icon {
+  margin: 0px;
+}
+
+#add-folder-icon {
+  margin: 0px;
+}
+
+.icon {
+  width: 2rem;
+}
+
+#nav-mobile > li {
+  padding: 0px;
+  padding-left: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.nav-link {
+  margin: 0px;
+  padding-left: 0px;
+}
+
+#snippet-name-input {
+  margin: 0px;
+}
+
+
