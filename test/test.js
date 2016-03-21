@@ -44,7 +44,7 @@ describe('the User Model - basics', function () {
 });
 
 describe('the User Model - makeUser', function () {
-  var tempUser;
+  var resultUser;
   before(function(done) {
     var testUser = {
       email: 'test@chai.com',
@@ -53,7 +53,7 @@ describe('the User Model - makeUser', function () {
 
     var testMakeUser = function() {
       User.makeUser(testUser, function(err, returnedUser) {
-        tempUser = returnedUser;
+        resultUser = returnedUser;
         done();
         returnedUser.remove();
       });
@@ -63,34 +63,34 @@ describe('the User Model - makeUser', function () {
   });
   
   it('should return an object', function() {
-    expect(tempUser).to.be.an('object');
+    expect(resultUser).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempUser).to.have.property('_id');
+    expect(resultUser).to.have.property('_id');
   });
   
   it('should have an email property that is a string', function () {
-    expect(tempUser).to.have.property('email', 'test@chai.com')
+    expect(resultUser).to.have.property('email', 'test@chai.com')
       .that.is.a('string');
   });
   it('should have a hashed _password property ', function () {
-    expect(tempUser).to.have.property('_password')
+    expect(resultUser).to.have.property('_password')
       .that.is.a('string')
       .and.not.equal('just testing');
   });
   xit('should have a snippet object', function(){
-    expect(tempUser).to.have.property('snippets')
+    expect(resultUser).to.have.property('snippets')
       .that.is.an('object')
   });
   xit('should have a root folder in the snippets object', function(){
-    expect(Object.keys(tempUser.snippets)).to.be.length(1);
+    expect(Object.keys(resultUser.snippets)).to.be.length(1);
   });
 
   it('should have a root folder in the snippets db collection', function(done){
-    Snippet.findOne({createdBy: tempUser.email}, function(err, result){
+    Snippet.findOne({createdBy: resultUser.email}, function(err, result){
       expect(result).to.have.property('createdBy')
-        .that.equals(tempUser.email);
+        .that.equals(resultUser.email);
       done();
       if (result) {
       result.remove();
@@ -101,7 +101,7 @@ describe('the User Model - makeUser', function () {
 
 describe('the User Model - getUser', function () {
 
-  var tempUser;
+  var resultUser;
   before(function(done) {
     var testUser = {
       email: 'test@chai.com',
@@ -113,7 +113,7 @@ describe('the User Model - getUser', function () {
         .then(function(returnedUser) {
           testUser = returnedUser;
           User.getUser(testUser.email ,function(err, result) {
-            tempUser = result;
+            resultUser = result;
             done();
           })
         })
@@ -127,25 +127,25 @@ describe('the User Model - getUser', function () {
   });
   
   it('should return an object', function() {
-    expect(tempUser).to.be.an('object');
+    expect(resultUser).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempUser).to.have.property('_id');
+    expect(resultUser).to.have.property('_id');
   });
   
   it('should have an email property that is a string', function () {
-    expect(tempUser).to.have.property('email', 'test@chai.com')
+    expect(resultUser).to.have.property('email', 'test@chai.com')
       .that.is.a('string');
   });
   it('should have an _password property', function () {
-    expect(tempUser).to.have.property('_password')
+    expect(resultUser).to.have.property('_password')
   });
 });
 
 describe('the User Model - updateUser', function () {
 
-  var tempUser;
+  var resultUser;
   var updateResult;
   var userUpdates = {
     bio: 'I am a test',
@@ -163,7 +163,7 @@ describe('the User Model - updateUser', function () {
         User.updateUser(testUser.email, userUpdates ,function(err, result) {
           updateResult = result;
           User.findOne({_id: testUser._id}, function(err, returnedUser) {
-            tempUser = returnedUser;
+            resultUser = returnedUser;
             done();
           })
         });
@@ -188,7 +188,7 @@ describe('the User Model - updateUser', function () {
   });
   
   it('should update properties', function () {
-    expect(tempUser).to.have.property('bio')
+    expect(resultUser).to.have.property('bio')
       .that.is.a('string')
       .and.equal('I am a test');
   });
@@ -196,7 +196,7 @@ describe('the User Model - updateUser', function () {
 
 describe('the User Model - removeUser', function () {
 
-  var tempUser;
+  var resultUser;
   var deleteResult;
   before(function(done) {
     var testUser = {
@@ -207,7 +207,7 @@ describe('the User Model - removeUser', function () {
     var testRemoveUser = function () {
       User.create(testUser)
       .then(function(returnedUser){
-        tempUser = returnedUser;
+        resultUser = returnedUser;
         User.removeUser(testUser.email ,function(err, result) {
           deleteResult = result;
           done();
@@ -234,7 +234,7 @@ describe('the User Model - removeUser', function () {
   });
   
   it('should not be able to find the test user', function (done) {
-    User.findOne({_id: tempUser._id}, function(err, result){
+    User.findOne({_id: resultUser._id}, function(err, result){
       expect(result).to.be.null;
       done();
       if (result) {
@@ -279,7 +279,7 @@ describe('the Snippet Model - Snippet basics', function () {
 
 describe('the Snippet Model - makeSnippet', function (){
 
-  var tempSnippet;
+  var resultSnippet;
   before(function(done) {
 
     var testSnippet = {
@@ -291,7 +291,7 @@ describe('the Snippet Model - makeSnippet', function (){
 
     var testMakeSnippet = function() {
       Snippet.makeSnippet(testSnippet, function(err, returnedSnippet) {
-        tempSnippet = returnedSnippet;
+        resultSnippet = returnedSnippet;
         done();
         returnedSnippet.remove();
       });
@@ -302,50 +302,50 @@ describe('the Snippet Model - makeSnippet', function (){
 
 
   it('should return an object', function() {
-    expect(tempSnippet).to.be.an('object');
+    expect(resultSnippet).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempSnippet).to.have.property('_id');
+    expect(resultSnippet).to.have.property('_id');
   });
 
   it('should have a property called _createdAt that is a Date', function() {
-    expect(tempSnippet).to.have.property('_createdAt');
+    expect(resultSnippet).to.have.property('_createdAt');
   });
 
   it('should have a property called _updatedAt At that is a Date', function() {
-    expect(tempSnippet).to.have.property('_updatedAt');
+    expect(resultSnippet).to.have.property('_updatedAt');
   });
   
   it('should have an createdBy property that is a string', function () {
-    expect(tempSnippet).to.have.property('createdBy', 'test@chai.com')
+    expect(resultSnippet).to.have.property('createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
   it('should have a data property that is a string', function () {
-    expect(tempSnippet).to.have.property('data')
+    expect(resultSnippet).to.have.property('data')
       .that.is.a('string');
   });
 
   it('should have a filePath property that is a string', function () {
-    expect(tempSnippet).to.have.property('filePath')
+    expect(resultSnippet).to.have.property('filePath')
       .that.is.a('string');
   });
 
   it('should have a name property that is a string', function () {
-    expect(tempSnippet).to.have.property('name', 'test.snip')
+    expect(resultSnippet).to.have.property('name', 'test.snip')
       .that.is.a('string');
   });
 
   it('should have a public property that is a boolean and defaulted to true', function () {
-    expect(tempSnippet).to.have.property('public', true)
+    expect(resultSnippet).to.have.property('public', true)
       .that.is.a('boolean');
   });
 })
 
 describe('the Snippet Model - getSnippet', function (){
 
-  var tempSnippet;
+  var resultSnippet;
   before(function(done) {
 
     var testSnippet = {
@@ -360,7 +360,7 @@ describe('the Snippet Model - getSnippet', function (){
         .then(function(returnedSnippet) {
           testSnippet = returnedSnippet;
           Snippet.getSnippet(testSnippet._id ,function(err, result) {
-            tempSnippet = result;
+            resultSnippet = result;
             done();
           })
         })
@@ -374,42 +374,42 @@ describe('the Snippet Model - getSnippet', function (){
 
 
   it('should return an object', function() {
-    expect(tempSnippet).to.be.an('object');
+    expect(resultSnippet).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempSnippet).to.have.property('_id');
+    expect(resultSnippet).to.have.property('_id');
   });
   
   it('should have an createdBy property that is a string', function () {
-    expect(tempSnippet).to.have.property('createdBy', 'test@chai.com')
+    expect(resultSnippet).to.have.property('createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
   it('should have a data property that is a string', function () {
-    expect(tempSnippet).to.have.property('data')
+    expect(resultSnippet).to.have.property('data')
       .that.is.a('string');
   });
 
   it('should have a filePath property that is a string', function () {
-    expect(tempSnippet).to.have.property('filePath')
+    expect(resultSnippet).to.have.property('filePath')
       .that.is.a('string');
   });
 
   it('should have a name property that is a string', function () {
-    expect(tempSnippet).to.have.property('name', 'test.snip')
+    expect(resultSnippet).to.have.property('name', 'test.snip')
       .that.is.a('string');
   });
 
   it('should have a public property that is a boolean and defaulted to true', function () {
-    expect(tempSnippet).to.have.property('public', true)
+    expect(resultSnippet).to.have.property('public', true)
       .that.is.a('boolean');
   });
 })
 
 describe('the Snippet Model - updateSnippet', function (){
 
-  var tempSnippet;
+  var resultSnippet;
   var updateResult;
   var oldSnippet;
   var snippetUpdates = {
@@ -431,7 +431,7 @@ describe('the Snippet Model - updateSnippet', function (){
         Snippet.updateSnippet(returnedSnippet._id, snippetUpdates ,function(err, result) {
           updateResult = result;
           Snippet.findOne({_id: returnedSnippet._id}, function(err, returnedSnippet) {
-            tempSnippet = returnedSnippet;
+            resultSnippet = returnedSnippet;
             done();
           })
         });
@@ -456,21 +456,21 @@ describe('the Snippet Model - updateSnippet', function (){
   });
   
   it('should update properties', function () {
-    expect(tempSnippet).to.have.property('filePath','test@chai.com/updates/updatedtest.snip')
+    expect(resultSnippet).to.have.property('filePath','test@chai.com/updates/updatedtest.snip')
       .that.is.a('string');
-    expect(tempSnippet).to.have.property('name','updatedtest.snip')
+    expect(resultSnippet).to.have.property('name','updatedtest.snip')
       .that.is.a('string');
   });
 
   it('should change the _updatedAt property of the document in the database', function() {
-    expect(tempSnippet).to.have.property('_updatedAt')
+    expect(resultSnippet).to.have.property('_updatedAt')
       .that.is.not.equal(oldSnippet._updatedAt);
   });
 })
 
 describe('the Snippet Model - removeSnippet', function (){
 
-  var tempSnippet;
+  var resultSnippet;
   var deleteResult;
   before(function(done) {
     var testSnippet = {
@@ -483,7 +483,7 @@ describe('the Snippet Model - removeSnippet', function (){
     var testRemoveSnippet = function () {
       Snippet.create(testSnippet)
       .then(function(returnedSnippet){
-        tempSnippet = returnedSnippet;
+        resultSnippet = returnedSnippet;
         Snippet.removeSnippet(returnedSnippet._id ,function(err, result) {
           deleteResult = result;
           done();
@@ -510,7 +510,7 @@ describe('the Snippet Model - removeSnippet', function (){
   });
   
   it('should not be able to find the test snippet', function (done) {
-    Snippet.findOne({_id: tempSnippet._id}, function(err, result) {
+    Snippet.findOne({_id: resultSnippet._id}, function(err, result) {
       expect(result).to.be.null;
       done();
       if (result) {
@@ -586,6 +586,19 @@ var removeTestAnnotation = function(callback){
   });
 }
 
+var removeTestAnnotations = function(callback){
+  Annotation.find({data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations'}, function(err, results) {
+    if (Array.isArray(results) && results.length > 0) {
+      results.forEach(function(doc){
+        doc.remove();
+      });
+      callback();
+    } else {
+      callback();
+    }
+  });
+}
+
 var testSnippet = {
   createdBy: 'test@chai.com',
   data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
@@ -598,7 +611,6 @@ var testAnnotationSnippet;
 Snippet.create(testSnippet)
   .then(function(returnedSnippet) {
     testAnnotationSnippet = returnedSnippet;
-    console.log("returnedSnippet", returnedSnippet);
   })
   .catch(function(err){
     done()
@@ -634,7 +646,7 @@ describe('the Annotation Model - Annotation basics', function () {
 
 describe('the Annotation Model - makeAnnotation', function (){
 
-  var tempAnnotation;
+  var resultAnnotation;
   before(function(done) {
 
     var testAnnotation = {
@@ -647,7 +659,7 @@ describe('the Annotation Model - makeAnnotation', function (){
 
     var testMakeAnnotation = function() {
       Annotation.makeAnnotation(testAnnotation, function(err, returnedAnnotation) {
-        tempAnnotation = returnedAnnotation;
+        resultAnnotation = returnedAnnotation;
         done();
         returnedAnnotation.remove();
       });
@@ -658,49 +670,49 @@ describe('the Annotation Model - makeAnnotation', function (){
 
 
   it('should return an object', function() {
-    expect(tempAnnotation).to.be.an('object');
+    expect(resultAnnotation).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempAnnotation).to.have.property('_id');
+    expect(resultAnnotation).to.have.property('_id');
   });
 
   it('should have a unique id called _sid that is a String', function() {
-    expect(tempAnnotation).to.have.property('_sid')
+    expect(resultAnnotation).to.have.property('_sid')
       .that.is.a('string');
   });
 
   it('should have a property called _createdAt that is a Date', function() {
-    expect(tempAnnotation).to.have.property('_createdAt');
+    expect(resultAnnotation).to.have.property('_createdAt');
   });
 
   it('should have a property called _updatedAt At that is a Date', function() {
-    expect(tempAnnotation).to.have.property('_updatedAt');
+    expect(resultAnnotation).to.have.property('_updatedAt');
   });
   
   it('should have a property called _createdBy is a string', function () {
-    expect(tempAnnotation).to.have.property('_createdBy', 'test@chai.com')
+    expect(resultAnnotation).to.have.property('_createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
   it('should have a data property that is a string', function () {
-    expect(tempAnnotation).to.have.property('data')
+    expect(resultAnnotation).to.have.property('data')
       .that.is.a('string');
   });
 
   it('should have a start property that is a number', function () {
-    expect(tempAnnotation).to.have.property('start')
+    expect(resultAnnotation).to.have.property('start')
       .that.is.a('number');
   });
 
   it('should have an end property that is a number', function () {
-    expect(tempAnnotation).to.have.property('end')
+    expect(resultAnnotation).to.have.property('end')
       .that.is.a('number');
   });
 })
 
 describe('the Annotation Model - getAnnotation', function (){
-  var tempAnnotation;
+  var resultAnnotation;
   before(function(done) {
     var testAnnotation = {
       _sid: testAnnotationSnippet._id +'',
@@ -715,7 +727,7 @@ describe('the Annotation Model - getAnnotation', function (){
         .then(function(returnedAnnotation) {
           testAnnotation = returnedAnnotation;
           Annotation.getAnnotation(testAnnotation._id ,function(err, result) {
-            tempAnnotation = result;
+            resultAnnotation = result;
             done();
           })
         })
@@ -729,50 +741,50 @@ describe('the Annotation Model - getAnnotation', function (){
 
 
     it('should return an object', function() {
-    expect(tempAnnotation).to.be.an('object');
+    expect(resultAnnotation).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
-    expect(tempAnnotation).to.have.property('_id');
+    expect(resultAnnotation).to.have.property('_id');
   });
 
   it('should have a unique id called _sid that is a String', function() {
-    expect(tempAnnotation).to.have.property('_sid')
+    expect(resultAnnotation).to.have.property('_sid')
       .that.is.a('string');
   });
 
   it('should have a property called _createdAt that is a Date', function() {
-    expect(tempAnnotation).to.have.property('_createdAt');
+    expect(resultAnnotation).to.have.property('_createdAt');
   });
 
   it('should have a property called _updatedAt At that is a Date', function() {
-    expect(tempAnnotation).to.have.property('_updatedAt');
+    expect(resultAnnotation).to.have.property('_updatedAt');
   });
   
   it('should have a property called _createdBy is a string', function () {
-    expect(tempAnnotation).to.have.property('_createdBy', 'test@chai.com')
+    expect(resultAnnotation).to.have.property('_createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
   it('should have a data property that is a string', function () {
-    expect(tempAnnotation).to.have.property('data')
+    expect(resultAnnotation).to.have.property('data')
       .that.is.a('string');
   });
 
   it('should have a start property that is a number', function () {
-    expect(tempAnnotation).to.have.property('start')
+    expect(resultAnnotation).to.have.property('start')
       .that.is.a('number');
   });
 
   it('should have an end property that is a number', function () {
-    expect(tempAnnotation).to.have.property('end')
+    expect(resultAnnotation).to.have.property('end')
       .that.is.a('number');
   });
 })
 
 describe('the Annotation Model - updateAnnotation', function (){
 
-  var tempAnnotation;
+  var resultAnnotation;
   var updateResult;
   var oldAnnotation;
   var annotationUpdates = {
@@ -798,7 +810,7 @@ describe('the Annotation Model - updateAnnotation', function (){
         Annotation.updateAnnotation(returnedAnnotation._id, annotationUpdates ,function(err, result) {
           updateResult = result;
           Annotation.findOne({_id: returnedAnnotation._id}, function(err, returnedAnnotation) {
-            tempAnnotation = returnedAnnotation;
+            resultAnnotation = returnedAnnotation;
             done();
           })
         });
@@ -823,23 +835,23 @@ describe('the Annotation Model - updateAnnotation', function (){
   });
   
   it('should update properties', function () {
-    expect(tempAnnotation).to.have.property('_createdBy','update@update.update')
+    expect(resultAnnotation).to.have.property('_createdBy','update@update.update')
       .that.is.a('string');
-    expect(tempAnnotation).to.have.property('start', 42)
+    expect(resultAnnotation).to.have.property('start', 42)
       .that.is.a('number');
-    expect(tempAnnotation).to.have.property('end', 1337)
+    expect(resultAnnotation).to.have.property('end', 1337)
       .that.is.a('number');
   });
 
   it('should change the _updatedAt property of the document in the database', function() {
-    expect(tempAnnotation).to.have.property('_updatedAt')
+    expect(resultAnnotation).to.have.property('_updatedAt')
       .that.is.not.equal(oldAnnotation._updatedAt);
   });
 })
 
 describe('the Annotation Model - removeAnnotation', function (){
 
-  var tempAnnotation;
+  var resultAnnotation;
   var deleteResult;
   before(function(done) {
     var testAnnotation = {
@@ -853,7 +865,7 @@ describe('the Annotation Model - removeAnnotation', function (){
     var testRemoveAnnotation = function () {
       Annotation.create(testAnnotation)
       .then(function(returnedAnnotation){
-        tempAnnotation = returnedAnnotation;
+        resultAnnotation = returnedAnnotation;
         Annotation.removeAnnotation(returnedAnnotation._id ,function(err, result) {
           deleteResult = result;
           done();
@@ -880,7 +892,7 @@ describe('the Annotation Model - removeAnnotation', function (){
   });
   
   it('should not be able to find the test annotation', function (done) {
-    Annotation.findOne({_id: tempAnnotation._id}, function(err, result) {
+    Annotation.findOne({_id: resultAnnotation._id}, function(err, result) {
       expect(result).to.be.null;
       done();
       if (result) {
@@ -890,6 +902,120 @@ describe('the Annotation Model - removeAnnotation', function (){
   });
 })
 
+describe('the Annotation Model - getBySnippet', function (){
+  var resultAnnotations;
+  var testAnnotations = [];
+
+  before(function(done) {
+    testAnnotations.push({
+      _sid: testAnnotationSnippet._id +'',
+      _createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
+      start: 0,
+      end: 1,
+    });
+
+    var testGetBySnippet = function() {
+      Annotation.create(testAnnotations[0])
+        .then(function(returnedAnnotation) {
+          testAnnotations.push(returnedAnnotation);
+        })
+        .then(function(){
+          return Annotation.create(testAnnotations[0])
+        })
+        .then(function(returnedAnnotation2){
+          testAnnotations.push(returnedAnnotation2);
+        })
+        .then(function(){
+          Annotation.getBySnippet(testAnnotationSnippet._id ,function(err, result) {
+            resultAnnotations = result;
+            done();
+          })
+        })
+        .catch(function(err){
+          done()
+        });
+    }
+
+    removeTestAnnotations(testGetBySnippet);
+  });
+
+  it('should return an array of annotations', function(){
+    expect(resultAnnotations).to.be.instanceOf(Array)
+      .and.have.length(2);
+  });
+
+  it('should return an array where each element has the same _sid', function(){
+    resultAnnotations.forEach(function(document){
+      expect(document).to.have.property('_sid')
+        .that.is.a('string')
+        .and.equals(testAnnotationSnippet.id + '');
+    })
+  })
+})
+
+describe('the Annotation Model - removeBySnippet', function () {
+  var deleteResult;
+  var testAnnotations = [];
+  before(function(done) {
+    testAnnotations.push({
+      _sid: testAnnotationSnippet._id +'',
+      _createdBy: 'test@chai.com',
+      data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
+      start: 0,
+      end: 1,
+    });
+
+    var testRemoveAnnotation = function () {
+      Annotation.create(testAnnotations[0])
+      .then(function(returnedAnnotation){
+        testAnnotations.push(returnedAnnotation);
+      })
+      .then(function(){
+        return Annotation.create(testAnnotations[0])
+      })
+      .then(function(returnedAnnotation2) {
+        testAnnotations.push(returnedAnnotation2);
+      })
+      .then(function(){
+        Annotation.removeBySnippet(testAnnotationSnippet._id ,function(err, result) {
+          deleteResult = result;
+          done();
+        })
+      })
+      .catch(function(err){
+        console.log(err);
+        done()
+      })
+    }
+
+    removeTestAnnotations(testRemoveAnnotation);
+
+  });
+
+  it('should return a results object', function() {
+    expect(deleteResult.result).to.be.an('object')
+      .that.has.property('ok');
+  });
+
+  it('should report removal from the database', function() {
+    expect(deleteResult.result).to.have.property('n')
+      .that.equals(2);
+  });
+  
+  it('should not be able to find the test annotations', function (done) {
+    Annotation.find({_sid: testAnnotationSnippet._id}, function(err, result) {
+      expect(result).to.be.instanceOf(Array)
+        .and.have.length(0);
+      done();
+      if (result) {
+        result.forEach(function(doc) {
+          doc.remove();
+        });
+      }
+    });
+  });
+});
 
 //////////////////////////////////////////////////////////
 //                   User Routes                        //
