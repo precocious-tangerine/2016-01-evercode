@@ -38,11 +38,11 @@ Snippet.removeSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
 }
 
-// Snippet.getSnippetByFilepath = (email, filepath, callback) => {
-//   Snippet.findOne({ email, filepath })
-//     .then(snippetObj => callback(null, snippetObj))
-//     .catch(callback);
-// }
+Snippet.getSnippetByFilepath = (email, filepath, callback) => {
+  Snippet.findOne({ email, filepath })
+    .then(snippetObj => callback(null, snippetObj))
+    .catch(callback);
+}
 
 Snippet.getSnippetsByUser = (email, callback) => {
   Snippet.find({ createdBy: email })

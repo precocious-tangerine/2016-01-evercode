@@ -79,12 +79,23 @@ describe('the User Model - makeUser', function () {
       .that.is.a('string')
       .and.not.equal('just testing');
   });
-  it('should have a snippet object', function(){
+  xit('should have a snippet object', function(){
     expect(tempUser).to.have.property('snippets')
       .that.is.an('object')
   });
-  it('should have a root folder in the snippets object', function(){
+  xit('should have a root folder in the snippets object', function(){
     expect(Object.keys(tempUser.snippets)).to.be.length(1);
+  });
+
+  it('should have a root folder in the snippets db collection', function(done){
+    Snippet.findOne({createdBy: tempUser.email}, function(err, result){
+      expect(result).to.have.property('createdBy')
+        .that.equals(tempUser.email);
+      done();
+      if (result) {
+      result.remove();
+      }
+    });
   });
 });
 
@@ -546,11 +557,11 @@ describe('the Snippet Model - Snippet Getters', function(){
     expect(Snippet.getSnippetsByUser).to.be.a('function');
   })
 
-  it('should have a getSnippetInfoByUser function', function(){
+  xit('should have a getSnippetInfoByUser function', function(){
     expect(Snippet.getSnippetInfoByUser).to.be.a('function');
   })
 
-  it('should have a getSnippetInfoByFolder function', function(){
+  xit('should have a getSnippetInfoByFolder function', function(){
     expect(Snippet.getSnippetInfoByFolder).to.be.a('function');
   })
 
@@ -587,10 +598,11 @@ var testAnnotationSnippet;
 Snippet.create(testSnippet)
   .then(function(returnedSnippet) {
     testAnnotationSnippet = returnedSnippet;
+    console.log("returnedSnippet", returnedSnippet);
   })
   .catch(function(err){
     done()
-  }) 
+  });
 
 
 describe('the Annotation Model - Annotation basics', function () {
@@ -617,8 +629,7 @@ describe('the Annotation Model - Annotation basics', function () {
 
   it('should have a removeBySnippet function', function () {
     expect(Annotation.removeBySnippet).to.be.a('function');
-  });
-  
+  });  
 });
 
 describe('the Annotation Model - makeAnnotation', function (){
@@ -686,19 +697,17 @@ describe('the Annotation Model - makeAnnotation', function (){
     expect(tempAnnotation).to.have.property('end')
       .that.is.a('number');
   });
-
 })
 
 describe('the Annotation Model - getAnnotation', function (){
-
   var tempAnnotation;
   before(function(done) {
-
     var testAnnotation = {
-      createdBy: 'test@chai.com',
+      _sid: testAnnotationSnippet._id +'',
+      _createdBy: 'test@chai.com',
       data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
-      filePath: 'test@chai.com/',
-      name: 'test.snip'
+      start: 0,
+      end: 1,
     };
 
     var testGetAnnotation = function() {
@@ -719,16 +728,29 @@ describe('the Annotation Model - getAnnotation', function (){
   });
 
 
-  it('should return an object', function() {
+    it('should return an object', function() {
     expect(tempAnnotation).to.be.an('object');
   });
 
   it('should have a unique id called _id', function() {
     expect(tempAnnotation).to.have.property('_id');
   });
+
+  it('should have a unique id called _sid that is a String', function() {
+    expect(tempAnnotation).to.have.property('_sid')
+      .that.is.a('string');
+  });
+
+  it('should have a property called _createdAt that is a Date', function() {
+    expect(tempAnnotation).to.have.property('_createdAt');
+  });
+
+  it('should have a property called _updatedAt At that is a Date', function() {
+    expect(tempAnnotation).to.have.property('_updatedAt');
+  });
   
-  it('should have an createdBy property that is a string', function () {
-    expect(tempAnnotation).to.have.property('createdBy', 'test@chai.com')
+  it('should have a property called _createdBy is a string', function () {
+    expect(tempAnnotation).to.have.property('_createdBy', 'test@chai.com')
       .that.is.a('string');
   });
 
@@ -737,19 +759,14 @@ describe('the Annotation Model - getAnnotation', function (){
       .that.is.a('string');
   });
 
-  it('should have a filePath property that is a string', function () {
-    expect(tempAnnotation).to.have.property('filePath')
-      .that.is.a('string');
+  it('should have a start property that is a number', function () {
+    expect(tempAnnotation).to.have.property('start')
+      .that.is.a('number');
   });
 
-  it('should have a name property that is a string', function () {
-    expect(tempAnnotation).to.have.property('name', 'test.snip')
-      .that.is.a('string');
-  });
-
-  it('should have a public property that is a boolean and defaulted to true', function () {
-    expect(tempAnnotation).to.have.property('public', true)
-      .that.is.a('boolean');
+  it('should have an end property that is a number', function () {
+    expect(tempAnnotation).to.have.property('end')
+      .that.is.a('number');
   });
 })
 
@@ -758,23 +775,27 @@ describe('the Annotation Model - updateAnnotation', function (){
   var tempAnnotation;
   var updateResult;
   var oldAnnotation;
-  var snippetUpdates = {
-    filePath: 'test@chai.com/updates/updatedtest.snip',
-    name:'updatedtest.snip'
+  var annotationUpdates = {
+    _createdBy: 'update@update.update',
+    start: 42,
+    end: 1337
   }
-  var testAnnotation = {
-    createdBy: 'test@chai.com',
-    data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
-    filePath: 'test@chai.com/test.snip',
-    name: 'test.snip'
-  };
+
 
   before(function(done) {
+    var testAnnotation = {
+        _sid: testAnnotationSnippet._id +'',
+        _createdBy: 'test@chai.com',
+        data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
+        start: 0,
+        end: 1,
+    };
+
     var testUpdateAnnotation = function () {
       Annotation.create(testAnnotation)
       .then(function(returnedAnnotation) {
         oldAnnotation = returnedAnnotation;
-        Annotation.updateAnnotation(returnedAnnotation._id, snippetUpdates ,function(err, result) {
+        Annotation.updateAnnotation(returnedAnnotation._id, annotationUpdates ,function(err, result) {
           updateResult = result;
           Annotation.findOne({_id: returnedAnnotation._id}, function(err, returnedAnnotation) {
             tempAnnotation = returnedAnnotation;
@@ -802,10 +823,12 @@ describe('the Annotation Model - updateAnnotation', function (){
   });
   
   it('should update properties', function () {
-    expect(tempAnnotation).to.have.property('filePath','test@chai.com/updates/updatedtest.snip')
+    expect(tempAnnotation).to.have.property('_createdBy','update@update.update')
       .that.is.a('string');
-    expect(tempAnnotation).to.have.property('name','updatedtest.snip')
-      .that.is.a('string');
+    expect(tempAnnotation).to.have.property('start', 42)
+      .that.is.a('number');
+    expect(tempAnnotation).to.have.property('end', 1337)
+      .that.is.a('number');
   });
 
   it('should change the _updatedAt property of the document in the database', function() {
@@ -820,10 +843,11 @@ describe('the Annotation Model - removeAnnotation', function (){
   var deleteResult;
   before(function(done) {
     var testAnnotation = {
-      createdBy: 'test@chai.com',
+      _sid: testAnnotationSnippet._id +'',
+      _createdBy: 'test@chai.com',
       data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations',
-      filePath: 'test@chai.com/test.snip',
-      name: 'test.snip'
+      start: 0,
+      end: 1,
     };
 
     var testRemoveAnnotation = function () {
@@ -856,7 +880,7 @@ describe('the Annotation Model - removeAnnotation', function (){
   });
   
   it('should not be able to find the test annotation', function (done) {
-    Annotation.findOne({_id: tempSnippet._id}, function(err, result) {
+    Annotation.findOne({_id: tempAnnotation._id}, function(err, result) {
       expect(result).to.be.null;
       done();
       if (result) {
