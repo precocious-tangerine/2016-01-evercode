@@ -12,7 +12,7 @@ let annotationSchema = mongoose.Schema({
   data:{type: String},
 });
 
-let Annotation = mongoose.model('Annotation', userSchema);
+let Annotation = mongoose.model('Annotation', annotationSchema);
 
 Annotation.makeAnnotation = (annotationObj, callback) => {
   Annotation.create(annotationObj)
