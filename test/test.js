@@ -563,7 +563,7 @@ describe('the Snippet Model - Snippet Getters', function(){
 //                 Annotations Model                    //
 //////////////////////////////////////////////////////////
 
-var Annotation = require('../server/models/snippet');
+var Annotation = require('../server/models/annotations');
 
 var removeTestAnnotation = function(callback){
   Annotation.findOne({data: 'I am the test Annotation, made by Edison Huff, and I stand alone in this world of annotations'}, function(err, result) {
