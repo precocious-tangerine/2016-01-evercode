@@ -42,8 +42,11 @@ class EditorCtrl {
       this.toggleTag();
     }
     if (tagToRemove) {
+      console.log('tagToRemove: ', tagToRemove);
       objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
     }
+    console.log('updated tags: ', objectToUpdate.tags);
+
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
     this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate }, this.snippetMap[this.selectedSnippet].filePath);
