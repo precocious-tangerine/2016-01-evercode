@@ -7,7 +7,7 @@ var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
 var jwt = require('jsonwebtoken');
 var secret = config.secretToken;
-
+let {postSignup, getVerification} = require('./email-verification.js');
 let createJWT = (user) => {
   var payload = {
     sub: user._id,
@@ -16,8 +16,15 @@ let createJWT = (user) => {
   return jwt.sign(payload, secret);
 }
 
-
 module.exports = (app, express) => {
+  app.route('/send-email')
+    .post(postSignup)
+
+  app.route('/email-verification/:URL')
+    .get(getVerification)
+
+
+
   app.route('/signin')
     .post((req, res) => {
       let { email, password } = req.body;
