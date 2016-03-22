@@ -32,12 +32,10 @@ module.exports.postSignup = (req, res) => {
    bcrypt.genSaltAsync(13)
    .then(salt => bcrypt.hashAsync(password, salt))
    .then(hash => {
-     console.log('hash is', hash);
      let newUser = new User({email, _password: hash});
      return nev.createTempUserAsync(newUser)
    })   
    .then((newTempUser) => {
-     console.log('user confirmed:, ', newTempUser);
       if(newTempUser) {
         let URL = newTempUser[nev.options.URLFieldName];
         return nev.sendVerificationEmailAsync(email, URL)
