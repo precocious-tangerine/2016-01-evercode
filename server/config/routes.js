@@ -18,18 +18,19 @@ let createJWT = (user) => {
   return jwt.sign(payload, secret);
 }
 
-app.route('/send-email')
-  .post(postSignup)
-
-app.route('/email-verification/:URL')
-  .get(getVerification)
-
-app.route('/orlandoc01/test/snippet.txt')
-  .get((req, res) => {
-    res.send({ data: 'test1' });
-  });
-
 module.exports = (app, express) => {
+
+  app.route('/send-email')
+    .post(postSignup)
+
+  app.route('/email-verification/:URL')
+    .get(getVerification)
+
+  app.route('/orlandoc01/test/snippet.txt')
+    .get((req, res) => {
+      res.send({ data: 'test1' });
+    });
+
   app.route('/signin')
     .post((req, res) => {
       let { email, password } = req.body;
