@@ -44,19 +44,10 @@ export class Folders {
         }).then(response => {
           dispatch(Actions.removeSnippetMap(folderPath))
         })
-
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/folders',
-        //   data: folderPath
-        // }).then(res => {
-        // dispatch(Actions.removeSnippetMap(folderPath));
-        // dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
-        // dispatch(Actions.removeSnippetMap(folderPath + '.config'));
-        // })
       }
     }
   }
+  
   mapStateToThis(state) {
     return {
       snippetMap: state.snippetMap,
