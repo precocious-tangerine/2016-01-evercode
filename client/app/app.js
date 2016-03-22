@@ -5,6 +5,7 @@ import { finalReducer } from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import ui_codemirror from 'angular-ui-codemirror';
 import { createAuthCtrl } from './auth/auth.js';
+import { search } from './search/search.js';
 import { Folders, Auth, Snippets } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { directories } from './directories/directories.js';
@@ -12,8 +13,9 @@ import { editor } from './editor/editor.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
+import ngAnimate from 'angular-animate';
 
-angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard'])
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
     $authProvider.oauth2({
@@ -27,9 +29,11 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     $urlRouterProvider.otherwise('/main');
     $stateProvider
       .state('main', directories())
-      .state('main.snippets', snippets('/snippets', '/donkey'))
-      .state('main.favorites', snippets('/favorites'))
+      .state('main.snippets', snippets('/snippets', '/snippets'))
       .state('main.snippets.editor', editor())
+      .state('main.favorites', snippets('/favorites', '/favorites'))
+      .state('main.search', search())
+      .state('main.search.editor', editor())
       .state('login', createAuthCtrl('/signin'))
       .state('signup', createAuthCtrl('/signup'))
       .state('signout', {

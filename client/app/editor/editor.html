@@ -1,42 +1,33 @@
-
 <div class="row editor-row">
   <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()" novalidate>
     <div class="form-group snippet-title">
-      <input id="snippet-name-input" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' />
+      <input placeholder="Name Your Snippet" type="text" class='form-control' ng-model='editor.snippetObj.name' />
     </div>
-    <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>system_update_alt</i></button>
+    <button type="submit" class="waves-effect waves-light btn save-snippet">{{editor.buttonText}}</button>
   </form>
 </div>
-
 <div class="row editor-row">
-  <div class='tags col m9'>
-    <span class="tag" >TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
-    <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
-  </div>
-  <button class="btn col m3" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
-    Copy to clipboard<i class="material-icons right">launch</i>
-  </button>
-</div>
-
-<div class="row editor-row">
+<div ng-show="editor.selectedSnippet" class='tags col m9'>
+  <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
+  <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
+  <div class="row editor-row">
   <span ng-show="editor.addTag" class="col m9">
     <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
       <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
     </form>
   </span>
-  <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()">Annotate<i class="material-icons right">comment</i></a>
-</div> 
-
-<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">
+</div>
+<div class="right-align">
+  <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
 </div>
 
+<button class="btn col m3" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
+ Copy to clipboard<i class="material-icons right">launch</i>
+</button>
+<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror='editor.editorOptions'>
+</div>
 <div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
   <h5>Annotations</h5>
   <hr>
-  <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
-    <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
-      <button type="submit" class="waves-effect waves-light btn save-annotation">
-        Save Annotation<i class='material-icons right'>system_update_alt</i>
-      </button>
-  </form>
+  <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
 </div>

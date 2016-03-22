@@ -41,7 +41,7 @@ export const removeSelectedSnippet = () => {
 
 
 //Handling which folder is currently selected
-export const setSselectedFolder = (folderPath) => {
+export const setSelectedFolder = (folderPath) => {
   return {
     type: 'SET_SELECTED_FOLDER',
     folderPath
