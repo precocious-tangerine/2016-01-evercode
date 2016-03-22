@@ -118,6 +118,26 @@ module.exports = (app, express) => {
         })
     });
 
+  app.route('/api/user/snippets/')
+    .get((req, res) => {
+      let token = jwt.verify(req.headers.authorization, secret);
+      return Snippets.getSnippetsByUserAsync(token.email)
+        .then((results) => {
+          if (Array.isArray(results) && results.length > 0) {
+            var fileTreeObj = {};
+            results.forEach((node) => {
+              fileTreeObj[node.filePath] = node;
+            });
+            res.status(200).send(fileTreeObj);
+          } else {
+            res.status(404).send("Snippets not Found");
+          }
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+    });
+    
   app.route('/api/snippet/annotations')
     .get((req, res) => {
       let {_sid} = req.query["_id"];
