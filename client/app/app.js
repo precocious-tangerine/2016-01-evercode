@@ -14,8 +14,9 @@ import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
 import ngAnimate from 'angular-animate';
+import tinymce from './tinymce/tinymce.js';
 
-angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate'])
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
     $authProvider.oauth2({

@@ -21,6 +21,10 @@ class EditorCtrl {
       lineWrapping: true,
       mode: 'javascript'
     };
+    this.tinymceOptions = {
+      height: 250,
+      toolbar: 'bold italic | bullist numlist'
+    };
     this.tag = '';
     this.addTag = false;
     this.showAnnotation = false;
@@ -66,11 +70,11 @@ class EditorCtrl {
   }
 
   addAnnotation() {
+    console.log('annotation object', this);
     let annotationObj = {
       id: this.snippetMap[this.selectedSnippet].value._id, 
-      data: this.snippetObj.annotation,
+      data: this.annotation,
     }
-    console.log('annotation object', annotationObj);
     this.Snippets.addAnnotation(annotationObj)
   }
 
