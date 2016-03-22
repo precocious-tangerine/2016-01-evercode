@@ -21,6 +21,10 @@ class EditorCtrl {
       lineWrapping: true,
       mode: 'javascript'
     };
+    this.tinymceOptions = {
+      height: 250,
+      toolbar: 'bold italic | bullist numlist'
+    };
     this.tag = '';
     this.addTag = false;
     this.showAnnotation = false;

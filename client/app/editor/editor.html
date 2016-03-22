@@ -29,7 +29,7 @@
   <h5>Annotations</h5>
   <hr>
   <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
-    <textarea ui-tinymce ng-model="editor.annotation"/>
+    <textarea ui-tinymce="editor.tinymceOptions" ng-model="editor.annotation"/>
       <button type="submit" class="waves-effect waves-light btn save-annotation">
         Save Annotation<i class='material-icons right'>system_update_alt</i>
       </button>
