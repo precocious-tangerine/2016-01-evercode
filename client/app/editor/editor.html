@@ -3,7 +3,7 @@
     <div class="form-group snippet-title">
       <input id="snippet-name-input" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' />
     </div>
-    <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>system_update_alt</i></button>
+    <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
   </form>
 </div>
 <div class="row editor-row">
@@ -17,6 +17,9 @@
       </form>
     </span>
   </div>
+  <button class="btn col m3" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
+    Copy Snippet<i class="material-icons right">content_paste</i>
+  </button>
 </div>
 <div class="code-editor row card">
   <div class="col s12 code-toolbar valign-wrapper">

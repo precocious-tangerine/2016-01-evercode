@@ -4,7 +4,7 @@
       <a ui-sref=".editor" class="btn-flat tooltipped" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
     </span>
     <span class="add-button col s6 center-align">
-      <a class="btn-flat tooltipped" data-position="bottom" ng-click="snippets.toggleInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">tab</i></a>
+      <a class="btn-flat tooltipped" data-position="bottom" ng-click="snippets.toggleInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
     </span>
   </div>
   <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addSubFolder()" novalidate>
@@ -16,7 +16,7 @@
     <div class="valign" ng-repeat="folder in snippets.visibleFolders">
       <div class="col s10 valign-wrapper">
         <a class="waves-effect waves-teal collection-item left valign" ng-click="snippets.changeActiveTab(folder.filePath)">
-          <i class="small material-icons">tab</i>{{folder.value}}
+          <i class="small material-icons">folder</i>{{folder.value}}
         </a>
       </div>
       <div class="col s2">
@@ -25,7 +25,8 @@
     </div>
     <div class="valign" ng-repeat="snippet in snippets.visibleSnippets">
       <div class="col s8">
-        <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">{{snippet.value.name}}
+        <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+        <i class=" small material-icons">description</i>{{snippet.value.name}}
       </a>
       </div>
       <div class="col s2">
