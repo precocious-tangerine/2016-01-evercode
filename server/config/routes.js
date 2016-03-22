@@ -5,6 +5,7 @@ var qs = require('querystring');
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
+var Annotations = Promise.promisifyAll(require('../models/annotations'))
 var jwt = require('jsonwebtoken');
 var secret = config.secretToken;
 let {postSignup, getVerification} = require('./email-verification.js');
@@ -58,7 +59,6 @@ module.exports = (app, express) => {
           res.status(500).send(err);
         });
     });
-
 
   app.route('/api/snippets')
     .get((req, res) => {
@@ -165,6 +165,64 @@ module.exports = (app, express) => {
           res.status(500).send(err);
         })
     })
+
+  app.route('/api/annotations/')
+    .get((req, res) => {
+      Annotations.getAnnotationAsync(req.query["_id"])
+        .then((annotation) => {
+          if (annotation) {
+            res.status(200).send(annotation)
+          } else {
+            res.status(404).send("Annotation not Found");
+          }
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+    })
+    .post((req, res) => {
+      let email = jwt.verify(req.headers.authorization, secret).email;
+      req.body._createdBy = email;
+      Annotations.makeAnnotationAsync(req.body)
+        .then((annotation) => {
+          res.status(201).send(annotation)
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+    })
+    .delete((req, res) => {
+      Annotations.removeAnnotationAsync(req.query.snippetId)
+        .then((response) => {
+          if (response) {
+            res.status(201).send(response);
+          } else {
+            res.status(404).send("Annotation not Found");
+          }
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+    })
+    .put((req, res) => {
+      Annotations.updateAnnotationAsync(req.body.snippetId, req.body.value)
+        .then((success) => {
+          if (success) {
+            Annotations.getAnnotationAsync(req.body.annotationId).then((annotation) => {
+              if (annotation) {
+                res.status(201).send(annotation);
+              } else {
+                res.status(404).send("Annotation not Found");
+              }
+            })
+          } else {
+            res.status(404).send("Annotation not Found");
+          }
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+    });
 
   app.post('/auth/github', (req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
