@@ -48,9 +48,17 @@
   float: left;
 }
 
+.code-selector select {
+  color: grey;
+  border: 0;
+  width: 120px;
+  height: 30px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
 .CodeMirror {
   border: 2px solid #eee;
-  margin-top: 10px;
   height: 70vh;
 }
 

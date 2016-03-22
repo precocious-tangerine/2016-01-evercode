@@ -78,6 +78,10 @@ class EditorCtrl {
     this.Snippets.addAnnotation(annotationObj)
   }
 
+  changeLanguage() {
+    console.log('changeLanguage')
+  }
+
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;

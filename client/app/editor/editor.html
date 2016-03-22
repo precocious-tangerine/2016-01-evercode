@@ -11,9 +11,6 @@
     <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
     <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
   </div>
-  <button class="btn col m3" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
-    Copy Snippet<i class="material-icons right">launch</i>
-  </button>
 </div>
 <div class="row editor-row">
   <span ng-show="editor.addTag" class="col m9">
@@ -21,17 +18,47 @@
       <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
     </form>
   </span>
-  <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
 </div>
-<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">
-</div>
-<div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
-  <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
-    <h5 class="center-align">Annotations</h5>
-    <hr>
-    <button type="submit" class="col s12 waves-effect waves-light btn save-annotation">
-      Save<i class='material-icons right'>system_update_alt</i>
-    </button>
-    <textarea ui-tinymce="editor.tinymceOptions" ng-model="editor.annotation"/>
-  </form>
+<div class="code-editor row card">
+  <div class="col s12 code-toolbar valign-wrapper">
+    <div class="col s1 copy-code">
+      <a class="valign waves-effect waves-teal btn-flat" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
+        <i class="material-icons center-align">assignment</i>
+      </a>
+    </div>
+    <div class="col s3 code-selector">
+      <select class="browser-default">
+        <option value="" disabled selected>Language</option>
+        <option value="javascript">javascript</option>
+        <option value="python">python</option>
+        <option value="html">html</option>
+      </select>
+    </div>
+    <div class="col s3 code-selector">
+      <select class="browser-default">
+        <option value="" disabled selected>Theme</option>
+        <option value="eclipse">javascript</option>
+        <option value="twilight">python</option>
+        <option value="elegant">html</option>
+      </select>
+    </div>
+    <div class="col s3 right-align">
+      <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
+    </div>
+  </div>
+  <div ng-class="editor.showAnnotation ? 'col m7 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">
+  </div>
+  <div ng-class="editor.showAnnotation ? 'col m5 s12 annotations' : 'toggle-annotation'">
+    <div>
+      {{editor.snippetObj.annotation}}
+    </div>
+    <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
+      <h5 class="center-align">Annotations</h5>
+      <hr>
+      <button type="submit" class="col s12 waves-effect waves-light btn save-annotation">
+        Save<i class='material-icons right'>system_update_alt</i>
+      </button>
+      <textarea ui-tinymce="editor.tinymceOptions" ng-model="editor.annotation"/>
+    </form>
+  </div>
 </div>
