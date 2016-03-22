@@ -27,19 +27,19 @@
       </a>
     </div>
     <div class="col s3 code-selector">
-      <select class="browser-default">
+      <select ng-model="editor.editorOption.mode" ng-change="editor.changeLanguage(editor.editorOption.mode)" class="browser-default">
         <option value="" disabled selected>Language</option>
         <option value="javascript">javascript</option>
         <option value="python">python</option>
-        <option value="html">html</option>
+        <option value="htmlmixed">html</option>
       </select>
     </div>
     <div class="col s3 code-selector">
-      <select class="browser-default">
+      <select ng-model="editor.editorOption.theme" ng-change="editor.changeTheme(editor.editorOption.theme)" class="browser-default">
         <option value="" disabled selected>Theme</option>
-        <option value="eclipse">javascript</option>
-        <option value="twilight">python</option>
-        <option value="elegant">html</option>
+        <option value="eclipse">eclipse</option>
+        <option value="twilight">twilight</option>
+        <option value="elegant">elegant</option>
       </select>
     </div>
     <div class="col s3 right-align">

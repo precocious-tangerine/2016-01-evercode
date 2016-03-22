@@ -17,9 +17,17 @@ class EditorCtrl {
     this.editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
-      theme: 'eclipse',
+      theme: 'twilight',
       lineWrapping: true,
       mode: 'javascript'
+    };
+    this.codemirrorLoaded = (_editor) =>{
+      // Editor part
+      // var _doc = _editor.getDoc();
+      // _editor.focus();
+      this.editor = _editor;
+      this.refresh = _editor.refresh;
+
     };
     this.tinymceOptions = {
       height: 250,
@@ -78,8 +86,12 @@ class EditorCtrl {
     this.Snippets.addAnnotation(annotationObj)
   }
 
-  changeLanguage() {
-    console.log('changeLanguage')
+  changeLanguage(language) {
+    this.editor.setOption('mode', language)
+  }
+
+  changeTheme(theme) {
+    this.editor.setOption('theme', theme)
   }
 
   mapStateToThis(state) {
