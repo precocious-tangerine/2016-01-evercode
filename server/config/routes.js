@@ -118,19 +118,19 @@ module.exports = (app, express) => {
         })
     });
 
-  app.route('/api/user/snippets/')
+  app.route('/api/snippet/annotations')
     .get((req, res) => {
-      let token = jwt.verify(req.headers.authorization, secret);
-      return Snippets.getSnippetsByUserAsync(token.email)
+      let {_sid} = req.query["_id"];
+      return Annotations.getBySnippetAsync(_sid)
         .then((results) => {
           if (Array.isArray(results) && results.length > 0) {
-            var fileTreeObj = {};
+            var idTreeObj = {};
             results.forEach((node) => {
-              fileTreeObj[node.filePath] = node;
+              idTreeObj[node._id] = node;
             });
-            res.status(200).send(fileTreeObj);
+            res.status(200).send(idTreeObj);
           } else {
-            res.status(404).send("Snippets not Found");
+            res.status(404).send("Annotations not Found");
           }
         }).catch((err) => {
           console.log(err);
