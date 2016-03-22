@@ -53,7 +53,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "test": "mocha test --compilers js:babel-core/register",
+    "test": "mocha test --harmony-destructuring --compilers js:babel-core/register",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
     "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client"
