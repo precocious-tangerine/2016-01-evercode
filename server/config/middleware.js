@@ -3,10 +3,6 @@ var morgan = require('morgan');
 var Promise = require('bluebird');
 var bodyParser = require('body-parser');
 
-
-
-
-
 module.exports = (app, express) => {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
