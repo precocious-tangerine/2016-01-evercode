@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let nev = Promise.promisifyAll(require('email-verification')(mongoose));
 let User = require('../models/users.js');
+let Snippets = require('../models/snippets.js');
 
 
 nev.configureAsync({
@@ -58,10 +59,9 @@ module.exports.getVerification = (req, res) => {
   nev.confirmTempUserAsync(url)
   .then((user) => {
     if(user) {
-      nev.sendConfirmationEmailAsync(user.email)
-      .then((info) => {
-        res.send('You have been confirmed, info ' + JSON.stringify(info));
-      })
+      Snippets.makeRootFolderAsync(user.email)
+      .then(() => nev.sendConfirmationEmailAsync(user.email))
+      .then(() => res.send('You have been confirmed as a user' ))
       .catch(err => {
         console.log('err: sending verify email', err);
         res.status(404).send(err)
