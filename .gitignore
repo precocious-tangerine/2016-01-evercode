@@ -1,5 +1,7 @@
 #server
 /server/config.js
+/server/gmail-credentials.json
+/server/client_secret.json
 
 #client
 /client/lib/*

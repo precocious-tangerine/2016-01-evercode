@@ -7,6 +7,6 @@ module.exports = {
 	mongodbPort: ':27017',
 	redisHost: process.env.REDIS_PORT_6379_TCP_ADDR || '127.0.0.1',
 	redisPort: process.env.REDIS_PORT_6379_TCP_PORT || 6379,
-	secretToken: ''
-
+	secretToken: '',
+	verificationEmailRoute: '/email-verification'
 }

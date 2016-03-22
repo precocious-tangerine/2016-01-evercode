@@ -1,7 +1,10 @@
 'use strict';
 var morgan = require('morgan');
+var Promise = require('bluebird');
 var bodyParser = require('body-parser');
-var config = require('../config');
+
+
+
 
 
 module.exports = (app, express) => {
