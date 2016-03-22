@@ -123,6 +123,16 @@ export class Snippets {
 
       deselectSnippet() {
         dispatch(Actions.removeSelectedSnippet());
+      },
+
+      addAnnotation(annotationObj) {
+        return this.$http({
+          method: 'POST',
+          url: '/api/annotations',
+          data: annotationObj
+        }).then(response => {
+          console.log('addAnnotation HTTP response: ', response);
+        })
       }
     }
   }

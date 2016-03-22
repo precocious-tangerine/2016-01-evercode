@@ -27,11 +27,16 @@
   <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()">Annotate<i class="material-icons right">comment</i></a>
 </div> 
 
-<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.content' ui-codemirror='editor.editorOptions'>
+<div ng-class="editor.showAnnotation ? 'col m9 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">
 </div>
 
 <div ng-class="editor.showAnnotation ? 'col m3 s12 annotations' : 'toggle-annotation'">
   <h5>Annotations</h5>
   <hr>
-  <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
+  <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
+    <textarea rows="50" cols="50" placeholder="Annotate your snippet" class='form-control annotation-text' ng-model='editor.snippetObj.annotation' />
+      <button type="submit" class="waves-effect waves-light btn save-annotation">
+        Save Annotation<i class='material-icons right'>system_update_alt</i>
+      </button>
+  </form>
 </div>

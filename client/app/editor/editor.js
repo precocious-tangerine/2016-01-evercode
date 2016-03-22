@@ -65,6 +65,15 @@ class EditorCtrl {
     this.Snippets.addSnippet(this.snippetObj);
   }
 
+  addAnnotation() {
+    let annotationObj = {
+      id: this.snippetMap[this.selectedSnippet].value._id, 
+      data: this.snippetObj.annotation,
+    }
+    console.log('annotation object', annotationObj);
+    this.Snippets.addAnnotation(annotationObj)
+  }
+
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
