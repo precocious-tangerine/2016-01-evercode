@@ -9,7 +9,8 @@ let snippetSchema = mongoose.Schema({
   data: { type: String, required: true },
   name: { type: String, required: true },
   filePath: { type: String, required: true },
-  tags: { type: [String], default: ["taggggg"] },
+  tags: { type: [String], default: [] },
+  annotation: { type: String },
   public: { type: Boolean, default: true },
   favorite: { type: Boolean, default: false },
   shareUrl: { type: String }
