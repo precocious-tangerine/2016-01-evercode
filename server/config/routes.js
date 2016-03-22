@@ -37,8 +37,14 @@ module.exports = (app, express) => {
       //Do some comparing
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
+<<<<<<< HEAD
           token = createJWT({ email });
           res.status(201).send({ token });
+=======
+          let user = { name: userData.name, avatar_url: userData.avatar_url };
+          token = createJWT({email});
+          res.status(201).send({token, user, msg: 'Authorized'});
+>>>>>>> Add snippets test route and python script
         }).catch((err) => {
           console.log(err);
           res.status(401).send({msg: 'Unauthorized'});
@@ -52,7 +58,7 @@ module.exports = (app, express) => {
       Users.makeUserAsync({ email, _password: password })
         .then(userData => {
           token = createJWT({ email });
-          res.status(201).send(token);
+          res.status(201).send({token});
         })
         .catch((err) => {
           console.log(err);
@@ -134,7 +140,9 @@ module.exports = (app, express) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
+      console.log('req header', req.headers);
       let token = jwt.verify(req.headers.authorization, secret);
+      console.log(token);
       return Snippets.getSnippetsByUserAsync(token.email)
         .then(results => {
           if (Array.isArray(results) && results.length > 0) {
