@@ -31,6 +31,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  height: 90vh;
 }
 
 .editor {
@@ -78,7 +79,7 @@
 }
 
 .tag {
-  margin-left: 10px
+  margin-left: 10px; 
   float: left;
 }
 
@@ -102,20 +103,21 @@
   line-height: 3em;
   width: 66px;
   left: 0;
-  margin:0;
-  padding:0px;
+  margin: 0;
+  padding: 0px;
   z-index: 999;
   height: 90vh;
 }
 
-nav, .nav-wrapper {
+nav,
+.nav-wrapper {
   margin: 0;
   padding: 0;
   width: 100%;
 }
 
 .innerContainer {
-  padding-left: 2px !important; 
+  padding-left: 2px !important;
 }
 
 .outerContainer {
@@ -126,31 +128,33 @@ nav, .nav-wrapper {
   max-width: 100%;
 }
 
+
 /*------------------*/
 
 .innerContainer {
-    -webkit-transition: -webkit-transform .5s ease-in-out;
-    -moz-transition: -moz-transform .5s ease-in-out;
-    -o-transition: -o-transform .5s ease-in-out;
-    transition: transform .5s ease-in-out;
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+  -moz-transition: -moz-transform .5s ease-in-out;
+  -o-transition: -o-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
 
 .innerContainer.ng-enter {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
-.innerContainer.ng-enter.ng-enter-active, .innerContainer.ng-leave {
-    position: absolute;
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+.innerContainer.ng-enter.ng-enter-active,
+.innerContainer.ng-leave {
+  position: absolute;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
 
 .innerContainer.ng-leave.ng-leave-active {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 .search {
@@ -165,3 +169,12 @@ nav, .nav-wrapper {
 .search-results {
   display: none;
 }
+
+.editor-row {
+  padding-bottom: 3;
+  margin: 0;
+}
+
+.side-nav li {
+  padding: 0;
+} 

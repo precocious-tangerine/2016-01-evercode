@@ -16,7 +16,6 @@ export class Folders {
         }).then(res => {
           var snippetMap = convertToTree(res.data);
           dispatch(Actions.setSnippetMap(snippetMap));
-          console.log(this);
           this.selectedFolder ? null : dispatch(Actions.setSelectedFolder('/' + this.email));
           snippetPath ? dispatch(Actions.setSelectedSnippet(snippetPath)) : null;
         })
@@ -47,7 +46,7 @@ export class Folders {
       }
     }
   }
-  
+
   mapStateToThis(state) {
     return {
       snippetMap: state.snippetMap,
