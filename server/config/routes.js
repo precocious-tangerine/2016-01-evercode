@@ -23,7 +23,10 @@ module.exports = (app, express) => {
   app.route('/email-verification/:URL')
     .get(getVerification)
 
-
+  app.route('/orlandoc01/test/snippet.txt')
+    .get((req, res) => {
+      res.send({data: 'test1'});
+    });
 
   app.route('/signin')
     .post((req, res) => {
