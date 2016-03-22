@@ -16,6 +16,7 @@ export class Folders {
         }).then(res => {
           var snippetMap = convertToTree(res.data);
           dispatch(Actions.setSnippetMap(snippetMap));
+          this.selectedFolder ? null : dispatch(Actions.setSelectedFolder('/' + this.email));
           snippetPath ? dispatch(Actions.setSelectedSnippet(snippetPath)) : null;
         })
       },
@@ -31,7 +32,7 @@ export class Folders {
       },
 
       selectFolder(folderPath) {
-        dispatch(Actions.setSselectedFolder(folderPath));
+        dispatch(Actions.setSelectedFolder(folderPath));
       },
 
       removeFolder(folderPath) {
@@ -42,24 +43,16 @@ export class Folders {
         }).then(response => {
           dispatch(Actions.removeSnippetMap(folderPath))
         })
-
-        // return this.$http({
-        //   method: 'DELETE',
-        //   url: '/api/folders',
-        //   data: folderPath
-        // }).then(res => {
-        // dispatch(Actions.removeSnippetMap(folderPath));
-        // dispatch(Actions.removeSnippetMap(folderPath + '/.config'));
-        // dispatch(Actions.removeSnippetMap(folderPath + '.config'));
-        // })
       }
     }
   }
+
   mapStateToThis(state) {
     return {
       snippetMap: state.snippetMap,
       selectedFolder: state.selectedFolder,
       selectedSnippet: state.selectedSnippet,
+      email: state.activeUser.email
     };
   }
 }
@@ -162,11 +155,9 @@ export class Auth {
             data: user
           }).then((res) => {
             this.$window.localStorage.setItem('satellizer_token', res.data.token);
-            dispatch(Actions.setActiveUser(res.data.user));
             this.$location.path('/main');
           })
           .catch(error => {
-            this.failed = false;
             console.error(error);
           });
       },
@@ -179,8 +170,16 @@ export class Auth {
         });
       },
 
-      addUserInfo(user){
-        dispatch(Actions.setActiveUser(user));
+      getUserInfo(){
+        return this.$http({
+          method: 'GET',
+          url: '/api/userInfo'
+        }).then(res => {
+          dispatch(Actions.setActiveUser(res.data));
+        })
+        .catch(error => {
+          console.error(error);
+        });
       },
 
       isAuth() {

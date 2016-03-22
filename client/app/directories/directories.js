@@ -1,5 +1,3 @@
-import * as FT from '../services/fileTree.js';
-
 export const directories = () => {
   return {
     url: '/main',
@@ -13,43 +11,21 @@ export const directories = () => {
 }
 
 class DirectoriesCtrl {
-  constructor($ngRedux, Folders) {
+  constructor($ngRedux, Folders, Auth, $location, $state) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    Auth.getUserInfo();
     Folders.getFileTree();
     this.Folders = Folders;
     this.folder = {};
     this.snippetArr = [];
-    this.sideNavOpen = false;
+    this.$state = $state;
+    this.$location = $location;
+    this.loc = this.$location.path();
   }
 
-  toggleSideNav() {
-    if (this.sideNavOpen){
-      $('#slide-out').animate({left:'-105%'},200, function(){
-        $('#slide-out').sideNav('hide');
-      })
-      this.sideNavOpen = false;
-    } else {
-      $('#slide-out').animate({left:'66'},200, function(){
-        $('#slide-out').sideNav('show');
-        $('#sidenav-overlay').click(function(){
-          $('#slide-out').animate({left:'-105%'},200)
-          this.sideNavOpen = false;
-        })
-        $('.drag-target').click(function(){
-          $('#slide-out').animate({left:'-105%'},200)
-          this.sideNavOpen = false;
-        })
-      })
-      this.sideNavOpen = true;
-    } 
+  toggleSideView(path) {
+    this.$location.path() === '/main/'+path ? this.$state.go('main') : this.$state.go('main.'+path);
   }
-
-
-
-  openModal() {
-      $('.modal-trigger').leanModal();
-      $('#snippets-modal').openModal();
-  } 
 
   addFolder() {
     let path = this.snippetMap.__root.value + '/' + this.folder.name;
@@ -59,8 +35,6 @@ class DirectoriesCtrl {
 
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
-    this.toggleSideNav();
-    this.openModal();
   }
 
   removeFolder(folderPath) {
@@ -68,7 +42,9 @@ class DirectoriesCtrl {
   }
 
   mapStateToThis(state) {
-    let { snippetMap, selectedFolder } = state;
+    let { snippetMap, selectedFolder, activeUser } = state;
+    let user = {};
+    user.avatar = activeUser ?  activeUser.avatar_url : "https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png"; 
     let folders = !snippetMap.__root ? null : snippetMap.__root.children.filter(folder => !folder.endsWith('.config')).map(el => (snippetMap[el]));
     let snippetArr =  [];
     Object.keys(snippetMap).forEach(key => {
@@ -79,24 +55,23 @@ class DirectoriesCtrl {
         }
       }
     });
-
+    let breadcrumbPath = activeUser.name;
     let convertPath = (path) => {
       let result = [];
       while(snippetMap[path]) {
-        let urlPath = snippetMap[path].parent ? '.snippets' : 'main';
-        result.unshift([snippetMap[path].value, snippetMap[path].filePath, urlPath]);
+        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
         path = snippetMap[path].parent;
       }
       return result
     }
-    let breadcrumbPath = convertPath(selectedFolder);
-
+    breadcrumbPath = convertPath(selectedFolder);
     return {
       folders,
       snippetMap,
       snippetArr,
       selectedFolder,
-      breadcrumbPath
+      breadcrumbPath,
+      user
     };
   }
 

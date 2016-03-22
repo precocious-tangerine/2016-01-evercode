@@ -1,5 +1,5 @@
 .container {
-  position: relative;
+  position: absolute;
   height: auto;
   width: auto;
   left: 0;
@@ -8,10 +8,12 @@
   bottom: 0;
 }
 
-main {
+.main {
   position: relative;
-  margin-left: 68px;
-  zindex:0;
+  width: 15vw;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .search-results {
@@ -23,13 +25,14 @@ main {
   font-size: 1.5em;
 }
 
-/*.snippets {
+.snippets {
   position: relative;
   width: 200px;
   left: 0;
   right: 0;
   bottom: 0;
-}*/
+  height: 90vh;
+}
 
 .editor {
   position: relative;
@@ -38,15 +41,6 @@ main {
   right: 0;
   bottom: 0;
 }
-
-.editor-row {
-  padding-bottom: 3;
-  margin:0;
-}
-
-/*.top-nav {
-  margin-left: 66;
-}*/
 
 .snippet-title input {
   width: auto;
@@ -85,7 +79,7 @@ main {
 }
 
 .tag {
-  margin-left: 10px
+  margin-left: 10px; 
   float: left;
 }
 
@@ -101,52 +95,86 @@ main {
   background-color: transparent;
 }
 
-.side-nav {
-  line-height: 3em;
-}
-
-#slide-out {
-  font-size: 1.2rem;
-  color: #3D3D3D;
-  width: 240px;
-  margin:0px;
-  padding:0px;
-  z-index:999;
+.icon {
+  width: 2rem;
 }
 
 #nav-mobile {
   line-height: 3em;
   width: 66px;
   left: 0;
-  margin:0px;
-  padding:0px;
-  z-index: 999;
-}
-
-#search-icon {
-  margin: 0px;
-}
-
-#add-folder-icon {
-  margin: 0px;
-}
-
-.icon {
-  width: 2rem;
-}
-
-#nav-mobile > li {
+  margin: 0;
   padding: 0px;
-  padding-left: 15px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  z-index: 999;
+  height: 90vh;
 }
 
-.nav-link {
-  margin: 0px;
-  padding-left: 0px;
+nav,
+.nav-wrapper {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-#snippet-name-input {
-  margin: 0px;
+.innerContainer {
+  padding-left: 2px !important;
 }
+
+.outerContainer {
+  margin-left: 0 !important;
+}
+
+.container {
+  max-width: 100%;
+}
+
+
+/*------------------*/
+
+.innerContainer {
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+  -moz-transition: -moz-transform .5s ease-in-out;
+  -o-transition: -o-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.innerContainer.ng-enter {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.innerContainer.ng-enter.ng-enter-active,
+.innerContainer.ng-leave {
+  position: absolute;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.innerContainer.ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.search {
+  position: relative;
+  width: 200px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 75px;
+}
+
+.search-results {
+  display: none;
+}
+
+.editor-row {
+  padding-bottom: 3;
+  margin: 0;
+}
+
+.side-nav li {
+  padding: 0;
+} 
