@@ -40,7 +40,7 @@ export class Folders {
           url: '/api/folders',
           params: { filePath: folderPath }
         }).then(response => {
-          this.getFileTree();
+          dispatch(Actions.removeSnippetMap(folderPath))
         })
 
         // return this.$http({
@@ -111,8 +111,9 @@ export class Snippets {
           url: '/api/snippets',
           params: { snippetId: snippetObj.value._id }
         }).then((response) => {
-          this.Folders.getFileTree();
-          // dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          // this.Folders.getFileTree();
+          dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          dispatch(Actions.removeSelectedSnippet());
         });
       },
 
@@ -122,6 +123,16 @@ export class Snippets {
 
       deselectSnippet() {
         dispatch(Actions.removeSelectedSnippet());
+      },
+
+      addAnnotation(annotationObj) {
+        return this.$http({
+          method: 'POST',
+          url: '/api/annotations',
+          data: annotationObj
+        }).then(response => {
+          console.log('addAnnotation HTTP response: ', response);
+        })
       }
     }
   }

@@ -65,7 +65,7 @@ main {
   min-height: 70vh;
 }
 
-.annotations > textarea {
+.annotation-text {
   height: 60vh;
 }
 
@@ -150,5 +150,3 @@ main {
 #snippet-name-input {
   margin: 0px;
 }
-
-

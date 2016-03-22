@@ -22,7 +22,6 @@ class EditorCtrl {
       mode: 'javascript'
     };
     this.tag = '';
-    this.tagToRemove = '';
     this.addTag = false;
     this.showAnnotation = false;
   }
@@ -43,9 +42,11 @@ class EditorCtrl {
       this.toggleTag();
     }
     if (tagToRemove) {
-      objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(this.tagToRemove), 1);
-      this.tagToRemove = '';
+      console.log('tagToRemove: ', tagToRemove);
+      objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
     }
+    console.log('updated tags: ', objectToUpdate.tags);
+
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
     this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate }, this.snippetMap[this.selectedSnippet].filePath);
@@ -62,6 +63,15 @@ class EditorCtrl {
   addSnippet() {
     this.snippetObj.filePath = this.path + '/' + this.snippetObj.name;
     this.Snippets.addSnippet(this.snippetObj);
+  }
+
+  addAnnotation() {
+    let annotationObj = {
+      id: this.snippetMap[this.selectedSnippet].value._id, 
+      data: this.snippetObj.annotation,
+    }
+    console.log('annotation object', annotationObj);
+    this.Snippets.addAnnotation(annotationObj)
   }
 
   mapStateToThis(state) {
