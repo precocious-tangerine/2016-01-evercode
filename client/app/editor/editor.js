@@ -17,7 +17,7 @@ class EditorCtrl {
     this.editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
-      theme: 'twilight',
+      theme: 'eclipse',
       lineWrapping: true,
       mode: 'javascript'
     };
