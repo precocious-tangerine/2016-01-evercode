@@ -94,8 +94,7 @@ export class Snippets {
           data: snippetObj
         }).then((res) => {
           Materialize.toast('Snippet updated!', 3000, 'rounded');
-          console.log('snippetObj', snippetObj);
-          dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, snippetObj.value));
+          dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, snippetObj));
         });
 
       },
