@@ -81,6 +81,7 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
+          Materialize.toast('Snippet added!', 3000, 'rounded');
           dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
           dispatch(Actions.setSelectedSnippet(res.data.filePath));
         });
@@ -92,6 +93,8 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
+          Materialize.toast('Snippet updated!', 3000, 'rounded');
+          console.log('snippetObj', snippetObj);
           dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, snippetObj.value));
         });
 
@@ -104,6 +107,7 @@ export class Snippets {
           params: { snippetId: snippetObj.value._id }
         }).then((response) => {
           this.deselectSnippet();
+          Materialize.toast('Successfully removed!', 3000, 'rounded');
           dispatch(Actions.removeSnippetMap(snippetObj.filePath));
         });
       },
@@ -138,11 +142,12 @@ export class Snippets {
 }
 
 export class Auth {
-  constructor($http, $location, $window, $ngRedux) {
+  constructor($http, $state, $window, $ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.$http = $http;
-    this.$location = $location;
+    this.$state = $state;
     this.$window = $window;
+    this.Folders = Folders;
   }
   mapDispatchToThis(dispatch) {
     return {
@@ -153,7 +158,9 @@ export class Auth {
             data: user
           }).then((res) => {
             this.$window.localStorage.setItem('satellizer_token', res.data.token);
-            this.$location.path('#/main');
+            this.getUserInfo();
+            this.Folders.getFileTree();
+            this.$state.go('main.editor');
           })
           .catch(error => {
             console.error(error);
@@ -187,7 +194,6 @@ export class Auth {
       signout() {
         this.$window.localStorage.removeItem('satellizer_token');
         dispatch(Actions.removeActiveUser());
-        this.$location.path('#/main');
       }
     }
   }

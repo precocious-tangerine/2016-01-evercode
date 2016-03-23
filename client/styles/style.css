@@ -90,6 +90,10 @@
   margin-bottom: -10px;
 }
 
+.addTag {
+  margin-left: 10px;
+}
+
 .toggle-annotation {
   display: none;
 }
@@ -204,3 +208,11 @@ nav,
 .snippets.collection-item {
   width: 75px;
 }
+
+#toast-container {
+    bottom: 50px !important;
+    top: inherit !important;
+    right: 50px !important;
+    left: inherit !important;
+}
+
