@@ -1,11 +1,11 @@
 #!/bin/bash
 function extractTokenFromJson() {
-	token=`echo $1 | grep -oP '(?:"token":")\K([^="]*)'`
+	token=`echo $1 | perl -nle 'print $& if m{(?:"token":")\K([^="]*)}'
 	echo ${token}
 }
 
 function extractMsgFromJson() {
-	msg=`echo $1 | grep -oP '(?:"msg":")\K([^="]*)'`
+	msg=`echo $1 | perl -nle 'print $& if m{(?:"msg":")\K([^="]*)}'
 	echo ${msg}
 }
 
