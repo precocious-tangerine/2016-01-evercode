@@ -150,9 +150,7 @@ module.exports = (app, express) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
-      console.log('req header', req.headers);
       let token = jwt.verify(req.headers.authorization, secret);
-      console.log(token);
       return Snippets.getSnippetsByUserAsync(token.email)
         .then(results => {
           if (Array.isArray(results) && results.length > 0) {
