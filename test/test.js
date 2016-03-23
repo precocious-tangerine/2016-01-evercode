@@ -621,31 +621,75 @@ describe('Auth Routes', function () {
 
   describe('/signup', function() {
 
-    it('should be able to sign up a test user', function(done) {
-
-    });
-
-    it('should be returned a token on successful signup', function(done) {
-
+    it('should be able to sign up a test user and be returned a token', function(done) {
+      request(testApp)
+        .post('/signup')
+        .send({email: "test@chai.com", password: "test"})
+        .expect(201)
+        .end(function(err,res){
+          if (err) {
+            done(err);
+          } else {
+            expect(res.status)
+            expect(res.msg).to.be.a('string')
+              that.has.value('Authorized')
+            done()
+          }
+        })
     });
 
     it('should not be able to sign up with the same email', function(done) {
-
+      request(testApp)
+        .post('/signup')
+        .send({email: "test@chai.com", password: "test"})
+        .expect(500)
+        .end(function(err,res){
+          if (err) {
+            done(err);
+          } else {
+            expect(res.status)
+            expect(res.msg).to.be.a('string')
+              that.has.value('Authorized')
+            done()
+          }
+        })
     });
   });
 
   describe('/signin', function(){
 
-    it('should be able to sign in with appropriate credentials', function(done) {
-
-    });
-
-    it('should recieve a token on successful login', function(done) {
-      //Be sure to grab appropriate token
+    it('should be able to sign in with appropriate credentials and recieve a token', function(done) {
+      request(testApp)
+        .post('/signup')
+        .send({email: "test@chai.com", password: "test"})
+        .expect(500)
+        .end(function(err,res){
+          if (err) {
+            done(err);
+          } else {
+            expect(res.status)
+            expect(res.msg).to.be.a('string')
+              that.has.value('Authorized')
+            done()
+          }
+        })
     });
 
     it('should not be able to sign in with inappropriate credentials', function(done) {
-
+      request(testApp)
+        .post('/signup')
+        .send({email: "test@chai.com", password: "test"})
+        .expect(500)
+        .end(function(err,res){
+          if (err) {
+            done(err);
+          } else {
+            expect(res.status)
+            expect(res.msg).to.be.a('string')
+              that.has.value('Authorized')
+            done()
+          }
+        })
     });
 
   });
