@@ -38,10 +38,10 @@ module.exports = (app, express) => {
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
           token = createJWT({ email });
-          res.status(201).send({ token });
+          res.status(201).send({ token, msg: 'Authorized' });
         }).catch((err) => {
           console.log(err);
-          res.status(401).send('Unauthorized');
+          res.status(401).send({msg: 'Unauthorized'});
         });
     });
 
@@ -52,7 +52,7 @@ module.exports = (app, express) => {
       Users.makeUserAsync({ email, _password: password })
         .then(userData => {
           token = createJWT({ email });
-          res.status(201).send(token);
+          res.status(201).send({token});
         })
         .catch((err) => {
           console.log(err);
