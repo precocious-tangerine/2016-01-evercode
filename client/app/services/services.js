@@ -90,9 +90,9 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
-          Materialize.toast('Snippet added!', 3000, 'rounded');
           dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
           dispatch(Actions.setSelectedSnippet(res.data.filePath));
+          Materialize.toast('Snippet added!', 3000, 'rounded');
         });
       },
 
@@ -115,8 +115,8 @@ export class Snippets {
           params: { snippetId: snippetObj.value._id }
         }).then((response) => {
           this.deselectSnippet();
-          Materialize.toast('Successfully removed!', 3000, 'rounded');
           dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+          Materialize.toast('Successfully removed!', 3000, 'rounded');
         });
       },
 
@@ -205,5 +205,4 @@ export class Auth {
       }
     }
   }
-
 }

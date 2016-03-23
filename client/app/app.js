@@ -35,9 +35,10 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.signin', createAuthCtrl('/signin'))
       .state('main.signup', createAuthCtrl('/signup'))
       .state('main.editor', editor())
-      .state('main.snippets', snippets('/snippets', '/snippets'))
+      .state('main.snippets', snippets('/snippets'))
       .state('main.snippets.editor', editor())
-      .state('main.favorites', snippets('/favorites', '/favorites'))
+      .state('main.favorites', snippets('/favorites'))
+      .state('main.favorites.editor', editor())
       .state('main.search', search())
       .state('main.search.editor', editor())
 

@@ -1,8 +1,8 @@
 import * as Actions from '../redux/actions.js';
 
-export const snippets = (url, templateUrl) => {
+export const snippets = (url) => {
   return {
-    url: templateUrl,
+    url: url,
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require(`.${url}.html`),
