@@ -619,7 +619,7 @@ describe('Auth Routes', function () {
     });
   });
 
-  describe('signup', function() {
+  describe('/signup', function() {
 
     it('should be able to sign up a test user', function(done) {
 
@@ -634,7 +634,7 @@ describe('Auth Routes', function () {
     });
   });
 
-  describe('signin', function(){
+  describe('/signin', function(){
 
     it('should be able to sign in with appropriate credentials', function(done) {
 
@@ -650,6 +650,18 @@ describe('Auth Routes', function () {
 
   });
 
+  describe('/api/userInfo', function() {
+
+    it('should not be able to get user info without a token', function(done) {
+
+    });
+
+    it('should be able to get user info with a token', function(done) {
+      
+    });
+
+  });
+
 })
 
 //////////////////////////////////////////////////////////
@@ -660,7 +672,7 @@ describe('Snippet Routes', function() {
 
   describe('api/snippets', function() {
 
-    describe('Authorization', function() {
+    describe('Unauthorized', function() {
 
       it('it should not be able to post a snippet without a token', function(done) {
 
@@ -684,7 +696,7 @@ describe('Snippet Routes', function() {
 
     });
 
-    describe('Authorized Methods', function() {
+    describe('Authorized', function() {
 
       it('it should be able to post a snippet when it has a token', function(done) {
 
@@ -708,6 +720,40 @@ describe('Snippet Routes', function() {
 
   describe('api/user/snippets', function() {
 
+    describe('Unauthorized', function() {
+
+      it('should return 401 for a get request without a token', function(done) {
+
+      });
+
+    });
+
+    describe('Authorized', function() {
+
+      it('should return 201 and an array of snippets for a get request with a token', function(done) {
+
+      });
+
+      it('should return 404 and an emptry array for a user with no snippets', function(done) {
+
+      });
+
+    });
+
   });
+
+  describe('api/folders', function() {
+
+    describe('Unauthorized', function() {
+
+    });
+
+    describe('Authorized', function() {
+
+    });
+
+  });
+
+  describe
 
 });
