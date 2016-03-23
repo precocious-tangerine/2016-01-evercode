@@ -64,17 +64,17 @@ User.makeUser = (userObj, callback) => {
       .then((hash) => {
         userObj._password = hash;
         return Snippets.makeRootFolderAsync(userObj.email);
-       })
-       .then((success) => {
+      })
+      .then((success) => {
         return User.create(userObj);
       })
       .then(result => callback(null, result))
-      .catch(callback);
+      .catch(err => callback(err, null));
   } else if (typeof userObj.id === 'number') {
     // OAuth based login (no supplied password)
     return User.create(userObj)
       .then(result => callback(null, result))
-      .catch(callback);
+      .catch(err => callback(err, null));
   } else {
     callback(new Error('must login via github or local session'), null);
   }

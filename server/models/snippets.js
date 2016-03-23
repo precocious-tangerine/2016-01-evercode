@@ -117,5 +117,17 @@ Snippet.removeFolder = (email, folder, callback) => {
   })
 }
 
+//TODO figure out how to return only 25
+Snippet.getPublic = (callback) => {
+  Snippet.find({public: 1, name: {$ne: '.config'}})
+    .then((foundSnippets) => {
+      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+        callback(null, foundSnippets.sort({ _createdAt: -1 }));
+      } else {
+        callback(new Error('Error'), null);
+      }
+    }).catch(callback);
+}
+
 
 module.exports = Snippet;

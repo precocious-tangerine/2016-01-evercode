@@ -132,6 +132,22 @@ module.exports = (app, express) => {
         })
     });
 
+  app.route('/snippets')
+    .get((req, res) => {
+      Snippets.getPublicSnippetsAsync()
+        .then(snippets => {
+          if (snippet) {
+            res.status(200).send(snippets)
+          } else {
+            res.status(404).send("Snippets not Found");
+          }
+        }).catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        })
+      })
+
+
   app.route('/api/user/snippets/')
     .get((req, res) => {
       let token = jwt.verify(req.headers.authorization, secret);

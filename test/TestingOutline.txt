@@ -1,0 +1,41 @@
+//////////////////////////////////////////////////
+//                     Auth                     //
+//////////////////////////////////////////////////
+
+Post to signin -- incorrect credentials
+Post to signup -- correct credentials
+  copy email, password
+  copy access token
+Post to signin -- correct pw and email 
+Post to signin -- signup token
+  copy access token
+
+
+//////////////////////////////////////////////////
+//             Snippets - basic                 //
+//////////////////////////////////////////////////
+
+Post to api/snippets
+  no token 
+Get to api/snippets
+  no token 
+Put to api/snippets
+  no token
+Delete to api/snippets
+  no token 
+Post to signin correct pw and email
+
+on body -
+  filePath
+  data
+  name
+
+Post to api/snippets
+Get to api/snippets
+Put to api/snippets
+Delete to api/snippets
+
+get to api/user/snippets
+
+post to api/folders
+delete to api/folders

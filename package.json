@@ -38,6 +38,7 @@
     "request": "^2.69.0",
     "satellizer": "^0.14.0",
     "source-map-loader": "^0.1.5",
+    "supertest": "^1.2.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
@@ -53,7 +54,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "test": "mocha test --compilers js:babel-core/register",
+    "test": "mocha test --harmony-destructuring --compilers js:babel-core/register",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
     "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client"
