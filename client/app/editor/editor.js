@@ -26,6 +26,7 @@ class EditorCtrl {
     };
     this.cmLanguages = ['javascript', 'python']
     this.cmThemes = ['eclipse', 'twilight']
+    this.cmDefaults = {language: 'javascript', theme: 'eclipse'};
     this.tinymceOptions = {
       height: 250,
       toolbar: 'bold italic | bullist numlist'

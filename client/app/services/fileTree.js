@@ -46,7 +46,7 @@ export const deleteNode = (origTree, filePath) => {
 
 export const updateNode = (origTree, origFilePath, updatedFilePath, updatedNode) => {
   let tree = Object.assign({}, origTree);
-  let nodeToUpdate = Object.assign({}, tree[origFilePath], updatedNode);
+  let nodeToUpdate = Object.assign({}, tree[origFilePath].value, updatedNode);
   tree = deleteNode(tree, origFilePath);
   return insertNode(tree, updatedFilePath, nodeToUpdate);
 }
