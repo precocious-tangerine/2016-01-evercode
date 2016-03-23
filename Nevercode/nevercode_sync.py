@@ -1,14 +1,3 @@
-# import sublime, sublime_plugin
-
-# NEVERCODE_BUILD = sublime.packages_path() + '/Nevercode/nevercode_build_system.sublime-build'
-
-# class NevercodeCommand(sublime_plugin.TextCommand):
-# 	def run(self, edit):
-# 		print(NEVERCODE_BUILD)
-# 		self.view.run_command('set_build_system', {"file" : NEVERCODE_BUILD})
-# 		self.view.run_command('build')
-# 		print('success')
-
 
 import sublime, sublime_plugin
 import sys
@@ -45,3 +34,4 @@ class NevercodeCommand(sublime_plugin.TextCommand):
 		        snipRef = open(os.path.join(dirName, 'snippets', snippetName + '.sublime-snippet'), 'w+')
 		        snipRef.write(fullSnippetFile)
 		        snipRef.close()
+		print 'Sync complete'
