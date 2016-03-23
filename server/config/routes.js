@@ -37,14 +37,8 @@ module.exports = (app, express) => {
       //Do some comparing
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
-<<<<<<< HEAD
           token = createJWT({ email });
-          res.status(201).send({ token });
-=======
-          let user = { name: userData.name, avatar_url: userData.avatar_url };
-          token = createJWT({email});
-          res.status(201).send({token, user, msg: 'Authorized'});
->>>>>>> Add snippets test route and python script
+          res.status(201).send({ token, msg: 'Authorized' });
         }).catch((err) => {
           console.log(err);
           res.status(401).send({msg: 'Unauthorized'});
