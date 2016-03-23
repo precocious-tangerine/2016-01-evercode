@@ -24,6 +24,8 @@ class EditorCtrl {
     this.codemirrorLoaded = (_editor) =>{
       this.editor = _editor;
     };
+    this.cmLanguages = ['javascript', 'python']
+    this.cmThemes = ['eclipse', 'twilight']
     this.tinymceOptions = {
       height: 250,
       toolbar: 'bold italic | bullist numlist'
@@ -58,7 +60,7 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name });
+    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut });
     objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
@@ -93,6 +95,8 @@ class EditorCtrl {
     let snippetObj = {};
     snippetObj.data = !selectedSnippet ? ' ' : snippetMap[selectedSnippet].value.data;
     snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
+    snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
+    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : '';
     return {
       path,
       snippetMap,

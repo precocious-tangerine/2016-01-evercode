@@ -17,7 +17,14 @@
       </form>
     </span>
   </div>
-
+  <div ng-show="editor.selectedSnippet" class='shortcut col m9 valign-wrapper'>
+    <span class="valign">Shortcut: </span>
+    <span class="valign">
+      <form name="shortcut" ng-submit="editor.addShortcut()" novalidate>
+        <input placeholder="Add shortcut" type="text" ng-model='editor.snippetObj.shortcut'/>
+      </form>
+    </span>
+  </div>
 </div>
 <div class="code-editor row card">
   <div class="col s12 code-toolbar valign-wrapper">
@@ -27,18 +34,13 @@
       </a>
     </div>
     <div class="col s3 code-selector">
-      <select ng-model="editor.editorOption.mode" ng-change="editor.changeLanguage(editor.editorOption.mode)" class="browser-default">
-        <option value="" disabled selected>Language</option>
-        <option value="javascript">javascript</option>
-        <option value="python">python</option>
-      </select>
+      <select ng-options='language for language in editor.cmLanguages' ng-model="editor.snippetObj.language || 'javascript'" class="browser-default"></select>
+<!--       <select  ng-model="editor.snippetObj.language" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
+        <option ng-repeat="language in editor.cmLanguages" ng-selected="editor.snippetObj.language || 'javascript'" value="{{language}}">{{language}}</option>
+      </select> -->
     </div>
     <div class="col s3 code-selector">
-      <select ng-model="editor.editorOption.theme" ng-change="editor.changeTheme(editor.editorOption.theme)" class="browser-default">
-        <option value="" disabled selected>Theme</option>
-        <option value="eclipse">eclipse</option>
-        <option value="twilight">twilight</option>
-      </select>
+      <select ng-options='theme for theme in editor.cmThemes' ng-model="editor.editorOptions.theme" class="browser-default"></select>
     </div>
     <div class="col s5 right-align">
       <a class="waves-effect waves-light btn right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
