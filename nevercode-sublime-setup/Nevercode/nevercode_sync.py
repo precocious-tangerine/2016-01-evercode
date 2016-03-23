@@ -38,4 +38,4 @@ class NevercodeCommand(sublime_plugin.TextCommand, sublime_plugin.WindowCommand)
 		totalChars += newView.insert(edit, totalChars, '\n\nSnippet Consturction Complete. The following files are now available\n')
 		for key, value in jsonDict.items():
 			if(value['name'] != '.config'):
-				totalChars = newView.insert(edit, totalChars, 'Snippet "' + value['name'] + '"  -> Triggered by keyword "' + value['name'] + '"\n')
+				totalChars += newView.insert(edit, totalChars, 'Snippet "' + value['name'] + '"  -> Triggered by keyword "' + value['name'] + '"\n')
