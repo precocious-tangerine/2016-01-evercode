@@ -25,6 +25,10 @@
   font-size: 1.5em;
 }
 
+.snippet-icon {
+  margin-top: 18px;
+}
+
 .snippets {
   position: relative;
   width: 200px;
