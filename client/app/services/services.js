@@ -73,6 +73,7 @@ export class Snippets {
           url: '/api/snippets?_id=' + snippetId
         });
       },
+
       addSnippet(snippetObj) {
         let { filePath } = snippetObj
         return this.$http({
@@ -85,15 +86,13 @@ export class Snippets {
         });
       },
 
-      updateSnippet(snippetObj) {
+      updateSnippet(snippetObj, oldFilePath) {
         return this.$http({
           method: 'PUT',
           url: '/api/snippets',
           data: snippetObj
         }).then((res) => {
-          dispatch(Actions.removeSelectedSnippet());
-          this.Folders.getFileTree(res.data.filePath);
-          // dispatch(Actions.addSnippetMap(filePath, snippetObj));
+          dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, snippetObj.value));
         });
 
       },
@@ -104,9 +103,8 @@ export class Snippets {
           url: '/api/snippets',
           params: { snippetId: snippetObj.value._id }
         }).then((response) => {
-          // this.Folders.getFileTree();
+          this.deselectSnippet();
           dispatch(Actions.removeSnippetMap(snippetObj.filePath));
-          dispatch(Actions.removeSelectedSnippet());
         });
       },
 
@@ -155,7 +153,7 @@ export class Auth {
             data: user
           }).then((res) => {
             this.$window.localStorage.setItem('satellizer_token', res.data.token);
-            this.$location.path('/main');
+            this.$location.path('#/main');
           })
           .catch(error => {
             console.error(error);
@@ -170,16 +168,16 @@ export class Auth {
         });
       },
 
-      getUserInfo(){
+      getUserInfo() {
         return this.$http({
-          method: 'GET',
-          url: '/api/userInfo'
-        }).then(res => {
-          dispatch(Actions.setActiveUser(res.data));
-        })
-        .catch(error => {
-          console.error(error);
-        });
+            method: 'GET',
+            url: '/api/userInfo'
+          }).then(res => {
+            dispatch(Actions.setActiveUser(res.data));
+          })
+          .catch(error => {
+            console.error(error);
+          });
       },
 
       isAuth() {
@@ -189,7 +187,7 @@ export class Auth {
       signout() {
         this.$window.localStorage.removeItem('satellizer_token');
         dispatch(Actions.removeActiveUser());
-        this.$location.path('/signin');
+        this.$location.path('#/main');
       }
     }
   }

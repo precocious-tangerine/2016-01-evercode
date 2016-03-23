@@ -8,7 +8,7 @@ import { createAuthCtrl } from './auth/auth.js';
 import { search } from './search/search.js';
 import { Folders, Auth, Snippets } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
-import { directories } from './directories/directories.js';
+import { createMainCtrl } from './main/main.js';
 import { editor } from './editor/editor.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
@@ -29,14 +29,15 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
 
     $urlRouterProvider.otherwise('/main');
     $stateProvider
-      .state('main', directories())
+      .state('main', createMainCtrl())
+      .state('main.signin', createAuthCtrl('/signin'))
+      .state('main.signup', createAuthCtrl('/signup'))
+      .state('main.editor', editor())
       .state('main.snippets', snippets('/snippets', '/snippets'))
       .state('main.snippets.editor', editor())
       .state('main.favorites', snippets('/favorites', '/favorites'))
       .state('main.search', search())
       .state('main.search.editor', editor())
-      .state('login', createAuthCtrl('/signin'))
-      .state('signup', createAuthCtrl('/signup'))
       .state('signout', {
         resolve: {
           signout: function(Auth) {
@@ -65,11 +66,10 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     };
     return attach;
   })
-  .run(($rootScope, $location, Auth) => {
+  .run(($rootScope, $state, Auth) => {
     $rootScope.$on('$stateChangeStart', (evt, next, current) => {
-      $rootScope.location = $location.path();
       if (next.access.restricted && !Auth.isAuth()) {
-        $location.path('/signin');
+        $state.go('main.signin');
       }
     });
   });

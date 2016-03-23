@@ -18,25 +18,22 @@ class SnippetsCtrl {
     this.folderInput = false;
   }
 
-  addSubFolder() {
-    if (this.selectedFolder) {
+  addFolder() {
       let path = this.selectedFolder + '/' + this.subFolder.name;
       this.Folders.addFolder({ path: path });
       this.subFolder.name = '';
-    }
+  }
+
+  removeFolder(folderPath) {
+    this.Folders.removeFolder(folderPath);
   }
 
   changeActiveTab(folderPath) {
     this.Folders.selectFolder(folderPath);
   }
 
-  toggleInput() {
+  toggleFolderNameInput() {
     this.folderInput = !this.folderInput;
-  }
-
-  deselectSnippet() {
-    this.Snippets.deselectSnippet();
-    $('#snippets-modal').closeModal();
   }
 
   copySnippet(snippet) {
@@ -44,23 +41,21 @@ class SnippetsCtrl {
   }
 
   toggleFavorite(snippet) {
-    console.log('favorited snippet', snippet);
     let _id = snippet.value._id;
     let favorite = !snippet.value.favorite;
     this.Snippets.updateSnippet({ snippetId: _id, value: { favorite: favorite } }, snippet.filePath);
   }
 
   changeSelectedSnippet(snippetPath) {
-    $('#snippets-modal').closeModal();
     this.Snippets.changeSelectedSnippet(snippetPath);
+  }
+
+  deselectSnippet() {
+    this.Snippets.deselectSnippet();
   }
 
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);
-  }
-
-  removeFolder(folderPath) {
-    this.Folders.removeFolder(folderPath);
   }
 
   mapStateToThis(state) {
