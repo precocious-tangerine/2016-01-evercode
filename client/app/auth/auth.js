@@ -38,7 +38,7 @@ class AuthCtrl {
 
   signup(boolean) {
     this.failed = true;
-    if (boolean) {
+    if (boolean && this.user.passwordConfirm === this.user.password) {
       this.Auth.signup(this.user)
         .then(res => {
           Materialize.toast('Success! Check your e-mail for verification', 5000, 'rounded', () => {
@@ -49,6 +49,8 @@ class AuthCtrl {
           this.failed = false;
           console.error(error);
         });
+    } else {
+      this.failed = false;
     }
   }
 
