@@ -195,8 +195,8 @@ nav,
 }
 
 .innerContainer.ng-leave.ng-leave-active {
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+  -webkit-transform: translateX(-800%);
+  transform: translateX(-800%);
 }
 
 /*--------------------------*/
@@ -238,3 +238,4 @@ nav,
     right: 50px !important;
     left: inherit !important;
 }
+

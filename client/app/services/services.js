@@ -168,6 +168,12 @@ export class Auth {
             this.$window.localStorage.setItem('satellizer_token', res.data.token);
             this.getUserInfo();
             this.Folders.getFileTree();
+            $('#snippets-modal').closeModal({
+              dismissible: true,
+              complete: function() {
+                $('.lean-overlay').remove();
+              }
+            });
             this.$state.go('main.editor');
           })
           .catch(error => {

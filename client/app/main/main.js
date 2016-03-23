@@ -34,6 +34,12 @@ class MainCtrl {
     this.Auth.signout();
   }
 
+  openModal() {
+    $('.lean-overlay').remove();
+    $('.modal-trigger').leanModal();
+    $('#signin-modal').openModal();
+  }
+
   mapStateToThis(state) {
     let { snippetMap, selectedFolder, activeUser } = state;
     let avatar = activeUser ? activeUser.avatar_url : null;
