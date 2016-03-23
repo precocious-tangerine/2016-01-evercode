@@ -83,7 +83,7 @@
   clear: both;
 }
 
-.tags input {
+.tag-row input {
   margin-left: 10px;
   max-width: 100px;
   height: 20px;
