@@ -117,5 +117,17 @@ Snippet.removeFolder = (email, folder, callback) => {
   })
 }
 
+Snippet.getPublicSnippets = (callback) => {
+  Snippet.find({public: true})
+    .sort({ createdAt: -1 } )
+    .then((foundSnippets) => {
+      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+        callback(null, foundSnippets);
+      } else {
+        callback(new Error('Error'), null);
+      }
+    }).catch(callback);
+}
+
 
 module.exports = Snippet;
