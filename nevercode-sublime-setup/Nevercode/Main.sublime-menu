@@ -1,0 +1,12 @@
+[
+  {
+    "caption": "Preferences",
+    "id": "preferences",
+    "children":
+    [
+      { "command" : "nevercode",
+        "caption": "Sync With Nevercode"
+      }
+    ]
+  }
+]
