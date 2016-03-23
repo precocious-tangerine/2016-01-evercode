@@ -82,7 +82,6 @@ class SnippetsCtrl {
         }
       }
     });
-    console.log('snipArr', snippetArr);
     return {
       visibleSnippets,
       visibleFolders,
