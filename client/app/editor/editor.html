@@ -7,43 +7,40 @@
   </form>
 </div>
 <div class="row editor-row">
-  <div ng-show="editor.selectedSnippet" class='tags col m9'>
-    <span class="tag">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
-    <span style="margin-left: 10px" class='chip tag' ng-click="editor.toggleTag()">+</span>
+  <div ng-show="editor.selectedSnippet" class='tags col m9 valign-wrapper'>
+    <span class="tag valign">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
+    <span style="margin-left: 10px" class='chip tag' ng-hide="editor.addTag" ng-click="editor.toggleTag()">+</span>
+    <span style="margin-left: 10px" class='chip tag' ng-show="editor.addTag" ng-click="editor.toggleTag()">-</span>
+    <span ng-show="editor.addTag" class="tag-input valign">
+      <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
+        <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
+      </form>
+    </span>
   </div>
-</div>
-<div class="row editor-row">
-  <span ng-show="editor.addTag" class="col m9">
-    <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
-      <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
-    </form>
-  </span>
 </div>
 <div class="code-editor row card">
   <div class="col s12 code-toolbar valign-wrapper">
     <div class="col s1 copy-code">
-      <a class="valign waves-effect waves-teal btn-flat" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
+      <a class="valign waves-effect waves-teal btn-flat tooltipped" data-tooltip="Copy Snippet" data-position="bottom" data-delay="50" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
         <i class="material-icons center-align">assignment</i>
       </a>
     </div>
     <div class="col s3 code-selector">
-      <select class="browser-default">
+      <select ng-model="editor.editorOption.mode" ng-change="editor.changeLanguage(editor.editorOption.mode)" class="browser-default">
         <option value="" disabled selected>Language</option>
         <option value="javascript">javascript</option>
         <option value="python">python</option>
-        <option value="html">html</option>
       </select>
     </div>
     <div class="col s3 code-selector">
-      <select class="browser-default">
+      <select ng-model="editor.editorOption.theme" ng-change="editor.changeTheme(editor.editorOption.theme)" class="browser-default">
         <option value="" disabled selected>Theme</option>
-        <option value="eclipse">javascript</option>
-        <option value="twilight">python</option>
-        <option value="elegant">html</option>
+        <option value="eclipse">eclipse</option>
+        <option value="twilight">twilight</option>
       </select>
     </div>
-    <div class="col s3 right-align">
-      <a class="waves-effect waves-light btn col m3 right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
+    <div class="col s5 right-align">
+      <a class="waves-effect waves-light btn right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
     </div>
   </div>
   <div ng-class="editor.showAnnotation ? 'col m7 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">

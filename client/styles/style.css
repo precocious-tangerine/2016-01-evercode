@@ -25,6 +25,10 @@
   font-size: 1.5em;
 }
 
+.snippet-icon {
+  margin-top: 18px;
+}
+
 .snippets {
   position: relative;
   width: 200px;
@@ -79,7 +83,10 @@
 }
 
 .tags input {
+  margin-left: 10px;
   max-width: 100px;
+  height: 20px;
+  margin-bottom: -10px;
 }
 
 .toggle-annotation {

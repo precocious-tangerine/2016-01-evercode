@@ -5,7 +5,6 @@ var qs = require('querystring');
 var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
-var Annotations = Promise.promisifyAll(require('../models/annotations'));
 var jwt = require('jsonwebtoken');
 var secret = config.secretToken;
 

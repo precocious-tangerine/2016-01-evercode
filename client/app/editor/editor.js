@@ -21,6 +21,9 @@ class EditorCtrl {
       lineWrapping: true,
       mode: 'javascript'
     };
+    this.codemirrorLoaded = (_editor) =>{
+      this.editor = _editor;
+    };
     this.tinymceOptions = {
       height: 250,
       toolbar: 'bold italic | bullist numlist'
@@ -78,8 +81,12 @@ class EditorCtrl {
     this.Snippets.addAnnotation(annotationObj)
   }
 
-  changeLanguage() {
-    console.log('changeLanguage')
+  changeLanguage(language) {
+    this.editor.setOption('mode', language)
+  }
+
+  changeTheme(theme) {
+    this.editor.setOption('theme', theme)
   }
 
   mapStateToThis(state) {
