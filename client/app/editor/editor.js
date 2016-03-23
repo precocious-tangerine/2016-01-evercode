@@ -22,12 +22,7 @@ class EditorCtrl {
       mode: 'javascript'
     };
     this.codemirrorLoaded = (_editor) =>{
-      // Editor part
-      // var _doc = _editor.getDoc();
-      // _editor.focus();
       this.editor = _editor;
-      this.refresh = _editor.refresh;
-
     };
     this.tinymceOptions = {
       height: 250,
