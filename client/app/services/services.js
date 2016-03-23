@@ -67,6 +67,15 @@ export class Snippets {
   mapDispatchToThis(dispatch) {
     return {
 
+      getPublicSnippets() {
+        return this.$http({
+          method: 'GET',
+          url: '/api/snippets'
+        }).then(res => {
+
+        });
+      },
+
       getSnippet(snippetId) {
         return this.$http({
           method: 'GET',

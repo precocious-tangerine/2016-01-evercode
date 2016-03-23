@@ -1,0 +1,20 @@
+<div>
+  <div class="splash">
+    <h1>never:code</h1
+    <h3>Your most useful code snippets in one place.</h3>
+    <span>
+      <a class="waves-effect waves-light btn right" ui-sref='main.feed'>Feed</a>
+    </span>
+    <span>
+      <a class="waves-effect waves-light btn right" ui-sref='main.editor'>Editor</a>
+    </span>
+  </div>
+  <div>
+    <div class="public-feed" ng-repeat="snippet in public.snippetList">
+      <h5>{{snippet.name}}</h5>
+      <span>{{snippet.createdBy}}</span>
+      <span>{{snippet.language}}</span>
+      <span class="chip" ng-repeat="tag in public.snippetList.tags"></span>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ class MainCtrl {
     this.$state = $state;
     this.$location = $location;
     this.Auth = Auth;
+    this.Folders = Folders;
   }
 
   toggleSideView(path) {
@@ -25,6 +26,7 @@ class MainCtrl {
   }
 
   changeActiveTab(folderPath) {
+    this.breadcrumbPath = [];
     this.Folders.selectFolder(folderPath);
   }
 
@@ -38,10 +40,10 @@ class MainCtrl {
     let convertPath = (path) => {
       let result = [];
       while (snippetMap[path]) {
-        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
+        result.push([snippetMap[path].value, snippetMap[path].filePath]);
         path = snippetMap[path].parent;
       }
-      return result
+      return result.reverse();
     };
 
     let breadcrumbPath = convertPath(selectedFolder);
