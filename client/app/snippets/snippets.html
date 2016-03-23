@@ -12,15 +12,15 @@
       <input placeholder="New Subfolder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="snippets.subFolder.name" />
     </div>
   </form>
-  <div class="row" ng-show='snippets.selectedFolderObj.parent'>
-    <a class="waves-effect waves-teal collection-item left" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
-      <i class="material-icons">arrow_back</i>
-    </a>
-  </div>
-  <div class="collection col s12 valign-wrapper">
-    <div class="valign" ng-repeat="folder in snippets.visibleFolders">
-      <div class="col s10 valign-wrapper">
-        <a class="waves-effect waves-teal collection-item left valign" ng-click="snippets.changeActiveTab(folder.filePath)">
+  <div class="collection col s12">
+    <div class="row" ng-show='snippets.selectedFolderObj.parent'>
+      <a class="waves-effect waves-teal collection-item left" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
+        <i class="material-icons">arrow_back</i>
+      </a>
+    </div>
+    <div class="row" ng-repeat="folder in snippets.visibleFolders">
+      <div class="col s8">
+        <a class="waves-effect waves-teal collection-item left" ng-click="snippets.changeActiveTab(folder.filePath)">
           <i class="small material-icons">folder</i>{{folder.value}}
         </a>
       </div>
@@ -28,7 +28,7 @@
         <a><i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right small material-icons snippet-icon">delete</i></a>
       </div>
     </div>
-    <div class="valign" ng-repeat="snippet in snippets.visibleSnippets">
+    <div class="row" ng-repeat="snippet in snippets.visibleSnippets">
       <div class="col s8">
         <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
           <i class=" small material-icons">description</i>{{snippet.value.name}}

@@ -39,7 +39,8 @@ class MainCtrl {
       snippetMap,
       selectedFolder,
       breadcrumbPath,
-      avatar
+      avatar,
+      activeUser
     };
   }
 

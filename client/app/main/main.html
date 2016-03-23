@@ -5,7 +5,7 @@
     </div>
     <ul class="center">
       <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-      <ul class="right">
+      <ul ng-hide='mainCtrl.activeUser' class="right">
         <li><a ui-sref='main.signin'>Login</a></li>
       </ul>
     </ul>
