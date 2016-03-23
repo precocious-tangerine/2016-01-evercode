@@ -1,11 +1,11 @@
 <nav class="top-nav">
   <div class="nav-wrapper fixed">
     <div class="left center-align col s4">
-      <a href="#" class="brand-logo hide-on-med-and-down">ever:code</a>
+      <a href="#" class="brand-logo hide-on-med-and-down">Never:code</a>
     </div>
-    <ul class="center">
+    <ul class="center breadcrumbs">
       <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-      <ul ng-hide='mainCtrl.activeUser' class="right">
+      <ul ng-hide='mainCtrl.activeUser.email' class="right">
         <li><a ui-sref='main.signin'>Login</a></li>
       </ul>
     </ul>
@@ -23,35 +23,35 @@
     </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('editor')">
       <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Create Snippet">
           <i class="material-icons center">add</i>
         </a>
       </div>
     </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('search')">
       <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Search for ...">
           <i class="material-icons center">search</i>
         </a>
       </div>
     </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('favorites')">
       <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Favorites">
           <i class="material-icons">star</i>
         </a>
       </div>
     </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('snippets')">
       <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Folders">
           <i class="material-icons">library_books</i>
         </a>
       </div>
     </li>
-    <li class="row">
+    <li class="row" ng-show='mainCtrl.activeUser.email'>
       <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link logout" ui-sref='signout' data-tooltip="Logout">
+        <a ui-sref='main' class="waves-effect waves-teal nav-link logout tooltipped" data-position="right" data-delay="50" data-tooltip="Logout" ng-click='mainCtrl.signout()'>
           <i class="material-icons left">power_settings_new</i>
         </a>
       </div>

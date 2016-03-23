@@ -38,13 +38,6 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.favorites', snippets('/favorites', '/favorites'))
       .state('main.search', search())
       .state('main.search.editor', editor())
-      .state('signout', {
-        resolve: {
-          signout: function(Auth) {
-            return Auth.signout();
-          }
-        }
-      })
 
     $httpProvider.interceptors.push('AttachTokens');
 

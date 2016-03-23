@@ -17,10 +17,19 @@ class MainCtrl {
     Folders.getFileTree();
     this.$state = $state;
     this.$location = $location;
+    this.Auth = Auth;
   }
 
   toggleSideView(path) {
     this.$location.path() === '/main/' + path ? this.$state.go('main') : this.$state.go('main.' + path);
+  }
+
+  changeActiveTab(folderPath) {
+    this.Folders.selectFolder(folderPath);
+  }
+
+  signout() {
+    this.Auth.signout();
   }
 
   mapStateToThis(state) {
@@ -33,7 +42,8 @@ class MainCtrl {
         path = snippetMap[path].parent;
       }
       return result
-    }
+    };
+
     let breadcrumbPath = convertPath(selectedFolder);
     return {
       snippetMap,
