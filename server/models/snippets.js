@@ -13,7 +13,9 @@ let snippetSchema = mongoose.Schema({
   annotation: { type: String },
   public: { type: Boolean, default: true },
   favorite: { type: Boolean, default: false },
-  shareUrl: { type: String }
+  shareUrl: { type: String },
+  shortcut: { type: String },
+  language: { type: String, default: 'javascript'}
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);
