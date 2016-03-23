@@ -38,6 +38,7 @@
     "request": "^2.69.0",
     "satellizer": "^0.14.0",
     "source-map-loader": "^0.1.5",
+    "supertest": "^1.2.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
