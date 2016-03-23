@@ -6,7 +6,7 @@
     <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
   </form>
 </div>
-<div class="row editor-row">
+<div class="row tag-row">
   <div class='tags col m9 valign-wrapper'>
     <span class="tag valign">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
     <span class='chip tag addTag' ng-hide="editor.addTag" ng-click="editor.toggleTag()">+</span>
