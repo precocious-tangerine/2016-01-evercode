@@ -2,10 +2,10 @@
   <div class="col s12">
     <h4>Favorites</h4>
   </div>
-  <div class="row" ng-repeat="snippet in snippets.visibleSnippets">
+  <div class="row" ng-repeat="snippet in snippets.snippetArr | filter:{favorite:true}">
     <div class="col s8">
       <a ui-sref=".editor" class="waves-effect waves-teal collection-item" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
-        <i class=" small material-icons">description</i>{{snippet.value.name}}
+        <i class=" small material-icons">description</i>{{snippet.name}}
       </a>
     </div>
     <div class="col s2">
