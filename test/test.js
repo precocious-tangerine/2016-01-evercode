@@ -577,11 +577,11 @@ describe('the Snippet Model', function(){
 //////////////////////////////////////////////////////////
 
 describe('Auth Routes', function () {
-  mongoose.connection.close();
 
   var request = require('supertest');
-  var testApp = require('../server/server.js').app;
-  var Routes = require('../server/config/routes.js')(testApp, Express);
+  var express = require('express');
+  var testApp = express();
+  var Routes = require('../server/config/routes.js')(testApp, express);
   var config = require('../server/config.js')
 
   describe('routes - general', function() {
@@ -589,12 +589,15 @@ describe('Auth Routes', function () {
     it('should have a /signup route',function(done) {
       request(testApp)
         .post('/signup')
-        .send({email: 0, password: 0})
+        .send()
         .expect(500)
         .end(function(err,res){
+          console.log(res.body)
+          console.log(err);
           if (err) {
             done();
           } else {
+            expect(err).to.be.instanceOf(Error);
             done()
           }
         })
@@ -607,12 +610,12 @@ describe('Auth Routes', function () {
         .expect(401)
         .end(function(err,res){
           if (err) {
-            done();
+            done(err);
           } else {
+            expect(res.body).to.equal("Unathorized")
             done()
           }
         })
-
     });
 
     it('should not have a /afogato route',function() {
