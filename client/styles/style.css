@@ -44,6 +44,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  height: 90vh;
 }
 
 .snippet-title input {
@@ -63,12 +64,12 @@
 
 .CodeMirror {
   border: 2px solid #eee;
-  height: 70vh;
+  height: 72vh;
 }
 
 .annotations {
   border-left: 2px solid grey;
-  min-height: 70vh;
+  height: 72vh;
 }
 
 .annotation-text {
@@ -143,7 +144,6 @@ nav,
   max-width: 100%;
 }
 
-
 /*------------------*/
 
 .innerContainer {
@@ -172,13 +172,15 @@ nav,
   transform: translateX(-100%);
 }
 
+/*--------------------------*/
+
 .search {
   position: relative;
   width: 200px;
   left: 0;
   right: 0;
   bottom: 0;
-  margin-top: 75px;
+  margin-top: 170px;
 }
 
 .search-results {
@@ -193,3 +195,12 @@ nav,
 .side-nav li {
   padding: 0;
 } 
+
+.logout {
+  bottom: 0;
+  position: fixed;
+}
+
+.snippets.collection-item {
+  width: 75px;
+}
