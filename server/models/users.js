@@ -51,6 +51,7 @@ let userSchema = mongoose.Schema({
     collaborators: { type: Number },
   },
   snippets: { type: mongoose.Schema.Types.Mixed },
+  theme: { type: String, default: 'eclipse' }
 });
 
 let User = mongoose.model('User', userSchema);

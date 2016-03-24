@@ -11,16 +11,10 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, Snippets, Auth) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
-    this.editorOptions = {
-      lineNumbers: true,
-      indentWithTabs: true,
-      theme: 'eclipse',
-      lineWrapping: true,
-      mode: 'javascript'
-    };
+    this.Auth = Auth;
     this.codemirrorLoaded = (_editor) =>{
       this.editor = _editor;
     };
@@ -61,7 +55,7 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut });
+    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut, public: this.snippetObj.public });
     objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
@@ -87,23 +81,40 @@ class EditorCtrl {
 
   changeTheme(theme) {
     this.editor.setOption('theme', theme)
+    this.Auth.updateUser(theme);
+  }
+
+  togglePublic() {
+    this.snippetObj.public = !this.snippetObj.public;
+    this.updateSnippet();
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, selectedSnippet, snippetMap } = state;
+    let { selectedFolder, selectedSnippet, snippetMap, activeUser } = state;
+    let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
+    let editorOptions = {
+      lineNumbers: true,
+      indentWithTabs: true,
+      theme: userTheme,
+      lineWrapping: true,
+      mode: 'javascript'
+    };
     let snippetObj = {};
     snippetObj.data = selectedSnippet ? snippetMap[selectedSnippet].value.data : ' ';
     snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
-    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : '';
+    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : 'javascript';
+    snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
     return {
       path,
       snippetMap,
       selectedSnippet,
       buttonText,
-      snippetObj
+      snippetObj,
+      userTheme,
+      editorOptions
     };
   }
 }

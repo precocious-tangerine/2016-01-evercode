@@ -33,17 +33,26 @@
         <i class="material-icons center-align">assignment</i>
       </a>
     </div>
+    <div class="col s2 public-toggle">
+      <a class="waves-effect waves-light btn" ng-click="editor.togglePublic()">{{editor.snippetObj.public ? 'Public' : 'Private'}}</a>
+    </div>
     <div class="col s3 code-selector">
-      <select  ng-model="editor.snippetObj.language" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
-        <option ng-repeat="language in editor.cmLanguages" ng-selected="editor.snippetObj.language == language || editor.cmDefaults.language == language" value="{{language}}">{{language}}</option>
+      <select ng-model="editor.snippetObj.language" 
+              ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language"
+              ng-options="language as language for language in editor.cmLanguages"
+              ng-change="editor.changeLanguage(editor.snippetObj.language)"
+              class="browser-default">
       </select>
     </div>
     <div class="col s3 code-selector">
-      <select  ng-model="editor.editorOption.theme" ng-change="editor.changeTheme(editor.editorOption.theme)" class="browser-default">
-        <option ng-repeat="theme in editor.cmThemes" ng-selected="editor.editorOption.theme == theme || editor.cmDefaults.theme == theme" value="{{theme}}">{{theme}}</option>
+      <select ng-model="editor.userTheme" 
+              ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme"
+              ng-options="theme as theme for theme in editor.cmThemes"
+              ng-change="editor.changeTheme(editor.userTheme)"
+              class="browser-default">
       </select>
     </div>
-    <div class="col s5 right-align">
+    <div class="col s3 right-align">
       <a class="waves-effect waves-light btn right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
     </div>
   </div>

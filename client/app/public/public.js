@@ -14,8 +14,10 @@ class PublicCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.snippetList = [];
+    this.loading = true;
     Snippets.getPublicSnippets().then(res => {
-      this.snippetList = res.data;      
+      this.loading = false;     
+      this.snippetList = res.data;
     });
   }
 }

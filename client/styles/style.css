@@ -38,6 +38,7 @@ html, body {
 .splash {
   text-align: center;
   color: #2E3C56;
+  padding-top: 75px;
 }
 
 .splash-buttons {
