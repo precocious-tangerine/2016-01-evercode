@@ -171,7 +171,7 @@ export class Auth {
             this.Folders.getFileTree();
             $('#snippets-modal').closeModal({
               dismissible: true,
-              complete: function() {
+              complete: () => {
                 $('.lean-overlay').remove();
               }
             });
