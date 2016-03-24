@@ -1,5 +1,4 @@
 'use strict';
-
 require('babel-polyfill');
 let expect = require('chai').expect;
 let mongoose = require('mongoose');

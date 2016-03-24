@@ -102,7 +102,7 @@ export class Snippets {
           url: '/api/snippets',
           data: snippetObj
         }).then(res => {
-          let nodeToPass = Object.assign({}, snippetObj, {value: res.data});
+          let nodeToPass = Object.assign({}, snippetObj, { value: res.data });
           Materialize.toast('Snippet updated!', 3000, 'rounded');
           dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
         });
@@ -203,7 +203,7 @@ export class Auth {
       },
 
       updateUser(prop) {
-        let userObj = {theme: prop}
+        let userObj = { theme: prop }
         return this.$http({
             method: 'PUT',
             url: '/api/userInfo',
