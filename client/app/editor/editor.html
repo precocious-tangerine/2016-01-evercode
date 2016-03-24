@@ -6,6 +6,13 @@
     <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
   </form>
 </div>
+<div class="row description-row">
+  <form name="descriptionForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '" novalidate>
+    <div class="form-group snippet-description">
+      <input id="snippet-description-input" placeholder="add a description" type="text" class="form-control col m9" ng-model="editor.snippetObj.description"/>
+    </div>
+  </form>
+</div>
 <div class="row tag-row">
   <div class='tags col m9 valign-wrapper'>
     <span class="tag valign">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
@@ -53,22 +60,19 @@
       </select>
     </div>
     <div class="col s3 right-align">
-      <a class="waves-effect waves-light btn right" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i>Annotate</a>
+      <a class="waves-effect waves-light btn" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i></a>
     </div>
   </div>
   <div ng-class="editor.showAnnotation ? 'col m7 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">
   </div>
   <div ng-class="editor.showAnnotation ? 'col m5 s12 annotations' : 'toggle-annotation'">
-    <div>
-      {{editor.snippetObj.annotation}}
-    </div>
-    <form name="annotate" ng-submit="editor.addAnnotation()" novalidate>
-      <h5 class="center-align">Annotations</h5>
+    <form name="annotate" ng-submit="editor.updateSnippet()" novalidate>
+      <h5 class="center-align">Notes</h5>
       <hr>
+      <textarea ui-tinymce="editor.tinymceOptions" ng-model="editor.snippetObj.annotation"/>
       <button type="submit" class="col s12 waves-effect waves-light btn save-annotation">
         Save<i class='material-icons right'>system_update_alt</i>
       </button>
-      <textarea ui-tinymce="editor.tinymceOptions" ng-model="editor.annotation"/>
     </form>
   </div>
 </div>

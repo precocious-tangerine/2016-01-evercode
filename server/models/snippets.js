@@ -11,6 +11,7 @@ let snippetSchema = mongoose.Schema({
   filePath: { type: String, required: true },
   tags: { type: [String], default: [] },
   annotation: { type: String },
+  description: { type: String },
   public: { type: Boolean, default: true },
   favorite: { type: Boolean, default: false },
   shareUrl: { type: String },
