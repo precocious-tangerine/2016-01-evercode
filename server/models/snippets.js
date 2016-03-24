@@ -17,7 +17,7 @@ let snippetSchema = mongoose.Schema({
   favorite: { type: Boolean, default: false },
   shareUrl: { type: String },
   shortcut: { type: String },
-  language: { type: String, default: 'javascript'}
+  language: { type: String, default: 'javascript' }
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);
@@ -109,7 +109,7 @@ Snippet.removeFolder = (email, folder, callback) => {
       callback(err);
     } else {
       var removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
-      var promiseArray = snippets.map( snip => removeSnippetAsync(snip._id));
+      var promiseArray = snippets.map(snip => removeSnippetAsync(snip._id));
       Promise.all(promiseArray)
         .then(response => {
           callback(null, response);
@@ -121,7 +121,7 @@ Snippet.removeFolder = (email, folder, callback) => {
 
 //TODO figure out how to return only 25
 Snippet.getPublic = (callback) => {
-  Snippet.find({public: 1, name: {$ne: '.config'}})
+  Snippet.find({ public: 1, name: { $ne: '.config' } })
     .then((foundSnippets) => {
       callback(null, foundSnippets.sort({ _createdAt: -1 }));
     }).catch(callback);

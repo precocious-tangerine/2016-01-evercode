@@ -14,6 +14,5 @@ module.exports = (app, express) => {
     next();
   });
   app.use('/', express.static(__dirname + '/../../client'));
-
   app.use('/api', utils.decode);
 };

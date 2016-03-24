@@ -8,7 +8,7 @@ let userSchema = mongoose.Schema({
   _password: { type: String },
   _createdAt: { type: Date, default: new Date() },
   _updatedAt: { type: Date, default: new Date() },
-  github: {type: String},
+  github: { type: String },
   avatar_url: { type: String },
   username: { type: String },
   email: { type: String, required: true, unique: true, dropDups: true },
