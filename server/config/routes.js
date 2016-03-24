@@ -134,9 +134,9 @@ module.exports = (app, express) => {
 
   app.route('/snippets')
     .get((req, res) => {
-      Snippets.getPublicSnippetsAsync()
+      Snippets.getPublicAsync()
         .then(snippets => {
-          if (snippet) {
+          if (snippets) {
             res.status(200).send(snippets)
           } else {
             res.status(404).send("Snippets not Found");

@@ -16,6 +16,29 @@
   bottom: 0;
 }
 
+.top-nav {
+  background-color: white;
+  height: 50px;
+  box-shadow: none;
+}
+
+.top-nav a {
+  text-align: center;
+  color: grey;
+}
+
+.splash {
+  text-align: center;
+  color: #2E3C56;
+}
+
+.splash-buttons {
+  text-align: center;
+  margin: 50px 0;
+  padding: 50px 0;
+  border-bottom: 2px solid lightgrey;
+}
+
 .search-results {
   z-index: 2;
 }
@@ -215,4 +238,3 @@ nav,
     right: 50px !important;
     left: inherit !important;
 }
-

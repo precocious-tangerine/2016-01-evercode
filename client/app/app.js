@@ -10,6 +10,7 @@ import { Folders, Auth, Snippets } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { createMainCtrl } from './main/main.js';
 import { editor } from './editor/editor.js';
+import { publicPage } from './public/public.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
@@ -30,6 +31,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     $urlRouterProvider.otherwise('/main');
     $stateProvider
       .state('main', createMainCtrl())
+      .state('main.public', publicPage('/public'))
       .state('main.signin', createAuthCtrl('/signin'))
       .state('main.signup', createAuthCtrl('/signup'))
       .state('main.editor', editor())
