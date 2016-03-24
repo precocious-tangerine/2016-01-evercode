@@ -26,7 +26,6 @@ class MainCtrl {
   }
 
   changeActiveTab(folderPath) {
-    this.breadcrumbPath = [];
     this.Folders.selectFolder(folderPath);
   }
 
