@@ -6,6 +6,7 @@ let snippetSchema = mongoose.Schema({
   _createdAt: { type: Date, default: new Date() },
   _updatedAt: { type: Date, default: new Date() },
   createdBy: { type: String, required: true },
+  username: { type: String, required: true },
   data: { type: String, required: true },
   name: { type: String, required: true },
   filePath: { type: String, required: true },
@@ -25,28 +26,28 @@ Snippet.makeSnippet = (snippetObj, callback) => {
   Snippet.create(snippetObj)
     .then((result) => callback(null, result))
     .catch(callback);
-}
+};
 
 Snippet.getSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) })
     .then(snippetObj => callback(null, snippetObj))
     .catch(callback);
-}
+};
 
 Snippet.updateSnippet = (_id, newProps, callback) => {
   newProps._updatedAt = new Date();
   Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
-}
+};
 
 Snippet.removeSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
-}
+};
 
 Snippet.getSnippetByFilepath = (email, filepath, callback) => {
   Snippet.findOne({ email, filepath })
     .then(snippetObj => callback(null, snippetObj))
     .catch(callback);
-}
+};
 
 Snippet.getSnippetsByUser = (email, callback) => {
   Snippet.find({ createdBy: email })
@@ -58,7 +59,7 @@ Snippet.getSnippetsByUser = (email, callback) => {
       }
     })
     .catch(callback);
-}
+};
 
 // Snippet.getSnippetInfoByUser = (email, callback) => {
 //   Snippet.find({ createdBy: email }, '-data')
@@ -91,16 +92,16 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
         callback(new Error('password invalid'), null);
       }
     }).catch(callback);
-}
+};
 
-Snippet.makeSubFolder = (email, filepath, callback) => {
+Snippet.makeSubFolder = (email, username, filepath, callback) => {
   filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: filepath + '/.config' }, callback);
-}
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: filepath + '/.config' }, callback);
+};
 
-Snippet.makeRootFolder = (email, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, filePath: email + '/.config' }, callback);
-}
+Snippet.makeRootFolder = (email, username, callback) => {
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: email + '/.config' }, callback);
+};
 
 Snippet.removeFolder = (email, folder, callback) => {
   Snippet.getSnippetsByFolder(email, folder, (err, snippets) => {
@@ -108,15 +109,15 @@ Snippet.removeFolder = (email, folder, callback) => {
       callback(err);
     } else {
       var removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
-      var promiseArray = snippets.map( snip => removeSnippetAsync(snip._id))
+      var promiseArray = snippets.map( snip => removeSnippetAsync(snip._id));
       Promise.all(promiseArray)
         .then(response => {
-          callback(null, response)
+          callback(null, response);
         })
         .catch(callback);
     }
-  })
-}
+  });
+};
 
 //TODO figure out how to return only 25
 Snippet.getPublic = (callback) => {
@@ -124,7 +125,7 @@ Snippet.getPublic = (callback) => {
     .then((foundSnippets) => {
       callback(null, foundSnippets.sort({ _createdAt: -1 }));
     }).catch(callback);
-}
+};
 
 
 module.exports = Snippet;
