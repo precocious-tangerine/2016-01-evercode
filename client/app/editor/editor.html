@@ -37,13 +37,19 @@
       <a class="waves-effect waves-light btn" ng-click="editor.togglePublic()">{{editor.snippetObj.public ? 'Public' : 'Private'}}</a>
     </div>
     <div class="col s3 code-selector">
-      <select  ng-model="editor.snippetObj.language" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
-        <option ng-repeat="language in editor.cmLanguages" ng-selected="editor.snippetObj.language == language || editor.cmDefaults.language == language" value="{{language}}">{{language}}</option>
+      <select ng-model="editor.snippetObj.language" 
+              ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language"
+              ng-options="language as language for language in editor.cmLanguages"
+              ng-change="editor.changeLanguage(editor.snippetObj.language)"
+              class="browser-default">
       </select>
     </div>
     <div class="col s3 code-selector">
-      <select  ng-model="editor.userTheme" ng-change="editor.changeTheme(editor.userTheme)" class="browser-default">
-        <option ng-repeat="theme in editor.cmThemes" ng-selected="editor.usertheme == theme || editor.cmDefaults.theme == theme" value="{{theme}}">{{theme}}</option>
+      <select ng-model="editor.userTheme" 
+              ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme"
+              ng-options="theme as theme for theme in editor.cmThemes"
+              ng-change="editor.changeTheme(editor.userTheme)"
+              class="browser-default">
       </select>
     </div>
     <div class="col s3 right-align">

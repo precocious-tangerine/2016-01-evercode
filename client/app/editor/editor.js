@@ -15,13 +15,6 @@ class EditorCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
     this.Auth = Auth;
-    this.editorOptions = {
-      lineNumbers: true,
-      indentWithTabs: true,
-      theme: 'eclipse',
-      lineWrapping: true,
-      mode: 'javascript'
-    };
     this.codemirrorLoaded = (_editor) =>{
       this.editor = _editor;
     };
@@ -87,7 +80,6 @@ class EditorCtrl {
   }
 
   changeTheme(theme) {
-    console.log('theme change: ', theme);
     this.editor.setOption('theme', theme)
     this.Auth.updateUser(theme);
   }
@@ -99,21 +91,30 @@ class EditorCtrl {
 
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser } = state;
-    let userTheme = activeUser.theme;
+    let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
+    let editorOptions = {
+      lineNumbers: true,
+      indentWithTabs: true,
+      theme: userTheme,
+      lineWrapping: true,
+      mode: 'javascript'
+    };
     let snippetObj = {};
     snippetObj.data = selectedSnippet ? snippetMap[selectedSnippet].value.data : ' ';
     snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
-    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : '';
+    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : 'javascript';
     snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
     return {
       path,
       snippetMap,
       selectedSnippet,
       buttonText,
-      snippetObj
+      snippetObj,
+      userTheme,
+      editorOptions
     };
   }
 }
