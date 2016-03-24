@@ -49,6 +49,8 @@ export const updateNode = (origTree, origFilePath, updatedFilePath, updatedNode)
   return insertNode(tree, updatedFilePath, nodeToUpdate.value);
 }
 
+
+//The following functions do not mutate their arguments
 export const convertToTree = (snippetObj) => {
   let userTreeMap = Object.keys(snippetObj).reduce( (prevTree, key) => {
     return insertNode(prevTree, key, snippetObj[key]);
@@ -56,12 +58,15 @@ export const convertToTree = (snippetObj) => {
   return userTreeMap
 }
 
+export const getNode = (tree, filePath) => {
+  return tree[filePath] ? Object.assign({}, tree[filePath]) : null;
+}
+
 export let getParent = (tree, filePath) => {
-    let parentPath = tree[filePath].parent
-    return parentPath ? Object.assign({}, tree[parentPath]) : null;
+    return tree[filePath] && tree[filePath].parent ? getNode(tree,tree[filePath].parent) : null;
   }
 export let getChildren = (tree, filePath, showConfigs) => {
-    let children = tree[filePath].children.map(childPath => Object.assign({},tree[childPath]));
+    let children = tree[filePath].children.map(childPath => getNode(tree, tree[childPath]));
     if(!showConfigs) {
       return children.filter(child => child.value.name !== '.config');
     } else {
@@ -71,7 +76,7 @@ export let getChildren = (tree, filePath, showConfigs) => {
 export let getAllParents = (tree, filePath) => {
     let results = [], parent = true;
     while (parent = getParent(tree, filePath)) {
-      results.push(parent);
+      results = [...results, parent];
       filePath = parent.filePath;
     }
     return results;
@@ -92,6 +97,7 @@ export let getAllChildren = (tree, filePath, showConfigs) => {
 
 export const createBoundMethods = (...args) => {
   return {
+    node: getNode.bind(null,...args),
     parent: getParent.bind(null,...args),
     children: getChildren.bind(null,...args),
     parents: getAllParents.bind(null,...args),
