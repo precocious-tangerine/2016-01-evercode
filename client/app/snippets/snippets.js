@@ -1,8 +1,8 @@
 import * as Actions from '../redux/actions.js';
 
-export const snippets = (url, templateUrl) => {
+export const snippets = (url) => {
   return {
-    url: templateUrl,
+    url: url,
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require(`.${url}.html`),
@@ -41,8 +41,8 @@ class SnippetsCtrl {
   }
 
   toggleFavorite(snippet) {
-    let _id = snippet.value._id;
-    let favorite = !snippet.value.favorite;
+    let _id = snippet.value ? snippet.value._id :snippet._id;
+    let favorite = snippet.value ? !snippet.value.favorite : !snippet.favorite;
     this.Snippets.updateSnippet({ snippetId: _id, value: { favorite: favorite } }, snippet.filePath);
   }
 
@@ -73,11 +73,21 @@ class SnippetsCtrl {
         }
       });
     }
+    let snippetArr = [];
+    Object.keys(snippetMap).forEach(key => {
+      let snippetVal = snippetMap[key].value
+      if (typeof snippetVal === 'object') {
+        if (snippetVal.name !== '.config' && snippetVal.name !== '/.config') {
+          snippetArr.push(snippetVal);
+        }
+      }
+    });
     return {
       visibleSnippets,
       visibleFolders,
       selectedFolderObj,
-      selectedFolder
+      selectedFolder,
+      snippetArr
     };
   }
 

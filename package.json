@@ -43,6 +43,8 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "eslint": "^2.1.0",
+    "eslint-config-hackreactor": "git://github.com/hackreactor-labs/eslint-config-hackreactor",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.5.0",

@@ -1,4 +1,10 @@
-.container {
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#container {
   position: absolute;
   height: auto;
   width: auto;
@@ -6,6 +12,8 @@
   right: 0;
   top: 0;
   bottom: 0;
+  min-width: 100%;
+  min-height: 100vh;
 }
 
 .main {
@@ -122,7 +130,7 @@
 }
 
 .tag {
-  margin-left: 10px; 
+  margin-left: 10px;
   float: left;
 }
 
@@ -143,6 +151,7 @@
 }
 
 #nav-mobile {
+  position: relative;
   line-height: 3em;
   width: 66px;
   left: 0;
@@ -167,40 +176,6 @@ nav,
   margin-left: 0 !important;
 }
 
-.container {
-  max-width: 100%;
-}
-
-/*------------------*/
-
-.innerContainer {
-  -webkit-transition: -webkit-transform .5s ease-in-out;
-  -moz-transition: -moz-transform .5s ease-in-out;
-  -o-transition: -o-transform .5s ease-in-out;
-  transition: transform .5s ease-in-out;
-  -webkit-transform: translateX(0);
-  transform: translateX(0);
-}
-
-.innerContainer.ng-enter {
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
-}
-
-.innerContainer.ng-enter.ng-enter-active,
-.innerContainer.ng-leave {
-  position: absolute;
-  -webkit-transform: translateX(0);
-  transform: translateX(0);
-}
-
-.innerContainer.ng-leave.ng-leave-active {
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
-}
-
-/*--------------------------*/
-
 .search {
   position: relative;
   width: 200px;
@@ -221,11 +196,11 @@ nav,
 
 .side-nav li {
   padding: 0;
-} 
+}
 
 .logout {
   bottom: 0;
-  position: fixed;
+  position: absolute;
 }
 
 .snippets.collection-item {
@@ -233,8 +208,39 @@ nav,
 }
 
 #toast-container {
-    bottom: 50px !important;
-    top: inherit !important;
-    right: 50px !important;
-    left: inherit !important;
+  bottom: 50px !important;
+  top: inherit !important;
+  right: 50px !important;
+  left: inherit !important;
 }
+
+
+/*------------------*/
+
+.snippets {
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+  -moz-transition: -moz-transform .5s ease-in-out;
+  -o-transition: -o-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.snippets.ng-enter {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.snippets.ng-enter.ng-enter-active,
+.snippets.ng-leave {
+  position: absolute;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.snippets.ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-800%);
+  transform: translateX(-800%);
+}
+
+/*--------------------------*/

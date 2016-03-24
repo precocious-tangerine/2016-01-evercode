@@ -26,12 +26,17 @@ class MainCtrl {
   }
 
   changeActiveTab(folderPath) {
-    this.breadcrumbPath = [];
     this.Folders.selectFolder(folderPath);
   }
 
   signout() {
     this.Auth.signout();
+  }
+
+  openModal() {
+    $('.lean-overlay').remove();
+    $('.modal-trigger').leanModal();
+    $('#signin-modal').openModal();
   }
 
   mapStateToThis(state) {

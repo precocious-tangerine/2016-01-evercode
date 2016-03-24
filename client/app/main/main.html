@@ -3,11 +3,12 @@
     <div class="left center-align col s4">
       <a href="#" class="brand-logo hide-on-med-and-down">Never:code</a>
     </div>
-    <ul class="center breadcrumbs">
+    <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
-      <ul ng-hide='mainCtrl.activeUser.email' class="right">
-        <li><a ui-sref='main.signin'>Login</a></li>
-      </ul>
+    </ul>
+    <ul ng-hide='mainCtrl.activeUser.email' class="right">
+      <li ng-click='mainCtrl.openModal()'><a href="#signin-modal" class="modal-trigger">Modal</a></li>
+      <li><a ui-sref='main.signin'>Login</a></li>
     </ul>
   </div>
 </nav>
@@ -58,5 +59,28 @@
     </li>
   </ul>
   <div class="innerContainer col s9 m11 l11" ui-view>
+  </div>
+</div>
+<div id="signin-modal" class="signin modal">
+  <div class="modal-content row row-centered">
+    <div class="col s4 offset-s4 col-centered">
+      <div id='signin'>
+        <h2>Sign In</h2>
+        <form name="userForm" ng-submit="authCtrl.signin(userForm.$valid)" novalidate>
+          <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+            <input type='text' placeholder="Email" name='email' class='form-control, validate' ng-model='authCtrl.user.email' required>
+            <p ng-hide='authCtrl.failed' class="help-block"> Invalid information. Try again. </p>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+            <input type="password" placeholder="Password" name='password' class="form-control" ng-model='authCtrl.user.password' required>
+          </div>
+          <button type="submit" class="waves-effect waves-light btn">Sign In</button>
+        </form>
+        <div class="github">
+          <a ng-click='authCtrl.githubAuth()'>Sign In with Github</a>
+        </div>
+        <a ui-sref="main.signup">Don't have an account? <strong>Signup</strong> ...</a>
+      </div>
+    </div>
   </div>
 </div>
