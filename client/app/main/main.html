@@ -1,8 +1,5 @@
 <nav class="top-nav white">
   <div class="nav-wrapper fixed">
-    <div class="left center-align col s4">
-      <a href="#" class="brand-logo hide-on-med-and-down"><|\|></a>
-    </div>
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
     </ul>
@@ -17,7 +14,7 @@
   <li class="row corner-logo">
     <div class="nav-icon">
       <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
-         <img class="icon button-collapse mid-navigation-menu" src="https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png" />
+         <img class="icon button-collapse mid-navigation-menu" src="../../n.png" />
       </a>
     </div>
   </li>

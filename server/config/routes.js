@@ -65,7 +65,7 @@ module.exports = (app, express) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
       Users.getUserAsync(email)
         .then(userData => {
-          let user = { name: userData.name, avatar_url: userData.avatar_url, email: email, theme: userData.theme };
+          let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
           res.status(201).send(user);
         })
         .catch((err) => {
@@ -76,9 +76,12 @@ module.exports = (app, express) => {
     .put((req, res) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
       Users.updateUserAsync(email, req.body)
-        .then(userData => {
-          let user = { name: userData.name, avatar_url: userData.avatar_url, email: email, theme: req.body.theme };
-          res.status(201).send(user);
+        .then(success => {
+          Users.getUserAsync(email)
+            .then(userData => {
+              let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
+              res.status(201).send(user);
+            })
         })
         .catch(err => {
           console.log(err);
