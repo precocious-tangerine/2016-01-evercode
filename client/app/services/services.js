@@ -202,6 +202,17 @@ export class Auth {
           });
       },
 
+      updateUser(prop) {
+        console.log('user in services: ', userObj)
+        return this.$http({
+          method: 'PUT',
+          url: '/api/userInfo',
+          data: userObj
+        }).then(res => {
+          
+        });
+      },
+
       isAuth() {
         return !!this.$window.localStorage.getItem('satellizer_token');
       },

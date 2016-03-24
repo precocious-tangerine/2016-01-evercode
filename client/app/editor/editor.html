@@ -42,8 +42,8 @@
       </select>
     </div>
     <div class="col s3 code-selector">
-      <select  ng-model="editor.editorOption.theme" ng-change="editor.changeTheme(editor.editorOption.theme)" class="browser-default">
-        <option ng-repeat="theme in editor.cmThemes" ng-selected="editor.editorOption.theme == theme || editor.cmDefaults.theme == theme" value="{{theme}}">{{theme}}</option>
+      <select  ng-model="editor.userTheme" ng-change="editor.changeTheme(editor.userTheme)" class="browser-default">
+        <option ng-repeat="theme in editor.cmThemes" ng-selected="editor.usertheme == theme || editor.cmDefaults.theme == theme" value="{{theme}}">{{theme}}</option>
       </select>
     </div>
     <div class="col s3 right-align">

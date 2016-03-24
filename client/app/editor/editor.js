@@ -11,9 +11,10 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, Snippets, Auth) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
+    this.Auth = Auth;
     this.editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -86,7 +87,9 @@ class EditorCtrl {
   }
 
   changeTheme(theme) {
+    console.log('theme change: ', theme);
     this.editor.setOption('theme', theme)
+    this.Auth.updateUser(theme);
   }
 
   togglePublic() {
@@ -95,7 +98,8 @@ class EditorCtrl {
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, selectedSnippet, snippetMap } = state;
+    let { selectedFolder, selectedSnippet, snippetMap, activeUser } = state;
+    let userTheme = activeUser.theme;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
     let snippetObj = {};
