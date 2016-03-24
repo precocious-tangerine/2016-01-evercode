@@ -6,7 +6,7 @@ export const editor = () => {
     controller: EditorCtrl,
     template: require('./editor.html'),
     scope: {},
-    access: { restricted: true }
+    access: { restricted: false }
   }
 }
 

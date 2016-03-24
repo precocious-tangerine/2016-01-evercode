@@ -151,12 +151,12 @@ export class Snippets {
 }
 
 export class Auth {
-  constructor($http, $state, $window, $ngRedux, Folders) {
+  constructor($http, $state, $auth, $ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.$http = $http;
     this.$state = $state;
-    this.$window = $window;
     this.Folders = Folders;
+    this.$auth = $auth;
   }
   mapDispatchToThis(dispatch) {
     return {
@@ -166,7 +166,7 @@ export class Auth {
             url: '/signin',
             data: user
           }).then((res) => {
-            this.$window.localStorage.setItem('satellizer_token', res.data.token);
+            this.$auth.setToken(res.data.token);
             this.getUserInfo();
             this.Folders.getFileTree();
             $('#snippets-modal').closeModal({
@@ -216,12 +216,8 @@ export class Auth {
           });
       },
 
-      isAuth() {
-        return !!this.$window.localStorage.getItem('satellizer_token');
-      },
-
       signout() {
-        this.$window.localStorage.removeItem('satellizer_token');
+        this.$auth.logout();
         dispatch(Actions.removeActiveUser());
       }
     }

@@ -62,9 +62,10 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     };
     return attach;
   })
-  .run(($rootScope, $state, Auth) => {
-    $rootScope.$on('$stateChangeStart', (evt, next, current) => {
-      if (next.access.restricted && !Auth.isAuth()) {
+  .run(($rootScope, $state, $auth, Auth) => {
+    $rootScope.$on('$stateChangeSuccess', (evt, next, current) => {
+      if (next.access.restricted && !$auth.isAuthenticated()) {
+        console.log('happening');
         $state.go('main.signin');
       }
     });

@@ -239,9 +239,13 @@ nav,
   height: 100vh;
 }
 
+.breadcrumb, .breadcrumb:before {
+  color: black !important;
+}
+
 /*---------ANIMATION---------*/
 
-.snippets {
+.innerContainer {
   -webkit-transition: -webkit-transform .5s ease-in-out;
   -moz-transition: -moz-transform .5s ease-in-out;
   -o-transition: -o-transform .5s ease-in-out;
@@ -250,19 +254,19 @@ nav,
   transform: translateX(0);
 }
 
-.snippets.ng-enter {
+.innerContainer.ng-enter {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 }
 
-.snippets.ng-enter.ng-enter-active,
-.snippets.ng-leave {
+.innerContainer.ng-enter.ng-enter-active,
+.innerContainer.ng-leave {
   position: absolute;
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
 
-.snippets.ng-leave.ng-leave-active {
+.innerContainer.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%);
 }

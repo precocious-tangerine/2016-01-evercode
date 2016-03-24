@@ -41,7 +41,7 @@ module.exports = (app, express) => {
           res.status(201).send({ token, msg: 'Authorized' });
         }).catch((err) => {
           console.log(err);
-          res.status(401).send({msg: 'Unauthorized'});
+          res.status(401).send({ msg: 'Unauthorized' });
         });
     });
 
@@ -52,7 +52,7 @@ module.exports = (app, express) => {
       Users.makeUserAsync({ email, _password: password })
         .then(userData => {
           token = createJWT({ email });
-          res.status(201).send({token});
+          res.status(201).send({ token });
         })
         .catch((err) => {
           console.log(err);
@@ -62,7 +62,7 @@ module.exports = (app, express) => {
 
   app.route('/api/userInfo')
     .get((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.user.email;
       Users.getUserAsync(email)
         .then(userData => {
           let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
@@ -74,14 +74,14 @@ module.exports = (app, express) => {
         });
     })
     .put((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.user.email;
       Users.updateUserAsync(email, req.body)
         .then(success => {
           Users.getUserAsync(email)
             .then(userData => {
               let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
               res.status(201).send(user);
-            })
+            });
         })
         .catch(err => {
           console.log(err);
@@ -104,7 +104,7 @@ module.exports = (app, express) => {
         });
     })
     .post((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.user.email;
       req.body.createdBy = email;
       Snippets.makeSnippetAsync(req.body)
         .then(snippet => {
@@ -165,7 +165,7 @@ module.exports = (app, express) => {
 
   app.route('/api/user/snippets/')
     .get((req, res) => {
-      let token = jwt.verify(req.headers.authorization, secret);
+      let token = req.user;
       return Snippets.getSnippetsByUserAsync(token.email)
         .then(results => {
           if (Array.isArray(results) && results.length > 0) {
@@ -185,7 +185,7 @@ module.exports = (app, express) => {
 
   app.route('/api/folders/')
     .post((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.user.email;
       let path = req.body.path;
       Snippets.makeSubFolderAsync(email, path)
         .then(folder => {
@@ -196,7 +196,7 @@ module.exports = (app, express) => {
         });
     })
     .delete((req, res) => {
-      let email = jwt.verify(req.headers.authorization, secret).email;
+      let email = req.user.email;
       let path = req.query.filePath;
       Snippets.removeFolderAsync(email, path)
         .then(result => {
