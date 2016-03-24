@@ -150,15 +150,23 @@ html, body {
   width: 2rem;
 }
 
+.avatar {
+  padding-left: 10px !important;
+}
+
+.avatar img {
+  width: 3rem;
+}
+
 #nav-mobile {
-  position: relative;
+  position: fixed;
   line-height: 3em;
   width: 66px;
   left: 0;
   margin: 0;
   padding: 0px;
   z-index: 999;
-  height: 90vh;
+  height: 100vh;
 }
 
 nav,
@@ -168,7 +176,19 @@ nav,
   width: 100%;
 }
 
+.corner-logo {
+  border-bottom: 2px solid grey;
+  background-color: #a8dba8;
+}
+
+.brand-logo {
+  margin-left: 100px;
+}
+
 .innerContainer {
+  position: fixed;
+  margin-left: 70px !important;
+  margin-top: 16px !important;
   padding-left: 2px !important;
 }
 
@@ -182,7 +202,7 @@ nav,
   left: 0;
   right: 0;
   bottom: 0;
-  margin-top: 170px;
+  margin-top: 190px;
 }
 
 .search-results {
@@ -214,8 +234,11 @@ nav,
   left: inherit !important;
 }
 
+.snippets {
+  height: 100vh;
+}
 
-/*------------------*/
+/*---------ANIMATION---------*/
 
 .snippets {
   -webkit-transition: -webkit-transform .5s ease-in-out;
@@ -242,5 +265,3 @@ nav,
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%);
 }
-
-/*--------------------------*/

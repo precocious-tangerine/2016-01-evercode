@@ -1,5 +1,3 @@
-//The following functions will mutate their arguments (maybe not anymore)
-
 export const insertNode = (origTree, filePath, node) => {
   let tree = Object.assign({}, origTree, {__root: origTree.__root});
   let folders = filePath.split('/').filter(a => a).concat(node);
@@ -51,9 +49,6 @@ export const updateNode = (origTree, origFilePath, updatedFilePath, updatedNode)
   return insertNode(tree, updatedFilePath, nodeToUpdate.value);
 }
 
-
-//The following functions do not mutate their arguments
-
 export const convertToTree = (snippetObj) => {
   let userTreeMap = Object.keys(snippetObj).reduce( (prevTree, key) => {
     return insertNode(prevTree, key, snippetObj[key]);
@@ -104,5 +99,3 @@ export const createBoundMethods = (...args) => {
   }
 
 }
-
-

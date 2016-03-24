@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var Promise = require('bluebird');
 var request = require('request');
 var qs = require('querystring');
@@ -15,15 +15,15 @@ let createJWT = (user) => {
     email: user.email
   };
   return jwt.sign(payload, secret);
-}
+};
 
 module.exports = (app, express) => {
 
   app.route('/send-email')
-    .post(postSignup)
+    .post(postSignup);
 
   app.route('/email-verification/:URL')
-    .get(getVerification)
+    .get(getVerification);
 
   app.route('/orlandoc01/test/snippet.txt')
     .get((req, res) => {
@@ -76,28 +76,28 @@ module.exports = (app, express) => {
 
   app.route('/api/snippets')
     .get((req, res) => {
-      Snippets.getSnippetAsync(req.query["_id"])
+      Snippets.getSnippetAsync(req.query['_id'])
         .then(snippet => {
           if (snippet) {
-            res.status(200).send(snippet)
+            res.status(200).send(snippet);
           } else {
-            res.status(404).send("Snippet not Found");
+            res.status(404).send('Snippet not Found');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     })
     .post((req, res) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
       req.body.createdBy = email;
       Snippets.makeSnippetAsync(req.body)
         .then(snippet => {
-          res.status(201).send(snippet)
+          res.status(201).send(snippet);
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     })
     .delete((req, res) => {
       Snippets.removeSnippetAsync(req.query.snippetId)
@@ -105,12 +105,12 @@ module.exports = (app, express) => {
           if (response) {
             res.status(201).send(response);
           } else {
-            res.status(404).send("Snippet not Found");
+            res.status(404).send('Snippet not Found');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     })
     .put((req, res) => {
       Snippets.updateSnippetAsync(req.body.snippetId, req.body.value)
@@ -120,16 +120,16 @@ module.exports = (app, express) => {
               if (snippet) {
                 res.status(201).send(snippet);
               } else {
-                res.status(404).send("Snippet not Found");
+                res.status(404).send('Snippet not Found');
               }
-            })
+            });
           } else {
-            res.status(404).send("Snippet not Found");
+            res.status(404).send('Snippet not Found');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     });
 
   app.route('/snippets')
@@ -137,15 +137,15 @@ module.exports = (app, express) => {
       Snippets.getPublicAsync()
         .then(snippets => {
           if (snippets) {
-            res.status(200).send(snippets)
+            res.status(200).send(snippets);
           } else {
-            res.status(404).send("Snippets not Found");
+            res.status(404).send('Snippets not Found');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
-      })
+        });
+    });
 
 
   app.route('/api/user/snippets/')
@@ -160,12 +160,12 @@ module.exports = (app, express) => {
             });
             res.status(200).send(fileTreeObj);
           } else {
-            res.status(404).send("Snippets not Found");
+            res.status(404).send('Snippets not Found');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     });
 
   app.route('/api/folders/')
@@ -174,11 +174,11 @@ module.exports = (app, express) => {
       let path = req.body.path;
       Snippets.makeSubFolderAsync(email, path)
         .then(folder => {
-          res.status(201).send(folder)
+          res.status(201).send(folder);
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
+        });
     })
     .delete((req, res) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
@@ -186,15 +186,15 @@ module.exports = (app, express) => {
       Snippets.removeFolderAsync(email, path)
         .then(result => {
           if (result) {
-            res.status(201).send("Succesfully removed");
+            res.status(201).send('Succesfully removed');
           } else {
-            res.status(401).send("Folder was not removed");
+            res.status(401).send('Folder was not removed');
           }
         }).catch((err) => {
           console.log(err);
           res.status(500).send(err);
-        })
-    })
+        });
+    });
 
   app.post('/auth/github', (req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
@@ -218,7 +218,7 @@ module.exports = (app, express) => {
             Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, name: profile.name }).then((success) => {
               var token = createJWT({ email: existingUser.email });
               res.status(201).send({ token });
-            })
+            });
           } else {
             let { email, github, avatar_url, name, id } = profile;
             Users.makeUserAsync({ email, github, avatar_url, name, github: '' + id })
@@ -235,4 +235,4 @@ module.exports = (app, express) => {
       });
     });
   });
-}
+};

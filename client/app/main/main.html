@@ -14,10 +14,17 @@
 </nav>
 <div class="row outerContainer">
   <ul id="nav-mobile" class="side-nav col s3 m1 l1 main">
+  <li class="row corner-logo">
+    <div class="nav-icon">
+      <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
+         <img class="icon button-collapse mid-navigation-menu" src="https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png" />
+      </a>
+    </div>
+  </li>
     <li class="row">
       <div class="nav-icon">
-        <a ui-sref="main" class="waves-effect waves-teal nav-link">
-          <img ng-show='mainCtrl.avatar' class="icon circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
+        <a ui-sref="main" class="waves-effect avatar waves-teal nav-link">
+          <img ng-show='mainCtrl.avatar' class="circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
           <img ng-hide='mainCtrl.avatar' class="icon button-collapse mid-navigation-menu" src="https://d30y9cdsu7xlg0.cloudfront.net/png/17485-200.png" />
         </a>
       </div>
