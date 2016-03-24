@@ -1,3 +1,4 @@
+import * as FT from '../services/fileTree.js'
 export const createMainCtrl = () => {
   return {
     url: '/main',
@@ -12,7 +13,8 @@ export const createMainCtrl = () => {
 
 class MainCtrl {
   constructor($ngRedux, Folders, Auth, $location, $state) {
-    $ngRedux.connect(this.mapStateToThis)(this);
+    this.clickedPath = false;
+    $ngRedux.connect(this.mapStateToThis.bind(this))(this);
     Auth.getUserInfo();
     Folders.getFileTree();
     this.$state = $state;
@@ -26,7 +28,8 @@ class MainCtrl {
   }
 
   changeActiveTab(folderPath) {
-    this.Folders.selectFolder(folderPath);
+    this.clickedPath = true;
+    this.Folders.selectFolder(folderPath.value);
   }
 
   signout() {
@@ -41,17 +44,10 @@ class MainCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder, activeUser } = state;
+    let boundFT = snippetMap ? FT.createBoundMethods(snippetMap) : null;
     let avatar = activeUser ? activeUser.avatar_url : null;
-    let convertPath = (path) => {
-      let result = [];
-      while (snippetMap[path]) {
-        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
-        path = snippetMap[path].parent;
-      }
-      return result;
-    };
-
-    let breadcrumbPath = convertPath(selectedFolder);
+    let breadcrumbPath = selectedFolder ? boundFT.parents(selectedFolder).reverse().concat(boundFT.node(selectedFolder)) : null;
+    this.clickedPath = false;
     return {
       snippetMap,
       selectedFolder,

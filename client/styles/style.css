@@ -293,4 +293,11 @@ nav,
 .outerContainer.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%);
+
+}
+
+/*--------------------------*/
+.breadcrumb, .breadcrumb:before {
+  color: black !important;
+
 }
