@@ -77,7 +77,7 @@ module.exports = (app, express) => {
       let email = jwt.verify(req.headers.authorization, secret).email;
       Users.updateUserAsync(email, req.body)
         .then(userData => {
-          let user = { name: userData.name, avatar_url: userData.avatar_url, email: email, theme: userData.theme };
+          let user = { name: userData.name, avatar_url: userData.avatar_url, email: email, theme: req.body.theme };
           res.status(201).send(user);
         })
         .catch(err => {

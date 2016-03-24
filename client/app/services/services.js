@@ -203,14 +203,17 @@ export class Auth {
       },
 
       updateUser(prop) {
-        console.log('user in services: ', userObj)
+        let userObj = {theme: prop}
         return this.$http({
-          method: 'PUT',
-          url: '/api/userInfo',
-          data: userObj
-        }).then(res => {
-          
-        });
+            method: 'PUT',
+            url: '/api/userInfo',
+            data: userObj
+          }).then(res => {
+            dispatch(Actions.setActiveUser(res.data));
+          })
+          .catch(error => {
+            console.error(error);
+          });
       },
 
       isAuth() {
