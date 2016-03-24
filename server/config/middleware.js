@@ -1,9 +1,8 @@
 'use strict';
-var morgan = require('morgan');
-var Promise = require('bluebird');
-var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-var secret = require('../config').secretToken;
+let morgan = require('morgan');
+let Promise = require('bluebird');
+let bodyParser = require('body-parser');
+let utils = require('./utils.js');
 
 module.exports = (app, express) => {
   app.use(morgan('dev'));
@@ -15,25 +14,5 @@ module.exports = (app, express) => {
     next();
   });
   app.use('/', express.static(__dirname + '/../../client'));
-
-  app.use('/api', (req, res, next) => {
-    var token = req.headers.authorization;
-    if (!token) {
-      return res.status(403).send('Please login');
-    }
-    try {
-      req.user = jwt.decode(token, secret);
-      next();
-    } catch (error) {
-      return next(error);
-    }
-  });
-};
-
-module.exports.createJWT = (user) => {
-  var payload = {
-    username: user.username,
-    email: user.email
-  };
-  return jwt.sign(payload, secret);
+  app.use('/api', utils.decode);
 };

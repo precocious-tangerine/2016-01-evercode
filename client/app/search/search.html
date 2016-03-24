@@ -8,7 +8,7 @@
 <div class="col s12 m9 l9 editor" ui-view></div>
 
 <script>
-$('#search-bar').keyup(function(event) {
+$('#search-bar').keyup(event => {
   if (event.target.value == '') {
     $('.search-results').slideUp();
   } else {
