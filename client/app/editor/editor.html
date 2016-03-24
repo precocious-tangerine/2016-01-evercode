@@ -10,7 +10,7 @@
   <div class='tags col m9 valign-wrapper'>
     <span class="tag valign">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
     <span class='chip tag addTag tooltipped' ng-hide="editor.addTag" data-tooltip="Add Tag" data-position="right" data-delay="50" ng-click="editor.toggleTag()">+</span>
-    <span class='chip tag addTag tooltipped' ng-show="editor.addTag" data-tooltip="Close Input" data-position="bottom" data-delay="50" ng-click="editor.toggleTag()">-</span>
+    <span class='chip tag addTag tooltipped' ng-show="editor.addTag" data-tooltip="Close Input" data-position="bottom" data-delay="50" ng-click="editor.toggleTag()">x</span>
     <span ng-show="editor.addTag" class="tag-input valign">
       <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
         <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
