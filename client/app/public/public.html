@@ -1,5 +1,6 @@
 <div>
   <div class="splash">
+    <img width="200px" src="../../n.png">
     <h1><span style="font-weight: 100">never</span>:code</h1>
     <h5>Your most useful code snippets in one place.</h5>
   </div>
@@ -7,14 +8,15 @@
       <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
   <div>
-    <ul class="collection with-header">
-      <li class="collection-header"><h4>See what other users have been creating</h4></li>
+    <h4 style="text-align: center">Public Snippets</h4>
+    <ul class="collection">
       <li class="collection-item avatar" ng-repeat="snippet in public.snippetList">
         <h5>{{snippet.name}}</h5>
+        <hr>
         <p>{{snippet.createdBy}}<br>
            {{snippet.language}}
         </p>
-        <span class="chip" ng-repeat="tag in public.snippetList.tags"></span>
+        <span class="chip" ng-repeat="tag in snippet.tags">{{tag}}</span>
         <a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
       </li>
     </ul>
