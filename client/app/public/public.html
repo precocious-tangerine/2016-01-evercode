@@ -1,17 +1,17 @@
 <div>
   <div class="splash">
-    <h1>never:code</h1
-    <h3>Your most useful code snippets in one place.</h3>
-    <span>
-      <a class="waves-effect waves-light btn right" ui-sref='main.feed'>Feed</a>
-    </span>
-    <span>
-      <a class="waves-effect waves-light btn right" ui-sref='main.editor'>Editor</a>
-    </span>
+    <h1>never:code</h1>
+    <h5>Your most useful code snippets in one place.</h5>
+  </div>
+  <div class="splash-buttons">
+      <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
   <div>
-    <div class="public-feed" ng-repeat="snippet in public.snippetList">
-      <h5>{{snippet.name}}</h5>
+    <h5>See what other users have been creating</h5>
+  </div>
+  <div>
+    <div class="public-feed" ng-repeat="snippet in public.snippetList.data">
+      <h6>{{snippet.name}}</h6>
       <span>{{snippet.createdBy}}</span>
       <span>{{snippet.language}}</span>
       <span class="chip" ng-repeat="tag in public.snippetList.tags"></span>

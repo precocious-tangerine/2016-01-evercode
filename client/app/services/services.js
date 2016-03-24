@@ -70,9 +70,10 @@ export class Snippets {
       getPublicSnippets() {
         return this.$http({
           method: 'GET',
-          url: '/api/snippets'
+          url: '/snippets'
         }).then(res => {
-
+          console.log('getPublicSnippets response: ', res);
+          return res;
         });
       },
 
