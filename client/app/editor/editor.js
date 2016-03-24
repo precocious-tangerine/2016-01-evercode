@@ -61,7 +61,7 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut });
+    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut, public: this.snippetObj.public });
     objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
@@ -89,6 +89,11 @@ class EditorCtrl {
     this.editor.setOption('theme', theme)
   }
 
+  togglePublic() {
+    this.snippetObj.public = !this.snippetObj.public;
+    this.updateSnippet();
+  }
+
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap } = state;
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
@@ -98,6 +103,7 @@ class EditorCtrl {
     snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
     snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
     snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : '';
+    snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
     return {
       path,
       snippetMap,

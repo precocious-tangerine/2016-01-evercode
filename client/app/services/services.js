@@ -101,9 +101,10 @@ export class Snippets {
           method: 'PUT',
           url: '/api/snippets',
           data: snippetObj
-        }).then((res) => {
+        }).then(res => {
+          let nodeToPass = Object.assign({}, snippetObj, {value: res.data});
           Materialize.toast('Snippet updated!', 3000, 'rounded');
-          dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, snippetObj));
+          dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
         });
 
       },
