@@ -21,6 +21,8 @@
     "googleapis": "^3.1.0",
     "html-webpack-plugin": "^2.10.0",
     "jsonwebtoken": "^5.7.0",
+    "materialize-css": "^0.97.5",
+    "materialize-sass": "^0.95.2",
     "mocks": "0.0.15",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
