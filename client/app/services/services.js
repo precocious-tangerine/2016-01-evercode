@@ -72,7 +72,6 @@ export class Snippets {
           method: 'GET',
           url: '/snippets'
         }).then(res => {
-          console.log('getPublicSnippets response: ', res);
           return res;
         });
       },

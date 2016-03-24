@@ -7,10 +7,9 @@
       <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
   <div>
-
     <ul class="collection with-header">
       <li class="collection-header"><h4>See what other users have been creating</h4></li>
-      <li class="collection-item avatar" ng-repeat="snippet in public.snippetList.data">
+      <li class="collection-item avatar" ng-repeat="snippet in public.snippetList">
         <h5>{{snippet.name}}</h5>
         <p>{{snippet.createdBy}}<br>
            {{snippet.language}}

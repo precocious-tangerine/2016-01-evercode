@@ -11,7 +11,6 @@ import { snippets } from './snippets/snippets.js';
 import { createMainCtrl } from './main/main.js';
 import { editor } from './editor/editor.js';
 import { publicPage } from './public/public.js';
-import { feed } from './feed/feed.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
@@ -33,8 +32,6 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     $stateProvider
       .state('main', createMainCtrl())
       .state('main.public', publicPage('/public'))
-      .state('main.public.feed', feed())
-      .state('main.feed', feed())
       .state('main.signin', createAuthCtrl('/signin'))
       .state('main.signup', createAuthCtrl('/signup'))
       .state('main.editor', editor())

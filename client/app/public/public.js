@@ -15,7 +15,7 @@ class PublicCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.snippetList = [];
     Snippets.getPublicSnippets().then(res => {
-      this.snippetList = res;      
+      this.snippetList = res.data;      
     });
   }
 }

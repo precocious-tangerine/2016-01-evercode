@@ -40,10 +40,10 @@ class MainCtrl {
     let convertPath = (path) => {
       let result = [];
       while (snippetMap[path]) {
-        result.push([snippetMap[path].value, snippetMap[path].filePath]);
+        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
         path = snippetMap[path].parent;
       }
-      return result.reverse();
+      return result;
     };
 
     let breadcrumbPath = convertPath(selectedFolder);
