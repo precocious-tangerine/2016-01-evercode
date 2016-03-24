@@ -80,9 +80,14 @@ html, body {
 }
 
 .snippet-title input {
-  width: auto;
   font-size: 3em;
   float: left;
+}
+
+.snippet-title input, .snippet-description input {
+  border-bottom: none;
+  width: auto;
+  height: auto;
 }
 
 .code-selector select {
