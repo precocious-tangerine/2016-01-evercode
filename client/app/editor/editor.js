@@ -22,8 +22,10 @@ class EditorCtrl {
     this.cmThemes = ['eclipse', 'twilight']
     this.cmDefaults = {language: 'javascript', theme: 'eclipse'};
     this.tinymceOptions = {
-      height: 250,
-      toolbar: 'bold italic | bullist numlist'
+      height: '40vh',
+      toolbar: 'styleselect | bold italic | bullist numlist outdent indent',
+      menubar: false,
+      statusbar: false
     };
     this.tag = '';
     this.addTag = false;
@@ -55,7 +57,16 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value, { data: this.snippetObj.data, name: this.snippetObj.name, language: this.snippetObj.language, shortcut: this.snippetObj.shortcut, public: this.snippetObj.public });
+    let objectToUpdate = Object.assign({}, 
+      this.snippetMap[this.selectedSnippet].value, 
+      { data: this.snippetObj.data,
+        name: this.snippetObj.name,
+        language: this.snippetObj.language,
+        shortcut: this.snippetObj.shortcut,
+        public: this.snippetObj.public,
+        annotation: this.snippetObj.annotation,
+        description: this.snippetObj.description
+      });
     objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
     let _id = objectToUpdate._id;
     delete objectToUpdate._id;
@@ -107,6 +118,8 @@ class EditorCtrl {
     snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
     snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : 'javascript';
     snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
+    snippetObj.annotation = selectedSnippet ? snippetMap[selectedSnippet].value.annotation : '';
+    snippetObj.description = selectedSnippet ? snippetMap[selectedSnippet].value.description : '';
     return {
       path,
       snippetMap,
