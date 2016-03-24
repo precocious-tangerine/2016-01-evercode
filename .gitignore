@@ -6,6 +6,7 @@
 #client
 /client/lib/*
 /client/dist/*
+/client/styles/materialize.css
 
 #npm_files
 /node_modules/*
