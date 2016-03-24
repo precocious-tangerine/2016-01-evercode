@@ -6,16 +6,10 @@ var config = require('../config');
 var Users = Promise.promisifyAll(require('../models/users'));
 var Snippets = Promise.promisifyAll(require('../models/snippets'));
 var jwt = require('jsonwebtoken');
+let createJWT = require('./middleware.js').createJWT;
 var secret = config.secretToken;
 
 let { postSignup, getVerification } = require('./email-verification.js');
-let createJWT = (user) => {
-  var payload = {
-    sub: user._id,
-    email: user.email
-  };
-  return jwt.sign(payload, secret);
-};
 
 module.exports = (app, express) => {
 
@@ -37,7 +31,7 @@ module.exports = (app, express) => {
       //Do some comparing
       Users.checkCredentialsAsync(email, password)
         .then((userData) => {
-          token = createJWT({ email });
+          token = createJWT({ email, username: userData.username });
           res.status(201).send({ token, msg: 'Authorized' });
         }).catch((err) => {
           console.log(err);
@@ -47,11 +41,11 @@ module.exports = (app, express) => {
 
   app.route('/signup')
     .post((req, res) => {
-      let { email, password } = req.body;
+      let { email, password, username } = req.body;
       let token;
-      Users.makeUserAsync({ email, _password: password })
+      Users.makeUserAsync({ email, _password: password, username: username })
         .then(userData => {
-          token = createJWT({ email });
+          token = createJWT({ email: userData.email, username: userData.username });
           res.status(201).send({ token });
         })
         .catch((err) => {
@@ -65,7 +59,7 @@ module.exports = (app, express) => {
       let email = req.user.email;
       Users.getUserAsync(email)
         .then(userData => {
-          let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
+          let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
           res.status(201).send(user);
         })
         .catch((err) => {
@@ -79,7 +73,7 @@ module.exports = (app, express) => {
         .then(success => {
           Users.getUserAsync(email)
             .then(userData => {
-              let user = { name: userData.name, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
+              let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
               res.status(201).send(user);
             });
         })
@@ -106,6 +100,7 @@ module.exports = (app, express) => {
     .post((req, res) => {
       let email = req.user.email;
       req.body.createdBy = email;
+      req.body.username = req.user.username;
       Snippets.makeSnippetAsync(req.body)
         .then(snippet => {
           res.status(201).send(snippet);
@@ -186,8 +181,9 @@ module.exports = (app, express) => {
   app.route('/api/folders/')
     .post((req, res) => {
       let email = req.user.email;
+      let username = req.user.username;
       let path = req.body.path;
-      Snippets.makeSubFolderAsync(email, path)
+      Snippets.makeSubFolderAsync(email, username, path)
         .then(folder => {
           res.status(201).send(folder);
         }).catch((err) => {
@@ -230,15 +226,15 @@ module.exports = (app, express) => {
         // Step 3a. Link user accounts.
         Users.findOne({ email: profile.email }, (err, existingUser) => {
           if (existingUser) {
-            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, name: profile.name }).then((success) => {
-              var token = createJWT({ email: existingUser.email });
+            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, username: profile.name }).then((success) => {
+              var token = createJWT({ email: existingUser.email, username: profile.name });
               res.status(201).send({ token });
             });
           } else {
-            let { email, github, avatar_url, name, id } = profile;
-            Users.makeUserAsync({ email, github, avatar_url, name, github: '' + id })
+            let { email, github, avatar_url, name } = profile;
+            Users.makeUserAsync({ email, github, avatar_url, username: name })
               .then((userObj) => {
-                token = createJWT({ email: userObj.email });
+                token = createJWT({ email: userObj.email, username: userObj.username });
                 res.status(201).send({ token });
               })
               .catch((err) => {

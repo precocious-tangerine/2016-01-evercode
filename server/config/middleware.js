@@ -29,3 +29,11 @@ module.exports = (app, express) => {
     }
   });
 };
+
+module.exports.createJWT = (user) => {
+  var payload = {
+    username: user.username,
+    email: user.email
+  };
+  return jwt.sign(payload, secret);
+};
