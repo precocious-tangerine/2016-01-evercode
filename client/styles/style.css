@@ -274,6 +274,7 @@ nav,
 
 .snippets {
   height: 100vh;
+  width: 100%;
 }
 
 .breadcrumb, .breadcrumb:before {
