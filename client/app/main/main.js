@@ -12,15 +12,12 @@ export const createMainCtrl = () => {
 }
 
 class MainCtrl {
-  constructor($ngRedux, Folders, Auth, $location, $state) {
-    this.breadcrumbPath = [];
+  constructor($ngRedux, Folders, Auth, $state) {
     Auth.getUserInfo();
     Folders.getFileTree();
     this.$state = $state;
-    this.$location = $location;
     this.Auth = Auth;
     this.Folders = Folders;
-
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
