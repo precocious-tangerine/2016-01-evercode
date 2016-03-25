@@ -8605,7 +8605,8 @@ html, body {
   bottom: 0;
   padding: 0;
   height: 100vh;
-  width: 100%; }
+  width: 100%;
+  box-shadow: none; }
 
 .editor {
   position: relative;

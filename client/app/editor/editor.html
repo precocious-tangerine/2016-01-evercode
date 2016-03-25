@@ -1,4 +1,4 @@
-<div class="col s12 m3 l3 innerContainer" ui-view></div>
+<div class="col s12 m3 l3 innerContainer card" ui-view></div>
 <div ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12 editor' : 'col s12 m9 l9 editor'">
   <div class="row editor-row">
     <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
@@ -38,7 +38,7 @@
   <div class="code-editor row card">
     <div class="col s12 code-toolbar valign-wrapper">
       <a class="btn" data-tooltip="Copy Snippet" data-position="bottom" data-delay="50" ngclipboard data-clipboard-text={{editor.snippetObj.data}}><i class="material-icons">assignment</i></a>
-      <div class="code-selector">
+      <div class="code-selector col s3">
         <select ng-model="editor.snippetObj.language" ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language" ng-options="language as language for language in editor.cmLanguages" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
         </select>
       </div>
