@@ -8527,7 +8527,11 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 html, body {
   height: 100%;
   width: 100%;
-  margin: 0; }
+  margin: 0;
+  color: #2E3C56; }
+
+.btn, .btn-large {
+  background-color: #2E3C56; }
 
 #container {
   position: absolute;
@@ -8587,11 +8591,7 @@ html, body {
   margin-top: 18px;
   margin-right: 15px;
   font-size: 1.5em;
-  color: grey; }
-
-.folder-icon, .code-icon {
-  font-size: 25px;
-  margin-right: 10px; }
+  color: #95A5A6; }
 
 .snippets {
   position: relative;
@@ -8601,7 +8601,8 @@ html, body {
   bottom: 0;
   padding: 0;
   height: 100vh;
-  width: 100%; }
+  width: 100%;
+  box-shadow: none; }
 
 .editor {
   position: relative;
@@ -8627,7 +8628,7 @@ html, body {
 .code-selector select {
   color: grey;
   border: 0;
-  width: 120px;
+  width: auto;
   height: 30px;
   border-radius: 3px;
   overflow: hidden; }
@@ -8707,7 +8708,7 @@ nav,
   margin-left: 100px; }
 
 .outerContainer {
-  position: fixed;
+  position: relative;
   margin-left: 70px !important;
   margin-top: 16px !important;
   padding-left: 0px !important; }
@@ -8718,14 +8719,29 @@ nav,
 .folder-list {
   border: 1px solid lightgrey; }
 
+.folder-list:hover {
+  background-color: #f6f6f6; }
+
 .folder-list-item {
-  display: inline-block; }
+  display: inline-block;
+  overflow: hidden; }
 
 .folder-list-link {
   padding: 0; }
 
 .folder-text {
   font-size: 1.1em; }
+
+.folder-icon, .code-icon {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #95A5A6; }
+
+.list-description {
+  padding: 5px;
+  margin: 0;
+  font-size: 0.8em;
+  color: #95A5A6; }
 
 .back-button {
   font-size: 0.9em; }
@@ -8745,6 +8761,17 @@ nav,
 
 .breadcrumb, .breadcrumb:before {
   color: black !important; }
+
+.snippet-gallery {
+  min-height: 275px;
+  padding: 3px; }
+
+.snippet-gallery-card {
+  padding: 10px; }
+
+.public-chip {
+  background-color: #2E3C56;
+  color: white; }
 
 /*---------ANIMATION---------*/
 .outerContainer {
@@ -8768,3 +8795,7 @@ nav,
 .outerContainer.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%); }
+
+/*--------------------------*/
+.breadcrumb, .breadcrumb:before {
+  color: black !important; }

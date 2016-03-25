@@ -28,7 +28,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       authorizationEndpoint: 'https://github.com/login/oauth/authorize'
     });
 
-    $urlRouterProvider.otherwise('/main/editor');
+    $urlRouterProvider.otherwise('/main/public');
     $stateProvider
       .state('main', createMainCtrl())
       .state('main.public', publicPage('/public'))

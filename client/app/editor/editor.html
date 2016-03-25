@@ -1,22 +1,22 @@
-<div class="col s12 m3 l3 innerContainer" ui-view></div>
+<div class="col s12 m3 l3 innerContainer card" ui-view></div>
 <div ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12 editor' : 'col s12 m9 l9 editor'">
   <div class="row editor-row">
-    <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()" novalidate>
+    <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
       <div class="form-group snippet-title">
-        <input id="snippet-name-input" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' />
+        <input id="snippet-name-input" name="title" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' ng-maxlength="20"/>
       </div>
       <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
+      <p ng-show="snippetForm.title.$error.maxlength" class="help-block">Snippet name must be less than 20 characters</p>
     </form>
-  </div>
-  <div class="row description-row">
-    <form name="descriptionForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '" novalidate>
+    <form name="descriptionForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '">
       <div class="form-group snippet-description">
-        <input id="snippet-description-input" placeholder="add a description" type="text" class="form-control col m9" ng-model="editor.snippetObj.description" />
+        <input id="snippet-description-input" name="description" placeholder="add a description" type="text" class="form-control col s12" ng-model="editor.snippetObj.description" ng-maxlength="100"/>
+        <p ng-show="descriptionForm.description.$error.maxlength" class="help-block">Description must be less than 100 characters</p>
       </div>
     </form>
   </div>
   <div class="row tag-row">
-    <div class='tags col m9 valign-wrapper'>
+    <div class='tags col s12 valign-wrapper'>
       <span class="tag valign">TAGS: </span><span class='chip tag' ng-repeat="tag in editor.snippetMap[editor.selectedSnippet].value.tags">{{ tag }}<i ng-click="editor.removeOrAddTag(tag)" class="material-icons">close</i></span>
       <span class='chip tag addTag tooltipped' ng-hide="editor.addTag" data-tooltip="Add Tag" data-position="right" data-delay="50" ng-click="editor.toggleTag()">+</span>
       <span class='chip tag addTag tooltipped' ng-show="editor.addTag" data-tooltip="Close Input" data-position="bottom" data-delay="50" ng-click="editor.toggleTag()">x</span>
@@ -37,24 +37,29 @@
   </div>
   <div class="code-editor row card">
     <div class="col s12 code-toolbar valign-wrapper">
-      <div class="col s1 copy-code">
-        <a class="valign waves-effect waves-teal btn-flat tooltipped" data-tooltip="Copy Snippet" data-position="bottom" data-delay="50" ngclipboard data-clipboard-text={{editor.snippetObj.data}}>
-          <i class="material-icons center-align">assignment</i>
-        </a>
-      </div>
-      <div class="col s2 public-toggle">
-        <a class="waves-effect waves-light btn" ng-click="editor.togglePublic()">{{editor.snippetObj.public ? 'Public' : 'Private'}}</a>
-      </div>
-      <div class="col s3 code-selector">
+      <a class="btn" data-tooltip="Copy Snippet" data-position="bottom" data-delay="50" ngclipboard data-clipboard-text={{editor.snippetObj.data}}><i class="material-icons">assignment</i></a>
+      <div class="code-selector col s3">
         <select ng-model="editor.snippetObj.language" ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language" ng-options="language as language for language in editor.cmLanguages" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
         </select>
       </div>
-      <div class="col s3 code-selector">
+      <div class="code-selector">
         <select ng-model="editor.userTheme" ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme" ng-options="theme as theme for theme in editor.cmThemes" ng-change="editor.changeTheme(editor.userTheme)" class="browser-default">
         </select>
       </div>
-      <div class="col s3 right-align">
-        <a class="waves-effect waves-light btn" ng-click="editor.toggleAnnotation()"><i class="material-icons right">comment</i></a>
+      <div class="switch col s4 right-align" ng-show="editor.selectedSnippet">
+        <label>
+          Private
+          <input type="checkbox" ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
+          <span class="lever"></span>
+          Public
+        </label>
+      </div>
+    </div>
+    <div style="position: relative;">
+      <div class="fixed-action-btn horizontal" style="position: absolute; display: inline-block; right: 24px; top: 50px;">
+        <a class="btn-floating btn-large red" ng-click="editor.toggleAnnotation()">
+          <i class="large material-icons">comment</i>
+        </a>
       </div>
     </div>
     <div ng-class="editor.showAnnotation ? 'col m7 s12 code-mirror' : 'col s12 code-mirror'" ng-model='editor.snippetObj.data' ui-codemirror="{ onLoad : editor.codemirrorLoaded }" ui-codemirror-opts="editor.editorOptions">

@@ -7,18 +7,19 @@
   <div class="splash-buttons">
       <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
-  <div>
+  <div class="row">
     <h4 style="text-align: center">Public Snippets</h4>
-    <ul class="collection">
-      <li class="collection-item avatar" ng-repeat="snippet in public.snippetList">
-        <h5>{{snippet.name}}</h5>
-        <hr>
-        <p>{{snippet.description}}</p>
-        <p>{{snippet.createdBy}}<br>
-           {{snippet.language}}
-        </p>
-        <span class="chip" ng-repeat="tag in snippet.tags">{{tag}}</span>
-        <a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
+    <ul class="">
+      <li class="snippet-gallery col s12 m4 l3" ng-repeat="snippet in public.snippetList">
+        <div class="card snippet-gallery-card">
+          <h5>{{snippet.name}}</h5>
+          <hr>
+          <p>{{snippet.description}}</p>
+          <p>{{snippet.createdBy}}<br>
+             {{snippet.language}}
+          </p>
+          <span class="chip public-chip" ng-repeat="tag in snippet.tags">{{tag}}</span>
+        </div>
       </li>
     </ul>
     <div class="preloader-wrapper active" ng-show="public.loading">

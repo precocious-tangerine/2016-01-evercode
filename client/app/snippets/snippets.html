@@ -1,4 +1,4 @@
-<ul class="snippets side-nav s12">
+<ul class="snippets side-nav">
   <div class="col s12">
     <span class="add-button col s6 center-align">
       <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
@@ -56,6 +56,9 @@
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
           <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
         </span>
+        <p class="list-description">
+          {{snippet.value.description}}
+        </p>
       </div>
     </div>
   </div>
