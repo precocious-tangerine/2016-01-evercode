@@ -22,7 +22,7 @@ class MainCtrl {
   }
 
   toggleSideView(path) {
-    this.$location.path() === '/main/' + path ? this.$state.go('main') : this.$state.go('main.' + path);
+    this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
   }
 
   changeActiveTab(folderPath) {

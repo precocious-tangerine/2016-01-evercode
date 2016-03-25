@@ -1,8 +1,7 @@
-
 <ul class="snippets side-nav s12">
   <div class="col s12">
     <span class="add-button col s6 center-align">
-      <a ui-sref=".editor" class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
     </span>
     <span class="add-button col s6 center-align">
       <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
@@ -46,7 +45,7 @@
     <div class="" ng-repeat="snippet in snippets.visibleSnippets">
       <div class="folder-list">
         <span class="folder-list-item">
-          <a ui-sref=".editor" class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
+          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
             <span class="folder-text valign-wrapper">
               <i class="material-icons code-icon valign">code</i>
               {{snippet.value.name}}
