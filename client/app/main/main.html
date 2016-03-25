@@ -1,7 +1,7 @@
 <nav class="top-nav white">
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
-      <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
+      <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
       <li ng-click='mainCtrl.openModal()'><a href="#signin-modal" class="modal-trigger">Modal</a></li>
@@ -9,7 +9,7 @@
     </ul>
   </div>
 </nav>
-<div class="row outerContainer">
+<div class="row">
   <ul id="nav-mobile" class="side-nav col s3 m1 l1 main">
   <li class="row corner-logo">
     <div class="nav-icon">
@@ -33,21 +33,21 @@
         </a>
       </div>
     </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('search')">
+    <li class="row" ng-click="mainCtrl.toggleSideView('editor.search')">
       <div class="nav-icon">
         <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Search for ...">
           <i class="material-icons center">search</i>
         </a>
       </div>
     </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('favorites')">
+    <li class="row" ng-click="mainCtrl.toggleSideView('editor.favorites')">
       <div class="nav-icon">
         <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Favorites">
           <i class="material-icons">star</i>
         </a>
       </div>
     </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('snippets')">
+    <li class="row" ng-click="mainCtrl.toggleSideView('editor.snippets')">
       <div class="nav-icon">
         <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Folders">
           <i class="material-icons">library_books</i>
@@ -62,9 +62,13 @@
       </div>
     </li>
   </ul>
-  <div class="innerContainer col s11" ui-view>
+  <div class="outerContainer col s11" ui-view>
   </div>
 </div>
+
+
+<!-- -------------- MODAL VIEW -------------- -->
+
 <div id="signin-modal" class="signin modal">
   <div class="modal-content row row-centered">
     <div class="col s4 offset-s4 col-centered">

@@ -11,8 +11,9 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth) {
+  constructor($ngRedux, Snippets, Auth, $state) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
     this.codemirrorLoaded = (_editor) =>{

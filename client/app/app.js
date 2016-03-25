@@ -28,19 +28,16 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       authorizationEndpoint: 'https://github.com/login/oauth/authorize'
     });
 
-    $urlRouterProvider.otherwise('/main');
+    $urlRouterProvider.otherwise('/main/editor');
     $stateProvider
       .state('main', createMainCtrl())
       .state('main.public', publicPage('/public'))
       .state('main.signin', createAuthCtrl('/signin'))
       .state('main.signup', createAuthCtrl('/signup'))
       .state('main.editor', editor())
-      .state('main.snippets', snippets('/snippets'))
-      .state('main.snippets.editor', editor())
-      .state('main.favorites', snippets('/favorites'))
-      .state('main.favorites.editor', editor())
-      .state('main.search', search())
-      .state('main.search.editor', editor())
+      .state('main.editor.snippets', snippets('/snippets'))
+      .state('main.editor.favorites', snippets('/favorites'))
+      .state('main.editor.search', search())
 
     $httpProvider.interceptors.push('AttachTokens');
 
@@ -65,7 +62,6 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .run(($rootScope, $state, $auth, Auth) => {
     $rootScope.$on('$stateChangeSuccess', (evt, next, current) => {
       if (next.access.restricted && !$auth.isAuthenticated()) {
-        console.log('happening');
         $state.go('main.signin');
       }
     });
