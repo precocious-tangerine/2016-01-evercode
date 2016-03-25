@@ -1,3 +1,4 @@
+import * as FT from '../services/fileTree.js'
 export const createMainCtrl = () => {
   return {
     url: '/main',
@@ -12,13 +13,15 @@ export const createMainCtrl = () => {
 
 class MainCtrl {
   constructor($ngRedux, Folders, Auth, $location, $state) {
-    $ngRedux.connect(this.mapStateToThis)(this);
+    this.breadcrumbPath = [];
     Auth.getUserInfo();
     Folders.getFileTree();
     this.$state = $state;
     this.$location = $location;
     this.Auth = Auth;
     this.Folders = Folders;
+
+    $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
   toggleSideView(path) {
@@ -41,23 +44,15 @@ class MainCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder, activeUser } = state;
-    let avatar = activeUser ? activeUser.avatar_url : null;
-    let convertPath = (path) => {
-      let result = [];
-      while (snippetMap[path]) {
-        result.unshift([snippetMap[path].value, snippetMap[path].filePath]);
-        path = snippetMap[path].parent;
-      }
-      return result;
-    };
-
-    let breadcrumbPath = convertPath(selectedFolder);
+    let boundFT = snippetMap ? FT.createBoundMethods(snippetMap) : null; 
+    this.avatar = activeUser ? activeUser.avatar_url : null;
+    
+    let parents = selectedFolder ? boundFT.parents(selectedFolder).reverse() : [];
+    this.breadcrumbPath = selectedFolder ? parents.concat(boundFT.node(selectedFolder)) : [];
     return {
       snippetMap,
       selectedFolder,
-      breadcrumbPath,
-      avatar,
-      activeUser
+      activeUser,
     };
   }
 

@@ -1,7 +1,7 @@
 <nav class="top-nav white">
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
-      <a ng-repeat="path in mainCtrl.breadcrumbPath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(path[1])" class="breadcrumb">{{path[0]}}</a>
+      <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
       <li ng-click='mainCtrl.openModal()'><a href="#signin-modal" class="modal-trigger">Modal</a></li>
