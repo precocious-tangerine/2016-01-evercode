@@ -30,6 +30,7 @@ export const insertNode = (origTree, filePath, node) => {
 }
 
 export const deleteNode = (origTree, filePath) => {
+  console.log('deleteNode ', origTree, ' ', filePath);
   let tree = Object.assign({}, origTree, {__root: origTree.__root});
   let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
   let parent = getParent(tree, filePath);
@@ -66,7 +67,7 @@ export let getParent = (tree, filePath) => {
     return tree[filePath] && tree[filePath].parent ? getNode(tree,tree[filePath].parent) : null;
   }
 export let getChildren = (tree, filePath, showConfigs) => {
-    let children = tree[filePath].children.map(childPath => getNode(tree, tree[childPath]));
+    let children = tree[filePath].children.map(childPath => getNode(tree, childPath));
     if(!showConfigs) {
       return children.filter(child => child.value.name !== '.config');
     } else {
