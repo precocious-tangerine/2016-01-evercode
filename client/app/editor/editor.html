@@ -46,10 +46,10 @@
         <select ng-model="editor.userTheme" ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme" ng-options="theme as theme for theme in editor.cmThemes" ng-change="editor.changeTheme(editor.userTheme)" class="browser-default">
         </select>
       </div>
-      <div class="switch col s4 right-align">
+      <div class="switch col s4 right-align" ng-show="editor.selectedSnippet">
         <label>
           Private
-          <input type="checkbox" ng-click="editor.togglePublic()">
+          <input type="checkbox" ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
           <span class="lever"></span>
           Public
         </label>
