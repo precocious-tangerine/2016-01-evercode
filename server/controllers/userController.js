@@ -89,8 +89,8 @@ module.exports = {
               res.status(201).send({ token });
             });
           } else {
-            let { email, github, avatar_url, name } = profile;
-            Users.makeUserAsync({ email, github, avatar_url, username: name })
+            let { email, id, avatar_url, name } = profile;
+            Users.makeUserAsync({ email, github: id, avatar_url, username: name })
               .then((userObj) => {
                 token = createJWT({ email: userObj.email, username: userObj.username });
                 res.status(201).send({ token });
