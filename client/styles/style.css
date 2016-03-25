@@ -59,6 +59,14 @@ html, body {
 
 .snippet-icon {
   margin-top: 18px;
+  margin-right: 15px;
+  font-size: 1.5em;
+  color: grey;
+}
+
+.folder-icon, .code-icon {
+  font-size: 25px;
+  margin-right: 10px;
 }
 
 .snippets {
@@ -195,7 +203,7 @@ nav,
   position: fixed;
   margin-left: 70px !important;
   margin-top: 16px !important;
-  padding-left: 2px !important;
+  padding-left: 0px !important;
 }
 
 .outerContainer {
@@ -224,13 +232,37 @@ nav,
   padding: 0;
 }
 
+.folder-list {
+  border: 1px solid lightgrey;
+}
+
+.folder-list-item {
+  display: inline-block;
+}
+
+.folder-list-link {
+  padding: 0;
+}
+
+.folder-text {
+  font-size: 1.1em;
+}
+
+.back-button {
+  font-size: 0.9em;
+}
+
 .logout {
   bottom: 0;
   position: absolute;
 }
 
-.snippets.collection-item {
-  width: 75px;
+.snippets {
+  padding: 0;
+}
+
+.collection-item {
+  padding: 0px;
 }
 
 #toast-container {
