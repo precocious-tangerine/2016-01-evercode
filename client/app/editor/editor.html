@@ -1,13 +1,15 @@
-<div class="col s12 m3 l3 innerContainer card" ui-view></div>
+<div ng-class="editor.$state.is('main.editor.search') ? null : 'card'" class="col s12 m3 l3 innerContainer" ui-view></div>
 <div ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12 editor' : 'col s12 m9 l9 editor'">
   <div class="row editor-row">
     <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
       <div class="form-group snippet-title">
         <input id="snippet-name-input" name="title" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' ng-maxlength="20"/>
       </div>
-      <button type="submit" class="col m3 waves-effect waves-light btn save-snippet">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
+      <button type="submit" class="col m3 waves-effect waves-light btn save-snippet right">{{editor.buttonText}}<i class='material-icons right'>archive</i></button>
       <p ng-show="snippetForm.title.$error.maxlength" class="help-block">Snippet name must be less than 20 characters</p>
     </form>
+    </div>
+    <div class="row editor-row"
     <form name="descriptionForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '">
       <div class="form-group snippet-description">
         <input id="snippet-description-input" name="description" placeholder="add a description" type="text" class="form-control col s12" ng-model="editor.snippetObj.description" ng-maxlength="100"/>

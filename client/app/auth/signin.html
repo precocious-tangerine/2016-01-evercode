@@ -5,7 +5,7 @@
       <form name="userForm" ng-submit="authCtrl.signin(userForm.$valid)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
           <input type='text' placeholder="Email" name='email' class='form-control, validate' ng-model='authCtrl.user.email' required>
-          <p ng-hide='authCtrl.failed' class="help-block"> Invalid information. Try again. </p>
+          <p ng-show='authCtrl.failed' class="help-block"> Invalid information. Try again. </p>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
           <input type="password" placeholder="Password" name='password' class="form-control" ng-model='authCtrl.user.password' required>
