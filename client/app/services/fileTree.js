@@ -30,7 +30,6 @@ export const insertNode = (origTree, filePath, node) => {
 }
 
 export const deleteNode = (origTree, filePath) => {
-  console.log('deleteNode ', origTree, ' ', filePath);
   let tree = Object.assign({}, origTree, {__root: origTree.__root});
   let childrenPaths = getAllChildren(tree, filePath, true).map(child => child.filePath);
   let parent = getParent(tree, filePath);
