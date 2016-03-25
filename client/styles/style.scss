@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   width: 100%;
   margin: 0;
+  color: #2E3C56;
 }
 
 .btn {
@@ -221,10 +222,14 @@ nav,
 }
 
 .outerContainer {
-  position: fixed;
+  position: relative;
   margin-left: 70px !important;
   margin-top: 16px !important;
   padding-left: 0px !important;
+}
+
+.innerContainer {
+  
 }
 
 .side-nav li {
@@ -282,6 +287,10 @@ nav,
 
 .snippet-gallery-card {
   padding: 10px;
+}
+
+.public-chip {
+  background-color: #f1c40f;
 }
 
 /*---------ANIMATION---------*/

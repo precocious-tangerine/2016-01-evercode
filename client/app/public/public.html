@@ -10,7 +10,7 @@
   <div class="row">
     <h4 style="text-align: center">Public Snippets</h4>
     <ul class="">
-      <li class="snippet-gallery col s12 m3" ng-repeat="snippet in public.snippetList">
+      <li class="snippet-gallery col s12 m4 l3" ng-repeat="snippet in public.snippetList">
         <div class="card snippet-gallery-card">
           <h5>{{snippet.name}}</h5>
           <hr>
@@ -18,7 +18,7 @@
           <p>{{snippet.createdBy}}<br>
              {{snippet.language}}
           </p>
-          <span class="chip" ng-repeat="tag in snippet.tags">{{tag}}</span>
+          <span class="chip public-chip" ng-repeat="tag in snippet.tags">{{tag}}</span>
         </div>
       </li>
     </ul>
