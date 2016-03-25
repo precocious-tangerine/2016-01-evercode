@@ -17,11 +17,7 @@ let snippetSchema = mongoose.Schema({
   favorite: { type: Boolean, default: false },
   shareUrl: { type: String },
   shortcut: { type: String },
-<<<<<<< 138e06ce850436e13ac1ad25b6216f43eb932aff
   language: { type: String, default: 'javascript' }
-=======
-  language: { type: String, default: 'javascript'}
->>>>>>> Persist shortcuts and language. Dynamically render language and theme
 });
 
 let Snippet = mongoose.model('Snippet', snippetSchema);
