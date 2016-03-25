@@ -4,6 +4,10 @@ html, body {
   margin: 0;
 }
 
+.btn {
+  background-color: #f1c40f;
+}
+
 #container {
   position: absolute;
   height: auto;
@@ -231,6 +235,10 @@ nav,
   border: 1px solid lightgrey;
 }
 
+.folder-list:hover {
+  background-color: #f6f6f6;
+}
+
 .folder-list-item {
   display: inline-block;
 }
@@ -265,6 +273,15 @@ nav,
 
 .breadcrumb, .breadcrumb:before {
   color: black !important;
+}
+
+.snippet-gallery {
+  min-height: 275px;
+  padding: 3px;
+}
+
+.snippet-gallery-card {
+  padding: 10px;
 }
 
 /*---------ANIMATION---------*/
