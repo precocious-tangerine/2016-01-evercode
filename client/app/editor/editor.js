@@ -16,12 +16,12 @@ class EditorCtrl {
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
-    this.codemirrorLoaded = (_editor) =>{
+    this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
-    this.cmDefaults = {language: 'javascript', theme: 'eclipse'};
+    this.cmDefaults = { language: 'javascript', theme: 'eclipse' };
     this.tinymceOptions = {
       height: '40vh',
       toolbar: 'styleselect | bold italic | bullist numlist outdent indent',
@@ -58,7 +58,7 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, 
+    let objectToUpdate = Object.assign({},
       this.snippetMap[this.selectedSnippet].value, 
       { data: this.snippetObj.data,
         name: this.snippetObj.name,
@@ -81,19 +81,19 @@ class EditorCtrl {
 
   addAnnotation() {
     let annotationObj = {
-      id: this.snippetMap[this.selectedSnippet].value._id, 
+      id: this.snippetMap[this.selectedSnippet].value._id,
       data: this.annotation,
-    }
-    this.Snippets.addAnnotation(annotationObj)
+    };
+    this.Snippets.addAnnotation(annotationObj);
   }
 
   changeLanguage(language) {
-    this.editor.setOption('mode', language)
+    this.editor.setOption('mode', language);
   }
 
   changeTheme(theme) {
-    this.editor.setOption('theme', theme)
-    this.Auth.updateUser(theme);
+    this.editor.setOption('theme', theme);
+    this.Auth.updateUser({ theme: prop });
   }
 
   togglePublic() {
@@ -114,13 +114,8 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    snippetObj.data = selectedSnippet ? snippetMap[selectedSnippet].value.data : ' ';
-    snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
-    snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
-    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : 'javascript';
-    snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
-    snippetObj.annotation = selectedSnippet ? snippetMap[selectedSnippet].value.annotation : '';
-    snippetObj.description = selectedSnippet ? snippetMap[selectedSnippet].value.description : '';
+    selectedSnippet && !$.isEmptyObject(snippetMap) ? Object.assign(snippetObj, snippetMap[selectedSnippet].value) : snippetObj.language = 'javascript';
+
     return {
       path,
       snippetMap,

@@ -12,16 +12,18 @@ export const createMainCtrl = () => {
 }
 
 class MainCtrl {
-  constructor($ngRedux, Folders, Auth, $state) {
-    Auth.getUserInfo();
-    Folders.getFileTree();
+  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets) {
+    $auth.isAuthenticated() ? Auth.getUserInfo(): null;
+    this.activeUser? Folders.getFileTree() : null;
     this.$state = $state;
     this.Auth = Auth;
     this.Folders = Folders;
+    this.Snippets = Snippets;
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
-  toggleSideView(path) {
+  toggleSideView(path, newSnippet) {
+    newSnippet ? this.Snippets.deselectSnippet() : null;
     this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
   }
 
@@ -49,7 +51,7 @@ class MainCtrl {
     return {
       snippetMap,
       selectedFolder,
-      activeUser,
+      activeUser
     };
   }
 
