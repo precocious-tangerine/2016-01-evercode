@@ -114,17 +114,8 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    if (selectedSnippet && !$.isEmptyObject(snippetMap)) {
-      snippetObj.data = snippetMap[selectedSnippet].value.data;
-      snippetObj.name = snippetMap[selectedSnippet].value.name;
-      snippetObj.shortcut = snippetMap[selectedSnippet].value.shortcut;
-      snippetObj.language = snippetMap[selectedSnippet].value.language;
-      snippetObj.public = snippetMap[selectedSnippet].value.public;
-      snippetObj.annotation = snippetMap[selectedSnippet].value.annotation;
-      snippetObj.description = snippetMap[selectedSnippet].value.description;
-    } else {
-      snippetObj.language = 'javascript';
-    }
+    selectedSnippet && !$.isEmptyObject(snippetMap) ? Object.assign(snippetObj, snippetMap[selectedSnippet].value) : snippetObj.language = 'javascript';
+
     return {
       path,
       snippetMap,

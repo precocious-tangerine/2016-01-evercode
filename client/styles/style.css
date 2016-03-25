@@ -303,6 +303,9 @@ nav,
   color: white;
 }
 
+.toast {
+  color: white;
+}
 /*---------ANIMATION---------*/
 
 .outerContainer {
@@ -333,7 +336,3 @@ nav,
 }
 
 /*--------------------------*/
-.breadcrumb, .breadcrumb:before {
-  color: black !important;
-
-}

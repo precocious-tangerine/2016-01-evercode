@@ -194,7 +194,6 @@ export class Auth {
           }).then((res) => {
             this.$auth.setToken(res.data.token);
             this.getUserInfo();
-            this.Folders.getFileTree();
             $('#snippets-modal').closeModal({
               dismissible: true,
               complete: () => {
@@ -213,7 +212,6 @@ export class Auth {
         this.$auth.authenticate('github')
           .then((res) => {
             this.getUserInfo();
-            this.Folders.getFileTree();
             Materialize.toast('Successfully signed in!', 5000, 'rounded');
             this.$state.go('main.editor');
           })
@@ -245,6 +243,7 @@ export class Auth {
             url: '/api/userInfo'
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
+            this.Folders.getFileTree();
             res.data.selectedSnippet ? dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet)) : null;
           })
           .catch(error => {
