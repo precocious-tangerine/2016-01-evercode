@@ -76,12 +76,7 @@ html, body {
   margin-top: 18px;
   margin-right: 15px;
   font-size: 1.5em;
-  color: grey;
-}
-
-.folder-icon, .code-icon {
-  font-size: 25px;
-  margin-right: 10px;
+  color: #95A5A6;
 }
 
 .snippets {
@@ -255,6 +250,19 @@ nav,
 
 .folder-text {
   font-size: 1.1em;
+}
+
+.folder-icon, .code-icon {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #95A5A6;
+}
+
+.list-description {
+  padding: 5px;
+  margin: 0;
+  font-size: 0.8em;
+  color: #95A5A6;
 }
 
 .back-button {

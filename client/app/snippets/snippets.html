@@ -56,6 +56,9 @@
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
           <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
         </span>
+        <p class="list-description">
+          {{snippet.value.description}}
+        </p>
       </div>
     </div>
   </div>
