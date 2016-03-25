@@ -16,12 +16,12 @@ class EditorCtrl {
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
-    this.codemirrorLoaded = (_editor) =>{
+    this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
-    this.cmDefaults = {language: 'javascript', theme: 'eclipse'};
+    this.cmDefaults = { language: 'javascript', theme: 'eclipse' };
     this.tinymceOptions = {
       height: '40vh',
       toolbar: 'styleselect | bold italic | bullist numlist outdent indent',
@@ -58,7 +58,7 @@ class EditorCtrl {
   }
 
   updateSnippet() {
-    let objectToUpdate = Object.assign({}, 
+    let objectToUpdate = Object.assign({},
       this.snippetMap[this.selectedSnippet].value, 
       { data: this.snippetObj.data,
         name: this.snippetObj.name,
@@ -81,7 +81,7 @@ class EditorCtrl {
 
   addAnnotation() {
     let annotationObj = {
-      id: this.snippetMap[this.selectedSnippet].value._id, 
+      id: this.snippetMap[this.selectedSnippet].value._id,
       data: this.annotation,
     };
     this.Snippets.addAnnotation(annotationObj);
@@ -114,13 +114,17 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    snippetObj.data = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.data : ' ';
-    snippetObj.name = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.name : '';
-    snippetObj.shortcut = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.shortcut : '';
-    snippetObj.language = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.language : 'javascript';
-    snippetObj.public = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.public : '';
-    snippetObj.annotation = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.annotation : '';
-    snippetObj.description = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.description : '';
+    if (selectedSnippet && !$.isEmptyObject(snippetMap)) {
+      snippetObj.data = snippetMap[selectedSnippet].value.data;
+      snippetObj.name = snippetMap[selectedSnippet].value.name;
+      snippetObj.shortcut = snippetMap[selectedSnippet].value.shortcut;
+      snippetObj.language = snippetMap[selectedSnippet].value.language;
+      snippetObj.public = snippetMap[selectedSnippet].value.public;
+      snippetObj.annotation = snippetMap[selectedSnippet].value.annotation;
+      snippetObj.description = snippetMap[selectedSnippet].value.description;
+    } else {
+      snippetObj.language = 'javascript';
+    }
     return {
       path,
       snippetMap,

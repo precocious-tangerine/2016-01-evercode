@@ -12,9 +12,9 @@ export const createMainCtrl = () => {
 }
 
 class MainCtrl {
-  constructor($ngRedux, $state, Folders, Auth, Snippets) {
-    Auth.getUserInfo();
-    Folders.getFileTree();
+  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets) {
+    $auth.isAuthenticated() ? Auth.getUserInfo(): null;
+    this.activeUser? Folders.getFileTree() : null;
     this.$state = $state;
     this.Auth = Auth;
     this.Folders = Folders;
@@ -51,7 +51,7 @@ class MainCtrl {
     return {
       snippetMap,
       selectedFolder,
-      activeUser,
+      activeUser
     };
   }
 

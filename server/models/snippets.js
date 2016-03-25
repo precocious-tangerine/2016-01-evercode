@@ -7,7 +7,7 @@ let snippetSchema = mongoose.Schema({
   _updatedAt: { type: Date, default: new Date() },
   createdBy: { type: String, required: true },
   username: { type: String, required: true },
-  data: { type: String, required: true },
+  data: { type: String },
   name: { type: String, required: true },
   filePath: { type: String, required: true },
   tags: { type: [String], default: [] },

@@ -245,7 +245,7 @@ export class Auth {
             url: '/api/userInfo'
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
-            dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet));
+            res.data.selectedSnippet ? dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet)) : null;
           })
           .catch(error => {
             console.error(error);
