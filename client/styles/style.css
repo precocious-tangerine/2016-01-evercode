@@ -306,6 +306,21 @@ nav,
 .toast {
   color: white;
 }
+
+.download-header {
+  text-align: center;
+}
+
+.download-instructions-container > h4, h6 {
+  text-align: center;
+}
+.download-instructions-container > h6 {
+  font-style: italic;
+}
+
+.download-link {
+  text-align: center;
+}
 /*---------ANIMATION---------*/
 
 .outerContainer {

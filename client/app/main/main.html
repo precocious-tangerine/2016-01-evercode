@@ -54,6 +54,13 @@
         </a>
       </div>
     </li>
+    <li class="row" ng-click="mainCtrl.toggleSideView('download')">
+      <div class="nav-icon">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Sublime Plugin">
+          <i class="material-icons">assignment_returned</i>
+        </a>
+      </div>
+    </li>
     <li class="row" ng-show='mainCtrl.activeUser.email'>
       <div class="nav-icon">
         <a ui-sref='main' class="waves-effect waves-teal nav-link logout tooltipped" data-position="right" data-delay="50" data-tooltip="Logout" ng-click='mainCtrl.signout()'>
