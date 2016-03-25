@@ -6,7 +6,7 @@
 @import "node_modules/materialize-css/sass/components/color";
 
 // Variables;
-@import "client/styles/variables";
+@import "variables";
 
 // Reset
 @import "node_modules/materialize-css/sass/components/normalize";
@@ -38,3 +38,6 @@
 @import "node_modules/materialize-css/sass/components/date_picker/default.scss";
 @import "node_modules/materialize-css/sass/components/date_picker/default.date.scss";
 @import "node_modules/materialize-css/sass/components/date_picker/default.time.scss";
+
+//our styles
+@import "style"
