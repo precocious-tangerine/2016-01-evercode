@@ -14,7 +14,7 @@ module.exports = {
   },
   module: {
     preLoaders: [{
-      text: /\.js$/,
+      text: /(\.js|\.html)$/,
       loader: 'source-map-loader'
     }],
     loaders: [{
