@@ -83,17 +83,17 @@ class EditorCtrl {
     let annotationObj = {
       id: this.snippetMap[this.selectedSnippet].value._id, 
       data: this.annotation,
-    }
-    this.Snippets.addAnnotation(annotationObj)
+    };
+    this.Snippets.addAnnotation(annotationObj);
   }
 
   changeLanguage(language) {
-    this.editor.setOption('mode', language)
+    this.editor.setOption('mode', language);
   }
 
   changeTheme(theme) {
-    this.editor.setOption('theme', theme)
-    this.Auth.updateUser(theme);
+    this.editor.setOption('theme', theme);
+    this.Auth.updateUser({ theme: prop });
   }
 
   togglePublic() {
@@ -114,13 +114,13 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    snippetObj.data = selectedSnippet ? snippetMap[selectedSnippet].value.data : ' ';
-    snippetObj.name = selectedSnippet ? snippetMap[selectedSnippet].value.name : '';
-    snippetObj.shortcut = selectedSnippet ? snippetMap[selectedSnippet].value.shortcut : '';
-    snippetObj.language = selectedSnippet ? snippetMap[selectedSnippet].value.language : 'javascript';
-    snippetObj.public = selectedSnippet ? snippetMap[selectedSnippet].value.public : '';
-    snippetObj.annotation = selectedSnippet ? snippetMap[selectedSnippet].value.annotation : '';
-    snippetObj.description = selectedSnippet ? snippetMap[selectedSnippet].value.description : '';
+    snippetObj.data = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.data : ' ';
+    snippetObj.name = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.name : '';
+    snippetObj.shortcut = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.shortcut : '';
+    snippetObj.language = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.language : 'javascript';
+    snippetObj.public = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.public : '';
+    snippetObj.annotation = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.annotation : '';
+    snippetObj.description = selectedSnippet && !$.isEmptyObject(snippetMap) ? snippetMap[selectedSnippet].value.description : '';
     return {
       path,
       snippetMap,

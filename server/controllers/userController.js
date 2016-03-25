@@ -40,7 +40,7 @@ module.exports = {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
-        let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
+        let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme, selectedSnippet: userData.selectedSnippet };
         res.status(201).send(user);
       })
       .catch((err) => {

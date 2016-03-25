@@ -14,7 +14,6 @@ export class Folders {
             method: 'GET',
             url: '/api/user/snippets'
           }).then(res => {
-            console.log('status', res.status);
             var snippetMap = convertToTree(res.data);
             dispatch(Actions.setSnippetMap(snippetMap));
             this.selectedFolder ? null : dispatch(Actions.setSelectedFolder('/' + this.email));
@@ -68,9 +67,10 @@ export class Folders {
 }
 
 export class Snippets {
-  constructor($http, $ngRedux, Folders) {
+  constructor($http, $ngRedux, Folders, Auth) {
     this.$http = $http;
     this.Folders = Folders;
+    this.Auth = Auth;
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
   }
 
@@ -145,6 +145,7 @@ export class Snippets {
 
       changeSelectedSnippet(snippetFilePath) {
         dispatch(Actions.setSelectedSnippet(snippetFilePath));
+        this.Auth.updateUser({ selectedSnippet: snippetFilePath });
       },
 
       deselectSnippet() {
@@ -244,14 +245,14 @@ export class Auth {
             url: '/api/userInfo'
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
+            dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet));
           })
           .catch(error => {
             console.error(error);
           });
       },
 
-      updateUser(prop) {
-        let userObj = { theme: prop }
+      updateUser(userObj) {
         return this.$http({
             method: 'PUT',
             url: '/api/userInfo',
