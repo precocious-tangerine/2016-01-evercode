@@ -12,15 +12,16 @@ export const createMainCtrl = () => {
 }
 
 class MainCtrl {
-  constructor($ngRedux, Folders, Auth, $location, $state) {
-    this.clickedPath = false;
-    $ngRedux.connect(this.mapStateToThis.bind(this))(this);
+  constructor($ngRedux, Folders, Auth, $location, $state, $scope) {
+    this.breadcrumbPath = [];
     Auth.getUserInfo();
     Folders.getFileTree();
     this.$state = $state;
     this.$location = $location;
     this.Auth = Auth;
     this.Folders = Folders;
+
+    $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
   toggleSideView(path) {
@@ -28,8 +29,7 @@ class MainCtrl {
   }
 
   changeActiveTab(folderPath) {
-    this.clickedPath = true;
-    this.Folders.selectFolder(folderPath.value);
+    this.Folders.selectFolder(folderPath);
   }
 
   signout() {
@@ -44,16 +44,15 @@ class MainCtrl {
 
   mapStateToThis(state) {
     let { snippetMap, selectedFolder, activeUser } = state;
-    let boundFT = snippetMap ? FT.createBoundMethods(snippetMap) : null;
-    let avatar = activeUser ? activeUser.avatar_url : null;
-    let breadcrumbPath = selectedFolder ? boundFT.parents(selectedFolder).reverse().concat(boundFT.node(selectedFolder)) : null;
-    this.clickedPath = false;
+    let boundFT = snippetMap ? FT.createBoundMethods(snippetMap) : null; 
+    this.avatar = activeUser ? activeUser.avatar_url : null;
+    
+    let parents = selectedFolder ? boundFT.parents(selectedFolder).reverse() : [];
+    this.breadcrumbPath = selectedFolder ? parents.concat(boundFT.node(selectedFolder)) : [];
     return {
       snippetMap,
       selectedFolder,
-      breadcrumbPath,
-      avatar,
-      activeUser
+      activeUser,
     };
   }
 
