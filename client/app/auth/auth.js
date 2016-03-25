@@ -12,8 +12,7 @@ export const createAuthCtrl = (url) => {
 class AuthCtrl {
   constructor($auth, $state, Auth, Folders) {
     this.user = {};
-    this.failed = true;
-    // this.success 
+    this.failed = false;
     this.Auth = Auth;
     this.$auth = $auth;
     this.$state = $state;
@@ -21,36 +20,23 @@ class AuthCtrl {
   }
 
   githubAuth() {
-    this.$auth.authenticate('github').then((res) => {
-      this.Auth.getUserInfo();
-      this.Folders.getFileTree();
-      Materialize.toast('Successfully signed in!', 5000, 'rounded');
-      this.$state.go('main.editor');
-    })
+    this.failed = false;
+    this.Auth.githubSignin();
   }
 
   signin(boolean) {
-    this.failed = true;
+    this.failed = false;
     if (boolean) {
       this.Auth.signin(this.user);
     }
   }
 
   signup(boolean) {
-    this.failed = true;
+    this.failed = false;
     if (boolean && this.user.passwordConfirm === this.user.password) {
-      this.Auth.signup(this.user)
-        .then(res => {
-          Materialize.toast('Success! Check your e-mail for verification', 5000, 'rounded', () => {
-            this.$state.go('main.signin');
-          })
-        })
-        .catch(error => {
-          this.failed = false;
-          console.error(error);
-        });
+      this.Auth.signup(this.user);
     } else {
-      this.failed = false;
+      this.failed = true;
     }
   }
 

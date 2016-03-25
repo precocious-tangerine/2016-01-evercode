@@ -87,7 +87,8 @@ class SnippetsCtrl {
       visibleFolders,
       selectedFolderObj,
       selectedFolder,
-      snippetArr
+      snippetArr,
+      snippetMap
     };
   }
 

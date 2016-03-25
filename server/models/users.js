@@ -8,7 +8,7 @@ let userSchema = mongoose.Schema({
   _password: { type: String },
   _createdAt: { type: Date, default: new Date() },
   _updatedAt: { type: Date, default: new Date() },
-  github: { type: String },
+  github: { type: Number },
   avatar_url: { type: String },
   username: { type: String },
   email: { type: String, required: true, unique: true, dropDups: true },
@@ -33,11 +33,14 @@ User.makeUser = (userObj, callback) => {
       })
       .then(result => callback(null, result))
       .catch(err => callback(err, null));
-  } else if (typeof userObj.id === 'number') {
+  } else if (userObj.github) {
     // OAuth based login (no supplied password)
-    return User.create(userObj)
-      .then(result => callback(null, result))
-      .catch(err => callback(err, null));
+    return Snippets.makeRootFolderAsync(userObj.email, userObj.username)
+      .then(success => {
+        return User.create(userObj)
+          .then(result => callback(null, result))
+          .catch(err => callback(err, null));
+      });
   } else {
     callback(new Error('must login via github or local session'), null);
   }

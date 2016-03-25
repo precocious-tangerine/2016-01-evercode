@@ -17,8 +17,7 @@
        });
    }),
    addSnippet: ((req, res) => {
-     let email = req.user.email;
-     req.body.createdBy = email;
+     req.body.createdBy = req.user.email;
      req.body.username = req.user.username;
      Snippets.makeSnippetAsync(req.body)
        .then(snippet => {
