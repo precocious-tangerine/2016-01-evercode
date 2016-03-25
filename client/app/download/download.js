@@ -11,4 +11,6 @@ export const createDownloadCtrl = (url) => {
 }
 
 class DownloadCtrl {
+	constructor() {
+	}
 }

@@ -39,7 +39,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.editor.snippets', snippets('/snippets'))
       .state('main.editor.favorites', snippets('/favorites'))
       .state('main.editor.search', search())
-      //.state('main.editor.download', createDownloadCtrl('/download'))
+      .state('main.download', createDownloadCtrl('/download'))
 
     $httpProvider.interceptors.push('AttachTokens');
 
