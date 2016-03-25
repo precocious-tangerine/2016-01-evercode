@@ -19,7 +19,7 @@ class EditorCtrl {
     this.codemirrorLoaded = (_editor) =>{
       this.editor = _editor;
     };
-    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css']
+    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
     this.cmDefaults = {language: 'javascript', theme: 'eclipse'};
     this.tinymceOptions = {

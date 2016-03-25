@@ -6,7 +6,7 @@ html, body {
 }
 
 .btn {
-  background-color: #f1c40f;
+  background-color: #2E3C56;
 }
 
 #container {
@@ -123,7 +123,7 @@ html, body {
 .code-selector select {
   color: grey;
   border: 0;
-  width: 120px;
+  width: auto;
   height: 30px;
   border-radius: 3px;
   overflow: hidden;
@@ -246,6 +246,7 @@ nav,
 
 .folder-list-item {
   display: inline-block;
+  overflow: hidden;
 }
 
 .folder-list-link {
@@ -290,7 +291,8 @@ nav,
 }
 
 .public-chip {
-  background-color: #f1c40f;
+  background-color: #2E3C56;
+  color: white;
 }
 
 /*---------ANIMATION---------*/
