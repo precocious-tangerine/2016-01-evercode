@@ -8527,7 +8527,11 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 html, body {
   height: 100%;
   width: 100%;
-  margin: 0; }
+  margin: 0;
+  color: #2E3C56; }
+
+.btn, .btn-large {
+  background-color: #2E3C56; }
 
 #container {
   position: absolute;
@@ -8627,7 +8631,7 @@ html, body {
 .code-selector select {
   color: grey;
   border: 0;
-  width: 120px;
+  width: auto;
   height: 30px;
   border-radius: 3px;
   overflow: hidden; }
@@ -8707,7 +8711,7 @@ nav,
   margin-left: 100px; }
 
 .outerContainer {
-  position: fixed;
+  position: relative;
   margin-left: 70px !important;
   margin-top: 16px !important;
   padding-left: 0px !important; }
@@ -8718,8 +8722,12 @@ nav,
 .folder-list {
   border: 1px solid lightgrey; }
 
+.folder-list:hover {
+  background-color: #f6f6f6; }
+
 .folder-list-item {
-  display: inline-block; }
+  display: inline-block;
+  overflow: hidden; }
 
 .folder-list-link {
   padding: 0; }
@@ -8746,6 +8754,17 @@ nav,
 .breadcrumb, .breadcrumb:before {
   color: black !important; }
 
+.snippet-gallery {
+  min-height: 275px;
+  padding: 3px; }
+
+.snippet-gallery-card {
+  padding: 10px; }
+
+.public-chip {
+  background-color: #2E3C56;
+  color: white; }
+
 /*---------ANIMATION---------*/
 .outerContainer {
   -webkit-transition: -webkit-transform .5s ease-in-out;
@@ -8768,3 +8787,7 @@ nav,
 .outerContainer.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%); }
+
+/*--------------------------*/
+.breadcrumb, .breadcrumb:before {
+  color: black !important; }
