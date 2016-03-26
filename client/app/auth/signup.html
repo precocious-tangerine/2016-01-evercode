@@ -1,7 +1,7 @@
 <div class='ng-modal' ng-show='authCtrl.show'>
-  <div class='ng-modal-overlay' ng-click='hideModal()'></div>
+  <div class='ng-modal-overlay' ng-click='authCtrl.hideModal()'></div>
   <div class='ng-modal-dialog' ng-style='dialogStyle'>
-    <div class='ng-modal-close' ng-click='hideModal()'>X</div>
+    <div class='ng-modal-close' ng-click='authCtrl.hideModal()'>X</div>
 
 <div class="row row-centered">
   <div class="col s4 offset-s4 col-centered">
@@ -30,7 +30,7 @@
         </div>
         <button type="submit" class="waves-effect waves-light btn">Sign Up</button>
       </form>
-      <a ui-sref="main.signin">Already have an account? <strong>Signin</strong> ...</a>
+      <a href='#' ng-click='authCtrl.switch()'>Already have an account? <strong>Signin</strong> ...</a>
     </div>
   </div>
 </div>

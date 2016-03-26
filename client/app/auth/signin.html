@@ -1,7 +1,7 @@
 <div class='ng-modal' ng-show='authCtrl.show'>
-  <div class='ng-modal-overlay' ng-click='hideModal()'></div>
+  <div class='ng-modal-overlay' ng-click='authCtrl.hideModal()'></div>
   <div class='ng-modal-dialog' ng-style='dialogStyle'>
-    <div class='ng-modal-close' ng-click='hideModal()'>X</div>
+    <div class='ng-modal-close' ng-click='authCtrl.hideModal()'>X</div>
 
 <div class="row row-centered">
   <div class="col s4 offset-s4 col-centered">
@@ -20,7 +20,7 @@
       <div class="github">
         <a ng-click='authCtrl.githubAuth()'>Sign In with Github</a>
       </div>
-      <a ui-sref="main.signup">Don't have an account? <strong>Signup</strong> ...</a>
+      <a href='#' ng-click='authCtrl.switch()'>Don't have an account? <strong>Signup</strong> ...</a>
     </div>
   </div>
 </div>

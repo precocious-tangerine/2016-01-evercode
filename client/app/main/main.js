@@ -43,7 +43,6 @@ class MainCtrl {
   toggleSignupModal() {
     this.signupModalShow = !this.signupModalShow;
   }
-
   mapStateToThis(state) {
     let { snippetMap, selectedFolder, activeUser } = state;
     let boundFT = snippetMap ? FT.createBoundMethods(snippetMap) : null; 
