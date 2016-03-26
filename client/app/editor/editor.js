@@ -124,6 +124,7 @@ class EditorCtrl {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet])
+      editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
       snippetObj.language = 'javascript'
     }
