@@ -205,10 +205,9 @@ export class Public {
 }
 
 export class Auth {
-  constructor($http, $state, $auth, $ngRedux, Folders) {
+  constructor($http, $auth, $ngRedux, Folders) {
     $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
     this.$http = $http;
-    this.$state = $state;
     this.Folders = Folders;
     this.$auth = $auth;
   }
@@ -229,7 +228,6 @@ export class Auth {
               }
             });
             Materialize.toast('Successfully signed in!', 5000, 'rounded');
-            this.$state.go('main.editor');
           })
           .catch(error => {
             console.error(error);
@@ -241,7 +239,6 @@ export class Auth {
           .then((res) => {
             this.getUserInfo();
             Materialize.toast('Successfully signed in!', 5000, 'rounded');
-            this.$state.go('main.editor');
           })
           .catch(error => {
             console.error(error);
@@ -255,9 +252,7 @@ export class Auth {
             data: user
           })
           .then(res => {
-            Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded', () => {
-              this.$state.go('main.signin');
-            })
+            Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded')
           })
           .catch(error => {
             this.failed = false;
