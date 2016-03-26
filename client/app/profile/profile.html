@@ -1,11 +1,19 @@
 <div class="row">
-  <div>
-    <a ui-sref="main" class="waves-effect avatar waves-teal nav-link">
-      <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
-      <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../avatar.png" />
-    </a>
+  <div class="user-profile">
+    <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
+    <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../avatar.png" />
     <h4>{{profile.activeUser.username}}</h4>
+    <hr>
     <p>{{profile.activeUser.email}}</p>
-    <p>{{profile.activeUser.theme}}</p>
+    <h6>Editor Theme</h6>
+    <div class="profile-theme">
+      <select ng-model="profile.userTheme" ng-init="profile.userTheme = profile.userTheme || 'eclipse'" ng-options="theme as theme for theme in profile.cmThemes" ng-change="profile.changeTheme(profile.userTheme)" class="browser-default">
+      </select>
+    </div>
+    <h6>Default Language</h6>
+    <div class="profile-language">
+      <select ng-model="profile.userLanguage" ng-init="profile.userLanguage = profile.userLanguage || 'eclipse'" ng-options="language as language for language in profile.cmLanguages" ng-change="profile.changeLanguage(profile.userLanguage)" class="browser-default">
+      </select>
+    </div>
   </div>
 </div>

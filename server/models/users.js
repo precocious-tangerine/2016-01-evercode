@@ -13,6 +13,7 @@ let userSchema = mongoose.Schema({
   username: { type: String },
   email: { type: String, required: true, unique: true, dropDups: true },
   theme: { type: String, default: 'eclipse' },
+  language: { type: String, default: 'javascript' },
   selectedSnippet: { type: String }
 });
 
