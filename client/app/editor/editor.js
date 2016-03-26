@@ -48,7 +48,6 @@ class EditorCtrl {
     if (this.tag) {
       objectToUpdate.tags.push(this.tag);
       this.tag = '';
-      this.toggleTag();
     }
     if (tagToRemove) {
       objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
