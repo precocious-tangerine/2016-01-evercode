@@ -42,32 +42,6 @@ export class Folders {
       },
 
       renameFolder(oldNode, newNode) {
-        boundFT = createBoundMethods(this.snippetMap);
-        oldParent = boundFt.parent(oldNode.filePath);
-        oldChildren = boundFT.children(oldNode.filePath, true);
-        newParent = Object.assign(oldParent, {children: oldParent.map((childPath) => {
-            return childPath === oldNode.filePath ? newNode.filePath: childPath;
-          })
-        });
-        newChildren = oldChildren.map( (childNode) => {
-          return Object.assign({}, childNode, {parent: newNode.filePath});
-        }); 
-
-        return this.$http({
-            method: 'PUT',
-            url: '/api/snippets',
-            data: snippetObj
-        })
-
-
-
-
-        dispatch(Actions.removeSnippetMap(oldNode.filePath));
-        dispatch(Actions.addSnippetMap(newParent.filePath, newParent));
-        dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
-        newChildren.forEach( (childNode) => {
-          Actions.dispatch()
-        })
       },
 
       moveSnippet(oldNode, newNode) {
