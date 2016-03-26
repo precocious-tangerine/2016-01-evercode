@@ -192,7 +192,7 @@ export class Public {
             method: 'GET',
             url: '/snippets'
           }).then(res => {
-            dispatch(Actions.setPublicList(publicList));
+            dispatch(Actions.setPublicList(res.data));
           })
           .catch(error => {
             console.error(error);
