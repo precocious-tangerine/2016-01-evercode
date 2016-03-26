@@ -1,5 +1,5 @@
-<div ng-class="editor.$state.is('main.editor.search') ? null : 'card'" class="col s12 m3 l3 innerContainer" ui-view></div>
-<div ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12 editor' : 'col s12 m9 l9 editor'">
+<div ng-class="editor.$state.is('main.editor.search') ? null : 'card'" class="col s12 m3 l3 innerContainer rotate" ui-view></div>
+<div class='rotate editor col s12 right' ng-class="editor.$state.is('main.editor') ? 'm12 l12' : 'm9 l9'">
   <div class="row editor-row">
     <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
       <div class="form-group snippet-title">
