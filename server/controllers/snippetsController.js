@@ -123,7 +123,6 @@
 
    getSharedSnippet: ((req, res) => {
       var id = req.query.s;
-      console.log(id);
       Snippets.getSnippetAsync(id)
        .then(snippet => {
          if (snippet) {
