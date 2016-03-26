@@ -13,7 +13,6 @@ export const editor = () => {
 class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, $state, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
     this.Public = Public;
