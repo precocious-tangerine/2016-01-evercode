@@ -1,7 +1,7 @@
  'use strict';
  let Promise = require('bluebird');
  let Snippets = Promise.promisifyAll(require('../models/snippets'));
- let Utils = require('../config/utils');
+ let bases = require('bases');
 
  module.exports = {
    getSnippet: ((req, res) => {
@@ -123,9 +123,8 @@
    }),
 
    getSharedSnippet: ((req, res) => {
-      var hexId = Utils.asciiToHex(req.query.n);
-      console.log("_id:",hexId ,"\nascii:",req.query.n);
-      Snippets.getSnippetAsync(hexId)
+      var id = req.query.n;
+      Snippets.getSnippetAsync(id);
        .then(snippet => {
          if (snippet) {
            res.status(200).send(snippet);
