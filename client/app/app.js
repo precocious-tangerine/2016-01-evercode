@@ -4,7 +4,7 @@ import createLogger from 'redux-logger';
 import { finalReducer } from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import ui_codemirror from 'angular-ui-codemirror';
-import { createSigninModal, createSignupModal} from './auth/auth.js';
+import { createAuthModal } from './auth/auth.js';
 import { createDownloadCtrl } from './download/download.js';
 import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
@@ -46,8 +46,8 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .service('Folders', Folders)
   .service('Snippets', Snippets)
   .service('Public', Public)
-  .directive('signin', createSigninModal)
-  .directive('signup', createSignupModal)
+  .directive('signin', createAuthModal('/signin'))
+  .directive('signup', createAuthModal('/signup'))
   .factory('AttachTokens', ($window) => {
     var attach = {
       request: (object) => {
