@@ -23,7 +23,7 @@ class ProfileCtrl {
     this.Auth.updateUser({ theme: theme });
   }
 
-  changeTheme(language) {
+  changeLanguage(language) {
     this.Auth.updateUser({ language: language });
   }
 

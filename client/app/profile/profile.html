@@ -6,13 +6,15 @@
     <hr>
     <p>{{profile.activeUser.email}}</p>
     <h6>Editor Theme</h6>
+    <hr>
     <div class="profile-theme">
       <select ng-model="profile.userTheme" ng-init="profile.userTheme = profile.userTheme || 'eclipse'" ng-options="theme as theme for theme in profile.cmThemes" ng-change="profile.changeTheme(profile.userTheme)" class="browser-default">
       </select>
     </div>
     <h6>Default Language</h6>
+    <hr>
     <div class="profile-language">
-      <select ng-model="profile.userLanguage" ng-init="profile.userLanguage = profile.userLanguage || 'eclipse'" ng-options="language as language for language in profile.cmLanguages" ng-change="profile.changeLanguage(profile.userLanguage)" class="browser-default">
+      <select ng-model="profile.userLanguage" ng-init="profile.userLanguage = profile.userLanguage || 'javascript'" ng-options="language as language for language in profile.cmLanguages" ng-change="profile.changeLanguage(profile.userLanguage)" class="browser-default">
       </select>
     </div>
   </div>

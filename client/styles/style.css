@@ -63,6 +63,11 @@ html, body {
   margin-top: 190px;
 }
 
+.user-profile h6 {
+  text-align: left;
+  font-weight: bold;
+}
+
 .folders {
   padding: 5px;
   font-size: 1.5em;

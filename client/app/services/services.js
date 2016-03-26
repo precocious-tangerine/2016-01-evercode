@@ -296,6 +296,7 @@ export class Auth {
             url: '/api/userInfo',
             data: userObj
           }).then(res => {
+            console.log('response from update user: ',res.data);
             dispatch(Actions.setActiveUser(res.data));
           })
           .catch(error => {
