@@ -1,5 +1,9 @@
 <div class="row">
   <div>
+    <a ui-sref="main" class="waves-effect avatar waves-teal nav-link">
+      <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
+      <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../avatar.png" />
+    </a>
     <h4>{{profile.activeUser.username}}</h4>
     <p>{{profile.activeUser.email}}</p>
     <p>{{profile.activeUser.theme}}</p>
