@@ -25,4 +25,12 @@ class PublicCtrl {
   openSnippet(snippet) {
     this.$state.go('main.editor');
   }
+
+  mapStateToThis(state) {
+    let { publicList, selectedPublicSnippet } = state;
+    return {
+      publicList,
+      selectedPublicSnippet
+    }
+  }
 }
