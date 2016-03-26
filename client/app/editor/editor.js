@@ -70,9 +70,7 @@ class EditorCtrl {
         description: this.snippetObj.description
       });
     objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
-    let _id = objectToUpdate._id;
-    delete objectToUpdate._id;
-    this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate }, this.snippetMap[this.selectedSnippet].filePath);
+    this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[this.selectedSnippet].filePath);
   }
 
   addSnippet() {
@@ -122,7 +120,7 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    if(selectedSnippet && !$.isEmptyObject(snippetMap)) {
+    if(selectedSnippet && (selectedSnippet in snippetMap)) {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet])
