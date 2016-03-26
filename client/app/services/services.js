@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import { convertToTree, getAllChildren } from './fileTree.js';
+import { convertToTree, getAllChildren, createBoundMethods } from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -39,6 +39,14 @@ export class Folders {
 
       selectFolder(folderPath) {
         dispatch(Actions.setSelectedFolder(folderPath));
+      },
+
+      renameFolder(oldNode, newNode) {
+      },
+
+      moveSnippet(oldNode, newNode) {
+        // dispatch(Actions.removeSnippetMap(oldNode.filePath));
+        // dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
       },
 
       removeFolder(folderPath) {
@@ -100,12 +108,15 @@ export class Snippets {
       },
 
       updateSnippet(snippetObj, oldFilePath) {
+        //delete old id so mongoose doesn't get upset
+        let snippetId = snippetObj._id;
+        delete snippetObj.Id;
         return this.$http({
             method: 'PUT',
             url: '/api/snippets',
-            data: snippetObj
+            data: {snippetId, value: snippetObj}
           }).then(res => {
-            let nodeToPass = Object.assign({}, snippetObj, { value: res.data });
+            let nodeToPass = Object.assign({}, this.snippetMap[oldFilePath], { filePath: res.data.filePath, value: res.data });
             Materialize.toast('Snippet updated!', 3000, 'rounded');
             dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
             this.activeUser.selectedSnippet === oldFilePath ? this.Auth.updateUser({ selectedSnippet: res.data.filePath }) : null;
