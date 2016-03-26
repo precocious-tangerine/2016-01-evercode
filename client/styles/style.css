@@ -201,6 +201,9 @@ html, body {
   height: 100vh;
 }
 
+#nav-mobile a {
+  width: 66px;
+}
 nav,
 .nav-wrapper {
   margin: 0;
@@ -321,33 +324,42 @@ nav,
 .download-link {
   text-align: center;
 }
-/*---------ANIMATION---------*/
 
-.outerContainer {
-  -webkit-transition: -webkit-transform .5s ease-in-out;
-  -moz-transition: -moz-transform .5s ease-in-out;
-  -o-transition: -o-transform .5s ease-in-out;
-  transition: transform .5s ease-in-out;
-  -webkit-transform: translateX(0);
-  transform: translateX(0);
+#snippet-name-input {
+  font-size: 36px;
+  width: 40%;
 }
 
-.outerContainer.ng-enter {
+#snippet-description-input {
+  width: 80%;
+}
+
+/*---------ANIMATION---------*/
+
+.rotate {
+  -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.rotate.ng-enter {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 }
 
-.outerContainer.ng-enter.ng-enter-active,
-.outerContainer.ng-leave {
+.rotate.ng-enter.ng-enter-active,
+.rotate.ng-leave {
   position: absolute;
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
 
-.outerContainer.ng-leave.ng-leave-active {
+.rotate.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%);
-
 }
 
 /*--------------------------*/

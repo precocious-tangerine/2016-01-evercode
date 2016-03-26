@@ -75,8 +75,13 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    this.snippetObj.filePath = this.path + '/' + this.snippetObj.name;
-    this.Snippets.addSnippet(this.snippetObj);
+    let path = this.path + '/' + this.snippetObj.name;
+    if(!this.snippetMap[path]){
+      this.snippetObj.filePath = path;
+      this.Snippets.addSnippet(this.snippetObj);
+    } else {
+      Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+    }
   }
 
   addAnnotation() {

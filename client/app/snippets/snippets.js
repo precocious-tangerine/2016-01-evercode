@@ -20,8 +20,12 @@ class SnippetsCtrl {
 
   addFolder() {
       let path = this.selectedFolder + '/' + this.subFolder.name;
-      this.Folders.addFolder({ path: path });
-      this.subFolder.name = '';
+      if(!this.snippetMap[path]){
+        this.Folders.addFolder({ path: path });
+        this.subFolder.name = '';
+      } else {
+        Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+      }
   }
 
   removeFolder(folderPath) {

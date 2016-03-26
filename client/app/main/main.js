@@ -14,7 +14,6 @@ export const createMainCtrl = () => {
 class MainCtrl {
   constructor($ngRedux, $state, $auth, Folders, Auth, Snippets) {
     $auth.isAuthenticated() ? Auth.getUserInfo(): null;
-    this.activeUser? Folders.getFileTree() : null;
     this.$state = $state;
     this.Auth = Auth;
     this.Folders = Folders;

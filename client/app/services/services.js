@@ -222,19 +222,19 @@ export class Auth {
 
       signup(user) {
         return this.$http({
-          method: 'POST',
-          url: '/signup',
-          data: user
-        })
-        .then(res => {
-          Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded', () => {
-            this.$state.go('main.signin');
+            method: 'POST',
+            url: '/signup',
+            data: user
           })
-        })
-        .catch(error => {
-          this.failed = false;
-          console.error(error);
-        });
+          .then(res => {
+            Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded', () => {
+              this.$state.go('main.signin');
+            })
+          })
+          .catch(error => {
+            this.failed = false;
+            console.error(error);
+          });
       },
 
       getUserInfo() {
