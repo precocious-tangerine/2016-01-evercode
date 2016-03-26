@@ -11,8 +11,9 @@ export const publicPage = () => {
 }
 
 class PublicCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, $state, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.$state = $state;
     this.snippetList = [];
     this.loading = true;
     Snippets.getPublicSnippets().then(res => {
@@ -22,6 +23,7 @@ class PublicCtrl {
   }
 
   openSnippet(snippet) {
-    console.log('snippet path: ', snippet)
+    console.log('snippet path: ', snippet);
+    this.$state.go('main.editor');
   }
 }
