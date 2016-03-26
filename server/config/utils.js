@@ -97,13 +97,4 @@ module.exports.decode = (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-};
-
-module.exports.asciiToHex(str) {  
-  let results = [];  
-  for (let n = 0, l = str.length; n < l; n ++) {  
-    let hex = Number(str.charCodeAt(n)).toString(16);  
-    results.push(hex);  
-  }  
-  return results.join('');  
-}  
+}; 
