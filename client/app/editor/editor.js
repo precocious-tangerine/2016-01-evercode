@@ -11,7 +11,7 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state, $location, $http) {
+  constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$http = $http;
     this.$location = $location;
@@ -46,14 +46,14 @@ class EditorCtrl {
         })
         .then((response) => {
           console.log(response.data);
-          this.snippetObj = response.data;
-        })
+          this.Public.setPublicList(response.data);
+          this.Public.setSelectedPublicSnippet("share");
+        });
     }
   }
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
-
   }
 
   toggleAnnotation() {
@@ -76,8 +76,8 @@ class EditorCtrl {
 
   updateSnippet() {
     let objectToUpdate = Object.assign({},
-      this.snippetMap[this.selectedSnippet].value, 
-      { data: this.snippetObj.data,
+      this.snippetMap[this.selectedSnippet].value, { 
+        data: this.snippetObj.data,
         name: this.snippetObj.name,
         language: this.snippetObj.language,
         shortcut: this.snippetObj.shortcut,

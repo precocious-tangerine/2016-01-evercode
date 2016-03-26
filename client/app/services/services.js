@@ -197,6 +197,10 @@ export class Public {
           });
       },
 
+      setPublicList(data) {
+        dispatch(Actions.setPublicList(data));
+      },
+
       setSelectedPublicSnippet(filePath) {
         dispatch(Actions.removeSelectedSnippet());
         dispatch(Actions.setSelectedPublicSnippet(filePath));

@@ -129,9 +129,7 @@
        .then(snippet => {
          if (snippet) {
            res.status(200).send({
-            name: snippet.name,
-            created: snippet._createdAt,
-            snippet: snippet.data,
+            share: snippet
            });
          } else {
            res.status(404).send('Snippet not Found');
