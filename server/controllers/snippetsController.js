@@ -63,12 +63,12 @@
 
    getPublicSnippets: ((req, res) => {
      Snippets.getPublicAsync()
-       .then(snippets => {
-         if (snippets) {
-           res.status(200).send(snippets);
-         } else {
-           res.status(404).send('Snippets not Found');
-         }
+       .then(snippetList => {
+          let fileTreeObj = {};
+          snippetList.forEach(snippet => {
+            fileTreeObj[snippet.filePath] = snippet;
+          });
+          res.status(200).send(fileTreeObj);
        }).catch((err) => {
          console.log(err);
          res.status(500).send(err);
