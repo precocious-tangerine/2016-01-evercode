@@ -187,6 +187,7 @@ export class Public {
       },
 
       setSelectedPublicSnippet(filePath) {
+        dispatch(Actions.removeSelectedSnippet());
         dispatch(Actions.setSelectedPublicSnippet(filePath));
       },
 
