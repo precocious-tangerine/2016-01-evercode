@@ -35,7 +35,7 @@ class EditorCtrl {
   }
 
   toggleTag() {
-    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create snippet first', 3000, 'rounded');
+    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
 
   }
 

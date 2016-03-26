@@ -7,8 +7,8 @@ export let createSigninModal = () => {
     replace: true,
     link(scope, element, attrs) {
       scope.dialogStyle = {};
-      attrs.width ? scope.dialogStyle.width = attrs.width: null;
-      attrs.height ? scope.dialogStyle.height = attrs.height: null;
+      attrs.width ? scope.dialogStyle.width = attrs.width : null;
+      attrs.height ? scope.dialogStyle.height = attrs.height : null;
       scope.hideModal = () => scope.authCtrl.show = false;
     },
     controllerAs: 'authCtrl',
@@ -28,8 +28,8 @@ export let createSignupModal = () => {
     link(scope, element, attrs) {
       window.signupModal = scope;
       scope.dialogStyle = {};
-      attrs.width ? scope.dialogStyle.width = attrs.width: null;
-      attrs.height ? scope.dialogStyle.height = attrs.height: null;
+      attrs.width ? scope.dialogStyle.width = attrs.width : null;
+      attrs.height ? scope.dialogStyle.height = attrs.height : null;
       scope.hideModal = () => scope.authCtrl.show = false;
     },
     controllerAs: 'authCtrl',
@@ -40,13 +40,10 @@ export let createSignupModal = () => {
 }
 
 class AuthCtrl {
-  constructor($auth, $state, Auth, Folders) {
+  constructor(Auth) {
     this.user = {};
     this.failed = false;
     this.Auth = Auth;
-    this.$auth = $auth;
-    this.$state = $state;
-    this.Folders = Folders;
   }
 
   githubAuth() {

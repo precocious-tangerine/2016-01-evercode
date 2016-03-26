@@ -9,7 +9,7 @@
       <p ng-show="snippetForm.title.$error.maxlength" class="help-block">Snippet name must be less than 20 characters</p>
     </form>
     </div>
-    <div class="row editor-row"
+    <div class="row editor-row">
     <form name="descriptionForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '">
       <div class="form-group snippet-description">
         <input id="snippet-description-input" name="description" placeholder="add a description" type="text" class="form-control col s12" ng-model="editor.snippetObj.description" ng-maxlength="100"/>
