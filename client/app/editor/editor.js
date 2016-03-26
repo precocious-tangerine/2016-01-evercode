@@ -157,7 +157,7 @@ class EditorCtrl {
       Object.assign(snippetObj, publicList[selectedPublicSnippet])
       editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
-      snippetObj.language = 'javascript'
+      snippetObj.language = activeUser.language;
     }
 
     let buttonText;

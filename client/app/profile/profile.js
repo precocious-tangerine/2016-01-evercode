@@ -32,7 +32,9 @@ class ProfileCtrl {
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let userLanguage = activeUser.language ? activeUser.language : 'javascript';
     return {
-      activeUser
+      activeUser,
+      userTheme,
+      userLanguage
     }
   }
 }
