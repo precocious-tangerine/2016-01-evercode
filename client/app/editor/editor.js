@@ -48,7 +48,6 @@ class EditorCtrl {
     if (this.tag) {
       objectToUpdate.tags.push(this.tag);
       this.tag = '';
-      this.toggleTag();
     }
     if (tagToRemove) {
       objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
@@ -74,12 +73,22 @@ class EditorCtrl {
   }
 
   addSnippet() {
+    let objectToUpdate = (this.snippetObj.username !== this.activeUser.username)
+      ? Object.assign({}, 
+        { data: this.snippetObj.data,
+          name: this.snippetObj.name,
+          language: this.snippetObj.language,
+          public: false,
+          annotation: this.snippetObj.annotation,
+          description: this.snippetObj.description
+        })
+      : this.snippetObj;
     let path = this.path + '/' + this.snippetObj.name;
     if(!this.snippetObj.name){
       Materialize.toast('Please, name the snippet', 3000, 'rounded');
     } else if(!this.snippetMap[path]){
-      this.snippetObj.filePath = path;
-      this.Snippets.addSnippet(this.snippetObj);
+      objectToUpdate.filePath = path;
+      this.Snippets.addSnippet(objectToUpdate);
     } else {
       Materialize.toast('Can not use duplicate name', 3000, 'rounded');
     }
@@ -111,7 +120,6 @@ class EditorCtrl {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
-    let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
     let editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -124,8 +132,18 @@ class EditorCtrl {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet])
+      editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
       snippetObj.language = 'javascript'
+    }
+
+    let buttonText;
+    if(selectedPublicSnippet && snippetObj.username !== activeUser.username) {
+      buttonText = 'Fork Snippet';
+    } else if(selectedSnippet) {
+      buttonText = 'Update Snippet';
+    } else {
+      buttonText = 'Add Snippet';
     }
 
     return {
@@ -135,7 +153,8 @@ class EditorCtrl {
       buttonText,
       snippetObj,
       userTheme,
-      editorOptions
+      editorOptions,
+      activeUser
     };
   }
 }
