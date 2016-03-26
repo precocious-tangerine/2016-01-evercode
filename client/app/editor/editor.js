@@ -11,9 +11,8 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state) {
+  constructor($ngRedux, Snippets, Auth) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
     this.codemirrorLoaded = (_editor) => {
@@ -34,7 +33,7 @@ class EditorCtrl {
   }
 
   toggleTag() {
-    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create snippet first', 3000, 'rounded');
+    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
 
   }
 

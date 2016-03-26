@@ -40,12 +40,11 @@ export let createSignupModal = () => {
 }
 
 class AuthCtrl {
-  constructor($auth, $state, Auth, Folders) {
+  constructor($auth, Auth, Folders) {
     this.user = {};
     this.failed = false;
     this.Auth = Auth;
     this.$auth = $auth;
-    this.$state = $state;
     this.Folders = Folders;
   }
 
