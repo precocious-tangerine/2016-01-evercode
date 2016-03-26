@@ -11,7 +11,7 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state, $location, $http) {
+  constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$http = $http;
     this.$location = $location;
@@ -46,8 +46,9 @@ class EditorCtrl {
         })
         .then((response) => {
           console.log(response.data);
-          this.snippetObj = response.data;
-        })
+          this.Public.setPublicList(response.data);
+          this.Public.setSelectedPublicSnippet("share");
+        });
     }
   }
 
