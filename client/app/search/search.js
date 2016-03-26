@@ -11,9 +11,8 @@ export const search = () => {
 }
 
 class SearchCtrl {
-  constructor($ngRedux, Snippets, $state) {
+  constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
-    this.$state = $state;
     this.Snippets = Snippets;
   }
 
