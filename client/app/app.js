@@ -9,14 +9,14 @@ import { createDownloadCtrl } from './download/download.js';
 import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
-import { createMainCtrl} from './main/main.js';
+import { createMainCtrl } from './main/main.js';
 import { editor } from './editor/editor.js';
 import { publicPage } from './public/public.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
 import ngAnimate from 'angular-animate';
-import tinymce from './tinymce/tinymce.js'; 
+import tinymce from './tinymce/tinymce.js';
 angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
@@ -67,5 +67,8 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
         event.preventDefault();
         Materialize.toast('Please sign in first', 2000, 'rounded');
       }
+    });
+    $rootScope.$on('$stateChangeSuccess', () => {
+      $state.is('main') ? $state.go('.public') : null;
     });
   });
