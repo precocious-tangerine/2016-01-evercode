@@ -96,6 +96,7 @@ class EditorCtrl {
       description: this.snippetObj.description
     }) : this.snippetObj;
     let path = this.path + '/' + this.snippetObj.name;
+    objectToUpdate.shortcut = objectToUpdate.shortcut || this.snippetObj.name;
     if (!this.snippetObj.name) {
       Materialize.toast('Please, name the snippet', 3000, 'rounded');
     } else if (!this.snippetMap[path]) {

@@ -143,13 +143,25 @@ html, body {
 }
 
 .tag-row input {
-  margin-left: 10px;
   max-width: 100px;
   height: 20px;
   margin-bottom: -10px;
 }
 
+.tag-input {
+  margin-left: 10px;
+}
+
 .tag-label {
+  margin-right: 10px;
+}
+
+.tag {
+  margin-left: 1px;
+  float: left;
+}
+
+.shortcut img {
   margin-right: 10px;
 }
 
@@ -157,10 +169,6 @@ html, body {
   display: none;
 }
 
-.tag {
-  margin-left: 10px;
-  float: left;
-}
 
 .folder-name {
   margin-left: 5px;

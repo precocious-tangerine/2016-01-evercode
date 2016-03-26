@@ -78,9 +78,9 @@
       </form>
     </span>
     </div>
-    <div class='shortcut col m9 valign-wrapper'
-      ng-show="editor.selectedSnippet" >
-      <span class="valign"> Shortcut: </span>
+    <div ng-show="editor.selectedSnippet" class='shortcut col m9 valign-wrapper'>
+      <img class="tooltipped" data-position="top" data-delay="50" data-tooltip="Sublime snippet trigger keyword" width="30px" src="../../subl.png">
+      <span >NC_</span>
       <span class="valign">
         <form name="shortcut"
           ng-submit="editor.addShortcut()"

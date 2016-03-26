@@ -22,10 +22,6 @@ class PublicCtrl {
     });
   }
 
-  searchPublicList() {
-
-  }
-
   openSnippet(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
     this.$state.go('main.editor');
