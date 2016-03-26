@@ -41,14 +41,47 @@ export class Folders {
         dispatch(Actions.setSelectedFolder(folderPath));
       },
 
-      renameFolder(oldNode, newNode) {
-      },
+      renameFolder(oldNode, newName) {
+        boundFT = createBoundMethods(this.snippetMap);
+        oldParent = boundFT.parent(oldNode.filePath);
+        oldChildren = boundFT.children(oldNode.filePath, true);
 
+        newNode = Object.assign({}, oldNode, {value: newName, filePath: oldParent.filePath + '/' + newName});
+        newParent = Object.assign({},oldParent, {children: oldParent.map((childPath) => {
+            return childPath === oldNode.filePath ? newNode.filePath: childPath;
+          })
+        });
+        newChildren = oldChildren.map( (childNode) => {
+          return Object.assign({}, childNode, {parent: newNode.filePath, filePath: newNode.filePath + '/' + childNode.value.name});
+        }); 
+
+        updateRequests = newChildren.reduce( (all, currChild) => {
+          return [...all, this.$http({
+            method: 'PUT',
+            url: '/api/snippets',
+            data: {snippetId: currChild.value._id, value: currChild.value}
+          })];
+        }, []);
+        updateRequests = [...updateRequests, this.$http({
+          method: 'PUT',
+          url: '/api/snippets',
+          data: {snippetId: newParent.value._id, value: newParent.value}
+        })];
+
+        Promise.all(updateRequests).then(resps => {
+          dispatch(Actions.removeSnippetMap(oldNode.filePath));
+          dispatch(Actions.updateSnippetMap(oldParent.filePath, newParent.filePath, newParent));
+          dispatch(Actions.updateSnippetMap(oldNode.filePath, newNode.filePath, newNode));
+          newChildren.forEach((newChild, index) => {
+            Actions.updateSnippetMap(oldChildren[index].filePath, newChild.filePath, newChild);
+          });
+        })
+        .catch(console.error);
+      },
       moveSnippet(oldNode, newNode) {
         // dispatch(Actions.removeSnippetMap(oldNode.filePath));
         // dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
       },
-
       removeFolder(folderPath) {
         return this.$http({
             method: 'DELETE',

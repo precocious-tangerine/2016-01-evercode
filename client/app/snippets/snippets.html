@@ -24,18 +24,19 @@
     <div>
       {{snippets.visibleFolders.length ? 'Folders' : ''}}
     </div>
-    <div class="fade" ng-repeat="folder in snippets.visibleFolders">
-      <div class="folder-list">
+    <div class="folder-list">
+      <div class="fade" ng-repeat="folder in snippets.visibleFolders">
         <span class="folder-list-item">
           <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
             <span class="folder-text valign-wrapper">
               <i class="material-icons folder-icon valign">folder</i>
-              {{folder.value}}
+              <span class='folder-name'>{{folder.value}}</span>
             </span>
           </a>
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
+         <i class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i></a>
         </span>
       </div>
     </div>
@@ -63,3 +64,23 @@
     </div>
   </div>
 </ul>
+<script>
+// $('.folder-list').on('click', '.rename-tool', function(event) {
+//   var $folderParent = $(this).parent().parent();
+//   var $folderElement = $folderParent.find('a');
+//   var name = $folderElement.find('.folder-name').html();
+//   console.log($folderElement);
+//   $folderElement.replaceWith('<input></input>')
+
+//   var $folderInput = $(this).parent().parent().find('input');
+//   $folderInput.focus()
+//   $folderInput.on('keyup', function(event) {
+//     console.log(event.target.value);
+//     if(event.keyCode === 13) {
+//       $folderInput.remove();
+//       $folderParent.prepend($folderElement);
+//     }
+//   })
+
+// })
+</script>
