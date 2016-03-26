@@ -140,5 +140,12 @@
          console.log(err);
          res.status(500).send(err);
        });
+   }),
+
+   rerouteSharedSnippet: ((req,res ) =>{
+    var id = req.query.s;
+    res.redirect('/#/main/editor?s='+ id);
    })
+
+
  };
