@@ -18,6 +18,8 @@ class MainCtrl {
     this.Auth = Auth;
     this.Folders = Folders;
     this.Snippets = Snippets;
+    this.signinModalShow = false;
+    this.signupModalShow = false;
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
@@ -34,10 +36,11 @@ class MainCtrl {
     this.Auth.signout();
   }
 
-  openModal() {
-    $('.lean-overlay').remove();
-    $('.modal-trigger').leanModal();
-    $('#signin-modal').openModal();
+  toggleSigninModal() {
+    this.signinModalShow = !this.signinModalShow;
+  }
+  toggleSignupModal() {
+    this.signupModalShow = !this.signupModalShow;
   }
 
   mapStateToThis(state) {
@@ -55,3 +58,4 @@ class MainCtrl {
   }
 
 };
+

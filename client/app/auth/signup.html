@@ -1,3 +1,8 @@
+<div class='ng-modal' ng-show='authCtrl.show'>
+  <div class='ng-modal-overlay' ng-click='hideModal()'></div>
+  <div class='ng-modal-dialog' ng-style='dialogStyle'>
+    <div class='ng-modal-close' ng-click='hideModal()'>X</div>
+
 <div class="row row-centered">
   <div class="col s4 offset-s4 col-centered">
     <div id='signup'>
@@ -28,4 +33,7 @@
       <a ui-sref="main.signin">Already have an account? <strong>Signin</strong> ...</a>
     </div>
   </div>
+</div>
+
+</div>
 </div>
