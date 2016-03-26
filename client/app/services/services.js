@@ -77,17 +77,17 @@ export class Snippets {
   mapDispatchToThis(dispatch) {
     return {
 
-      getPublicSnippets() {
-        return this.$http({
-            method: 'GET',
-            url: '/snippets'
-          }).then(res => {
-            return res;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
+      // getPublicSnippets() {
+      //   return this.$http({
+      //       method: 'GET',
+      //       url: '/snippets'
+      //     }).then(res => {
+      //       return res;
+      //     })
+      //     .catch(error => {
+      //       console.error(error);
+      //     });
+      // },
 
       getSnippet(snippetId) {
         return this.$http({
@@ -178,6 +178,42 @@ export class Snippets {
     };
   }
 
+}
+
+export class Public {
+  constructor($http, $ngRedux) {
+    $ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
+    this.$http = $http;
+  }
+  mapDispatchToThis(dispatch) {
+    return {
+      getPublicSnippets() {
+        return this.$http({
+            method: 'GET',
+            url: '/snippets'
+          }).then(res => {
+            dispatch(Actions.setPublicList(publicList));
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+
+      setSelectedPublicSnippet(filePath) {
+        dispatch(Actions.setSelectedPublicSnippet(filePath));
+      },
+
+      removeSelectedPublicSnippet() {
+        dispatch(Actions.removeSelectedPublicSnippet(filePath));
+      }
+    }
+  }
+  mapStateToThis(state) {
+    return {
+      publicList: state.publicList,
+      selectedPublicSnippet: state.selectedPublicSnippet
+    }
+  }
 }
 
 export class Auth {
