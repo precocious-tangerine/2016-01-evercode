@@ -38,15 +38,17 @@ class EditorCtrl {
   }
 
   getSharedSnippet() {
-    let id = this.$location.absUrl().slice(-24);
-    this.$http({
-        method: 'GET',
-        url: '/share?s=' + id ,
-      })
-      .then((response) => {
-        console.log(response.data);
-        this.snippetObj = response.data;
-      })
+    if(this.$location.absUrl().indexOf("?") != -1) {
+      let id = this.$location.absUrl().slice(-24);
+      this.$http({
+          method: 'GET',
+          url: '/share?s=' + id ,
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.snippetObj = response.data;
+        })
+    }
   }
 
   toggleTag() {
