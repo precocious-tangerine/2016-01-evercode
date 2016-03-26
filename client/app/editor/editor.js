@@ -74,12 +74,24 @@ class EditorCtrl {
   }
 
   addSnippet() {
+    let objectToUpdate = (this.snippetObj.username !== this.activeUser.username)
+      ? Object.assign({}, 
+        { data: this.snippetObj.data,
+          name: this.snippetObj.name,
+          language: this.snippetObj.language,
+          public: false,
+          path: this.snippetObj.filePath,
+          annotation: this.snippetObj.annotation,
+          description: this.snippetObj.description
+        })
+      : this.snippetObj;
     let path = this.path + '/' + this.snippetObj.name;
+    console.log('add: ', path, objectToUpdate);
     if(!this.snippetObj.name){
       Materialize.toast('Please, name the snippet', 3000, 'rounded');
     } else if(!this.snippetMap[path]){
-      this.snippetObj.filePath = path;
-      this.Snippets.addSnippet(this.snippetObj);
+      objectToUpdate.filePath = path;
+      this.Snippets.addSnippet(objectToUpdate);
     } else {
       Materialize.toast('Can not use duplicate name', 3000, 'rounded');
     }
@@ -144,7 +156,8 @@ class EditorCtrl {
       buttonText,
       snippetObj,
       userTheme,
-      editorOptions
+      editorOptions,
+      activeUser
     };
   }
 }
