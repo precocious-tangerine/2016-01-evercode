@@ -45,7 +45,6 @@ class EditorCtrl {
           url: '/share?s=' + id ,
         })
         .then((response) => {
-          console.log(response.data);
           this.Public.setPublicList(response.data);
           this.Public.setSelectedPublicSnippet("share");
         });
