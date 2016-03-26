@@ -34,7 +34,7 @@ class EditorCtrl {
   }
 
   toggleTag() {
-    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
+    this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create snippet first', 3000, 'rounded');
 
   }
 
@@ -76,7 +76,9 @@ class EditorCtrl {
 
   addSnippet() {
     let path = this.path + '/' + this.snippetObj.name;
-    if(!this.snippetMap[path]){
+    if(!this.snippetObj.name){
+      Materialize.toast('Please, name the snippet', 3000, 'rounded');
+    } else if(!this.snippetMap[path]){
       this.snippetObj.filePath = path;
       this.Snippets.addSnippet(this.snippetObj);
     } else {

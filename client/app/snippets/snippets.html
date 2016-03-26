@@ -24,7 +24,7 @@
     <div>
       {{snippets.visibleFolders.length ? 'Folders' : ''}}
     </div>
-    <div class="" ng-repeat="folder in snippets.visibleFolders">
+    <div class="fade" ng-repeat="folder in snippets.visibleFolders">
       <div class="folder-list">
         <span class="folder-list-item">
           <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
@@ -42,7 +42,7 @@
     <div>
       {{snippets.visibleSnippets.length ? 'Snippets' : ''}}
     </div>
-    <div class="" ng-repeat="snippet in snippets.visibleSnippets">
+    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets">
       <div class="folder-list">
         <span class="folder-list-item">
           <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">

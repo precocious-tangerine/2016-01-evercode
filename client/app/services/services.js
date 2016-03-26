@@ -104,7 +104,7 @@ export class Snippets {
             data: snippetObj
           }).then((res) => {
             dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
-            dispatch(Actions.setSelectedSnippet(res.data.filePath));
+            this.changeSelectedSnippet(res.data.filePath);
             Materialize.toast('Snippet added!', 3000, 'rounded');
           })
           .catch(error => {
@@ -121,6 +121,8 @@ export class Snippets {
             let nodeToPass = Object.assign({}, snippetObj, { value: res.data });
             Materialize.toast('Snippet updated!', 3000, 'rounded');
             dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
+            this.activeUser.selectedSnippet === oldFilePath ? this.Auth.updateUser({ selectedSnippet: res.data.filePath }) : null;
+            dispatch(Actions.setSelectedSnippet(res.data.filePath));
           })
           .catch(error => {
             console.error(error);
@@ -136,6 +138,7 @@ export class Snippets {
           }).then((response) => {
             this.deselectSnippet();
             dispatch(Actions.removeSnippetMap(snippetObj.filePath));
+            this.activeUser.selectedSnippet === snippetObj.filePath ? this.Auth.updateUser({ selectedSnippet: null }) : null;
             Materialize.toast('Successfully removed!', 3000, 'rounded');
           })
           .catch(error => {
@@ -171,6 +174,7 @@ export class Snippets {
       snippetMap: state.snippetMap,
       selectedFolder: state.selectedFolder,
       selectedSnippet: state.selectedSnippet,
+      activeUser: state.activeUser
     };
   }
 
