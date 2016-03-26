@@ -1,6 +1,7 @@
  'use strict';
  let Promise = require('bluebird');
  let Snippets = Promise.promisifyAll(require('../models/snippets'));
+ let Utils = require('../config/utils');
 
  module.exports = {
    getSnippet: ((req, res) => {
@@ -114,6 +115,22 @@
            res.status(201).send('Succesfully removed');
          } else {
            res.status(401).send('Folder was not removed');
+         }
+       }).catch((err) => {
+         console.log(err);
+         res.status(500).send(err);
+       });
+   }),
+
+   getSharedSnippet: ((req, res) => {
+      var hexId = Utils.asciiToHex(req.query.n);
+      console.log("_id:",hexId ,"\nascii:",req.query.n);
+      Snippets.getSnippetAsync(hexId)
+       .then(snippet => {
+         if (snippet) {
+           res.status(200).send(snippet);
+         } else {
+           res.status(404).send('Snippet not Found');
          }
        }).catch((err) => {
          console.log(err);
