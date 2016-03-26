@@ -6,7 +6,6 @@ export let createSigninModal = () => {
     },
     replace: true,
     link(scope, element, attrs) {
-      window.signinModal = scope;
       scope.dialogStyle = {};
       attrs.width ? scope.dialogStyle.width = attrs.width: null;
       attrs.height ? scope.dialogStyle.height = attrs.height: null;
