@@ -5,6 +5,8 @@ html, body {
   color: #2E3C56;
 }
 
+
+
 .btn {
   background-color: #2E3C56;
 }
@@ -232,6 +234,7 @@ nav,
 
 .side-nav li {
   padding: 0;
+  margin: 10px 0;
 }
 
 .folder-list {

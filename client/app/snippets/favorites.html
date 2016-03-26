@@ -1,15 +1,25 @@
-<ul class="snippets side-nav s12">
-  <div class="col s12">
-    <h4>Favorites</h4>
-  </div>
-  <div class="row" ng-repeat="snippet in snippets.snippetArr | filter:{favorite:true}">
-    <div class="col s8">
-      <a class="waves-effect waves-teal collection-item" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
-        <i class=" small material-icons">description</i>{{snippet.name}}
-      </a>
+<ul class="snippets side-nav">
+    <div>
+      <h4>Favorites</h4>
     </div>
-    <div class="col s2">
-      <a class="waves-effect waves-teal right"><i ng-click="snippets.toggleFavorite(snippet)" class=" small material-icons snippet-icon">star</i></a>
+    <div class="" ng-repeat="snippet in snippets.snippetArr | filter:{favorite:true}">
+      <div class="folder-list">
+        <span class="folder-list-item">
+          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+            <span class="folder-text valign-wrapper">
+              <i class="material-icons code-icon valign">code</i>
+              {{snippet.name}}
+            </span>
+          </a>
+        </span>
+        <span class="folder-list-item right">
+          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
+          <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
+        </span>
+        <p class="list-description">
+          {{snippet.description}}
+        </p>
+      </div>
     </div>
   </div>
 </ul>
