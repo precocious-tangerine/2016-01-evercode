@@ -34,7 +34,6 @@ class MainCtrl {
 
   signout() {
     this.Auth.signout();
-    this.$state.go('main.public');
   }
 
   toggleSigninModal() {

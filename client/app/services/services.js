@@ -145,7 +145,8 @@ export class Snippets {
       },
 
       changeSelectedSnippet(snippetFilePath) {
-        dispatch(Actions.setSelectedSnippet(snippetFilePath));
+        dispatch(Actions.setSelectedPublicSnippet(filePath));
+        dispatch(Actions.removeSelectedPublicSnippet());
         this.Auth.updateUser({ selectedSnippet: snippetFilePath });
       },
 

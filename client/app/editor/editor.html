@@ -1,7 +1,7 @@
 <div ng-class="editor.$state.is('main.editor.search') ? null : 'card'" class="col s12 m3 l3 innerContainer transform" ui-view></div>
 <div class='transform editor col s12 right' ng-class="editor.$state.is('main.editor') ? 'm12 l12' : 'm9 l9'">
   <div class="row editor-row">
-    <form name="snippetForm" ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
+    <form name="snippetForm" ng-submit="editor.buttonTrigger()">
       <div class="form-group snippet-title">
         <input id="snippet-name-input" name="title" placeholder="Name Your Snippet" type="text" class='form-control col m9' ng-model='editor.snippetObj.name' ng-maxlength="20"/>
       </div>

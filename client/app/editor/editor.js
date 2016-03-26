@@ -36,7 +36,6 @@ class EditorCtrl {
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
-
   }
 
   toggleAnnotation() {
@@ -52,15 +51,13 @@ class EditorCtrl {
     if (tagToRemove) {
       objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
     }
-    let _id = objectToUpdate._id;
-    delete objectToUpdate._id;
-    this.Snippets.updateSnippet({ snippetId: _id, value: objectToUpdate }, this.snippetMap[this.selectedSnippet].filePath);
+    this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[this.selectedSnippet].filePath);
   }
 
   updateSnippet() {
     let objectToUpdate = Object.assign({},
-      this.snippetMap[this.selectedSnippet].value, 
-      { data: this.snippetObj.data,
+      this.snippetMap[this.selectedSnippet].value, {
+        data: this.snippetObj.data,
         name: this.snippetObj.name,
         language: this.snippetObj.language,
         shortcut: this.snippetObj.shortcut,
@@ -73,24 +70,32 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    let objectToUpdate = (this.snippetObj.username !== this.activeUser.username)
-      ? Object.assign({}, 
-        { data: this.snippetObj.data,
-          name: this.snippetObj.name,
-          language: this.snippetObj.language,
-          public: false,
-          annotation: this.snippetObj.annotation,
-          description: this.snippetObj.description
-        })
-      : this.snippetObj;
+    let objectToUpdate = (this.snippetObj.username !== this.activeUser.username) ? Object.assign({}, {
+      data: this.snippetObj.data,
+      name: this.snippetObj.name,
+      language: this.snippetObj.language,
+      public: false,
+      annotation: this.snippetObj.annotation,
+      description: this.snippetObj.description
+    }) : this.snippetObj;
     let path = this.path + '/' + this.snippetObj.name;
-    if(!this.snippetObj.name){
+    if (!this.snippetObj.name) {
       Materialize.toast('Please, name the snippet', 3000, 'rounded');
-    } else if(!this.snippetMap[path]){
+    } else if (!this.snippetMap[path]) {
       objectToUpdate.filePath = path;
       this.Snippets.addSnippet(objectToUpdate);
     } else {
       Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+    }
+  }
+
+  buttonTrigger() {
+    if (this.selectedSnippet) {
+      this.updateSnippet();
+    } else if (this.selectedPublicSnippet && !this.activeUser.username) {
+      Materialize.toast('Sign in or sign up to fork', 3000, 'rounded');
+    } else {
+      this.addSnippet();
     }
   }
 
@@ -128,7 +133,7 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    if(selectedSnippet && (selectedSnippet in snippetMap)) {
+    if (selectedSnippet && (selectedSnippet in snippetMap)) {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet])
@@ -138,9 +143,9 @@ class EditorCtrl {
     }
 
     let buttonText;
-    if(selectedPublicSnippet && snippetObj.username !== activeUser.username) {
+    if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
       buttonText = 'Fork Snippet';
-    } else if(selectedSnippet) {
+    } else if (selectedSnippet) {
       buttonText = 'Update Snippet';
     } else {
       buttonText = 'Add Snippet';
@@ -150,6 +155,7 @@ class EditorCtrl {
       path,
       snippetMap,
       selectedSnippet,
+      selectedPublicSnippet,
       buttonText,
       snippetObj,
       userTheme,
