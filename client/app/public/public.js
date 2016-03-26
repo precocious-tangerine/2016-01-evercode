@@ -20,4 +20,8 @@ class PublicCtrl {
       this.snippetList = res.data;
     });
   }
+
+  openSnippet(snippet) {
+    console.log('snippet path: ', snippet)
+  }
 }
