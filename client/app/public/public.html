@@ -21,9 +21,9 @@
           ng-click="public.openSnippet(snippet.filePath)">
           <h5>{{snippet.name}}</h5>
           <hr>
-          <p>{{snippet.description}}</p>
-          <p>{{snippet.username}}<br>
-             {{snippet.language}}
+          <p>{{snippet.value.description}}</p>
+          <p>{{snippet.value.username}}<br>
+             {{snippet.value.language}}
           </p>
           <span class="chip public-chip"
             ng-repeat="tag in snippet.tags">

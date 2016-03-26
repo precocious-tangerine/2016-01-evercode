@@ -1,10 +1,13 @@
 <ul class="snippets side-nav">
   <div class="col s12">
-    <span class="add-button col s6 center-align">
+    <span class="add-button col s4 center-align">
       <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
     </span>
-    <span class="add-button col s6 center-align">
+    <span class="add-button col s4 center-align">
       <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
+    </span>
+    <span class="add-button col s4 center-align">
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="50" data-tooltip="Hide List View"><i class="large material-icons">arrow_back</i></a>
     </span>
   </div>
   <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addFolder()" novalidate>
@@ -16,7 +19,7 @@
     <div class="" ng-show='snippets.selectedFolderObj.parent'>
       <a class="waves-effect waves-teal collection-item" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
         <span class="flow-text back-button">
-          <i class="material-icons">arrow_back</i>
+          <i class="material-icons">subdirectory_arrow_left</i>
           {{snippets.selectedFolderObj.parent}}
         </span>
       </a>

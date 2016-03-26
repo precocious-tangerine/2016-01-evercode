@@ -24,7 +24,7 @@ class PublicCtrl {
 
   openSnippet(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
-    this.$state.go('main.editor');
+    this.$state.go('main.editor.snippets');
   }
 
   mapStateToThis(state) {

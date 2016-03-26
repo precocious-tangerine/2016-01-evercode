@@ -11,21 +11,23 @@ export const snippets = (url) => {
 }
 
 class SnippetsCtrl {
-  constructor($ngRedux, Snippets, Folders) {
+  constructor($ngRedux, Snippets, Folders, Public, $state) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.Public = Public;
     this.Folders = Folders;
     this.Snippets = Snippets;
     this.folderInput = false;
+    this.$state = $state;
   }
 
   addFolder() {
-      let path = this.selectedFolder + '/' + this.subFolder.name;
-      if(!this.snippetMap[path]){
-        this.Folders.addFolder({ path: path });
-        this.subFolder.name = '';
-      } else {
-        Materialize.toast('Can not use duplicate name', 3000, 'rounded');
-      }
+    let path = this.selectedFolder + '/' + this.subFolder.name;
+    if (!this.snippetMap[path]) {
+      this.Folders.addFolder({ path: path });
+      this.subFolder.name = '';
+    } else {
+      Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+    }
   }
 
   removeFolder(folderPath) {
@@ -45,28 +47,40 @@ class SnippetsCtrl {
   }
 
   toggleFavorite(snippet) {
-    let _id = snippet.value ? snippet.value._id :snippet._id;
+    let _id = snippet.value ? snippet.value._id : snippet._id;
     let favorite = snippet.value ? !snippet.value.favorite : !snippet.favorite;
-    this.Snippets.updateSnippet({  _id, favorite }, snippet.filePath);
+    this.Snippets.updateSnippet({ _id, favorite }, snippet.filePath);
   }
 
   changeSelectedSnippet(snippetPath) {
-    this.selectedSnippet === snippetPath ? null :this.Snippets.changeSelectedSnippet(snippetPath);
+    if (this.selectedPublicSnippet) {
+      this.selectedPublicSnippet === snippetPath ? null : this.Public.setSelectedPublicSnippet(snippetPath);
+    } else {
+      this.selectedSnippet === snippetPath ? null : this.Snippets.changeSelectedSnippet(snippetPath);
+    }
   }
 
   deselectSnippet() {
+    this.Public.removeSelectedPublicSnippet();
     this.Snippets.deselectSnippet();
   }
 
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);
   }
+
+  closeSideNav() {
+    this.$state.go('main.editor');
+  }
+
   mapStateToThis(state) {
-    let { selectedFolder, snippetMap, selectedSnippet } = state;
+    let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;
     let visibleFolders = [],
       visibleSnippets = [];
     let selectedFolderObj = snippetMap[selectedFolder];
-    if (selectedFolderObj) {
+    if (selectedPublicSnippet) {
+      visibleSnippets = publicList;
+    } else if (selectedFolderObj) {
       selectedFolderObj.children.forEach(childKey => {
         let child = snippetMap[childKey];
         if (typeof child.value === 'string') {
@@ -76,22 +90,13 @@ class SnippetsCtrl {
         }
       });
     }
-    let snippetArr = [];
-    Object.keys(snippetMap).forEach(key => {
-      let snippetVal = snippetMap[key].value
-      if (typeof snippetVal === 'object') {
-        if (snippetVal.name !== '.config' && snippetVal.name !== '/.config') {
-          snippetArr.push(snippetVal);
-        }
-      }
-    });
     return {
+      selectedPublicSnippet,
       visibleSnippets,
       visibleFolders,
       selectedFolderObj,
       selectedFolder,
       selectedSnippet,
-      snippetArr,
       snippetMap
     };
   }

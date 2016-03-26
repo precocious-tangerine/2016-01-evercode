@@ -132,6 +132,7 @@ export class Snippets {
             data: snippetObj
           }).then((res) => {
             dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
+            dispatch(Actions.removeSelectedPublicSnippet());
             this.changeSelectedSnippet(res.data.filePath);
             Materialize.toast('Snippet added!', 3000, 'rounded');
           })
@@ -178,8 +179,8 @@ export class Snippets {
       },
 
       changeSelectedSnippet(snippetFilePath) {
-        dispatch(Actions.setSelectedSnippet(snippetFilePath));
         dispatch(Actions.removeSelectedPublicSnippet());
+        dispatch(Actions.setSelectedSnippet(snippetFilePath));
         this.Auth.updateUser({ selectedSnippet: snippetFilePath });
       },
 
@@ -228,7 +229,7 @@ export class Public {
       },
 
       removeSelectedPublicSnippet() {
-        dispatch(Actions.removeSelectedPublicSnippet(filePath));
+        dispatch(Actions.removeSelectedPublicSnippet());
       }
     }
   }
