@@ -111,7 +111,6 @@ class EditorCtrl {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
-    let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
     let editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -127,6 +126,15 @@ class EditorCtrl {
       editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
       snippetObj.language = 'javascript'
+    }
+
+    let buttonText;
+    if(selectedPublicSnippet && snippetObj.username !== activeUser.username) {
+      buttonText = 'Fork Snippet';
+    } else if(selectedSnippet) {
+      buttonText = 'Update Snippet';
+    } else {
+      buttonText = 'Add Snippet';
     }
 
     return {
