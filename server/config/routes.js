@@ -36,4 +36,10 @@ module.exports = (app, express) => {
   app.route('/api/folders/')
     .post(snippetsController.addFolder)
     .delete(snippetsController.removeFolder);
+
+  app.route('/n')
+    .get(snippetsController.rerouteSharedSnippet)
+
+  app.route('/share')
+    .get(snippetsController.getSharedSnippet)
 };

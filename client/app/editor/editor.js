@@ -11,8 +11,10 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state, Public) {
+  constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.$http = $http;
+    this.$location = $location;
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
@@ -32,11 +34,26 @@ class EditorCtrl {
     this.tag = '';
     this.addTag = false;
     this.showAnnotation = false;
+    this.getSharedSnippet();
+  }
+
+  getSharedSnippet() {
+    if(this.$location.absUrl().indexOf("?") != -1) {
+      let id = this.$location.absUrl().slice(-24);
+      this.$http({
+          method: 'GET',
+          url: '/share?s=' + id ,
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.Public.setPublicList(response.data);
+          this.Public.setSelectedPublicSnippet("share");
+        });
+    }
   }
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
-
   }
 
   toggleAnnotation() {
@@ -59,8 +76,8 @@ class EditorCtrl {
 
   updateSnippet() {
     let objectToUpdate = Object.assign({},
-      this.snippetMap[this.selectedSnippet].value, 
-      { data: this.snippetObj.data,
+      this.snippetMap[this.selectedSnippet].value, { 
+        data: this.snippetObj.data,
         name: this.snippetObj.name,
         language: this.snippetObj.language,
         shortcut: this.snippetObj.shortcut,

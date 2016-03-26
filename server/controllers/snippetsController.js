@@ -1,6 +1,7 @@
  'use strict';
  let Promise = require('bluebird');
  let Snippets = Promise.promisifyAll(require('../models/snippets'));
+ let bases = require('bases');
 
  module.exports = {
    getSnippet: ((req, res) => {
@@ -119,5 +120,30 @@
          console.log(err);
          res.status(500).send(err);
        });
+   }),
+
+   getSharedSnippet: ((req, res) => {
+      var id = req.query.s;
+      console.log(id);
+      Snippets.getSnippetAsync(id)
+       .then(snippet => {
+         if (snippet) {
+           res.status(200).send({
+            share: snippet
+           });
+         } else {
+           res.status(404).send('Snippet not Found');
+         }
+       }).catch((err) => {
+         console.log(err);
+         res.status(500).send(err);
+       });
+   }),
+
+   rerouteSharedSnippet: ((req,res ) =>{
+    var id = req.query.s;
+    res.redirect('/#/main/editor?s='+ id);
    })
+
+
  };
