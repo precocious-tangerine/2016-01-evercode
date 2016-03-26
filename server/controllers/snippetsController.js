@@ -123,11 +123,16 @@
    }),
 
    getSharedSnippet: ((req, res) => {
-      var id = req.query.n;
-      Snippets.getSnippetAsync(id);
+      var id = req.query.s;
+      console.log(id);
+      Snippets.getSnippetAsync(id)
        .then(snippet => {
          if (snippet) {
-           res.status(200).send(snippet);
+           res.status(200).send({
+            name: snippet.name,
+            created: snippet._createdAt,
+            snippet: snippet.data,
+           });
          } else {
            res.status(404).send('Snippet not Found');
          }

@@ -40,6 +40,9 @@
   <div class="code-editor row card">
     <div class="col s12 code-toolbar valign-wrapper">
       <a class="btn" data-tooltip="Copy Snippet" data-position="bottom" data-delay="50" ngclipboard data-clipboard-text={{editor.snippetObj.data}}><i class="material-icons">assignment</i></a>
+      <div class="share-url">
+        <input value="http://localhost:3000/n/?s={{editor.snippetObj._id}}">
+      </div>
       <div class="code-selector col s3">
         <select ng-model="editor.snippetObj.language" ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language" ng-options="language as language for language in editor.cmLanguages" ng-change="editor.changeLanguage(editor.snippetObj.language)" class="browser-default">
         </select>
