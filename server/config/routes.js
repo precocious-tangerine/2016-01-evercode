@@ -38,5 +38,8 @@ module.exports = (app, express) => {
     .delete(snippetsController.removeFolder);
 
   app.route('/n')
+    .get(snippetsController.rerouteSharedSnippet)
+
+  app.route('/share')
     .get(snippetsController.getSharedSnippet)
 };

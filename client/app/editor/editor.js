@@ -11,8 +11,10 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state, Public) {
+  constructor($ngRedux, Snippets, Auth, $state, $location, $http) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.$http = $http;
+    this.$location = $location;
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
@@ -32,6 +34,19 @@ class EditorCtrl {
     this.tag = '';
     this.addTag = false;
     this.showAnnotation = false;
+    this.getSharedSnippet();
+  }
+
+  getSharedSnippet() {
+    let id = this.$location.absUrl().slice(-24);
+    this.$http({
+        method: 'GET',
+        url: '/share?s=' + id ,
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.snippetObj = response.data;
+      })
   }
 
   toggleTag() {
