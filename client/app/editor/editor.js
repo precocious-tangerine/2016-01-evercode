@@ -80,13 +80,11 @@ class EditorCtrl {
           name: this.snippetObj.name,
           language: this.snippetObj.language,
           public: false,
-          path: this.snippetObj.filePath,
           annotation: this.snippetObj.annotation,
           description: this.snippetObj.description
         })
       : this.snippetObj;
     let path = this.path + '/' + this.snippetObj.name;
-    console.log('add: ', path, objectToUpdate);
     if(!this.snippetObj.name){
       Materialize.toast('Please, name the snippet', 3000, 'rounded');
     } else if(!this.snippetMap[path]){
