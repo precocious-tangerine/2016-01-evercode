@@ -76,19 +76,6 @@ export class Snippets {
 
   mapDispatchToThis(dispatch) {
     return {
-
-      // getPublicSnippets() {
-      //   return this.$http({
-      //       method: 'GET',
-      //       url: '/snippets'
-      //     }).then(res => {
-      //       return res;
-      //     })
-      //     .catch(error => {
-      //       console.error(error);
-      //     });
-      // },
-
       getSnippet(snippetId) {
         return this.$http({
           method: 'GET',

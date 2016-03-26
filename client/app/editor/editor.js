@@ -11,11 +11,12 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state) {
+  constructor($ngRedux, Snippets, Auth, $state, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
+    this.Public = Public;
     this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
@@ -109,7 +110,7 @@ class EditorCtrl {
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, selectedSnippet, snippetMap, activeUser } = state;
+    let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';

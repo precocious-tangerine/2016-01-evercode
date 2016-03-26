@@ -22,7 +22,8 @@ class PublicCtrl {
     });
   }
 
-  openSnippet(snippet) {
+  openSnippet(filepath) {
+    this.Public.setSelectedPublicSnippet(filepath);
     this.$state.go('main.editor');
   }
 
