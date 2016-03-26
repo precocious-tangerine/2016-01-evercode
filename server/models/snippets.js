@@ -15,7 +15,6 @@ let snippetSchema = mongoose.Schema({
   description: { type: String },
   public: { type: Boolean, default: true },
   favorite: { type: Boolean, default: false },
-  shareUrl: { type: String },
   shortcut: { type: String },
   language: { type: String, default: 'javascript' }
 });

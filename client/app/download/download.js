@@ -1,4 +1,3 @@
-
 export const createDownloadCtrl = (url) => {
 	return {
 		url: url,

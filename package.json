@@ -58,7 +58,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "css" : "node-sass  ./client/styles/materialize.scss ./client/styles/materialize.css",
+    "css": "node-sass  ./client/styles/materialize.scss ./client/styles/materialize.css",
     "test": "mocha test --harmony-destructuring --compilers js:babel-core/register",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
