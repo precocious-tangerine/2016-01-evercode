@@ -101,7 +101,7 @@ class EditorCtrl {
 
   changeTheme(theme) {
     this.editor.setOption('theme', theme);
-    this.Auth.updateUser({ theme: prop });
+    this.Auth.updateUser({ theme: theme });
   }
 
   togglePublic() {
@@ -129,7 +129,6 @@ class EditorCtrl {
     } else {
       snippetObj.language = 'javascript'
     }
-    // selectedSnippet && !$.isEmptyObject(snippetMap) ? Object.assign(snippetObj, snippetMap[selectedSnippet].value) : snippetObj.language = 'javascript';
 
     return {
       path,
