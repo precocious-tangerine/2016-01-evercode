@@ -11,11 +11,12 @@ export const editor = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, $state) {
+  constructor($ngRedux, Snippets, Auth, $state, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
+    this.Public = Public;
     this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
@@ -100,7 +101,7 @@ class EditorCtrl {
 
   changeTheme(theme) {
     this.editor.setOption('theme', theme);
-    this.Auth.updateUser({ theme: prop });
+    this.Auth.updateUser({ theme: theme });
   }
 
   togglePublic() {
@@ -109,7 +110,7 @@ class EditorCtrl {
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, selectedSnippet, snippetMap, activeUser } = state;
+    let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
     let buttonText = selectedSnippet ? 'Update Snippet' : 'Add Snippet';
@@ -121,7 +122,13 @@ class EditorCtrl {
       mode: 'javascript'
     };
     let snippetObj = {};
-    selectedSnippet && !$.isEmptyObject(snippetMap) ? Object.assign(snippetObj, snippetMap[selectedSnippet].value) : snippetObj.language = 'javascript';
+    if(selectedSnippet && !$.isEmptyObject(snippetMap)) {
+      Object.assign(snippetObj, snippetMap[selectedSnippet].value)
+    } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
+      Object.assign(snippetObj, publicList[selectedPublicSnippet])
+    } else {
+      snippetObj.language = 'javascript'
+    }
 
     return {
       path,

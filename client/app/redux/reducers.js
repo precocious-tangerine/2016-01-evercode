@@ -50,9 +50,31 @@ const modifyActiveUser = (state = {}, action) => {
   }
 };
 
+const modifySelectedPublicSnippet = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_SELECTED_PUBLIC_SNIPPET':
+      return action.snippetPath;
+    case 'REMOVE_SELECTED_PUBLIC_SNIPPET':
+      return '';
+    default:
+      return state;
+  }
+};
+
+const modifyPublicList = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_PUBLIC_LIST':
+      return action.publicList;
+    default:
+      return state;
+  }
+};
+
 export const finalReducer = combineReducers({
   selectedSnippet: modifySelectedSnippet,
   selectedFolder: modifySelectedFolder,
   snippetMap: modifySnippetMap,
-  activeUser: modifyActiveUser
+  activeUser: modifyActiveUser,
+  publicList: modifyPublicList,
+  selectedPublicSnippet: modifySelectedPublicSnippet
 });

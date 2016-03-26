@@ -7,7 +7,7 @@ import ui_codemirror from 'angular-ui-codemirror';
 import { createSigninModal, createSignupModal} from './auth/auth.js';
 import { createDownloadCtrl } from './download/download.js';
 import { search } from './search/search.js';
-import { Folders, Auth, Snippets } from './services/services.js';
+import { Folders, Auth, Snippets, Public } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { createMainCtrl} from './main/main.js';
 import { editor } from './editor/editor.js';
@@ -45,6 +45,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .service('Auth', Auth)
   .service('Folders', Folders)
   .service('Snippets', Snippets)
+  .service('Public', Public)
   .directive('signin', createSigninModal)
   .directive('signup', createSignupModal)
   .factory('AttachTokens', ($window) => {

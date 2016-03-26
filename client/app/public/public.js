@@ -11,17 +11,27 @@ export const publicPage = () => {
 }
 
 class PublicCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, $state, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
+    this.$state = $state;
+    this.Public = Public;
     this.snippetList = [];
     this.loading = true;
-    Snippets.getPublicSnippets().then(res => {
+    this.Public.getPublicSnippets().then(res => {
       this.loading = false;     
-      this.snippetList = res.data;
     });
   }
 
-  openSnippet(snippet) {
-    console.log('snippet path: ', snippet)
+  openSnippet(filepath) {
+    this.Public.setSelectedPublicSnippet(filepath);
+    this.$state.go('main.editor');
+  }
+
+  mapStateToThis(state) {
+    let { publicList, selectedPublicSnippet } = state;
+    return {
+      publicList,
+      selectedPublicSnippet
+    }
   }
 }
