@@ -41,6 +41,16 @@ export class Folders {
         dispatch(Actions.setSelectedFolder(folderPath));
       },
 
+      renameFolder(oldNode, newNode) {
+        dispatch(Actions.removeSnippetMap(oldNode.filePath));
+        dispatch(Actions.addSnippetMap(newNode.filePath, newNode)) 
+      },
+
+      moveSnippet(oldNode, newNode) {
+        dispatch(Actions.removeSnippetMap(oldNode.filePath));
+        dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
+      },
+
       removeFolder(folderPath) {
         return this.$http({
             method: 'DELETE',
