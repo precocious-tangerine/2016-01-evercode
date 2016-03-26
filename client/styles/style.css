@@ -339,7 +339,7 @@ nav,
 
 /*---------ANIMATION---------*/
 
-.rotate {
+.transform {
   -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -348,19 +348,19 @@ nav,
     transform: translateX(0);
 }
 
-.rotate.ng-enter {
+.transform.ng-enter {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
 }
 
-.rotate.ng-enter.ng-enter-active,
-.rotate.ng-leave {
+.transform.ng-enter.ng-enter-active,
+.transform.ng-leave {
   position: absolute;
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
 
-.rotate.ng-leave.ng-leave-active {
+.transform.ng-leave.ng-leave-active {
   -webkit-transform: translateX(-800%);
   transform: translateX(-800%);
 }
