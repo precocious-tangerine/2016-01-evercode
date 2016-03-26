@@ -51,7 +51,7 @@ class SnippetsCtrl {
   }
 
   changeSelectedSnippet(snippetPath) {
-    this.Snippets.changeSelectedSnippet(snippetPath);
+    this.selectedSnippet === snippetPath ? null :this.Snippets.changeSelectedSnippet(snippetPath);
   }
 
   deselectSnippet() {
@@ -63,7 +63,7 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, snippetMap } = state;
+    let { selectedFolder, snippetMap, selectedSnippet } = state;
     let visibleFolders = [],
       visibleSnippets = [];
     let selectedFolderObj = snippetMap[selectedFolder];
@@ -91,6 +91,7 @@ class SnippetsCtrl {
       visibleFolders,
       selectedFolderObj,
       selectedFolder,
+      selectedSnippet,
       snippetArr,
       snippetMap
     };

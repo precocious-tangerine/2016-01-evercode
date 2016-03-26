@@ -40,7 +40,8 @@ module.exports = {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
-        let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme, selectedSnippet: userData.selectedSnippet };
+        let { username, avatar_url, email, theme, selectedSnippet } = userData;
+        let user = { username, avatar_url, email, theme, selectedSnippet };
         res.status(201).send(user);
       })
       .catch((err) => {
@@ -55,7 +56,8 @@ module.exports = {
       .then(success => {
         Users.getUserAsync(email)
           .then(userData => {
-            let user = { username: userData.username, avatar_url: userData.avatar_url, email: userData.email, theme: userData.theme };
+            let { username, avatar_url, email, theme, selectedSnippet } = userData;
+            let user = { username, avatar_url, email, theme, selectedSnippet };
             res.status(201).send(user);
           });
       })
