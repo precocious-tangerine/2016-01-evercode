@@ -2,7 +2,7 @@
 let Promise = require('bluebird');
 let request = require('request');
 let qs = require('querystring');
-let config = require('../config');
+let setup = require('../setup');
 let Users = Promise.promisifyAll(require('../models/users'));
 let { createJWT } = require('../config/utils.js');
 

@@ -1,12 +1,15 @@
 #server
-/server/config.js
-/server/gmail-credentials.json
-/server/client_secret.json
+/files-server/setup.js
+/files-server/gmail-credentials.json
+/files-server/client_secret.json
+/user-server/setup.js
+/user-server/setup.js
+/user-server/gmail-credentials.json
 
 #client
-/client/lib/*
-/client/dist/*
-/client/styles/materialize.css
+client-server/client/lib/*
+client-server/client/dist/*
+client-server/client/styles/materialize.css
 
 #npm_files
 /node_modules/*

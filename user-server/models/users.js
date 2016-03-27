@@ -2,7 +2,6 @@
 const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
-let Snippets = Promise.promisifyAll(require('./snippets.js'));
 
 let userSchema = mongoose.Schema({
   _password: { type: String },
