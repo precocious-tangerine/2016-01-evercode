@@ -151,7 +151,7 @@ class EditorCtrl {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
       editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
-      snippetObj.language = activeUser.language;
+      snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
       this.editor ? this.editor.setOption('readOnly', false) : null;
     }
 

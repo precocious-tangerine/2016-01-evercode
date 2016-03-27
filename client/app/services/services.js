@@ -230,7 +230,7 @@ export class Public {
             this.setPublicList(response.data);
             this.setSelectedPublicSnippet("share");
           });
-      }
+      },
 
       setPublicList(data) {
         dispatch(Actions.setPublicList(data));
