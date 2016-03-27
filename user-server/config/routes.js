@@ -1,6 +1,6 @@
 'use strict';
 let { postSignup, getVerification } = require('./utils.js');
-let userController = require('./controllers/userController');
+let userController = require('../controllers/userController');
 
 module.exports = (app, express) => {
 

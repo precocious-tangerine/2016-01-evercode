@@ -7,5 +7,7 @@ module.exports = {
 	mongodbName: '/everCodeUsers',
 	mongodbPort: ':27017',
 	secretToken: 'donkey',
-	verificationEmailRoute: 'user/email-verification'
+	verificationEmailRoute: 'user/email-verification',
+	filesServerAddress: 'http://localhost',
+	filesServerPort: 3002
 }

@@ -1,19 +1,66 @@
 'use strict';
 let Promise = require('bluebird');
-let config = require('../config');
+let request = require('request');
+let setup = require('../setup.js');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let nev = Promise.promisifyAll(require('email-verification')(mongoose));
 let User = require('../models/users.js');
-let Snippets = require('../models/snippets.js');
 let jwt = require('jsonwebtoken');
-let secret = require('../config').secretToken;
+let secret = setup.secretToken;
 
 
+module.exports.createJWT = (user) => {
+  let payload = {
+    username: user.username,
+    email: user.email
+  };
+  return jwt.sign(payload, secret);
+};
+
+module.exports.decode = (req, res, next) => {
+  let token = req.headers.authorization;
+  if (!token) {
+    return res.status(403).send('Please login');
+  }
+  try {
+    req.user = jwt.decode(token, secret);
+    next();
+  } catch (error) {
+    return next(error);
+  }
+}; 
+
+//Declare here first for use locally
+let createRootFolderAsync = (userObj) => {
+  return new Promise((resolve, reject) => {
+    request({
+      url: setup.fileServerAddress + ':' + fileServerPort,
+      method: 'POST',
+      headers: {
+        'authorization': createJWT(user)
+      },
+      json: {
+        path: user.email
+      } 
+    }, function(error, resp, body) {
+      if(error) {
+        console.log(error);
+        reject(error);
+      } else {
+        resolve(resp);
+      }
+    });
+  })
+}
+module.exports.createRootFolderAsync = createRootFolderAsync;
+
+
+//Email verification configuration
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://localhost:3000/user/email-verification/${URL}',
+  verificationURL: 'http://localhost:3003/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {
@@ -27,8 +74,6 @@ nev.configureAsync({
 nev.generateTempUserModelAsync(User)
   .then(tempUser => console.log('created tempUser', tempUser))
   .catch(err => console.log('err in tempUser', err));
-
-
 
 module.exports.postSignup = (req, res) => {
   let { email, password } = req.body;
@@ -61,7 +106,7 @@ module.exports.getVerification = (req, res) => {
   nev.confirmTempUserAsync(url)
     .then((user) => {
       if (user) {
-        Snippets.makeRootFolderAsync(user.email)
+        createRootFolderAsync(user)
           .then(() => nev.sendConfirmationEmailAsync(user.email))
           .then(() => res.send('You have been confirmed as a user'))
           .catch(err => {
@@ -78,23 +123,4 @@ module.exports.getVerification = (req, res) => {
     });
 };
 
-module.exports.createJWT = (user) => {
-  let payload = {
-    username: user.username,
-    email: user.email
-  };
-  return jwt.sign(payload, secret);
-};
 
-module.exports.decode = (req, res, next) => {
-  let token = req.headers.authorization;
-  if (!token) {
-    return res.status(403).send('Please login');
-  }
-  try {
-    req.user = jwt.decode(token, secret);
-    next();
-  } catch (error) {
-    return next(error);
-  }
-}; 
