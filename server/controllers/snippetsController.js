@@ -128,9 +128,9 @@ module.exports = {
     Snippets.getSnippetAsync(id)
       .then(snippet => {
         if (snippet) {
-          res.status(200).send({
-            share: snippet
-          });
+          let fileTreeObj = {};
+          fileTreeObj.share = { filePath: snippet.filePath, value: snippet };
+          res.status(200).send(fileTreeObj);
         } else {
           res.status(404).send('Snippet not Found');
         }

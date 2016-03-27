@@ -12,7 +12,6 @@ export const editor = () => {
 
 class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
-    $ngRedux.connect(this.mapStateToThis)(this);
     this.$http = $http;
     this.$location = $location;
     this.$state = $state;
@@ -41,14 +40,7 @@ class EditorCtrl {
   getSharedSnippet() {
     if (this.$location.absUrl().indexOf("?") != -1) {
       let id = this.$location.absUrl().slice(-24);
-      this.$http({
-          method: 'GET',
-          url: '/share?s=' + id,
-        })
-        .then((response) => {
-          this.Public.setPublicList(response.data);
-          this.Public.setSelectedPublicSnippet("share");
-        });
+      this.Public.getSharedSnippet(id);
     }
   }
 

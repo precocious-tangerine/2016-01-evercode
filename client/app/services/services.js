@@ -40,7 +40,7 @@ export class Folders {
       selectFolder(folderPath) {
         dispatch(Actions.setSelectedFolder(folderPath));
       },
-
+      
       renameFolder(oldNode, newName) {
         boundFT = createBoundMethods(this.snippetMap);
         oldParent = boundFT.parent(oldNode.filePath);
@@ -78,10 +78,12 @@ export class Folders {
         })
         .catch(console.error);
       },
+
       moveSnippet(oldNode, newNode) {
         // dispatch(Actions.removeSnippetMap(oldNode.filePath));
         // dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
       },
+
       removeFolder(folderPath) {
         return this.$http({
             method: 'DELETE',
@@ -147,8 +149,8 @@ export class Snippets {
         delete snippetObj.Id;
         return this.$http({
             method: 'PUT',
-            url: 'files/api/snippets',
-            data: {snippetId, value: snippetObj}
+            url: '/api/snippets',
+            data: { snippetId, value: snippetObj }
           }).then(res => {
             let nodeToPass = Object.assign({}, this.snippetMap[oldFilePath], { filePath: res.data.filePath, value: res.data });
             Materialize.toast('Snippet updated!', 3000, 'rounded');
@@ -218,6 +220,17 @@ export class Public {
             console.error(error);
           });
       },
+
+      getSharedSnippet(id) {
+        this.$http({
+            method: 'GET',
+            url: '/share?s=' + id,
+          })
+          .then((response) => {
+            this.setPublicList(response.data);
+            this.setSelectedPublicSnippet("share");
+          });
+      }
 
       setPublicList(data) {
         dispatch(Actions.setPublicList(data));
