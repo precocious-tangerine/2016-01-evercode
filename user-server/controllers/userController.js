@@ -4,7 +4,7 @@ let request = require('request');
 let qs = require('querystring');
 let setup = require('../setup');
 let Users = Promise.promisifyAll(require('../models/users'));
-let { createJWT } = require('../config/utils.js');
+let utils = require('../config/utils.js');
 
 module.exports = {
 
@@ -14,7 +14,7 @@ module.exports = {
     //Do some comparing
     Users.checkCredentialsAsync(email, password)
       .then((userData) => {
-        token = createJWT({ email, username: userData.username });
+        token = utils.createJWT({ email, username: userData.username });
         res.status(201).send({ token, msg: 'Authorized' });
       }).catch((err) => {
         console.log(err);
@@ -25,9 +25,13 @@ module.exports = {
   signup: ((req, res) => {
     let { email, password, username } = req.body;
     let token;
+
+    console.log('making user');
+    console.log(typeof utils.createJWT);
     Users.makeUserAsync({ email, _password: password, username: username })
       .then(userData => {
-        token = createJWT({ email: userData.email, username: userData.username });
+        console.log('about to send token');
+        token = utils.createJWT({ email: userData.email, username: userData.username });
         res.status(201).send({ token });
       })
       .catch((err) => {
@@ -87,14 +91,14 @@ module.exports = {
         Users.findOne({ email: profile.email }, (err, existingUser) => {
           if (existingUser) {
             Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, username: profile.name }).then((success) => {
-              var token = createJWT({ email: existingUser.email, username: profile.name });
+              var token = utils.createJWT({ email: existingUser.email, username: profile.name });
               res.status(201).send({ token });
             });
           } else {
             let { email, id, avatar_url, name } = profile;
             Users.makeUserAsync({ email, github: id, avatar_url, username: name })
               .then((userObj) => {
-                token = createJWT({ email: userObj.email, username: userObj.username });
+                token = utils.createJWT({ email: userObj.email, username: userObj.username });
                 res.status(201).send({ token });
               })
               .catch((err) => {

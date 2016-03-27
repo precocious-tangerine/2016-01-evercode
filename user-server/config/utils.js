@@ -10,13 +10,14 @@ let jwt = require('jsonwebtoken');
 let secret = setup.secretToken;
 
 
-module.exports.createJWT = (user) => {
+let createJWT = (user) => {
   let payload = {
     username: user.username,
     email: user.email
   };
   return jwt.sign(payload, secret);
 };
+module.exports.createJWT = createJWT;
 
 module.exports.decode = (req, res, next) => {
   let token = req.headers.authorization;
@@ -33,15 +34,17 @@ module.exports.decode = (req, res, next) => {
 
 //Declare here first for use locally
 let createRootFolderAsync = (userObj) => {
+  let token = createJWT(userObj);
   return new Promise((resolve, reject) => {
+    let fullUrl = setup.filesServerAddress + ':' + setup.filesServerPort + '/files/api/folders';
     request({
-      url: setup.fileServerAddress + ':' + fileServerPort,
+      url: fullUrl,
       method: 'POST',
       headers: {
-        'authorization': createJWT(user)
+        'authorization': token
       },
       json: {
-        path: user.email
+        path: userObj.email
       } 
     }, function(error, resp, body) {
       if(error) {
