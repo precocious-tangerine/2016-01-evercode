@@ -4,6 +4,6 @@ module.exports = {
 	mongodbName: '/everCodeFiles',
 	mongodbPort: ':27017',
 	secretToken: 'donkey',
-	userServerAddress: 'http://localhost'
-	userServerPort: 3003,
+	userServerAddress: 'http://localhost',
+	userServerPort: 3003
 }
