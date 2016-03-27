@@ -62,6 +62,7 @@
    }),
 
    getPublicSnippets: ((req, res) => {
+    console.log('req seen');
      Snippets.getPublicAsync()
        .then(snippetList => {
           let fileTreeObj = {};

@@ -13,7 +13,7 @@ let secret = require('../config').secretToken;
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://localhost:3000/email-verification/${URL}',
+  verificationURL: 'http://localhost:3000/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {
