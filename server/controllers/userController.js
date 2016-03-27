@@ -56,7 +56,6 @@ module.exports = {
       .then(success => {
         Users.getUserAsync(email)
           .then(userData => {
-            console.log('userData: ', userData)
             let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
             let user = { username, avatar_url, email, theme, selectedSnippet, language };
             res.status(201).send(user);
