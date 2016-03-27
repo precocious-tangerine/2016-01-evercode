@@ -7,11 +7,16 @@
   <div class="splash-buttons">
       <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
-  <div class="row">
+  <div>
     <h4 style="text-align: center">Public Snippets</h4>
+    <div>
+      <input id="public-search" type="text" ng-model="searchInput" placeholder="Search public snippets..." />
+    </div>
+  </div>
+  <div class="row">
     <ul class="">
       <li class="snippet-gallery col s12 m4 l3"
-        ng-repeat="snippet in public.publicList">
+        ng-repeat="snippet in public.snippetArr | filter:{name:searchInput} track by snippet.filePath">
         <div class="card snippet-gallery-card"
           ng-click="public.openSnippet(snippet.filePath)">
           <h5>{{snippet.name}}</h5>

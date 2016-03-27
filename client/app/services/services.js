@@ -145,26 +145,13 @@ export class Snippets {
       },
 
       changeSelectedSnippet(snippetFilePath) {
-        dispatch(Actions.setSelectedPublicSnippet(filePath));
+        dispatch(Actions.setSelectedSnippet(snippetFilePath));
         dispatch(Actions.removeSelectedPublicSnippet());
         this.Auth.updateUser({ selectedSnippet: snippetFilePath });
       },
 
       deselectSnippet() {
         dispatch(Actions.removeSelectedSnippet());
-      },
-
-      addAnnotation(annotationObj) {
-        return this.$http({
-            method: 'POST',
-            url: '/api/annotations',
-            data: annotationObj
-          }).then(response => {
-            console.log('addAnnotation HTTP response: ', response);
-          })
-          .catch(error => {
-            console.error(error);
-          });
       }
     }
   }

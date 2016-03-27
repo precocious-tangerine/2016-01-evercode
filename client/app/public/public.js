@@ -29,8 +29,12 @@ class PublicCtrl {
 
   mapStateToThis(state) {
     let { publicList, selectedPublicSnippet } = state;
+    let snippetArr = Object.keys(publicList).map(key => {
+      return publicList[key]
+    })
     return {
       publicList,
+      snippetArr,
       selectedPublicSnippet
     }
   }

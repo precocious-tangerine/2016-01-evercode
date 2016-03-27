@@ -12,6 +12,7 @@ import { snippets } from './snippets/snippets.js';
 import { createMainCtrl } from './main/main.js';
 import { editor } from './editor/editor.js';
 import { publicPage } from './public/public.js';
+import { profile } from './profile/profile.js';
 import satellizer from 'satellizer';
 import config from './../../server/config.js';
 import ngclipboard from 'ngclipboard';
@@ -35,6 +36,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.editor', editor())
       .state('main.editor.snippets', snippets('/snippets'))
       .state('main.editor.favorites', snippets('/favorites'))
+      .state('main.editor.profile', profile())
       .state('main.editor.search', search())
       .state('main.download', createDownloadCtrl('/download'))
 
