@@ -18,7 +18,7 @@ class PublicCtrl {
     this.snippetList = [];
     this.loading = true;
     this.Public.getPublicSnippets().then(res => {
-      this.loading = false;     
+      this.loading = false;
     });
   }
 

@@ -126,7 +126,7 @@
         ng-show="editor.selectedSnippet">
         <label>
           Private
-          <input type="checkbox"
+          <input type="checkbox" ng-checked="editor.snippetObj.public"
             ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
           <span class="lever"></span>
           Public

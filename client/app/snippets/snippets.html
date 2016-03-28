@@ -35,7 +35,7 @@
               <i class="material-icons folder-icon valign">folder</i>
               <span class='folder-name'>{{folder.value}}</span>
             </span>
-          </a>
+        </a>
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
@@ -48,13 +48,13 @@
     </div>
     <div class="fade" ng-repeat="snippet in snippets.visibleSnippets">
       <div class="folder-list">
-        <span class="folder-list-item">
-          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+        <span class="folder-list-item waves-effect waves-teal">
+          <a class="folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
             <span class="folder-text valign-wrapper">
               <i class="material-icons code-icon valign">code</i>
               {{snippet.value.name}}
             </span>
-          </a>
+        </a>
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
@@ -67,7 +67,7 @@
     </div>
   </div>
 </ul>
-<script>
+<!--<script>
 // $('.folder-list').on('click', '.rename-tool', function(event) {
 //   var $folderParent = $(this).parent().parent();
 //   var $folderElement = $folderParent.find('a');

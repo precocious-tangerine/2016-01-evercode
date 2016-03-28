@@ -18,12 +18,12 @@
       </a>
     </div>
   </li>
-    <li class="row">
+    <li class="row" ng-click="mainCtrl.toggleSideView('editor.profile')">
       <div class="nav-icon">
-        <a ng-click="mainCtrl.toggleSideView('editor.profile', true)" class="waves-effect avatar waves-teal nav-link">
+        <a class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Create Snippet" >
           <img ng-show='mainCtrl.avatar' class="circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
           <img ng-hide='mainCtrl.avatar' class="icon button-collapse mid-navigation-menu" src="../../avatar.png" />
-        </a>
+         </a>
       </div>
     </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('editor', true)">

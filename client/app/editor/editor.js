@@ -136,7 +136,7 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
-    let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
+    let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,

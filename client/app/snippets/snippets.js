@@ -90,6 +90,15 @@ class SnippetsCtrl {
         }
       });
     }
+    let favoritesArr = [];
+    Object.keys(snippetMap).forEach(key => {
+      let snippetVal = snippetMap[key].value
+      if (typeof snippetVal === 'object') {
+        if (snippetVal.name !== '.config' && snippetVal.name !== '/.config') {
+          favoritesArr.push(snippetVal);
+        }
+      }
+    });
     return {
       selectedPublicSnippet,
       visibleSnippets,
@@ -97,7 +106,8 @@ class SnippetsCtrl {
       selectedFolderObj,
       selectedFolder,
       selectedSnippet,
-      snippetMap
+      snippetMap,
+      favoritesArr
     };
   }
 
