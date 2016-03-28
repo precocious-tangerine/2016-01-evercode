@@ -12,5 +12,5 @@ module.exports = (app, express) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
-  app.use('/user/api', utils.decode)
+  app.use('/user/api', utils.decode);
 };
