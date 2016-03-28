@@ -1,0 +1,468 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  color: #2E3C56;
+}
+
+#container {
+  position: absolute;
+  height: auto;
+  width: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
+.main {
+  position: relative;
+  width: 15vw;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.top-nav {
+  background-color: white;
+  height: 50px;
+  box-shadow: none;
+}
+
+.top-nav a {
+  text-align: center;
+  color: grey;
+}
+
+.splash {
+  text-align: center;
+  color: #2E3C56;
+  padding-top: 75px;
+}
+
+.splash span {
+  font-weight: 100;
+}
+
+.splash img {
+  width: 200px;
+}
+
+.splash-buttons {
+  text-align: center;
+  margin: 50px 0;
+  padding: 50px 0;
+  border-bottom: 2px solid lightgrey;
+}
+
+.public-header {
+  text-align: center;
+}
+
+.search-results {
+  z-index: 2;
+  display: none;
+}
+
+.search {
+  position: relative;
+  width: 200px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 190px;
+}
+
+.user-profile h6 {
+  text-align: left;
+  font-weight: bold;
+}
+
+.folders {
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+.snippet-icon {
+  margin-top: 18px;
+  margin-right: 15px;
+  font-size: 1.5em;
+  color: #95A5A6;
+}
+
+.snippets {
+  position: relative;
+  width: 200px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  box-shadow: none;
+}
+
+.editor {
+  position: relative;
+  width: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90vh;
+}
+
+.editor-row {
+  padding-bottom: 3;
+  margin: 0;
+}
+
+.snippet-title input {
+  font-size: 3em;
+  float: left;
+}
+
+.snippet-title input, .snippet-description input {
+  border-bottom: none;
+  width: auto;
+  height: auto;
+}
+
+.code-selector select {
+  color: grey;
+  border: 0;
+  width: auto;
+  height: 30px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.CodeMirror {
+  border: 2px solid #eee;
+  height: 72vh;
+}
+
+.annotations {
+  border-left: 2px solid grey;
+  height: 72vh;
+}
+
+.annotation-text {
+  height: 60vh;
+}
+
+.tags {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 1px;
+  clear: both;
+}
+
+.tag-row input {
+  max-width: 100px;
+  height: 20px;
+  margin-bottom: -10px;
+}
+
+.tag-input {
+  margin-left: 10px;
+}
+
+.tag-label {
+  margin-right: 10px;
+}
+
+.tag {
+  margin-left: 1px;
+  float: left;
+}
+
+.shortcut img {
+  margin-right: 10px;
+}
+
+.toggle-annotation {
+  display: none;
+}
+
+.folder-name {
+  margin-left: 5px;
+}
+
+.center a {
+  display: inline;
+}
+
+.center a:hover {
+  background-color: transparent;
+}
+
+.icon {
+  width: 2rem;
+}
+
+.avatar {
+  padding-left: 10px !important;
+}
+
+.avatar img {
+  width: 3rem;
+}
+
+#nav-mobile {
+  position: fixed;
+  line-height: 3em;
+  width: 66px;
+  left: 0;
+  margin: 0;
+  padding: 0px;
+  z-index: 999;
+  height: 100vh;
+}
+
+#nav-mobile a {
+  width: 66px;
+}
+
+nav,
+.nav-wrapper {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.corner-logo {
+  border-bottom: 2px solid grey;
+  background-color: white;
+}
+
+.brand-logo {
+  margin-left: 100px;
+}
+
+.outerContainer {
+  position: relative;
+  margin-left: 70px !important;
+  margin-top: 16px !important;
+  padding-left: 0px !important;
+}
+
+.side-nav li {
+  padding: 0;
+  margin: 10px 0;
+}
+
+.folder-list {
+  border: 1px solid lightgrey;
+}
+
+.folder-list:hover {
+  background-color: #f6f6f6;
+}
+
+.folder-list-item {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.folder-list-link {
+  padding: 0;
+}
+
+.folder-text {
+  font-size: 1.1em;
+}
+
+.folder-icon, .code-icon {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #95A5A6;
+}
+
+.list-description {
+  padding: 5px;
+  margin: 0;
+  font-size: 0.8em;
+  color: #95A5A6;
+}
+
+.back-button {
+  font-size: 0.9em;
+}
+
+.logout {
+  bottom: 0;
+  position: absolute;
+}
+
+.collection-item {
+  padding: 0px;
+}
+
+#toast-container {
+  bottom: 50px !important;
+  top: inherit !important;
+  right: 50px !important;
+  left: inherit !important;
+}
+
+.breadcrumb, .breadcrumb:before {
+  color: black !important;
+}
+
+.snippet-gallery {
+  min-height: 275px;
+  padding: 3px;
+}
+
+.snippet-gallery-card {
+  padding: 10px;
+}
+
+.public-chip {
+  background-color: #2E3C56;
+  color: white;
+}
+
+.toast {
+  color: white;
+}
+
+.download-header, .download-link, .download-button {
+  text-align: center;
+}
+
+.download-instructions-container > h4, h6 {
+  text-align: center;
+}
+
+.download-instructions-container > h6 {
+  font-style: italic;
+}
+
+#snippet-name-input {
+  font-size: 36px;
+  width: 40%;
+}
+
+#snippet-description-input {
+  width: 80%;
+}
+
+.github img {
+  height: 25px;
+  margin-top: 5px;
+}
+
+.signin {
+  padding: 0 !important;
+}
+
+.comment-btn {
+  position: relative;
+}
+
+.comment-btn div {
+  position: absolute;
+  display: inline-block;
+  right: 13px;
+  top: 60px;
+}
+
+.comment-btn i {
+  font-size: 1em;
+}
+
+.subl-icon img {
+  width: 30px;
+  margin-top: 15px;
+}
+
+/*---------ANIMATION---------*/
+
+.transform {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.transform.ng-enter {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.transform.ng-enter.ng-enter-active,
+.transform.ng-leave {
+  position: absolute;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.transform.ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-800%);
+  transform: translateX(-800%);
+}
+
+
+/*--------------------------*/
+
+.fade.ng-enter {
+  transition: 0.5s linear all;
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  opacity: 0;
+}
+
+.fade.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.ng-modal-overlay {
+  /* A dark translucent div that covers the whole screen */
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.8;
+}
+
+.ng-modal-dialog {
+  /* A centered div above the overlay with a box shadow. */
+  z-index: 10000;
+  position: absolute;
+  width: 50%;
+  /* Default */
+  /* Center the dialog */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: 4px 4px 80px #000;
+}
+
+.ng-modal-dialog-content {
+  padding: 10px;
+  text-align: left;
+}
+
+.ng-modal-close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 120%;
+  display: inline-block;
+  font-weight: bold;
+  font-family: 'arial', 'sans-serif';
+}

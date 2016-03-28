@@ -1,0 +1,24 @@
+<ul class="snippets side-nav">
+    <div>
+      <h4>Favorites</h4>
+    </div>
+    <div class="" ng-repeat="snippet in snippets.favoritesArr | filter:{favorite:true}">
+      <div class="folder-list">
+        <span class="folder-list-item">
+          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+            <span class="folder-text valign-wrapper">
+              <i class="material-icons code-icon valign">code</i>
+              {{snippet.name}}
+            </span>
+          </a>
+        </span>
+        <span class="folder-list-item right">
+          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
+        </span>
+        <p class="list-description">
+          {{snippet.description}}
+        </p>
+      </div>
+    </div>
+  </div>
+</ul>

@@ -1,0 +1,16 @@
+<ul class="search side-nav col s12">
+  <input id="search-bar" data-activates="search-results" type="text" ng-model="search.searchInput" placeholder="Search your snippets..." />
+  <div class="search-results">
+    <a ui-sref=".editor" ng-show="search.searchInput" ng-repeat="snippet in search.snippetArr | filter:{name:search.searchInput}" class="waves-effect waves-teal collection-item" ng-click="search.changeSelectedSnippet(snippet.filePath)">{{snippet.name}}
+    </a>
+  </div>
+</ul>
+<script>
+$('#search-bar').keyup(event => {
+  if (event.target.value == '') {
+    $('.search-results').slideUp();
+  } else {
+    $('.search-results').slideDown();
+  }
+});
+</script>

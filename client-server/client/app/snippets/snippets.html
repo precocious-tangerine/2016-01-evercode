@@ -1,0 +1,98 @@
+<ul class="snippets side-nav">
+  <div class="col s12">
+    <span class="add-button col s4 center-align">
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
+    </span>
+    <span class="add-button col s4 center-align">
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
+    </span>
+    <span class="add-button col s4 center-align">
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="50" data-tooltip="Hide List View"><i class="large material-icons">arrow_back</i></a>
+    </span>
+  </div>
+  <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addFolder()" novalidate>
+    <div class="form-group">
+      <input placeholder="New Subfolder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="snippets.subFolder.name" />
+    </div>
+  </form>
+  <div>
+    <div ng-show='snippets.selectedFolderObj.parent'>
+      <a class="waves-effect waves-teal collection-item" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
+        <span class="flow-text back-button">
+          <i class="material-icons">subdirectory_arrow_left</i>
+          {{snippets.selectedFolderObj.parent}}
+        </span>
+      </a>
+    </div>
+    <div>
+      {{snippets.visibleFolders.length ? 'Folders' : ''}}
+    </div>
+    <div class="folder-list">
+      <div class="fade" ng-repeat="folder in snippets.visibleFolders">
+        <span class="folder-list-item">
+          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
+            <span class="folder-text valign-wrapper">
+              <i class="material-icons folder-icon valign">folder</i>
+              <span class='folder-name'>{{folder.value}}</span>
+            </span>
+        </a>
+        </span>
+        <span class="folder-list-item right">
+          <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
+         <i class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i></a>
+        </span>
+      </div>
+    </div>
+    <div>
+      {{snippets.visibleSnippets.length ? 'Snippets' : ''}}
+    </div>
+    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets">
+      <div class="folder-list">
+        <span class="folder-list-item waves-effect waves-teal">
+          <a class="folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+            <span class="folder-text valign-wrapper">
+              <i class="material-icons code-icon valign">code</i>
+              {{snippet.value.name}}
+            </span>
+          </a>
+        </span>
+<!--         <span ng-show='snippets.forRename.value._id === snippet.value._id' class="folder-list-item">
+         <form name="newName" ng-submit="snippets.changeName(snippet.forRename)" novalidate>
+           <div class="input-field form-group">
+             <input type='text' name='name' class='form-control' ng-model='snippets.forRename.value.name' required>
+           </div>
+         </form>
+        </span> -->
+        <span class="folder-list-item right">
+        <i ngclipboard data-clipboard-text={{snippet.value.data}} class="waves-effect waves-teal material-icons snippet-icon">content_copy</i>
+          <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
+          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
+          <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
+        </span>
+        <p class="list-description">
+          {{snippet.value.description}}
+        </p>
+      </div>
+    </div>
+  </div>
+</ul>
+<!--<script>
+// $('.folder-list').on('click', '.rename-tool', function(event) {
+//   var $folderParent = $(this).parent().parent();
+//   var $folderElement = $folderParent.find('a');
+//   var name = $folderElement.find('.folder-name').html();
+//   console.log($folderElement);
+//   $folderElement.replaceWith('<input></input>')
+
+//   var $folderInput = $(this).parent().parent().find('input');
+//   $folderInput.focus()
+//   $folderInput.on('keyup', function(event) {
+//     console.log(event.target.value);
+//     if(event.keyCode === 13) {
+//       $folderInput.remove();
+//       $folderParent.prepend($folderElement);
+//     }
+//   })
+
+// })
+</script>
