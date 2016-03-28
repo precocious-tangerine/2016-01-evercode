@@ -1,15 +1,18 @@
 <div class='ng-modal' ng-show='editorModal.show'>
   <div class='ng-modal-overlay' ng-click='editorModal.hideModal()'></div>
-  <div class='ng-modal-dialog' ng-style='dialogStyle'>
+  <div class='ng-modal-dialog section' ng-style='dialogStyle'>
     <div class='ng-modal-close row' ng-click='editorModal.hideModal()'>X</div>
+    <div class="row"></div>
     <div class="row editor-row">
       <div class="snippet-title col s9">
         <h2>{{editorModal.snippetObj.name}}</h2>
       </div>
-      <button class="col m3 waves-effect waves-light btn save-snippet right"
-        type="submit" >
-        {{editorModal.buttonText}}<i class='material-icons right'>archive</i>
-      </button>
+      <div class="col s3">
+        <button ng-show="!!editorModal.activeUser.username" class="waves-effect waves-light btn save-snippet right"
+          type="submit" >
+          {{editorModal.buttonText}}<i class='material-icons right'>archive</i>
+        </button>
+      </div>
     </div>
     <div>
       <p>{{editorModal.snippetObj.description}}</p>
