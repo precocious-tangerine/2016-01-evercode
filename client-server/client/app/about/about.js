@@ -5,7 +5,7 @@ export const createAboutCtrl = (url) => {
     controller: AboutCtrl,
     template: require(`.${url}.html`),
     scope: {},
-    access: {restricted: true}
+    access: {restricted: false}
   };
 }
 

@@ -2,8 +2,10 @@
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
+      <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
+      <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
       <li><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
       <li><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
     </ul>
@@ -20,7 +22,7 @@
   </li>
     <li class="row" ng-click="mainCtrl.toggleSideView('editor.profile')">
       <div class="nav-icon">
-        <a class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Create Snippet" >
+        <a class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Profile" >
           <img ng-show='mainCtrl.avatar' class="circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
           <img ng-hide='mainCtrl.avatar' class="icon button-collapse mid-navigation-menu" src="../../assets/avatar.png" />
          </a>

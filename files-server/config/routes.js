@@ -20,8 +20,8 @@ module.exports = (app, express) => {
     .delete(snippetsController.removeFolder);
 
   app.route('files/n')
-    .get(snippetsController.rerouteSharedSnippet)
+    .get(snippetsController.rerouteSharedSnippet);
 
   app.route('files/share')
-    .get(snippetsController.getSharedSnippet)
+    .get(snippetsController.getSharedSnippet);
 };

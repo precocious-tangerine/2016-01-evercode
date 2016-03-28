@@ -6,7 +6,7 @@
 /user-server/setup.js
 /user-server/gmail-credentials.json
 
-/setup.js
+setup.js
 
 #client
 client-server/client/lib/*
