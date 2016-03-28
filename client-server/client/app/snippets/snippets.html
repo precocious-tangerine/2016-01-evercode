@@ -27,26 +27,26 @@
     <div>
       {{snippets.visibleFolders.length ? 'Folders' : ''}}
     </div>
-    <div class="folder-list">
-      <div class="fade" ng-repeat="folder in snippets.visibleFolders">
+    <div class="fade" ng-repeat="folder in snippets.visibleFolders track by $index">
+      <div class="folder-list">
         <span class="folder-list-item">
           <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
             <span class="folder-text valign-wrapper">
               <i class="material-icons folder-icon valign">folder</i>
               <span class='folder-name'>{{folder.value}}</span>
             </span>
-        </a>
+          </a>
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
-         <i class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i></a>
+         <i class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i>
         </span>
       </div>
     </div>
     <div>
       {{snippets.visibleSnippets.length ? 'Snippets' : ''}}
     </div>
-    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets">
+    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets | orderBy:'value._createdAt'">
       <div class="folder-list">
         <span class="folder-list-item waves-effect waves-teal">
           <a class="folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
@@ -54,15 +54,8 @@
               <i class="material-icons code-icon valign">code</i>
               {{snippet.value.name}}
             </span>
-          </a>
+        </a>
         </span>
-<!--         <span ng-show='snippets.forRename.value._id === snippet.value._id' class="folder-list-item">
-         <form name="newName" ng-submit="snippets.changeName(snippet.forRename)" novalidate>
-           <div class="input-field form-group">
-             <input type='text' name='name' class='form-control' ng-model='snippets.forRename.value.name' required>
-           </div>
-         </form>
-        </span> -->
         <span class="folder-list-item right">
         <i ngclipboard data-clipboard-text={{snippet.value.data}} class="waves-effect waves-teal material-icons snippet-icon">content_copy</i>
           <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
