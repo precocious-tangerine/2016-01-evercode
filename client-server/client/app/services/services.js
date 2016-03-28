@@ -342,6 +342,7 @@ export class Auth {
         dispatch(Actions.removeActiveUser());
         dispatch(Actions.removeSelectedFolder());
         dispatch(Actions.removeSelectedSnippet());
+        dispatch(Actions.clearSnippetMap());
       }
     }
   }
