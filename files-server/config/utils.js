@@ -1,7 +1,7 @@
 'use strict';
-let setup = require('../setup.js');
+let setup = require('../../setup.js');
 let jwt = require('jsonwebtoken');
-let secret = require('../setup').secretToken;
+let secret = setup.secretToken;
 
 
 module.exports.createJWT = (user) => {

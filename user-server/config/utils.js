@@ -1,7 +1,7 @@
 'use strict';
 let Promise = require('bluebird');
 let request = require('request');
-let setup = require('../setup.js');
+let setup = require('../../setup.js');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let nev = Promise.promisifyAll(require('email-verification')(mongoose));

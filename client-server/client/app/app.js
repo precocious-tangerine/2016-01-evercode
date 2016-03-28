@@ -14,7 +14,7 @@ import { editor } from './editor/editor.js';
 import { publicPage } from './public/public.js';
 import { profile } from './profile/profile.js';
 import satellizer from 'satellizer';
-import config from './../../server/config.js';
+import setup from '../../../setup.js';
 import ngclipboard from 'ngclipboard';
 import ngAnimate from 'angular-animate';
 import tinymce from './tinymce/tinymce.js';
@@ -24,7 +24,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     $authProvider.oauth2({
       name: 'github',
       url: '/auth/github',
-      clientId: config.githubClientId,
+      clientId: setup.githubClientId,
       redirectUri: window.location.origin,
       authorizationEndpoint: 'https://github.com/login/oauth/authorize'
     });

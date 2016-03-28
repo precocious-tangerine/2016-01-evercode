@@ -2,7 +2,7 @@
 let Promise = require('bluebird');
 let request = require('request');
 let qs = require('querystring');
-let setup = require('../setup');
+let setup = require('../../setup');
 let Users = Promise.promisifyAll(require('../models/users'));
 let utils = require('../config/utils.js');
 
@@ -26,11 +26,8 @@ module.exports = {
     let { email, password, username } = req.body;
     let token;
 
-    console.log('making user');
-    console.log(typeof utils.createJWT);
     Users.makeUserAsync({ email, _password: password, username: username })
       .then(userData => {
-        console.log('about to send token');
         token = utils.createJWT({ email: userData.email, username: userData.username });
         res.status(201).send({ token });
       })

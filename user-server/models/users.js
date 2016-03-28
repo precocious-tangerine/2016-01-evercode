@@ -29,14 +29,18 @@ User.makeUser = (userObj, callback) => {
         userObj._password = hash;
       return utils.createRootFolderAsync(userObj);
       })
-      .then((success) => User.create(userObj))
-      .then(result => callback(null, result))
+      .then((success) => {
+        User.create(userObj);
+    })
+      .then(result =>  {
+        callback(null, userObj)
+      })
       .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
     createRootFolderAsync(userObj)
       .then(success => User.create(userObj))
-      .then(result => callback(null, result))
+      .then(result => callback(null, userObj))
       .catch(err => callback(err, null));
   } else {
     callback(new Error('must login via github or local session'), null);

@@ -2,9 +2,9 @@
 let express = require('express');
 let app = express();
 let mongoose = require('mongoose');
-let setup = require('./setup.js');
+let setup = require('../setup.js');
 
-mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbName);
+mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);
