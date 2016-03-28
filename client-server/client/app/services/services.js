@@ -340,6 +340,9 @@ export class Auth {
       signout() {
         this.$auth.logout();
         dispatch(Actions.removeActiveUser());
+        dispatch(Actions.removeSelectedFolder());
+        dispatch(Actions.removeSelectedSnippet());
+        dispatch(Actions.clearSnippetMap());
       }
     }
   }

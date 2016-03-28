@@ -1,0 +1,70 @@
+<div class='ng-modal' ng-show='editorModal.show'>
+  <div class='ng-modal-overlay' ng-click='editorModal.hideModal()'></div>
+  <div class='ng-modal-dialog section' ng-style='dialogStyle'>
+    <div class='ng-modal-close row' ng-click='editorModal.hideModal()'>X</div>
+    <div class="row"></div>
+    <div class="row editor-row">
+      <div class="snippet-title col s9">
+        <h2>{{editorModal.snippetObj.name}}</h2>
+      </div>
+      <div class="col s3">
+        <button ng-show="!!editorModal.activeUser.username" class="waves-effect waves-light btn save-snippet right"
+          type="submit" >
+          {{editorModal.buttonText}}<i class='material-icons right'>archive</i>
+        </button>
+      </div>
+    </div>
+    <div>
+      <p>{{editorModal.snippetObj.description}}</p>
+    </div>
+    <div class="row tag-row">
+      <div class='tags col s12 valign-wrapper'>
+        <span class="tag valign">TAGS:</span>
+        <span class='chip tag'
+          ng-repeat="tag in editorModal.snippetMap[editorModal.selectedSnippet].value.tags">
+          {{ tag }}<i ng-click="editorModal.removeOrAddTag(tag)" class="material-icons">close</i>
+        </span>
+      </div>
+    </div>
+    <div class="code-editor row card">
+      <div class="col s12 code-toolbar valign-wrapper">
+        <a class="btn col s1"
+          data-tooltip="Copy Snippet"
+          data-position="bottom"
+          data-delay="50"
+          ngclipboard
+          data-clipboard-text={{editorModal.snippetObj.data}}>
+          <i class="material-icons">assignment</i>
+        </a>
+        <div class="code-selector col s3">
+          <select class="browser-default"
+            ng-model="editorModal.snippetObj.language"
+            ng-init="editorModal.snippetObj.language = editorModal.snippetObj.language || editorModal.cmDefaults.language"
+            ng-options="language as language for language in editorModal.cmLanguages"
+            ng-change="editorModal.changeLanguage(editorModal.snippetObj.language)">
+          </select>
+        </div>
+        <div class="code-selector col s3">
+          <select class="browser-default"
+            ng-model="editorModal.userTheme"
+            ng-init="editorModal.userTheme = editorModal.userTheme || editorModal.cmDefaults.theme"
+            ng-options="theme as theme for theme in editorModal.cmThemes"
+            ng-change="editorModal.changeTheme(editorModal.userTheme)">
+          </select>
+        </div>
+        <a class="btn col s3"
+          data-tooltip="Copy Share URL"
+          data-position="bottom"
+          data-delay="50"
+          ngclipboard
+          data-clipboard-text="localhost:3000/n/?s={{editorModal.snippetObj._id}}">Share URL
+        </a>
+      </div>
+      <div class="col s12 public-code-mirror"
+        ng-model='editorModal.snippetObj.data'
+        ui-codemirror="{ onLoad : editorModal.codemirrorLoaded }"
+        ui-codemirror-opts="editorModal.editorOptions">
+      </div>
+    </div>
+  </div>
+</div>

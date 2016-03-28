@@ -10,6 +10,26 @@ export const editor = () => {
   }
 }
 
+export let createEditorModal = () => {
+  return {
+    restrict: 'E',
+    scope: {
+      show: '=',
+      other: '='
+    },
+    link(scope, element, attrs) {
+      scope.dialogStyle = {};
+      attrs.width ? scope.dialogStyle.width = attrs.width: null;
+      attrs.height ? scope.dialogStyle.height = attrs.height: null;
+    },
+    controllerAs: 'editorModal',
+    controller: EditorCtrl,
+    bindToController: true,
+    template: require(`./editorModal.html`),
+    url: '/editor'
+  }
+}
+
 class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
     this.$http = $http;
@@ -35,6 +55,10 @@ class EditorCtrl {
     this.showAnnotation = false;
     this.getSharedSnippet();
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
+  }
+
+  hideModal() {
+    this.show = false;
   }
 
   getSharedSnippet() {

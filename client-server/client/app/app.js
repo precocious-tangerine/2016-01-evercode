@@ -11,7 +11,7 @@ import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { createMainCtrl } from './main/main.js';
-import { editor } from './editor/editor.js';
+import { editor, createEditorModal } from './editor/editor.js';
 import { publicPage } from './public/public.js';
 import { profile } from './profile/profile.js';
 import satellizer from 'satellizer';
@@ -52,6 +52,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .service('Public', Public)
   .directive('signin', createAuthModal('/signin'))
   .directive('signup', createAuthModal('/signup'))
+  .directive('editor', createEditorModal)
   .factory('AttachTokens', ($window) => {
     var attach = {
       request: (object) => {
