@@ -149,7 +149,7 @@ export class Snippets {
         delete snippetObj.Id;
         return this.$http({
             method: 'PUT',
-            url: '/api/snippets',
+            url: 'files/api/snippets',
             data: { snippetId, value: snippetObj }
           }).then(res => {
             let nodeToPass = Object.assign({}, this.snippetMap[oldFilePath], { filePath: res.data.filePath, value: res.data });
