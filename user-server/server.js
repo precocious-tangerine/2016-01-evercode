@@ -2,13 +2,13 @@
 let express = require('express');
 let app = express();
 let mongoose = require('mongoose');
-let config = require('./config.js');
+let setup = require('../setup.js');
 
-mongoose.connect(config.mongodbHost + config.mongodbPort + config.mongodbName);
+mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 
 
 const startServer = () => {

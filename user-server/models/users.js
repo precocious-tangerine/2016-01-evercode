@@ -2,7 +2,7 @@
 const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
-let Snippets = Promise.promisifyAll(require('./snippets.js'));
+let utils = require('../config/utils.js')
 
 let userSchema = mongoose.Schema({
   _password: { type: String },
@@ -27,18 +27,20 @@ User.makeUser = (userObj, callback) => {
       .then((salt) => bcrypt.hashAsync(pw, salt))
       .then((hash) => {
         userObj._password = hash;
-        return Snippets.makeRootFolderAsync(userObj.email, userObj.username);
+      return utils.createRootFolderAsync(userObj);
       })
       .then((success) => {
-        return User.create(userObj);
+        User.create(userObj);
+    })
+      .then(result =>  {
+        callback(null, userObj)
       })
-      .then(result => callback(null, result))
       .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
-    Snippets.makeRootFolderAsync(userObj.email, userObj.username)
+    createRootFolderAsync(userObj)
       .then(success => User.create(userObj))
-      .then(result => callback(null, result))
+      .then(result => callback(null, userObj))
       .catch(err => callback(err, null));
   } else {
     callback(new Error('must login via github or local session'), null);

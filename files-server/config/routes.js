@@ -1,24 +1,6 @@
 'use strict';
-let { postSignup, getVerification } = require('./utils.js');
-let userController = require('../controllers/userController');
 let snippetsController = require('../controllers/snippetsController');
-
 module.exports = (app, express) => {
-
-  // Post signup and email verification 
-  app.post('/user/send-email', postSignup);
-  app.get('/user/email-verification/:URL', getVerification);
-
-  // Sign in and sign up locally and using github 
-  app.post('/user/signin', userController.signin);
-  app.post('/user/signup', userController.signup);
-  app.post('/user/auth/github', userController.githubLogin);
-
-  // Get or update profile information
-  app.route('/user/api/userInfo')
-    .get(userController.userInfo)
-    .put(userController.updateUserInfo);
-
   // Access, add, remove or update user snippets
   app.route('/files/api/snippets')
     .get(snippetsController.getSnippet)
@@ -37,9 +19,9 @@ module.exports = (app, express) => {
     .post(snippetsController.addFolder)
     .delete(snippetsController.removeFolder);
 
-  app.route('/n')
+  app.route('files/n')
     .get(snippetsController.rerouteSharedSnippet)
 
-  app.route('/share')
+  app.route('files/share')
     .get(snippetsController.getSharedSnippet)
 };
