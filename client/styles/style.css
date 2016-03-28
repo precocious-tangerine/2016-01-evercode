@@ -42,11 +42,23 @@ html, body {
   padding-top: 75px;
 }
 
+.splash span {
+  font-weight: 100;
+}
+
+.splash img {
+  width: 200px;
+}
+
 .splash-buttons {
   text-align: center;
   margin: 50px 0;
   padding: 50px 0;
   border-bottom: 2px solid lightgrey;
+}
+
+.public-header {
+  text-align: center;
 }
 
 .search-results {
@@ -317,7 +329,7 @@ nav,
   color: white;
 }
 
-.download-header {
+.download-header, .download-link, .download-button {
   text-align: center;
 }
 
@@ -329,10 +341,6 @@ nav,
   font-style: italic;
 }
 
-.download-link {
-  text-align: center;
-}
-
 #snippet-name-input {
   font-size: 36px;
   width: 40%;
@@ -342,6 +350,34 @@ nav,
   width: 80%;
 }
 
+.github img {
+  height: 25px;
+  margin-top: 5px;
+}
+
+.signin {
+  padding: 0 !important;
+}
+
+.comment-btn {
+  position: relative;
+}
+
+.comment-btn div {
+  position: absolute;
+  display: inline-block;
+  right: 13px;
+  top: 60px;
+}
+
+.comment-btn i {
+  font-size: 1em;
+}
+
+.subl-icon img {
+  width: 30px;
+  margin-top: 15px;
+}
 
 /*---------ANIMATION---------*/
 
