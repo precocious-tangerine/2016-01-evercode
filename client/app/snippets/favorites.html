@@ -2,7 +2,7 @@
     <div>
       <h4>Favorites</h4>
     </div>
-    <div class="" ng-repeat="snippet in snippets.snippetArr | filter:{favorite:true}">
+    <div class="" ng-repeat="snippet in snippets.favoritesArr | filter:{favorite:true}">
       <div class="folder-list">
         <span class="folder-list-item">
           <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
@@ -14,7 +14,6 @@
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
-          <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
         </span>
         <p class="list-description">
           {{snippet.description}}

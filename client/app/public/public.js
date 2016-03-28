@@ -18,19 +18,19 @@ class PublicCtrl {
     this.snippetList = [];
     this.loading = true;
     this.Public.getPublicSnippets().then(res => {
-      this.loading = false;     
+      this.loading = false;
     });
   }
 
   openSnippet(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
-    this.$state.go('main.editor');
+    this.$state.go('main.editor.snippets');
   }
 
   mapStateToThis(state) {
     let { publicList, selectedPublicSnippet } = state;
     let snippetArr = Object.keys(publicList).map(key => {
-      return publicList[key]
+      return publicList[key];
     })
     return {
       publicList,

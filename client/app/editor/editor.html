@@ -1,14 +1,12 @@
 <div class="col s12 m3 l3 innerContainer transform" 
-  ng-class="editor.$state.is('main.editor.search') ? null : 'card'" 
-  ui-view
->
+  ng-class="editor.$state.is('main.editor.search') ? null : 'card'" ui-view>
 </div>
 <div class='transform editor col s12 right' 
   ng-class="editor.$state.is('main.editor') ? 'm12 l12' : 'm9 l9'"
 >
   <div class="row editor-row">
     <form name="snippetForm" 
-      ng-submit="editor.selectedSnippet ? editor.updateSnippet() : editor.addSnippet()">
+      ng-submit="editor.buttonTrigger()">
       <div class="form-group snippet-title">
         <input class='form-control col m9' 
           id="snippet-name-input"
@@ -79,7 +77,7 @@
     </span>
     </div>
     <div ng-show="editor.selectedSnippet" class='shortcut col m9 valign-wrapper'>
-      <img class="tooltipped" data-position="top" data-delay="50" data-tooltip="Sublime snippet trigger keyword" width="30px" src="../../subl.png">
+      <img class="tooltipped" data-position="top" data-delay="50" data-tooltip="Sublime snippet trigger keyword" width="30px" src="../../assets/subl.png">
       <span >NC_</span>
       <span class="valign">
         <form name="shortcut"
@@ -95,7 +93,7 @@
   </div>
   <div class="code-editor row card">
     <div class="col s12 code-toolbar valign-wrapper">
-      <a class="btn"
+      <a class="btn col s1"
         data-tooltip="Copy Snippet"
         data-position="bottom"
         data-delay="50"
@@ -103,9 +101,6 @@
         data-clipboard-text={{editor.snippetObj.data}}>
         <i class="material-icons">assignment</i>
       </a>
-      <div class="share-url">
-        <input value="localhost:3000/n/?s={{editor.snippetObj._id}}">
-      </div>
       <div class="code-selector col s3">
         <select class="browser-default"
           ng-model="editor.snippetObj.language"
@@ -114,7 +109,7 @@
           ng-change="editor.changeLanguage(editor.snippetObj.language)">
         </select>
       </div>
-      <div class="code-selector">
+      <div class="code-selector col s3">
         <select class="browser-default"
           ng-model="editor.userTheme"
           ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme"
@@ -122,23 +117,29 @@
           ng-change="editor.changeTheme(editor.userTheme)">
         </select>
       </div>
-      <div class="switch col s4 right-align"
+      <a class="btn col s3"
+        data-tooltip="Copy Share URL"
+        data-position="bottom"
+        data-delay="50"
+        ngclipboard
+        data-clipboard-text="localhost:3000/n/?s={{editor.snippetObj._id}}">Share URL
+      </a>
+      <div class="switch col s2 right-align"
         ng-show="editor.selectedSnippet">
         <label>
           Private
-          <input type="checkbox"
+          <input type="checkbox" ng-checked="editor.snippetObj.public"
             ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
           <span class="lever"></span>
           Public
         </label>
       </div>
     </div>
-    <div style="position: relative;">
-      <div class="fixed-action-btn horizontal"
-        style="position: absolute; display: inline-block; right: 13px; top: 60px;">
+    <div class="comment-btn">
+      <div class="fixed-action-btn horizontal">
         <a class="btn-floating btn"
           ng-click="editor.toggleAnnotation()">
-          <i class="material-icons" style="font-size: 1em;">comment</i>
+          <i class="material-icons">comment</i>
         </a>
       </div>
     </div>

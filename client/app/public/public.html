@@ -1,14 +1,14 @@
 <div>
   <div class="splash">
-    <img width="200px" src="../../n.png">
-    <h1><span style="font-weight: 100">never</span>:code</h1>
+    <img src="../../assets/n.png">
+    <h1><span>never</span>:code</h1>
     <h5>Your most useful code snippets in one place.</h5>
   </div>
   <div class="splash-buttons">
       <a class="waves-effect waves-light btn center" ui-sref='main.editor'>Editor</a>
   </div>
   <div>
-    <h4 style="text-align: center">Public Snippets</h4>
+    <h4 class='public-header'>Public Snippets</h4>
     <div>
       <input id="public-search" type="text" ng-model="searchInput" placeholder="Search public snippets..." />
     </div>
@@ -18,12 +18,12 @@
       <li class="snippet-gallery col s12 m4 l3"
         ng-repeat="snippet in public.snippetArr | filter:{name:searchInput} track by snippet.filePath">
         <div class="card snippet-gallery-card"
-          ng-click="public.openSnippet(snippet.filePath)">
-          <h5>{{snippet.name}}</h5>
+          ng-click="public.openSnippet(snippet.value.filePath)">
+          <h5>{{snippet.value.name}}</h5>
           <hr>
-          <p>{{snippet.description}}</p>
-          <p>{{snippet.username}}<br>
-             {{snippet.language}}
+          <p>{{snippet.value.description}}</p>
+          <p>{{snippet.value.username}}<br>
+             {{snippet.value.language}}
           </p>
           <span class="chip public-chip"
             ng-repeat="tag in snippet.tags">

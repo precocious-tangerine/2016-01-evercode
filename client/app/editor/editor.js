@@ -12,7 +12,6 @@ export const editor = () => {
 
 class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
-    $ngRedux.connect(this.mapStateToThis)(this);
     this.$http = $http;
     this.$location = $location;
     this.$state = $state;
@@ -35,19 +34,13 @@ class EditorCtrl {
     this.addTag = false;
     this.showAnnotation = false;
     this.getSharedSnippet();
+    $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
   getSharedSnippet() {
-    if(this.$location.absUrl().indexOf("?") != -1) {
+    if (this.$location.absUrl().indexOf("?") != -1) {
       let id = this.$location.absUrl().slice(-24);
-      this.$http({
-          method: 'GET',
-          url: '/share?s=' + id ,
-        })
-        .then((response) => {
-          this.Public.setPublicList(response.data);
-          this.Public.setSelectedPublicSnippet("share");
-        });
+      this.Public.getSharedSnippet(id);
     }
   }
 
@@ -114,6 +107,7 @@ class EditorCtrl {
       Materialize.toast('Sign in or sign up to fork', 3000, 'rounded');
     } else {
       this.addSnippet();
+      this.editor.setOption('readOnly', false);
     }
   }
 
@@ -142,7 +136,7 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
-    let path = !selectedFolder ? null : snippetMap[selectedFolder].filePath;
+    let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,
       indentWithTabs: true,
@@ -154,10 +148,11 @@ class EditorCtrl {
     if (selectedSnippet && (selectedSnippet in snippetMap)) {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
-      Object.assign(snippetObj, publicList[selectedPublicSnippet])
+      Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
       editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
-      snippetObj.language = activeUser.language;
+      snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
+      this.editor ? this.editor.setOption('readOnly', false) : null;
     }
 
     let buttonText;
