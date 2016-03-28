@@ -12,7 +12,7 @@ export class Folders {
       getFileTree(snippetPath) {
         return this.$http({
             method: 'GET',
-            url: '/api/user/snippets'
+            url: 'files/api/user/snippets'
           }).then(res => {
             var snippetMap = convertToTree(res.data);
             dispatch(Actions.setSnippetMap(snippetMap));
@@ -27,7 +27,7 @@ export class Folders {
       addFolder(folder) {
         return this.$http({
             method: 'POST',
-            url: '/api/folders',
+            url: 'files/api/folders',
             data: folder
           }).then(snippet => {
             dispatch(Actions.addSnippetMap(snippet.data.filePath, snippet.data));
@@ -41,18 +41,51 @@ export class Folders {
         dispatch(Actions.setSelectedFolder(folderPath));
       },
 
-      renameFolder(oldNode, newNode) {
-      },
+      renameFolder(oldNode, newName) {
+        boundFT = createBoundMethods(this.snippetMap);
+        oldParent = boundFT.parent(oldNode.filePath);
+        oldChildren = boundFT.children(oldNode.filePath, true);
 
+        newNode = Object.assign({}, oldNode, {value: newName, filePath: oldParent.filePath + '/' + newName});
+        newParent = Object.assign({},oldParent, {children: oldParent.map((childPath) => {
+            return childPath === oldNode.filePath ? newNode.filePath: childPath;
+          })
+        });
+        newChildren = oldChildren.map( (childNode) => {
+          return Object.assign({}, childNode, {parent: newNode.filePath, filePath: newNode.filePath + '/' + childNode.value.name});
+        }); 
+
+        updateRequests = newChildren.reduce( (all, currChild) => {
+          return [...all, this.$http({
+            method: 'PUT',
+            url: 'files/api/snippets',
+            data: {snippetId: currChild.value._id, value: currChild.value}
+          })];
+        }, []);
+        updateRequests = [...updateRequests, this.$http({
+          method: 'PUT',
+          url: 'files/api/snippets',
+          data: {snippetId: newParent.value._id, value: newParent.value}
+        })];
+
+        Promise.all(updateRequests).then(resps => {
+          dispatch(Actions.removeSnippetMap(oldNode.filePath));
+          dispatch(Actions.updateSnippetMap(oldParent.filePath, newParent.filePath, newParent));
+          dispatch(Actions.updateSnippetMap(oldNode.filePath, newNode.filePath, newNode));
+          newChildren.forEach((newChild, index) => {
+            Actions.updateSnippetMap(oldChildren[index].filePath, newChild.filePath, newChild);
+          });
+        })
+        .catch(console.error);
+      },
       moveSnippet(oldNode, newNode) {
         // dispatch(Actions.removeSnippetMap(oldNode.filePath));
         // dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
       },
-
       removeFolder(folderPath) {
         return this.$http({
             method: 'DELETE',
-            url: '/api/folders',
+            url: 'files/api/folders',
             params: { filePath: folderPath }
           }).then(response => {
             dispatch(Actions.removeSnippetMap(folderPath))
@@ -87,7 +120,7 @@ export class Snippets {
       getSnippet(snippetId) {
         return this.$http({
           method: 'GET',
-          url: '/api/snippets?_id=' + snippetId
+          url: 'files/api/snippets?_id=' + snippetId
         });
       },
 
@@ -95,7 +128,7 @@ export class Snippets {
         let { filePath } = snippetObj
         return this.$http({
             method: 'POST',
-            url: '/api/snippets',
+            url: 'files/api/snippets',
             data: snippetObj
           }).then((res) => {
             dispatch(Actions.addSnippetMap(res.data.filePath, res.data));
@@ -113,7 +146,7 @@ export class Snippets {
         delete snippetObj.Id;
         return this.$http({
             method: 'PUT',
-            url: '/api/snippets',
+            url: 'files/api/snippets',
             data: {snippetId, value: snippetObj}
           }).then(res => {
             let nodeToPass = Object.assign({}, this.snippetMap[oldFilePath], { filePath: res.data.filePath, value: res.data });
@@ -131,7 +164,7 @@ export class Snippets {
       removeSnippet(snippetObj) {
         return this.$http({
             method: 'DELETE',
-            url: '/api/snippets',
+            url: 'files/api/snippets',
             params: { snippetId: snippetObj.value._id }
           }).then((response) => {
             this.deselectSnippet();
@@ -152,7 +185,7 @@ export class Snippets {
 
       deselectSnippet() {
         dispatch(Actions.removeSelectedSnippet());
-      }
+      },
     }
   }
   mapStateToThis(state) {
@@ -176,7 +209,7 @@ export class Public {
       getPublicSnippets() {
         return this.$http({
             method: 'GET',
-            url: '/snippets'
+            url: 'files/public/snippets'
           }).then(res => {
             dispatch(Actions.setPublicList(res.data));
           })
@@ -219,7 +252,7 @@ export class Auth {
       signin(user) {
         return this.$http({
             method: 'POST',
-            url: '/signin',
+            url: 'user/signin',
             data: user
           }).then((res) => {
             this.$auth.setToken(res.data.token);
@@ -251,7 +284,7 @@ export class Auth {
       signup(user) {
         return this.$http({
             method: 'POST',
-            url: '/signup',
+            url: 'user/signup',
             data: user
           })
           .then(res => {
@@ -266,7 +299,7 @@ export class Auth {
       getUserInfo() {
         return this.$http({
             method: 'GET',
-            url: '/api/userInfo'
+            url: '/user/api/userInfo'
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
             this.Folders.getFileTree();
@@ -280,7 +313,7 @@ export class Auth {
       updateUser(userObj) {
         return this.$http({
             method: 'PUT',
-            url: '/api/userInfo',
+            url: 'user/api/userInfo',
             data: userObj
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
