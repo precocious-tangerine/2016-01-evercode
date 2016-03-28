@@ -6,7 +6,7 @@ export const snippets = (url) => {
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require(`.${url}.html`),
-    access: { restricted: true }
+    access: { restricted: false }
   };
 }
 
@@ -68,6 +68,14 @@ class SnippetsCtrl {
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);
   }
+
+  // toggleChangeName(snippet) {
+  //   if(!this.forRename){
+  //     this.forRename = snippet; 
+  //   } else {
+  //     this.forRename = this.forRename.value._id === snippet.value._id ? null : snippet
+  //   }
+  // }
 
   closeSideNav() {
     this.$state.go('main.editor');

@@ -15,8 +15,8 @@
       <input placeholder="New Subfolder" type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="snippets.subFolder.name" />
     </div>
   </form>
-  <div class="">
-    <div class="" ng-show='snippets.selectedFolderObj.parent'>
+  <div>
+    <div ng-show='snippets.selectedFolderObj.parent'>
       <a class="waves-effect waves-teal collection-item" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
         <span class="flow-text back-button">
           <i class="material-icons">subdirectory_arrow_left</i>
@@ -54,9 +54,18 @@
               <i class="material-icons code-icon valign">code</i>
               {{snippet.value.name}}
             </span>
-        </a>
+          </a>
         </span>
+<!--         <span ng-show='snippets.forRename.value._id === snippet.value._id' class="folder-list-item">
+         <form name="newName" ng-submit="snippets.changeName(snippet.forRename)" novalidate>
+           <div class="input-field form-group">
+             <input type='text' name='name' class='form-control' ng-model='snippets.forRename.value.name' required>
+           </div>
+         </form>
+        </span> -->
         <span class="folder-list-item right">
+        <i ngclipboard data-clipboard-text={{snippet.value.data}} class="waves-effect waves-teal material-icons snippet-icon">content_copy</i>
+          <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
           <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
         </span>
