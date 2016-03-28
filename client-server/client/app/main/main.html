@@ -2,8 +2,10 @@
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
+      <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
+      <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
       <li><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
       <li><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
     </ul>

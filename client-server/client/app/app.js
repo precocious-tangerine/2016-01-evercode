@@ -5,6 +5,7 @@ import { finalReducer } from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import ui_codemirror from 'angular-ui-codemirror';
 import { createAuthModal } from './auth/auth.js';
+import { createAboutCtrl } from './about/about.js';
 import { createDownloadCtrl } from './download/download.js';
 import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
@@ -39,6 +40,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.editor.profile', profile())
       .state('main.editor.search', search())
       .state('main.download', createDownloadCtrl('/download'))
+      .state('main.about', createAboutCtrl('/about'))
 
     $httpProvider.interceptors.push('AttachTokens');
 
