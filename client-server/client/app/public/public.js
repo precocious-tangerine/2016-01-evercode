@@ -17,9 +17,15 @@ class PublicCtrl {
     this.Public = Public;
     this.snippetList = [];
     this.loading = true;
+    this.editorModalShow = false;
     this.Public.getPublicSnippets().then(res => {
       this.loading = false;
     });
+  }
+
+  toggleEditorModal(filepath) {
+    this.Public.setSelectedPublicSnippet(filepath);
+    this.editorModalShow = !this.editorModalShow;
   }
 
   openSnippet(filepath) {

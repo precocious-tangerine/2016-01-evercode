@@ -18,7 +18,7 @@
       <li class="snippet-gallery col s12 m4 l3"
         ng-repeat="snippet in public.snippetArr | filter:{name:searchInput} track by snippet.filePath">
         <div class="card snippet-gallery-card"
-          ng-click="public.openSnippet(snippet.value.filePath)">
+          ng-click="public.toggleEditorModal(snippet.value.filePath)">
           <h5>{{snippet.value.name}}</h5>
           <hr>
           <p>{{snippet.value.description}}</p>
@@ -45,3 +45,7 @@
     </div>
   </div>
 </div>
+
+<!-- -------------- MODAL VIEW -------------- -->
+<editor  show='public.editorModalShow' other='public.editorModalShow' width='75vw' height='75vh'>
+</editor>
