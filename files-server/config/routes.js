@@ -21,9 +21,9 @@ module.exports = (app, express) => {
     .post(snippetsController.addFolder)
     .delete(snippetsController.removeFolder);
 
-  app.route('files/n')
+  app.route('/files/n')
     .get(snippetsController.rerouteSharedSnippet);
 
-  app.route('files/share')
+  app.route('/files/share')
     .get(snippetsController.getSharedSnippet);
 };

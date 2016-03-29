@@ -77,12 +77,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/precocious-tangerine/evercode.git"
+    "url": "https://github.com/precocious-tangerine/nevercode.git"
   },
   "author": "Edison D. Huff, Gerrit Yntema, Max Kroshka, Orlando Castillo",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/precocious-tangerine/evercode.git/issues"
+    "url": "https://github.com/precocious-tangerine/nevercode.git/issues"
   },
-  "homepage": "https://github.com/precocious-tangerine/evercode.git#readme"
+  "homepage": "https://github.com/precocious-tangerine/nevercode.git#readme"
 }

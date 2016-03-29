@@ -29,12 +29,10 @@ User.makeUser = (userObj, callback) => {
         userObj._password = hash;
         return utils.createRootFolderAsync(userObj);
       })
-      .then((success) => {
-        User.create(userObj);
-      })
+      .then(success => User.create(userObj)
       .then(result => {
-        callback(null, userObj);
-      })
+        callback(null, result);
+      }))
       .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
@@ -50,7 +48,6 @@ User.makeUser = (userObj, callback) => {
 User.getUser = (email, callback) => {
   return User.findOne({ email: email })
     .then((userObj) => {
-      userObj = userObj.toObject();
       callback(null, userObj);
     })
     .catch(callback);
