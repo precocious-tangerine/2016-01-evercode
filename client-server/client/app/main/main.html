@@ -2,7 +2,7 @@
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-show="mainCtrl.$state.includes('main.editor')" ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
-      <li ng-hide="mainCtrl.$state.includes('main.about')" class='right'><a ui-sref='main.about'>About</a></li>
+      <li class='right'><a ui-sref='main.about'>About</a></li>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
       <li ng-hide="mainCtrl.$state.includes('main.about')"><a ui-sref='main.about'>About</a></li>
@@ -14,8 +14,9 @@
     </ul>
   </div>
 </nav>
+
 <div class="row">
-  <ul ng-show='mainCtrl.activeUser.email' id="nav-mobile" class="side-nav col s3 m1 l1 main">
+  <ul ng-show='mainCtrl.activeUser.email' id="nav-mobile" class="side-nav col s3 m1 l1 main hide-on-med-and-down">
   <li class="row corner-logo">
     <div class="nav-icon">
       <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
@@ -81,8 +82,10 @@
       </div>
     </li>
   </ul>
+
   <div class="outerContainer col s11" ui-view>
   </div>
+
 </div>
 
 
