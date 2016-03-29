@@ -1,8 +1,57 @@
 <ul class="search side-nav col s12">
   <input id="search-bar" data-activates="search-results" type="text" ng-model="search.searchInput" placeholder="Search your snippets..." />
   <div class="search-results">
-    <a ui-sref=".editor" ng-show="search.searchInput" ng-repeat="snippet in search.snippetArr | filter:{name:search.searchInput}" class="waves-effect waves-teal collection-item" ng-click="search.changeSelectedSnippet(snippet.filePath)">{{snippet.name}}
-    </a>
+    <div>
+      <h5>Found by Name</h5>
+    </div>
+    <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
+      <div class="folder-list">
+        <span class="folder-list-item">
+          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <span class="folder-text valign-wrapper">
+            <i class="material-icons code-icon valign">code</i>{{snippet.name}}
+          </span>
+        </a>
+        </span>
+        <p class="list-description">
+          {{snippet.description}}
+        </p>
+      </div>
+    </div>
+    <div>
+      <h5>Found by Content</h5>
+    </div>
+    <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{data:search.searchInput}">
+      <div class="folder-list">
+        <span class="folder-list-item">
+          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <span class="folder-text valign-wrapper">
+            <i class="material-icons code-icon valign">code</i>{{snippet.name}}
+          </span>
+        </a>
+        </span>
+        <p class="list-description">
+          {{snippet.description}}
+        </p>
+      </div>
+    </div>
+    <div>
+      <h5>Found by Description</h5>
+    </div>
+    <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{description:search.searchInput}">
+      <div class="folder-list">
+        <span class="folder-list-item">
+          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <span class="folder-text valign-wrapper">
+            <i class="material-icons code-icon valign">code</i>{{snippet.name}}
+          </span>
+        </a>
+        </span>
+        <p class="list-description">
+          {{snippet.description}}
+        </p>
+      </div>
+    </div>
   </div>
 </ul>
 <script>

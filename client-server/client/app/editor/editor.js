@@ -162,6 +162,7 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
+    userTheme !== this.editorOptions && this.editor ? this.editor.setOption('theme', activeUser.theme) : null;
     let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,
@@ -189,7 +190,6 @@ class EditorCtrl {
     } else {
       buttonText = 'Add Snippet';
     }
-
     return {
       path,
       snippetMap,
