@@ -2,9 +2,29 @@
   <div class="user-profile">
     <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
     <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../assets/avatar.png" />
-    <h4>{{profile.activeUser.username}}</h4>
+    <div class="col s12">
+      <form name="profile-username" 
+        ng-submit="profile.changeUsername(profile.activeUser.username)">
+        <div class="form-group col s9">
+          <input class='form-control' 
+            id="profile-username-input"
+            name="username" 
+            type="text" 
+            ng-model='profile.activeUser.username' 
+            ng-maxlength="20"
+          />
+        </div>
+        <button class="col m3 waves-effect waves-light btn save-snippet right"
+          type="submit" ><i class="material-icons">archive</i>
+        </button>
+        <p class="help-block" 
+          ng-show="snippetForm.title.$error.maxlength">
+          Snippet name must be less than 20 characters
+        </p>
+      </form>
+    </div>
     <hr>
-    <p>{{profile.activeUser.email}}</p>
+    {{profile.activeUser.email}}
     <h6>Editor Theme</h6>
     <hr>
     <div class="profile-theme">
