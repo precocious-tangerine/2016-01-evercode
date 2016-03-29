@@ -96,9 +96,9 @@ module.exports = {
   }),
 
   renameUserSnippets: ((req, res) => {
-    let token = req.user;
-    let newName = req.body;
-    return Snippets.updateSnippetsByUserAsync(token.email, {username: newName})
+    let email = req.body.email;
+    let newName = req.body.username;
+    return Snippets.updateSnippetsByUserAsync(email, {username: newName})
       .then(results => {
         if (results && results.nModified !== 0) {
           res.status(200).send(results);
