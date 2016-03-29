@@ -197,6 +197,7 @@ export class Snippets {
             url: 'files/api/user/snippets',
             data: userObj
           }).then(res => {
+            dispatch(Actions.setActiveUser({ username: userObj.username }));
             this.Folders.getFileTree();
           })
           .catch(error => {
