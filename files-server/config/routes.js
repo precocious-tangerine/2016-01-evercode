@@ -12,7 +12,9 @@ module.exports = (app, express) => {
   app.get('/files/public/snippets', snippetsController.getPublicSnippets);
 
   // Get all user snippets available
-  app.get('/files/api/user/snippets', snippetsController.getUserSnippets);
+  app.route('/files/api/user/snippets')
+    .get(snippetsController.getUserSnippets)
+    .put(snippetsController.renameUserSnippets);
 
   // Add or remove user folder 
   app.route('/files/api/folders')
