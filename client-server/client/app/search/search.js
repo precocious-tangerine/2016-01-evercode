@@ -6,7 +6,7 @@ export const search = () => {
     controller: SearchCtrl,
     template: require('./search.html'),
     scope: {},
-    access: { restricted: false }
+    access: { restricted: true }
   }
 }
 

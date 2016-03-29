@@ -125,12 +125,12 @@ class EditorCtrl {
   }
 
   buttonTrigger() {
-    if (this.selectedSnippet) {
+    if (!this.activeUser.username) {
+      Materialize.toast('Please, sign in or sign up first', 3000, 'rounded');
+    } else if (this.selectedSnippet) {
       this.updateSnippet(this.selectedSnippet);
     } else if (this.selectedPublicSnippet in this.snippetMap){
       this.updateSnippet(this.selectedPublicSnippet);
-    } else if (this.selectedPublicSnippet && !this.activeUser.username) {
-      Materialize.toast('Sign in or sign up to fork', 3000, 'rounded');
     } else {
       this.addSnippet();
       this.editor.setOption('readOnly', false);
@@ -162,7 +162,7 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
-    userTheme !== this.editorOptions && this.editor ? this.editor.setOption('theme', activeUser.theme) : null;
+    userTheme !== this.editorOptions && this.editor ? this.editor.setOption('theme', userTheme) : null;
     let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,

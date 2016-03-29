@@ -74,7 +74,7 @@ module.exports = {
     var params = {
       code: req.body.code,
       client_id: req.body.clientId,
-      client_secret: config.githubSecret,
+      client_secret: setup.githubSecret,
       redirect_uri: req.body.redirectUri
     };
     let token;

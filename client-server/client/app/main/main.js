@@ -53,6 +53,7 @@ class MainCtrl {
     
     let parents = selectedFolder ? boundFT.parents(selectedFolder).reverse() : [];
     this.breadcrumbPath = selectedFolder ? parents.concat(boundFT.node(selectedFolder)) : [];
+    this.breadcrumbPath[0] ? this.breadcrumbPath[0].value = 'Home' : null;
     return {
       snippetMap,
       selectedFolder,
