@@ -127,6 +127,10 @@ html, body {
   margin: 0;
 }
 
+.code-selector {
+  margin: 0 2vw;
+}
+
 .snippet-title input {
   font-size: 3em;
   float: left;
@@ -361,11 +365,9 @@ nav,
 
 #snippet-name-input {
   font-size: 36px;
-  width: 40%;
 }
 
 #snippet-description-input {
-  width: 80%;
 }
 
 .github img {

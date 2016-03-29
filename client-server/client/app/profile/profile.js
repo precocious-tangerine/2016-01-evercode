@@ -20,8 +20,8 @@ class ProfileCtrl {
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
   }
 
-  changeUsername(email, newUsername) {
-    this.Snippets.updateUsername({ email, newUsername });
+  changeUsername(email, username) {
+    this.Snippets.updateUsername({ email, username });
   }
 
   changeTheme(theme) {
