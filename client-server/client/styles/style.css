@@ -5,6 +5,25 @@ html, body {
   color: #2E3C56;
 }
 
+@media only screen and (max-width: 600px) {
+  #outer-container {
+    position: relative !important;
+    margin-top: 16px !important;
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+  }
+
+  #search-list-container {
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+}
+
 #container {
   position: absolute;
   height: auto;
@@ -276,9 +295,10 @@ nav,
   margin-left: 100px;
 }
 
+
 .outerContainer {
-  position: relative;
   margin-left: 70px !important;
+  position: relative !important;
   margin-top: 16px !important;
   padding-left: 0px !important;
 }
