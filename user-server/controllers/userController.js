@@ -86,11 +86,10 @@ module.exports = {
   }),
 
   verifySublimeSecret: ((req, res) => {
-    let secret = req.body.secret;
+    let secret = req.headers.secret;
     Users.exchangeSecretForToken(secret)
       .then(userObj => {
         let {email, username} = userObj;
-        console.log('userObj ', email, ' username ', username);
         let token = utils.createJWT({email, username})
         res.status(200).send(token);
       })

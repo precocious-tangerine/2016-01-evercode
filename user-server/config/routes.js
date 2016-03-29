@@ -21,5 +21,5 @@ module.exports = (app, express) => {
   app.route('/user/api/sublime-secret')
     .get(userController.generateSublimeSecret)
   app.route('/user/sublime-secret')
-    .post(userController.verifySublimeSecret)
+    .get(userController.verifySublimeSecret)
 };
