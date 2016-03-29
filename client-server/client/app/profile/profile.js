@@ -11,16 +11,17 @@ export const profile = () => {
 }
 
 class ProfileCtrl {
-  constructor($ngRedux, $state, Auth) {
+  constructor($ngRedux, $state, Auth, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
     this.Auth = Auth;
+    this.Snippets = Snippets
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
   }
 
-  changeUsername(username) {
-    this.Auth.updateUser({ username });
+  changeUsername(email, newUsername) {
+    this.Snippets.updateUsername({ email, newUsername });
   }
 
   changeTheme(theme) {

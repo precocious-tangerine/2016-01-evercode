@@ -190,6 +190,19 @@ export class Snippets {
       deselectSnippet() {
         dispatch(Actions.removeSelectedSnippet());
       },
+
+      updateUsername(userObj) {
+        return this.$http({
+            method: 'PUT',
+            url: 'files/api/user/snippets',
+            data: userObj
+          }).then(res => {
+            this.Folders.getFileTree();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
     }
   }
   mapStateToThis(state) {
