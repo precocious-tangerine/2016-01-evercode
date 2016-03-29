@@ -56,8 +56,8 @@
     <div>
       <h5>Found by Tag</h5>
     </div>
-    <div class="search-list-tag">
-      <div ng-repeat="snippet in search.snippetArr" ng-show="search.hasTag(snippet, search.searchInput)">
+    <div ng-repeat= "(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show = 'search.hasTag(snippetTag, search.searchInput)'>
+      <div ng-repeat="snippet in snippets">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
