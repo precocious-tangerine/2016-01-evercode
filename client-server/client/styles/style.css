@@ -22,6 +22,10 @@ html, body {
   font-size: 2em;
 }
 
+.backdrop {
+  background-color: lightgrey;
+}
+
 .main {
   position: relative;
   width: 15vw;
