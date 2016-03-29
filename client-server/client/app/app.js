@@ -9,7 +9,7 @@ import { createAboutCtrl } from './about/about.js';
 import { createDownloadCtrl } from './download/download.js';
 import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
-import { snippets } from './snippets/snippets.js';
+import { snippets, createFolderModal } from './snippets/snippets.js';
 import { createMainCtrl } from './main/main.js';
 import { editor, createEditorModal } from './editor/editor.js';
 import { publicPage } from './public/public.js';
@@ -53,6 +53,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .directive('signin', createAuthModal('/signin'))
   .directive('signup', createAuthModal('/signup'))
   .directive('editor', createEditorModal)
+  .directive('folder', createFolderModal)
   .factory('AttachTokens', ($window) => {
     var attach = {
       request: (object) => {

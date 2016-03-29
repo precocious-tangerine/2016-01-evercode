@@ -10,6 +10,26 @@ export const snippets = (url) => {
   };
 }
 
+export let createFolderModal = () => {
+  return {
+    restrict: 'E',
+    scope: {
+      show: '=',
+      other: '='
+    },
+    link(scope, element, attrs) {
+      scope.dialogStyle = {};
+      attrs.width ? scope.dialogStyle.width = attrs.width: null;
+      attrs.height ? scope.dialogStyle.height = attrs.height: null;
+    },
+    controllerAs: 'folderModal',
+    controller: SnippetsCtrl,
+    bindToController: true,
+    template: require(`./folderModal.html`),
+    url: '/snippets'
+  }
+}
+
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders, Public, $state) {
     $ngRedux.connect(this.mapStateToThis)(this);
@@ -17,7 +37,17 @@ class SnippetsCtrl {
     this.Folders = Folders;
     this.Snippets = Snippets;
     this.folderInput = false;
+    this.folderModalShow = false;
     this.$state = $state;
+  }
+
+  toggleFolderModal() {
+    console.log('toggleFolderModal: ', this.folderModalShow)
+    this.folderModalShow = !this.folderModalShow;
+  }
+
+  hideModal() {
+    this.show = false;
   }
 
   addFolder() {
