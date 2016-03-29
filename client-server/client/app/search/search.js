@@ -19,6 +19,10 @@ class SearchCtrl {
   changeSelectedSnippet(snippetPath) {
     this.Snippets.changeSelectedSnippet(snippetPath);
   }
+  
+  hasTag(snippet, searchTag) {
+    return !!(snippet.tags.find(snippetTag => snippetTag.includes(searchTag)));
+  }
 
   mapStateToThis(state) {
     let { snippetMap } = state;
