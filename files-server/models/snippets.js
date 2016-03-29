@@ -76,7 +76,7 @@ Snippet.makeSubFolder = (email, username, filepath, callback) => {
 };
 
 Snippet.makeRootFolder = (email, username, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: email + '/.config' }, callback);
+  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: '/' + email + '/.config' }, callback);
 };
 
 Snippet.removeFolder = (email, folder, callback) => {
