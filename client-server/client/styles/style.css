@@ -271,24 +271,24 @@ nav,
   margin: 10px 0;
 }
 
-.folder-list {
+.folder-list, .search-list {
   border: 1px solid lightgrey;
 }
 
-.folder-list:hover {
+.folder-list-item:hover, .search-list-item:hover {
   background-color: #f6f6f6;
 }
 
-.folder-list-item {
+.folder-list-item, .search-list-item {
   display: inline-block;
   overflow: hidden;
 }
 
-.folder-list-link {
+.folder-list-link, .search-list-link {
   padding: 0;
 }
 
-.folder-text {
+.folder-text, .search-text {
   font-size: 1.1em;
 }
 
