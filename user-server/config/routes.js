@@ -22,5 +22,9 @@ module.exports = (app, express) => {
   app.route('/user/api/sublime-secret')
     .get(userController.generateSublimeSecret)
   app.route('/user/sublime-secret')
+<<<<<<< b2ddfc95abc429a5bd46d1a0bcdc9a9f784b9af9
     .get(userController.verifySublimeSecret)
+=======
+    .post(userController.verifySublimeSecret)
+>>>>>>> Two new endpoints created for sublime authorization
 };
