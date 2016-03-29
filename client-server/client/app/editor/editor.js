@@ -176,10 +176,10 @@ class EditorCtrl {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
-      editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
+      editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : 'nocursor';
     } else {
       snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
-      this.editor ? this.editor.setOption('readOnly', false) : null;
+      this.editor ? this.editor.setOption('readOnly', 'nocursor') : null;
     }
 
     let buttonText;

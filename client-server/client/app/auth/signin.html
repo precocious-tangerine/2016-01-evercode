@@ -1,32 +1,35 @@
 <div class='ng-modal' ng-show='authCtrl.show'>
   <div class='ng-modal-overlay' ng-click='authCtrl.hideModal()'></div>
-  <div class='ng-modal-dialog' ng-style='dialogStyle'>
+  <div class='ng-modal-dialog card' ng-style='dialogStyle'>
     <div class='ng-modal-close' ng-click='authCtrl.hideModal()'>X</div>
     <div class="row">
-      <div class="col s6 offset-s3">
-        <div id='signin'>
-          <h2>Sign In</h2>
-          <form name="userForm" ng-submit="authCtrl.signin(userForm.$valid)" novalidate>
-            <div class="input-field form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-              <input id='signin-email' type='email' name='email' class='form-control, validate' ng-model='authCtrl.user.email' required>
-              <label for='signin-email'>Email</label>
-              <p ng-show='authCtrl.failed' class="help-block"> Invalid information. Try again. </p>
+      <div class="col s12">
+        <div>
+          <div class="signin-signup">
+            <h2>log in</h2>
+            <div ng-click='authCtrl.githubAuth()' class="waves-effect waves-light btn github col s12">
+              <img src="../../assets/octocat_white.png" />
             </div>
-            <div class="input-field form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
-              <input id='signin-password' type="password" name='password' class="form-control" ng-model='authCtrl.user.password' required>
-              <label for='signin-password'>Password</label>
-            </div>
-            <div class='row'>
-              <div class='col s6 signin'>
-                <button type="submit" class="waves-effect waves-light btn">Sign In</button>
+          </div>
+          <div class="row"></div>
+          <div>
+            <form name="userForm" ng-submit="authCtrl.signin(userForm.$valid)" novalidate>
+              <div class="input-field form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                <input id='signin-email' type='email' name='email' class='form-control, validate' ng-model='authCtrl.user.email' required>
+                <label for='signin-email'>Email</label>
+                <p ng-show='authCtrl.failed' class="help-block"> Invalid information. Try again. </p>
               </div>
-              <div class='col s6'>
-                <button ng-click='authCtrl.githubAuth()' class="waves-effect waves-light btn github indigo accent-2">
-                  <img src="../../assets/github.png" />
-                </button>
+              <div class="input-field form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+                <input id='signin-password' type="password" name='password' class="form-control" ng-model='authCtrl.user.password' required>
+                <label for='signin-password'>Password</label>
               </div>
-            </div>
-          </form>
+              <div class='row'>
+                <div class='col s6 signin'>
+                  <button type="submit" class="waves-effect waves-light btn">Sign In</button>
+                </div>
+              </div>
+            </form>
+          </div>
           <a href='#' ng-click='authCtrl.switch()'>Don't have an account? <strong>Signup</strong> ...</a>
         </div>
       </div>

@@ -158,7 +158,7 @@ html, body {
 }
 
 .public-code-mirror {
-  height: 35vh;
+  height: 45vh;
 }
 
 .annotations {
@@ -377,6 +377,14 @@ nav,
   padding: 0 !important;
 }
 
+.signin-signup {
+  text-align: center;
+}
+
+.signin-signup h2 {
+  font-weight: 100;
+}
+
 .comment-btn {
   position: relative;
 }
@@ -395,6 +403,10 @@ nav,
 .subl-icon img {
   width: 30px;
   margin-top: 15px;
+}
+
+.snippet-modal-title {
+  font-size: 2.5em;
 }
 
 /*---------ANIMATION---------*/
@@ -472,7 +484,8 @@ nav,
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 10px
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .ng-modal-dialog-content {
