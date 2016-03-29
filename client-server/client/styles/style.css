@@ -495,12 +495,14 @@ nav,
 
 .ng-modal-close {
   position: absolute;
-  top: 3px;
-  right: 5px;
-  padding: 5px;
+  top: -12px;
+  right: -12px;
+  padding: 4px 11px;
   cursor: pointer;
-  font-size: 120%;
   display: inline-block;
-  font-weight: bold;
   font-family: 'arial', 'sans-serif';
+  border: 1px solid white;
+  border-radius: 100px;
+  background-color: lightgrey;
+  color: white;
 }
