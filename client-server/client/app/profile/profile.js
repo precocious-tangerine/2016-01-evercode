@@ -33,12 +33,14 @@ class ProfileCtrl {
 
   mapStateToThis(state) {
     let { activeUser } = state;
+    let username = activeUser.username;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
     let userLanguage = activeUser.language ? activeUser.language : 'javascript';
     return {
       activeUser,
       userTheme,
-      userLanguage
+      userLanguage,
+      username
     }
   }
 }

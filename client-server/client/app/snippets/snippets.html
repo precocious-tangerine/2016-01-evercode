@@ -7,7 +7,7 @@
       <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
     </span>
     <span class="add-button col s4 center-align">
-      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="50" data-tooltip="Hide List View"><i class="large material-icons">arrow_back</i></a>
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="50" data-tooltip="Hide List View"><i class="large material-icons">cancel</i></a>
     </span>
   </div>
   <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addFolder()" novalidate>
@@ -19,7 +19,7 @@
     <div ng-show='snippets.selectedFolderObj.parent'>
       <a class="waves-effect waves-teal collection-item" ng-click="snippets.changeActiveTab(snippets.selectedFolderObj.parent)">
         <span class="flow-text back-button">
-          <i class="material-icons">subdirectory_arrow_left</i>
+          <i class="material-icons">arrow_back</i>
           {{snippets.selectedFolderObj.parent}}
         </span>
       </a>
