@@ -74,6 +74,29 @@ module.exports = {
       });
   }),
 
+  generateSublimeSecret: ((req, res) => {
+   let email = req.user.email;
+   console.log(email);
+   Users.createSublimeSecret(email)
+    .then(secret => {
+      console.log('secret from model is ', secret);
+      res.status(201).send(secret);
+    })
+    .catch(err => res.status(401).send('Unauthorized')) 
+  }),
+
+  verifySublimeSecret: ((req, res) => {
+    let secret = req.body.secret;
+    Users.exchangeSecretForToken(secret)
+      .then(userObj => {
+        let {email, username} = userObj;
+        console.log('userObj ', email, ' username ', username);
+        let token = utils.createJWT({email, username})
+        res.status(200).send(token);
+      })
+      .catch(err => res.status(401).send('Unauthorized'))
+  }),
+
   githubLogin: ((req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
     var userApiUrl = 'https://api.github.com/user';
