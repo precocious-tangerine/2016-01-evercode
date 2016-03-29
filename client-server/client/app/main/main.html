@@ -3,18 +3,17 @@
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
       <a ng-show="mainCtrl.$state.includes('main.editor')" ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
       <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
+      <li class='right'><a ui-sref='main.about'>About</a></li>
     </ul>
-    <ul>
-    </ul>
-    <ul class="right">
+    <ul ng-hide='mainCtrl.activeUser.email' class="right">
       <li><a ui-sref='main.about'>About</a></li>
-      <li ng-hide='mainCtrl.activeUser.email'><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
-      <li ng-hide='mainCtrl.activeUser.email'><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
+      <li><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
+      <li><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
     </ul>
   </div>
 </nav>
 <div class="row">
-  <ul id="nav-mobile" class="side-nav col s3 m1 l1 main">
+  <ul ng-show='mainCtrl.activeUser.email' id="nav-mobile" class="side-nav col s3 m1 l1 main">
   <li class="row corner-logo">
     <div class="nav-icon">
       <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
@@ -65,7 +64,7 @@
         </a>
       </div>
     </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('download')">
+    <li ui-sref='main.download' class="row">
       <div class="nav-icon subl-icon">
         <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Sublime Plugin">
           <img src="../../assets/subl_bw.png">
@@ -80,7 +79,7 @@
       </div>
     </li>
   </ul>
-  <div class="outerContainer col s11 transform" ui-view>
+  <div class="outerContainer col s11" ui-view>
   </div>
 </div>
 
