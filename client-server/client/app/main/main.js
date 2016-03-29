@@ -24,8 +24,12 @@ class MainCtrl {
   }
 
   toggleSideView(path, newSnippet) {
-    newSnippet ? this.Snippets.deselectSnippet() : null;
-    this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
+    if(newSnippet){
+      this.Snippets.deselectSnippet();
+      this.$state.go('main.editor'); 
+    } else {
+      this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
+    }
   }
 
   changeActiveTab(folderPath) {

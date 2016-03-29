@@ -156,6 +156,7 @@ export class Snippets {
             Materialize.toast('Snippet updated!', 3000, 'rounded');
             dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
             this.activeUser.selectedSnippet === oldFilePath ? this.Auth.updateUser({ selectedSnippet: res.data.filePath }) : null;
+            this.selectedPublicSnippet === oldFilePath ? dispatch(Actions.setSelectedPublicSnippet(res.data.filePath)) : null;
             dispatch(Actions.setSelectedSnippet(res.data.filePath));
           })
           .catch(error => {
@@ -196,7 +197,8 @@ export class Snippets {
       snippetMap: state.snippetMap,
       selectedFolder: state.selectedFolder,
       selectedSnippet: state.selectedSnippet,
-      activeUser: state.activeUser
+      activeUser: state.activeUser,
+      selectedPublicSnippet: state.selectedPublicSnippet
     };
   }
 

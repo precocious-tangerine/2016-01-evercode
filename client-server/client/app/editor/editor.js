@@ -88,9 +88,9 @@ class EditorCtrl {
     this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[this.selectedSnippet].filePath);
   }
 
-  updateSnippet() {
+  updateSnippet(snippetPath) {
     let objectToUpdate = Object.assign({},
-      this.snippetMap[this.selectedSnippet].value, {
+      this.snippetMap[snippetPath].value, {
         data: this.snippetObj.data,
         name: this.snippetObj.name,
         language: this.snippetObj.language,
@@ -99,8 +99,8 @@ class EditorCtrl {
         annotation: this.snippetObj.annotation,
         description: this.snippetObj.description
       });
-    objectToUpdate.filePath = this.snippetMap[this.selectedSnippet].parent + '/' + this.snippetObj.name;
-    this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[this.selectedSnippet].filePath);
+    objectToUpdate.filePath = this.snippetMap[snippetPath].parent + '/' + this.snippetObj.name;
+    this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[snippetPath].filePath);
   }
 
   addSnippet() {
@@ -126,7 +126,9 @@ class EditorCtrl {
 
   buttonTrigger() {
     if (this.selectedSnippet) {
-      this.updateSnippet();
+      this.updateSnippet(this.selectedSnippet);
+    } else if (this.selectedPublicSnippet in this.snippetMap){
+      this.updateSnippet(this.selectedPublicSnippet);
     } else if (this.selectedPublicSnippet && !this.activeUser.username) {
       Materialize.toast('Sign in or sign up to fork', 3000, 'rounded');
     } else {
@@ -160,6 +162,7 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
+    userTheme !== this.editorOptions && this.editor ? this.editor.setOption('theme', activeUser.theme) : null;
     let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,
@@ -171,7 +174,7 @@ class EditorCtrl {
     let snippetObj = {};
     if (selectedSnippet && (selectedSnippet in snippetMap)) {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value)
-    } else if (selectedPublicSnippet && !$.isEmptyObject(publicList)) {
+    } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
       editorOptions.readOnly = snippetObj.username !== activeUser.username ? true : false;
     } else {
@@ -182,12 +185,11 @@ class EditorCtrl {
     let buttonText;
     if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
       buttonText = 'Fork Snippet';
-    } else if (selectedSnippet) {
+    } else if (selectedSnippet || (selectedPublicSnippet in snippetMap)) {
       buttonText = 'Update Snippet';
     } else {
       buttonText = 'Add Snippet';
     }
-
     return {
       path,
       snippetMap,
