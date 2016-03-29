@@ -12,12 +12,13 @@ export const createMainCtrl = () => {
 }
 
 class MainCtrl {
-  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets) {
+  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public) {
     $auth.isAuthenticated() ? Auth.getUserInfo(): null;
     this.$state = $state;
     this.Auth = Auth;
     this.Folders = Folders;
     this.Snippets = Snippets;
+    this.Public = Public;
     this.signinModalShow = false;
     this.signupModalShow = false;
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
@@ -28,6 +29,7 @@ class MainCtrl {
       this.Snippets.deselectSnippet();
       this.$state.go('main.editor'); 
     } else {
+      this.Public.removeSelectedPublicSnippet();
       this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
     }
   }
