@@ -240,7 +240,7 @@ export class Public {
       getSharedSnippet(id) {
         this.$http({
             method: 'GET',
-            url: '/share?s=' + id,
+            url: '/files/share?s=' + id,
           })
           .then((response) => {
             this.setPublicList(response.data);

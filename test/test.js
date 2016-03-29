@@ -8,7 +8,8 @@ mongoose.connect('mongodb://127.0.0.1/everCodeTest');
 //////////////////////////////////////////////////////////
 //                   User Model                         //
 //////////////////////////////////////////////////////////
-let User = require('../server/models/users');
+let User = require('../user-server/models/users');
+let Users = Promise.promisifyAll(require('../user-server/models/users'));
 
 let removeTestUser = function(callback) {
   User.findOne({ email: 'test@chai.com' }, function(err, result) {
@@ -51,11 +52,11 @@ describe('the User Model', function() {
       };
 
       let testMakeUser = function() {
-        User.makeUser(testUser, function(err, returnedUser) {
-          resultUser = returnedUser;
-          done();
-          returnedUser.remove();
-        });
+        Users.makeUserAsync(testUser)
+          .then(returnedUser => {
+            resultUser = returnedUser;
+            done();
+          });
       };
 
       removeTestUser(testMakeUser);
@@ -78,14 +79,6 @@ describe('the User Model', function() {
         .that.is.a('string')
         .and.not.equal('just testing');
     });
-    xit('should have a snippet object', function() {
-      expect(resultUser).to.have.property('snippets')
-        .that.is.an('object');
-    });
-    xit('should have a root folder in the snippets object', function() {
-      expect(Object.keys(resultUser.snippets)).to.be.length(1);
-    });
-
     it('should have a root folder in the snippets db collection', function(done) {
       Snippet.findOne({ createdBy: resultUser.email }, function(err, result) {
         expect(result).to.have.property('createdBy')
@@ -109,12 +102,16 @@ describe('the User Model', function() {
 
       let testGetUser = function() {
         User.create(testUser)
-          .then(function(returnedUser) {
+          .then(returnedUser => {
             testUser = returnedUser;
-            User.getUser(testUser.email, function(err, result) {
-              resultUser = result;
-              done();
-            });
+            Users.getUserAsync(testUser.email)
+              .then(result => {
+                resultUser = result;
+                done();
+              })
+              .catch(err => {
+                done();
+              });
           })
           .catch(function(err) {
             done();
@@ -146,7 +143,7 @@ describe('the User Model', function() {
 
     let resultUser, updateResult;
     let userUpdates = {
-      bio: 'I am a test',
+      theme: 'twilight',
     };
     let testUser = {
       email: 'test@chai.com',
@@ -186,9 +183,9 @@ describe('the User Model', function() {
     });
 
     it('should update properties', function() {
-      expect(resultUser).to.have.property('bio')
+      expect(resultUser).to.have.property('theme')
         .that.is.a('string')
-        .and.equal('I am a test');
+        .and.equal('twilight');
     });
   });
 
@@ -245,8 +242,8 @@ describe('the User Model', function() {
 //////////////////////////////////////////////////////////
 //                   Snippet Model                      //
 //////////////////////////////////////////////////////////
-let Snippet = require('../server/models/snippets');
-
+let Snippet = require('../files-server/models/snippets');
+let Snippets = Promise.promisifyAll(require('../files-server/models/snippets'));
 let removeTestSnippet = function(callback) {
   Snippet.findOne({ data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets' }, function(err, result) {
     if (result) {
@@ -284,15 +281,20 @@ describe('the Snippet Model', function() {
         createdBy: 'test@chai.com',
         data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/',
-        name: 'test.snip'
+        name: 'test.snip',
+        username: 'test'
       };
 
       let testMakeSnippet = function() {
-        Snippet.makeSnippet(testSnippet, function(err, returnedSnippet) {
-          resultSnippet = returnedSnippet;
-          done();
-          returnedSnippet.remove();
-        });
+        Snippets.makeSnippetAsync(testSnippet)
+          .then(returnedSnippet => {
+            resultSnippet = returnedSnippet;
+            done();
+          })
+          .catch(err => {
+            console.log(err);
+            done();
+          });
       };
 
       removeTestSnippet(testMakeSnippet);
@@ -350,17 +352,19 @@ describe('the Snippet Model', function() {
         createdBy: 'test@chai.com',
         data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/',
-        name: 'test.snip'
+        name: 'test.snip',
+        username: 'test'
       };
 
       let testGetSnippet = function() {
         Snippet.create(testSnippet)
           .then(function(returnedSnippet) {
             testSnippet = returnedSnippet;
-            Snippet.getSnippet(testSnippet._id, function(err, result) {
-              resultSnippet = result;
-              done();
-            });
+            Snippets.getSnippetAsync(testSnippet._id)
+              .then(result => {
+                resultSnippet = result;
+                done();
+              });
           })
           .catch(function(err) {
             done();
@@ -416,7 +420,8 @@ describe('the Snippet Model', function() {
       createdBy: 'test@chai.com',
       data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
       filePath: 'test@chai.com/test.snip',
-      name: 'test.snip'
+      name: 'test.snip',
+      username: 'test'
     };
 
     before(function(done) {
@@ -424,13 +429,14 @@ describe('the Snippet Model', function() {
         Snippet.create(testSnippet)
           .then(function(returnedSnippet) {
             oldSnippet = returnedSnippet;
-            Snippet.updateSnippet(returnedSnippet._id, snippetUpdates, function(err, result) {
-              updateResult = result;
-              Snippet.findOne({ _id: returnedSnippet._id }, function(err, returnedSnippet) {
-                resultSnippet = returnedSnippet;
-                done();
+            Snippets.updateSnippetAsync(returnedSnippet._id, snippetUpdates)
+              .then(result => {
+                updateResult = result;
+                Snippet.findOne({ _id: returnedSnippet._id }, function(err, returnedSnippet) {
+                  resultSnippet = returnedSnippet;
+                  done();
+                });
               });
-            });
           })
           .catch(function(err) {
             console.log(err);
@@ -472,17 +478,19 @@ describe('the Snippet Model', function() {
         createdBy: 'test@chai.com',
         data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/test.snip',
-        name: 'test.snip'
+        name: 'test.snip',
+        username: 'test'
       };
 
       let testRemoveSnippet = function() {
         Snippet.create(testSnippet)
           .then(function(returnedSnippet) {
             resultSnippet = returnedSnippet;
-            Snippet.removeSnippet(returnedSnippet._id, function(err, result) {
-              deleteResult = result;
-              done();
-            });
+            Snippet.removeSnippetAsync(returnedSnippet._id)
+              .then(result => {
+                deleteResult = result;
+                done();
+              });
           })
           .catch(function(err) {
             console.log(err);
@@ -526,7 +534,7 @@ describe('the Snippet Model', function() {
     });
 
     it('should have a removeFolder function', function() {
-      expect(Snippet.makeRootFolder).to.be.a('function');
+      expect(Snippet.removeFolder).to.be.a('function');
     });
   });
 
@@ -544,20 +552,12 @@ describe('the Snippet Model', function() {
 
   describe('Snippet Getters', function() {
 
-    it('should have a getSnippetByFilepath function', function() {
-      expect(Snippet.getSnippetByFilepath).to.be.a('function');
-    });
-
     it('should have a getSnippetsByUser function', function() {
+      expect(Snippet.updateSnippetsByUser).to.be.a('function');
+    });
+
+    it('should have a updateSnippetsByUser function', function() {
       expect(Snippet.getSnippetsByUser).to.be.a('function');
-    });
-
-    xit('should have a getSnippetInfoByUser function', function() {
-      expect(Snippet.getSnippetInfoByUser).to.be.a('function');
-    });
-
-    xit('should have a getSnippetInfoByFolder function', function() {
-      expect(Snippet.getSnippetInfoByFolder).to.be.a('function');
     });
 
     it('should have a getSnippetsByFolder function', function() {
@@ -566,24 +566,47 @@ describe('the Snippet Model', function() {
   });
 });
 
-//////////////////////////////////////////////////////////
-//                   Auth Routes                        //
-//////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////
+// //                   Auth Routes                        //
+// //////////////////////////////////////////////////////////
 
 describe('Auth Routes', function() {
 
   let request = require('supertest');
   let express = require('express');
   let testApp = express();
-  let Routes = require('../server/config/routes.js')(testApp, express);
-  let config = require('../server/config.js');
+  let Routes = require('../user-server/config/routes.js')(testApp, express);
+  let config = require('../setup.js');
+  let userController = require('../user-server/controllers/userController');
+
+  describe('Auth basics', function() {
+    it('should have signin function', function() {
+      expect(userController.signin).to.be.a('function');
+    });
+
+    it('should have getSnippet function', function() {
+      expect(userController.signup).to.be.a('function');
+    });
+
+    it('should have githubLogin function', function() {
+      expect(userController.githubLogin).to.be.a('function');
+    });
+
+    it('should have a userInfo function', function() {
+      expect(userController.userInfo).to.be.a('function');
+    });
+
+    it('should have a updateUserInfo function', function() {
+      expect(userController.updateUserInfo).to.be.a('function');
+    });
+  });
 
   describe('basic', function() {
 
-    it('should have a /signup route', function(done) {
+    it('should have a /user/signup route', function(done) {
       request(testApp)
-        .post('/signup')
-        .send()
+        .post('/user/signup')
+        .send({ email: 'test@chai.com', username: 'test', password: 'test' })
         .expect(500)
         .end(function(err, res) {
           console.log(res.body);
@@ -597,10 +620,10 @@ describe('Auth Routes', function() {
         });
     });
 
-    it('should have a /signin route', function() {
+    it('should have a /user/signin route', function() {
       request(testApp)
-        .post('/signin')
-        .send({ email: 0, password: 0 })
+        .post('/user/signin')
+        .send({ email: 'test@chai.com', password: 'test' })
         .expect(401)
         .end(function(err, res) {
           if (err) {
@@ -613,12 +636,12 @@ describe('Auth Routes', function() {
     });
   });
 
-  describe('/signup', function() {
+  describe('/user/signup', function() {
 
     it('should be able to sign up a test user and be returned a token', function(done) {
       request(testApp)
-        .post('/signup')
-        .send({ email: 'test@chai.com', password: 'test' })
+        .post('/user/signup')
+        .send({ email: 'test@chai.com', username: 'test', password: 'test' })
         .expect(201)
         .end(function(err, res) {
           if (err) {
@@ -634,7 +657,7 @@ describe('Auth Routes', function() {
 
     it('should not be able to sign up with the same email', function(done) {
       request(testApp)
-        .post('/signup')
+        .post('/user/signup')
         .send({ email: 'test@chai.com', password: 'test' })
         .expect(500)
         .end(function(err, res) {
@@ -650,11 +673,11 @@ describe('Auth Routes', function() {
     });
   });
 
-  describe('/signin', function() {
+  describe('/user/signin', function() {
 
     it('should be able to sign in with appropriate credentials and recieve a token', function(done) {
       request(testApp)
-        .post('/signup')
+        .post('/user/signin')
         .send({ email: 'test@chai.com', password: 'test' })
         .expect(500)
         .end(function(err, res) {
@@ -671,7 +694,7 @@ describe('Auth Routes', function() {
 
     it('should not be able to sign in with inappropriate credentials', function(done) {
       request(testApp)
-        .post('/signup')
+        .post('/user/signin')
         .send({ email: 'test@chai.com', password: 'test' })
         .expect(500)
         .end(function(err, res) {
@@ -688,7 +711,7 @@ describe('Auth Routes', function() {
 
   });
 
-  describe('/api/userInfo', function() {
+  describe('/user/api/userInfo', function() {
 
     it('should not be able to get user info without a token', function(done) {
 
@@ -702,96 +725,96 @@ describe('Auth Routes', function() {
 
 });
 
-//////////////////////////////////////////////////////////
-//                   Snippet Routes                     //
-//////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////
+// //                   Snippet Routes                     //
+// //////////////////////////////////////////////////////////
 
-describe('Snippet Routes', function() {
+// describe('Snippet Routes', function() {
 
-  describe('api/snippets', function() {
+//   describe('/files/api/snippets', function() {
 
-    describe('Unauthorized', function() {
+//     describe('Unauthorized', function() {
 
-      it('it should not be able to post a snippet without a token', function(done) {
+//       it('it should not be able to post a snippet without a token', function(done) {
 
-      });
+//       });
 
-      it('it should not be able to get a private snippet without a token', function(done) {
+//       it('it should not be able to get a private snippet without a token', function(done) {
 
-      });
+//       });
 
-      it('it should be able to get a public snippet without a token', function(done) {
+//       it('it should be able to get a public snippet without a token', function(done) {
 
-      });
+//       });
 
-      it('it should not be able to update a snippet without a token', function(done) {
+//       it('it should not be able to update a snippet without a token', function(done) {
 
-      });
+//       });
 
-      it('it should not be able to delete a snippet without a token', function(done) {
+//       it('it should not be able to delete a snippet without a token', function(done) {
 
-      });
+//       });
 
-    });
+//     });
 
-    describe('Authorized', function() {
+//     describe('Authorized', function() {
 
-      it('it should be able to post a snippet when it has a token', function(done) {
+//       it('it should be able to post a snippet when it has a token', function(done) {
 
-      });
+//       });
 
-      it('it should be able to get a private snippet when it has a token', function(done) {
+//       it('it should be able to get a private snippet when it has a token', function(done) {
 
-      });
+//       });
 
-      it('it should be able to update a snippet when it has a token', function(done) {
+//       it('it should be able to update a snippet when it has a token', function(done) {
 
-      });
+//       });
 
-      it('it should be able to delete a snippet when it has a token', function(done) {
+//       it('it should be able to delete a snippet when it has a token', function(done) {
 
-      });
+//       });
 
-    });
+//     });
 
-  });
+//   });
 
-  describe('api/user/snippets', function() {
+//   describe('/files/api/user/snippets', function() {
 
-    describe('Unauthorized', function() {
+//     describe('Unauthorized', function() {
 
-      it('should return 401 for a get request without a token', function(done) {
+//       it('should return 401 for a get request without a token', function(done) {
 
-      });
+//       });
 
-    });
+//     });
 
-    describe('Authorized', function() {
+//     describe('Authorized', function() {
 
-      it('should return 201 and an array of snippets for a get request with a token', function(done) {
+//       it('should return 201 and an array of snippets for a get request with a token', function(done) {
 
-      });
+//       });
 
-      it('should return 404 and an emptry array for a user with no snippets', function(done) {
+//       it('should return 404 and an emptry array for a user with no snippets', function(done) {
 
-      });
+//       });
 
-    });
+//     });
 
-  });
+//   });
 
-  describe('api/folders', function() {
+//   describe('/files/api/folders', function() {
 
-    describe('Unauthorized', function() {
+//     describe('Unauthorized', function() {
 
-    });
+//     });
 
-    describe('Authorized', function() {
+//     describe('Authorized', function() {
 
-    });
+//     });
 
-  });
+//   });
 
-  describe;
+//   describe;
 
-});
+// });

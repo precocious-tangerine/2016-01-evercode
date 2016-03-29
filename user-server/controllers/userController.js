@@ -25,15 +25,21 @@ module.exports = {
   signup: ((req, res) => {
     let { email, password, username } = req.body;
     let token;
-
-    Users.makeUserAsync({ email, _password: password, username: username })
-      .then(userData => {
-        token = utils.createJWT({ email: userData.email, username: userData.username });
-        res.status(201).send({ token });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send(err);
+    Users.getUserAsync(email)
+      .then(found => {
+        if (found) {
+          res.status(500).send('User with given email already exists!');
+        } else {
+          Users.makeUserAsync({ email, _password: password, username: username })
+            .then(userData => {
+              token = utils.createJWT({ email: userData.email, username: userData.username });
+              res.status(201).send({ token });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).send(err);
+            });
+        }
       });
   }),
 

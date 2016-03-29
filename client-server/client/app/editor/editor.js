@@ -31,8 +31,7 @@ export let createEditorModal = () => {
 }
 
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, Public, $state, $location, $http) {
-    this.$http = $http;
+  constructor($ngRedux, Snippets, Auth, Public, $state, $location) {
     this.$location = $location;
     this.$state = $state;
     this.Snippets = Snippets;
