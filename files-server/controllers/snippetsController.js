@@ -94,6 +94,23 @@ module.exports = {
         res.status(500).send(err);
       });
   }),
+
+  renameUserSnippets: ((req, res) => {
+    let email = req.body.email;
+    let newName = req.body.username;
+    return Snippets.updateSnippetsByUserAsync(email, {username: newName})
+      .then(results => {
+        if (results && results.nModified !== 0) {
+          res.status(200).send(results);
+        } else {
+          res.status(404).send('Snippets not Found');
+        }
+      }).catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
+  }),
+
   addFolder: ((req, res) => {
     let email = req.user.email;
     let username = req.user.username;
