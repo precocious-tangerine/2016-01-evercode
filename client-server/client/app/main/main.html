@@ -1,7 +1,7 @@
 <nav class="top-nav white">
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
-      <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
+      <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
       <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
     </ul>
     <ul ng-hide='mainCtrl.activeUser.email' class="right">
@@ -53,6 +53,13 @@
       <div class="nav-icon">
         <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Folders">
           <i class="material-icons">library_books</i>
+        </a>
+      </div>
+    </li>
+    <li ui-sref='main.public' class="row">
+      <div class="nav-icon">
+        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Public Page">
+          <i class="material-icons">people</i>
         </a>
       </div>
     </li>
