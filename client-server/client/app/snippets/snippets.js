@@ -6,7 +6,7 @@ export const snippets = (url) => {
     controllerAs: 'snippets',
     controller: SnippetsCtrl,
     template: require(`.${url}.html`),
-    access: { restricted: false }
+    access: { restricted: true }
   };
 }
 

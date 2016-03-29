@@ -1,13 +1,15 @@
 <nav class="top-nav white">
   <div class="nav-wrapper fixed">
     <ul ng-show='mainCtrl.activeUser.email' class="center breadcrumbs">
-      <a ng-if='!mainCtrl.clickedBC' ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
+      <a ng-show="mainCtrl.$state.includes('main.editor')" ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath" ui-sref='main.editor.snippets' ng-click="mainCtrl.changeActiveTab(folder.filePath)" class="breadcrumb">{{folder.value}}</a>
       <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
     </ul>
-    <ul ng-hide='mainCtrl.activeUser.email' class="right">
-      <li><a ng-click="mainCtrl.toggleSideView('about')">About</a></li>
-      <li><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
-      <li><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
+    <ul>
+    </ul>
+    <ul class="right">
+      <li><a ui-sref='main.about'>About</a></li>
+      <li ng-hide='mainCtrl.activeUser.email'><a ng-click="mainCtrl.toggleSigninModal()">Login</a></li>
+      <li ng-hide='mainCtrl.activeUser.email'><a ng-click="mainCtrl.toggleSignupModal()">Signup</a></li>
     </ul>
   </div>
 </nav>
