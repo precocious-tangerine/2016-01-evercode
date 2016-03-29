@@ -19,12 +19,16 @@ class ProfileCtrl {
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
   }
 
+  changeUsername(username) {
+    this.Auth.updateUser({ username });
+  }
+
   changeTheme(theme) {
-    this.Auth.updateUser({ theme: theme });
+    this.Auth.updateUser({ theme });
   }
 
   changeLanguage(language) {
-    this.Auth.updateUser({ language: language });
+    this.Auth.updateUser({ language });
   }
 
   mapStateToThis(state) {

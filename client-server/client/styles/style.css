@@ -17,6 +17,11 @@ html, body {
   min-height: 100vh;
 }
 
+#profile-username-input {
+  border-bottom: none;
+  font-size: 2em;
+}
+
 .main {
   position: relative;
   width: 15vw;
