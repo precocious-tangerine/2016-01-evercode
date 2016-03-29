@@ -2,7 +2,7 @@
 const Promise = require('bluebird');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
-let utils = require('../config/utils.js')
+let utils = require('../config/utils.js');
 
 let userSchema = mongoose.Schema({
   _password: { type: String },
@@ -27,18 +27,18 @@ User.makeUser = (userObj, callback) => {
       .then((salt) => bcrypt.hashAsync(pw, salt))
       .then((hash) => {
         userObj._password = hash;
-      return utils.createRootFolderAsync(userObj);
+        return utils.createRootFolderAsync(userObj);
       })
       .then((success) => {
         User.create(userObj);
-    })
-      .then(result =>  {
-        callback(null, userObj)
+      })
+      .then(result => {
+        callback(null, userObj);
       })
       .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
-    createRootFolderAsync(userObj)
+    return utils.createRootFolderAsync(userObj)
       .then(success => User.create(userObj))
       .then(result => callback(null, userObj))
       .catch(err => callback(err, null));

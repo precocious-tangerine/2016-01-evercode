@@ -24,7 +24,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
 
     $authProvider.oauth2({
       name: 'github',
-      url: '/auth/github',
+      url: '/user/auth/github',
       clientId: setup.githubClientId,
       redirectUri: window.location.origin,
       authorizationEndpoint: 'https://github.com/login/oauth/authorize'

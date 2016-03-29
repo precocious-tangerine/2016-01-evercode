@@ -47,15 +47,15 @@ let createRootFolderAsync = (userObj) => {
         path: userObj.email
       } 
     }, function(error, resp, body) {
-      if(error) {
+      if (error) {
         console.log(error);
         reject(error);
       } else {
         resolve(resp);
       }
     });
-  })
-}
+  });
+};
 module.exports.createRootFolderAsync = createRootFolderAsync;
 
 
