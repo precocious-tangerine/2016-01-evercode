@@ -233,10 +233,8 @@ html, body {
 }
 
 #nav-mobile {
-  position: fixed;
   line-height: 3em;
   width: 66px;
-  left: 0;
   margin: 0;
   padding: 0px;
   z-index: 999;
