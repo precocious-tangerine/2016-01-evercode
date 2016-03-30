@@ -102,6 +102,10 @@ html, body {
   text-align: center;
 }
 
+.public-spacing {
+  margin-top: 100px;
+}
+
 .search-results {
   z-index: 2;
   display: none;
