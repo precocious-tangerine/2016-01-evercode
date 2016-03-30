@@ -5,12 +5,17 @@
     <div class="row">
       <div class="col s12">
         <div>
-          <div class="signin-signup">
-            <h2>sign up</h2>
-            <div ng-click='authCtrl.githubAuth()' class="waves-effect waves-light btn github col s12">
-              <img src="../../assets/octocat_white.png" />
-            </div>
-          </div>
+        <div class="signin-signup">
+          <h2>log in</h2>
+          <button ng-click='authCtrl.githubAuth()' class="btn github col s12 valign-wrapper" >
+              <div class="valign col s2">
+                <img class="responsive-img" src="../../assets/octocat_white.png"/>
+              </div>
+              <div class="valign">
+                Github login 
+              </div>
+          </button>
+        </div>
           <div class="row"></div>
           <form name="userForm" ng-submit="authCtrl.signup(userForm.$valid)" novalidate>
             <div class="input-field form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
@@ -37,7 +42,7 @@
               <label for='signup-confirm'>Confirm Password</label>
               <p ng-show="authCtrl.user.password && authCtrl.user.password !== authCtrl.user.passwordConfirm" class="help-block">Passwords dont match.</p>
             </div>
-            <button type="submit" class="waves-effect waves-light btn">Sign Up</button>
+            <button type="submit" class="waves-effect waves-light btn col s12">Sign Up</button>
           </form>
           <a href='#' ng-click='authCtrl.switch()'>Already have an account? <strong>Signin</strong> ...</a>
         </div>

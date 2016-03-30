@@ -7,14 +7,14 @@
         <div>
           <div class="signin-signup">
             <h2>log in</h2>
-            <div ng-click='authCtrl.githubAuth()' class="waves-effect waves-light btn github col s12" >
-              <div class="row valign-wrapper">
-                <div class="valign col s4">
-                  <img src="../../assets/octocat_white.png"/>
+            <button ng-click='authCtrl.githubAuth()' class="btn github col s12 valign-wrapper" >
+                <div class="valign col s2">
+                  <img class="responsive-img" src="../../assets/octocat_white.png"/>
                 </div>
-                <span class="valign col s8">Github login</span> 
-              </div>
-            </div>
+                <div class="valign">
+                  Github login 
+                </div>
+            </button>
           </div>
           <div class="row"></div>
           <div>
@@ -29,9 +29,7 @@
                 <label for='signin-password'>Password</label>
               </div>
               <div class='row'>
-                <div class='col s6 signin'>
-                  <button type="submit" class="waves-effect waves-light btn">Sign In</button>
-                </div>
+                <button type="submit" class="waves-effect waves-light btn col s12">Sign In</button>
               </div>
             </form>
           </div>
