@@ -42,41 +42,45 @@ export class Folders {
       },
       
       renameFolder(oldNode, newName) {
-        boundFT = createBoundMethods(this.snippetMap);
-        oldParent = boundFT.parent(oldNode.filePath);
-        oldChildren = boundFT.children(oldNode.filePath, true);
+        let boundFT = createBoundMethods(this.snippetMap);
+        let oldParent = boundFT.parent(oldNode.filePath);
+        let oldChildren = boundFT.allChildren(oldNode.filePath, true);
+        let newNode = Object.assign({}, oldNode, {value: newName, filePath: oldParent.filePath + '/' + newName});
 
-        newNode = Object.assign({}, oldNode, {value: newName, filePath: oldParent.filePath + '/' + newName});
-        newParent = Object.assign({},oldParent, {children: oldParent.map((childPath) => {
-            return childPath === oldNode.filePath ? newNode.filePath: childPath;
-          })
-        });
-        newChildren = oldChildren.map( (childNode) => {
-          return Object.assign({}, childNode, {parent: newNode.filePath, filePath: newNode.filePath + '/' + childNode.value.name});
-        }); 
+        let newChildren = [];
 
-        updateRequests = newChildren.reduce( (all, currChild) => {
-          return [...all, this.$http({
+        let changeAllChildFolders = (node, currFilePath, parentFilePath) => {
+          if(!node) {
+            return;
+          }
+          if(typeof node.value === 'object') {
+            let newValue = Object.assign({}, node.value, {filePath: currFilePath});
+            let newNode = Object.assign({}, node, {parent: parentFilePath, filePath: currFilePath,  value: newValue});
+            newChildren.push(newNode);
+            return;
+          } else {
+            node.children.forEach(child => {
+              let childPathArr = child.split('/');
+              let newPath = currFilePath + '/' + childPathArr[childPathArr.length-1];
+              changeAllChildFolders(this.snippetMap[child], newPath, currFilePath)
+            })
+          }
+        }
+
+        changeAllChildFolders(newNode, newNode.filePath);
+
+        newChildren.forEach((currChild, index) => {
+          return this.$http ({
             method: 'PUT',
             url: 'files/api/snippets',
             data: {snippetId: currChild.value._id, value: currChild.value}
-          })];
-        }, []);
-        updateRequests = [...updateRequests, this.$http({
-          method: 'PUT',
-          url: 'files/api/snippets',
-          data: {snippetId: newParent.value._id, value: newParent.value}
-        })];
-
-        Promise.all(updateRequests).then(resps => {
-          dispatch(Actions.removeSnippetMap(oldNode.filePath));
-          dispatch(Actions.updateSnippetMap(oldParent.filePath, newParent.filePath, newParent));
-          dispatch(Actions.updateSnippetMap(oldNode.filePath, newNode.filePath, newNode));
-          newChildren.forEach((newChild, index) => {
-            Actions.updateSnippetMap(oldChildren[index].filePath, newChild.filePath, newChild);
-          });
+          })
+          .then(res => {
+            if(index === newChildren.length-1) {
+              this.getFileTree();
+            }
+          })
         })
-        .catch(console.error);
       },
 
       moveSnippet(oldNode, newNode) {

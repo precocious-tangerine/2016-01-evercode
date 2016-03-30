@@ -15,18 +15,34 @@ export let createFolderModal = () => {
     restrict: 'E',
     scope: {
       show: '=',
-      other: '='
+      selectedfolder: '=',
+      name: '=',
+      email: '='
     },
     link(scope, element, attrs) {
       scope.dialogStyle = {};
       attrs.width ? scope.dialogStyle.width = attrs.width: null;
       attrs.height ? scope.dialogStyle.height = attrs.height: null;
     },
-    controllerAs: 'folderModal',
-    controller: SnippetsCtrl,
+    controllerAs: 'folderModalCtrl',
+    controller: FolderModalCtrl,
     bindToController: true,
-    template: require(`./folderModal.html`),
-    url: '/snippets'
+    template: require(`./folderModal.html`)
+  }
+}
+
+class FolderModalCtrl {
+  constructor(Folders) {
+    this.Folders = Folders;
+  }
+
+  renameFolder() {
+    this.Folders.renameFolder(this.selectedfolder, this.name);
+    this.hideModal();
+  }
+
+  hideModal() {
+    this.show = false;
   }
 }
 
@@ -38,11 +54,12 @@ class SnippetsCtrl {
     this.Snippets = Snippets;
     this.folderInput = false;
     this.folderModalShow = false;
+    this.folderModal = {};
     this.$state = $state;
   }
 
-  toggleFolderModal() {
-    console.log('toggleFolderModal: ', this.folderModalShow)
+  toggleFolderModal(folderObj) {
+    this.folderModal = folderObj;
     this.folderModalShow = !this.folderModalShow;
   }
 

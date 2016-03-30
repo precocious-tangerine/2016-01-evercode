@@ -544,6 +544,10 @@ nav,
   border-radius: 4px;
 }
 
+.ng-modal-folder-dialog {
+  top: 25%;
+}
+
 .ng-modal-dialog-content {
   padding: 10px;
   text-align: left;
