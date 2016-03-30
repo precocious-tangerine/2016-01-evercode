@@ -126,36 +126,6 @@ module.exports = {
       .catch(err => res.status(401).send('Unauthorized'));
   }),
 
-  updatePassword: ((req, res) => {
-    let { email, password, newPassword } = req.body;
-    if (typeof newPassword === 'string' && newPassword !== '') {
-      Users.findOne({ email: email })
-        .then(foundUser => {
-          if (foundUser) {
-            return bcrypt.compareAsync(password, foundUser._password)
-              .then(success => bcrypt.genSaltAsync(13))
-              .then(salt => bcrypt.hashAsync(newPassword, salt))
-              .then(hash => {
-                return Users.updateUserAsync(email, { _password: hash })
-                  .then(success => {
-                    res.status(201).send(success);
-                  });
-              })
-              .catch(err => {
-                res.status(500).send(err);
-              });
-          } else {
-            res.status(500).send('User with given email does not exist');
-          }
-        })
-        .catch(err => {
-          res.status(500).send(err);
-        });
-    } else {
-      res.status(500).send('New password has invalid format');
-    }
-  }),
-
   githubLogin: ((req, res) => {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
     var userApiUrl = 'https://api.github.com/user';

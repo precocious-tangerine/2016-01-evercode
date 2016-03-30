@@ -21,7 +21,7 @@ class ProfileCtrl {
   }
 
   changeUsername(email, username) {
-    this.Snippets.updateUsername({ email, username: username });
+    this.Snippets.updateUsername({ email, username });
   }
 
   changeTheme(theme) {
