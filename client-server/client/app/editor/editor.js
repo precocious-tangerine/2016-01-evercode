@@ -155,7 +155,7 @@ class EditorCtrl {
       }
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value);
-      if(this.editor) { 
+      if(this.editor) {
         this.editor.setOption('readOnly', 'nocursor');
       }
     } else {

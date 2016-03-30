@@ -9,8 +9,6 @@ class SearchCtrl {
   }
   
   hasTag(snippetTag, searchTag) {
-    console.log('snippetTag is ', snippetTag);
-    console.log('searchTag is ', searchTag);
     return !!snippetTag.includes(searchTag);
   }
 
