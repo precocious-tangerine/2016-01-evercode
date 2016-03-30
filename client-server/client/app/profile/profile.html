@@ -7,7 +7,9 @@
         <div class="form-group col s9">
           <input class='form-control' id="profile-username-input" name="username" type="text" ng-model='profile.username' ng-maxlength="20" />
         </div>
-        <button class="col m3 waves-effect waves-light btn save-snippet right" type="submit"><i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
+        <button class="col m3 waves-effect waves-light btn save-snippet right"
+          type="submit" >
+          <i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
         </button>
         <p class="help-block" ng-show="snippetForm.title.$error.maxlength">
           Snippet name must be less than 20 characters
@@ -20,13 +22,21 @@
     <h6>Editor Theme</h6>
     <hr>
     <div class="profile-theme">
-      <select ng-model="profile.userTheme" ng-init="profile.userTheme = profile.userTheme || 'eclipse'" ng-options="theme as theme for theme in profile.cmThemes" ng-change="profile.changeTheme(profile.userTheme)" class="browser-default">
+      <select ng-model="profile.userTheme"
+        ng-init="profile.userTheme = profile.userTheme || 'eclipse'"
+        ng-options="theme as theme for theme in profile.cmThemes"
+        ng-change="profile.changeTheme(profile.userTheme)"
+        class="browser-default">
       </select>
     </div>
     <h6>Default Language</h6>
     <hr>
     <div class="profile-language">
-      <select ng-model="profile.userLanguage" ng-init="profile.userLanguage = profile.userLanguage || 'javascript'" ng-options="language as language for language in profile.cmLanguages" ng-change="profile.changeLanguage(profile.userLanguage)" class="browser-default">
+      <select ng-model="profile.userLanguage"
+        ng-init="profile.userLanguage = profile.userLanguage || 'javascript'"
+        ng-options="language as language for language in profile.cmLanguages"
+        ng-change="profile.changeLanguage(profile.userLanguage)"
+        class="browser-default">
       </select>
     </div>
     <hr>
@@ -54,5 +64,14 @@
         </form>
       </li>
     </ul>
+    <h6>Logout</h6>
+    <hr>
+    <div class="col 12 center"> 
+      <a ui-sref='main'
+        class="waves-effect waves-teal tooltipped btn right"
+        ng-click='mainCtrl.signout()'>
+        <i class="material-icons">power_settings_new</i>
+      </a>
+    </div>
   </div>
 </div>
