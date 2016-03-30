@@ -32,6 +32,7 @@
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
     "path": "^0.12.7",
+    "precommit-hook": "^3.0.0",
     "querystring": "^0.2.0",
     "ramda": "^0.19.1",
     "raw-loader": "^0.5.1",
@@ -73,7 +74,9 @@
     "test": "mocha test --harmony-destructuring --compilers js:babel-core/register",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
-    "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client"
+    "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
   "repository": {
     "type": "git",
@@ -84,5 +87,10 @@
   "bugs": {
     "url": "https://github.com/precocious-tangerine/nevercode.git/issues"
   },
-  "homepage": "https://github.com/precocious-tangerine/nevercode.git#readme"
+  "homepage": "https://github.com/precocious-tangerine/nevercode.git#readme",
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
