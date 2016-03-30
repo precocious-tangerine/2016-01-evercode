@@ -47,8 +47,8 @@ module.exports = {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
-        let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
-        let user = { username, avatar_url, email, theme, selectedSnippet, language };
+        let {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret} = userData;
+        let user = {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret};
         res.status(201).send(user);
       })
       .catch((err) => {
