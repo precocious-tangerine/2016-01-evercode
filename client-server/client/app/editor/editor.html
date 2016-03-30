@@ -92,16 +92,16 @@
   </div>
   <div class="code-editor row card">
     <div class="col s12 code-toolbar valign-wrapper">
-      <a class="btn"
+      <a class="copy-to-clipboard tooltipped"
         data-tooltip="Copy Snippet"
-        data-position="bottom"
-        data-delay="800"
+        data-position="top"
+        data-delay="500"
         ngclipboard
         data-clipboard-text={{editor.snippetObj.data}}
         ng-click="editor.confirmCopyAction('Snippet content')">
         <i class="material-icons">assignment</i>
       </a>
-      <div class="code-selector">
+      <div class="code-selector col s2 right">
         <select class="browser-default"
           ng-model="editor.snippetObj.language"
           ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language"
@@ -109,7 +109,7 @@
           ng-change="editor.changeLanguage(editor.snippetObj.language)">
         </select>
       </div>
-      <div class="code-selector">
+      <div class="code-selector col s2">
         <select class="browser-default"
           ng-model="editor.userTheme"
           ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme"
@@ -117,15 +117,15 @@
           ng-change="editor.changeTheme(editor.userTheme)">
         </select>
       </div>
-      <a class="btn"
+      <a class="btn col s1 valign-wrapper tooltipped"
         ng-show="editor.activeUser.username"
         data-tooltip="Copy Share URL"
-        data-position="bottom"
-        data-delay="800"
+
+        data-position="top"
+        data-delay="500"
         ngclipboard
-        data-clipboard-text="http://nevercode.com/files/n/?s={{editor.snippetObj._id}}"
-        ng-click="editor.confirmCopyAction('Share url')">
-        <i class="material-icons">share</i>Share URL
+        data-clipboard-text="http://nevercode.com/files/n/?s={{editor.snippetObj._id}}">
+        <i class="material-icons">share</i><span class="valign">Share</span>
       </a>
       <div class="switch col s3 right-align"
         ng-show="editor.selectedSnippet">

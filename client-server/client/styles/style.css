@@ -102,6 +102,10 @@ html, body {
   text-align: center;
 }
 
+.public-spacing {
+  margin-top: 100px;
+}
+
 .search-results {
   z-index: 2;
   display: none;
@@ -157,6 +161,16 @@ html, body {
 .editor-row {
   padding-bottom: 3;
   margin: 0;
+}
+
+.copy-to-clipboard {
+  background-color: #2E3C56;
+  color: white;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-radius: 2px;
+  padding: 5px 3px 0 3px;
+  text-align: center;
 }
 
 .code-selector {
