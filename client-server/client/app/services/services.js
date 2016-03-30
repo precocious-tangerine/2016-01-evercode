@@ -198,8 +198,6 @@ export class Snippets {
             data: userObj
           }).then(res => {
             this.Auth.updateUser({ username: userObj.username });
-            let user = Object.assign({}, this.activeUser, {username: userObj.username})
-            dispatch(Actions.setActiveUser(user));
             this.Folders.getFileTree();
           })
           .catch(error => {
