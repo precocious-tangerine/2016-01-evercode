@@ -55,9 +55,11 @@
   <div class="row">  
     <hr>
     <ul class="collapsible password-change" data-collapsible="accordion">
-      <li>
-        <h6 class="collapsible-header">Change Password</h6>
-        <form class="collapsible-body" name="userForm" ng-submit="profile.changePassword(userForm.$valid)" novalidate>
+      <li class="collapsible-header">
+        <h6>Change Password</h6>
+      </li>
+      <li class="collapsible-body">
+        <form name="userForm" ng-submit="profile.changePassword(userForm.$valid)" novalidate>
           <div class="input-field form-group" ng-class="{ 'has-error' : userForm.currentPass.$invalid && !userForm.currentPass.$pristine }">
             <input id='change-current' type='password' name='currentPass' class='form-control' ng-model='profile.user.currentPass' required>
             <label for='change-current'>Current Password</label>
@@ -76,6 +78,7 @@
             </div>
           </div>
         </form>
+      </li>
       </li>
     </ul>
   </div>
