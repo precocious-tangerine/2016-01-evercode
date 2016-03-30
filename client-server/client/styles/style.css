@@ -5,6 +5,31 @@ html, body {
   color: #2E3C56;
 }
 
+@media only screen and (max-width: 600px) {
+  #outer-container {
+    position: relative !important;
+    margin-top: 16px !important;
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  #search-list-container {
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+
+  #toast-container {
+    min-width: 90vw !important;
+    max-width: 90vw !important;
+  }
+}
+
 #container {
   position: absolute;
   height: auto;
@@ -233,6 +258,19 @@ html, body {
 }
 
 #nav-mobile {
+  line-height: 3em;
+  width: 66px;
+  margin: 0;
+  padding: 0px;
+  z-index: 999;
+  height: 100vh;
+}
+
+#nav-mobile a {
+  width: 66px;
+}
+
+#nav-desktop {
   position: fixed;
   line-height: 3em;
   width: 66px;
@@ -243,7 +281,7 @@ html, body {
   height: 100vh;
 }
 
-#nav-mobile a {
+#nav-desktop a {
   width: 66px;
 }
 
@@ -263,11 +301,13 @@ nav,
   margin-left: 100px;
 }
 
+
 .outerContainer {
-  position: relative;
   margin-left: 70px !important;
+  position: relative !important;
   margin-top: 16px !important;
   padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .side-nav li {
@@ -323,9 +363,9 @@ nav,
 }
 
 #toast-container {
-  bottom: 50px !important;
+  bottom: 5vh !important;
   top: inherit !important;
-  right: 50px !important;
+  right: 5vw !important;
   left: inherit !important;
 }
 
@@ -411,12 +451,19 @@ nav,
   font-size: 2.5em;
 }
 
+.collapsible-header {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .password-change {
   border-right: 0 !important;
   border-left: 0 !important;
   box-shadow: none !important;
 }
+/*.carousel {
+  top:-100px !important;
+}*/
 
 /*---------ANIMATION---------*/
 

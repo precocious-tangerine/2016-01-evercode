@@ -1,49 +1,89 @@
-<div class="row">
-  <div class="user-profile">
+<div class="user-profile">
+  <div class="row">
     <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
     <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../assets/avatar.png" />
-    <div class="col s12">
-      <form name="profile-username" ng-submit="profile.changeUsername(profile.activeUser.email, profile.username)">
-        <div class="form-group col s9">
-          <input class='form-control' id="profile-username-input" name="username" type="text" ng-model='profile.username' ng-maxlength="20" />
-        </div>
-        <button class="col m3 waves-effect waves-light btn save-snippet right" type="submit"><i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
-        </button>
-        <p class="help-block" ng-show="snippetForm.title.$error.maxlength">
-          Snippet name must be less than 20 characters
-        </p>
-      </form>
-    </div>
+  </div>
+  <div class="row">
+    <form name="profile-username" 
+      ng-submit="profile.changeUsername(profile.activeUser.email, profile.username)">
+      <div class="form-group col s9">
+        <input class='form-control' 
+          id="profile-username-input"
+          name="username" 
+          type="text" 
+          ng-model='profile.username' 
+          ng-maxlength="20"
+        />
+      </div>
+      <button class="col m3 waves-effect waves-light btn save-snippet right"
+        type="submit">
+        <i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
+      </button>
+      <p class="help-block" 
+        ng-show="snippetForm.title.$error.maxlength">
+        Snippet name must be less than 20 characters
+      </p>
+    </form>
+  </div>
     <hr>
     <h6>Email</h6> 
     {{profile.activeUser.email}}
+  <div class="row">  
     <h6>Editor Theme</h6>
     <hr>
     <div class="profile-theme">
-      <select ng-model="profile.userTheme" ng-init="profile.userTheme = profile.userTheme || 'eclipse'" ng-options="theme as theme for theme in profile.cmThemes" ng-change="profile.changeTheme(profile.userTheme)" class="browser-default">
+      <select ng-model="profile.userTheme"
+        ng-init="profile.userTheme = profile.userTheme || 'eclipse'"
+        ng-options="theme as theme for theme in profile.cmThemes"
+        ng-change="profile.changeTheme(profile.userTheme)"
+        class="browser-default">
       </select>
     </div>
+  <div class="row">  
     <h6>Default Language</h6>
     <hr>
     <div class="profile-language">
-      <select ng-model="profile.userLanguage" ng-init="profile.userLanguage = profile.userLanguage || 'javascript'" ng-options="language as language for language in profile.cmLanguages" ng-change="profile.changeLanguage(profile.userLanguage)" class="browser-default">
+      <select ng-model="profile.userLanguage"
+        ng-init="profile.userLanguage = profile.userLanguage || 'javascript'"
+        ng-options="language as language for language in profile.cmLanguages"
+        ng-change="profile.changeLanguage(profile.userLanguage)"
+        class="browser-default">
       </select>
     </div>
+  </div>
+  <div class="row">  
     <hr>
     <ul class="collapsible password-change" data-collapsible="accordion">
       <li>
         <h6 class="collapsible-header">Change Password</h6>
         <form class="collapsible-body" name="userForm" ng-submit="profile.changePassword(userForm.$valid)" novalidate>
-          <div class="input-field form-group" ng-class="{ 'has-error' : userForm.currentPass.$invalid && !userForm.currentPass.$pristine }">
-            <input id='change-current' type='password' name='currentPass' class='form-control' ng-model='profile.user.currentPass' required>
+          <div class="input-field form-group"
+            ng-class="{ 'has-error' : userForm.currentPass.$invalid && !userForm.currentPass.$pristine }">
+            <input id='change-current'
+              type='password'
+              name='currentPass'
+              class='form-control'
+              ng-model='profile.user.currentPass'
+              required>
             <label for='change-current'>Current Password</label>
           </div>
           <div class="input-field form-group" ng-class="{ 'has-error' : userForm.newPass.$invalid && !userForm.newPass.$pristine }">
-            <input id='change-new' type="password" name='newPass' class="form-control" ng-model='profile.user.newPass' required>
+            <input id='change-new'
+              type="password"
+              name='newPass'
+              class="form-control"
+              ng-model='profile.user.newPass'
+              required>
             <label for='change-new'>New Password</label>
           </div>
-          <div class="input-field form-group" ng-class="{ 'has-error' : userForm.confirmPass.$invalid && !userForm.confirmPass.$pristine }">
-            <input id='change-confirm' type="password" name='confirmPass' class="form-control" ng-model='profile.user.confirmPass' required>
+          <div class="input-field form-group"
+            ng-class="{ 'has-error' : userForm.confirmPass.$invalid && !userForm.confirmPass.$pristine }">
+            <input id='change-confirm'
+              type="password"
+              name='confirmPass'
+              class="form-control"
+              ng-model='profile.user.confirmPass'
+              required>
             <label for='change-confirm'>Confirm Password</label>
           </div>
           <div class='row'>
@@ -55,4 +95,16 @@
       </li>
     </ul>
   </div>
+  <div class="row">  
+    <h6>Logout</h6>
+    <hr>
+    <div> 
+      <a ui-sref='main'
+        class="waves-effect waves-teal tooltipped btn center"
+        ng-click='mainCtrl.signout()'>
+        <i class="material-icons">power_settings_new</i>
+      </a>
+    </div>
+  </div>
 </div>
+<script>$('.collapsible').collapsible()</script>
