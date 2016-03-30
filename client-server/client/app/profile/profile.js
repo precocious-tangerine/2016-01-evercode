@@ -15,13 +15,13 @@ class ProfileCtrl {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
     this.Auth = Auth;
-    this.Snippets = Snippets
+    this.Snippets = Snippets;
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
-    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
+    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed'];
   }
 
   changeUsername(email, username) {
-    this.Snippets.updateUsername({ email, username });
+    this.Snippets.updateUsername({ email, username: username });
   }
 
   changeTheme(theme) {
@@ -30,6 +30,14 @@ class ProfileCtrl {
 
   changeLanguage(language) {
     this.Auth.updateUser({ language });
+  }
+
+  changePassword() {
+    if(this.user.newPass === this.user.confirmPass){
+      this.Auth.updatePassword({ email: this.activeUser.email, password: this.user.currentPass, newPassword: this.user.newPass });
+    } else {
+      Materialize.toast("New passwords don't match!", 3000, 'rounded');
+    }
   }
 
   mapStateToThis(state) {

@@ -411,6 +411,13 @@ nav,
   font-size: 2.5em;
 }
 
+
+.password-change {
+  border-right: 0 !important;
+  border-left: 0 !important;
+  box-shadow: none !important;
+}
+
 /*---------ANIMATION---------*/
 
 .transform {
