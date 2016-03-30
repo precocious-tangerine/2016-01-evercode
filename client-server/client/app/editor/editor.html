@@ -101,7 +101,7 @@
         ng-click="editor.confirmCopyAction('Snippet content')">
         <i class="material-icons">assignment</i>
       </a>
-      <div class="code-selector col s3 right">
+      <div class="code-selector col s2 right">
         <select class="browser-default"
           ng-model="editor.snippetObj.language"
           ng-init="editor.snippetObj.language = editor.snippetObj.language || editor.cmDefaults.language"
@@ -109,7 +109,7 @@
           ng-change="editor.changeLanguage(editor.snippetObj.language)">
         </select>
       </div>
-      <div class="code-selector col s3">
+      <div class="code-selector col s2">
         <select class="browser-default"
           ng-model="editor.userTheme"
           ng-init="editor.userTheme = editor.userTheme || editor.cmDefaults.theme"
