@@ -77,6 +77,12 @@ html, body {
   color: grey;
 }
 
+.splash-container {
+  background-image: url("../assets/sf-gg-bay.jpg");
+  background-position: center; 
+  background-size: 100%;
+}
+
 .splash {
   text-align: center;
   color: #2E3C56;
