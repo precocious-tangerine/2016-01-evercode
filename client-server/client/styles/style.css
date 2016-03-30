@@ -451,6 +451,10 @@ nav,
   font-size: 2.5em;
 }
 
+.collapsible-header {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .password-change {
   border-right: 0 !important;

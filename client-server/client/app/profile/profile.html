@@ -39,7 +39,6 @@
         class="browser-default">
       </select>
     </div>
-  </ile.activeUser.email}}>
   <div class="row">  
     <h6>Default Language</h6>
     <hr>
@@ -55,21 +54,36 @@
   <div class="row">  
     <hr>
     <ul class="collapsible password-change" data-collapsible="accordion">
-      <li class="collapsible-header">
-        <h6>Change Password</h6>
-      </li>
-      <li class="collapsible-body">
-        <form name="userForm" ng-submit="profile.changePassword(userForm.$valid)" novalidate>
-          <div class="input-field form-group" ng-class="{ 'has-error' : userForm.currentPass.$invalid && !userForm.currentPass.$pristine }">
-            <input id='change-current' type='password' name='currentPass' class='form-control' ng-model='profile.user.currentPass' required>
+      <li>
+        <h6 class="collapsible-header">Change Password</h6>
+        <form class="collapsible-body" name="userForm" ng-submit="profile.changePassword(userForm.$valid)" novalidate>
+          <div class="input-field form-group"
+            ng-class="{ 'has-error' : userForm.currentPass.$invalid && !userForm.currentPass.$pristine }">
+            <input id='change-current'
+              type='password'
+              name='currentPass'
+              class='form-control'
+              ng-model='profile.user.currentPass'
+              required>
             <label for='change-current'>Current Password</label>
           </div>
           <div class="input-field form-group" ng-class="{ 'has-error' : userForm.newPass.$invalid && !userForm.newPass.$pristine }">
-            <input id='change-new' type="password" name='newPass' class="form-control" ng-model='profile.user.newPass' required>
+            <input id='change-new'
+              type="password"
+              name='newPass'
+              class="form-control"
+              ng-model='profile.user.newPass'
+              required>
             <label for='change-new'>New Password</label>
           </div>
-          <div class="input-field form-group" ng-class="{ 'has-error' : userForm.confirmPass.$invalid && !userForm.confirmPass.$pristine }">
-            <input id='change-confirm' type="password" name='confirmPass' class="form-control" ng-model='profile.user.confirmPass' required>
+          <div class="input-field form-group"
+            ng-class="{ 'has-error' : userForm.confirmPass.$invalid && !userForm.confirmPass.$pristine }">
+            <input id='change-confirm'
+              type="password"
+              name='confirmPass'
+              class="form-control"
+              ng-model='profile.user.confirmPass'
+              required>
             <label for='change-confirm'>Confirm Password</label>
           </div>
           <div class='row'>
@@ -78,7 +92,6 @@
             </div>
           </div>
         </form>
-      </li>
       </li>
     </ul>
   </div>
@@ -94,3 +107,4 @@
     </div>
   </div>
 </div>
+<script>$('.collapsible').collapsible()</script>
