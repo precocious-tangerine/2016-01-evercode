@@ -64,6 +64,7 @@
         <div class='row toolbar' id='{{snippet.value.name}}' style='display: none'>
           <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">{{snippet.value.favorite ? 'star' : 'star_border'}}</i>
+            <i class="waves-effect waves-teal material-icons snippet-icon" ngclipboard data-clipboard-text={{snippet.value.data}}>assignment</i>
           <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
         </div>
         <p class="list-description">
