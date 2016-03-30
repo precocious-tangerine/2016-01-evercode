@@ -1,13 +1,13 @@
 <ul class="snippets side-nav">
   <div class="col s12">
     <span class="add-button col s4 center-align">
-      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="50" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" data-delay="800" ng-click="snippets.deselectSnippet()" data-tooltip="Add a snippet"><i class="large material-icons">note_add</i></a>
     </span>
     <span class="add-button col s4 center-align">
-      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="50" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.toggleFolderNameInput()" data-delay="800" data-tooltip="Add a folder"><i class="large material-icons">create_new_folder</i></a>
     </span>
     <span class="add-button col s4 center-align">
-      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="50" data-tooltip="Hide List View"><i class="large material-icons">cancel</i></a>
+      <a class="btn-flat tooltipped waves-effect waves-teal" data-position="bottom" ng-click="snippets.closeSideNav()" data-delay="800" data-tooltip="Hide List View"><i class="large material-icons">cancel</i></a>
     </span>
   </div>
   <form ng-show='snippets.folderInput' name="subFolderForm" ng-submit="snippets.addFolder()" novalidate>
@@ -46,9 +46,10 @@
     <div>
       {{snippets.visibleSnippets.length ? 'Snippets' : ''}}
     </div>
-    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets | orderBy:'value._createdAt'">
+    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets | orderBy:'value.name' track by $index" >
       <div class="folder-list">
-        <span class="folder-list-item waves-effect waves-teal">
+      <div class='snippet-name row'>
+        <span class="waves-effect waves-teal">
           <a class="folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
             <span class="folder-text valign-wrapper">
               <i class="material-icons code-icon valign">code</i>
@@ -57,10 +58,14 @@
         </a>
         </span>
         <span class="folder-list-item right">
+          <i ng-click="snippets.showToolbar(snippet.value.name)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
+        </span>
+        </div>
+        <div class='row toolbar' id='{{snippet.value.name}}' style='display: none'>
           <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
           <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">{{snippet.value.favorite ? 'star' : 'star_border'}}</i>
           <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
-        </span>
+        </div>
         <p class="list-description">
           {{snippet.value.description}}
         </p>
