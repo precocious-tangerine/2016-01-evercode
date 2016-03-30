@@ -17,4 +17,3 @@ client-server/client/styles/materialize.css
 /node_modules/*
 *.rdb
 npm-debug.log
-nevercode-sublime-setup.zip

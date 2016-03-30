@@ -17,4 +17,9 @@ module.exports = (app, express) => {
   app.route('/user/api/userInfo')
     .get(userController.userInfo)
     .put(userController.updateUserInfo);
+
+  app.route('/user/api/sublime-secret')
+    .get(userController.generateSublimeSecret)
+  app.route('/user/sublime-secret')
+    .get(userController.verifySublimeSecret)
 };

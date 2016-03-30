@@ -4,15 +4,34 @@
   <h5>Easily integrate your code snippets and templates with sublime's snippet templates</h5>
 </div>
 <div class="divider"></div>
+<div class='sublime-secret'>
+  <div class='sublime-secret-entry'>
+  <h5 class='sublime-secret-title'>Current Client Secret:<span class='client-secret-value'>{{downloadCtrl.activeUser.sublimeSecret}}</span></h5>
+  </div>
+  <div class='sublime-secret-buttons' text-align:>
+  <a class="btn col m3 offset-m3" 
+        data-tooltip="Copy Client Secret"
+        data-position="bottom"
+        data-delay="50"
+        ngclipboard
+        data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}>Copy to Clipboard</a>
+  <button ng-click="downloadCtrl.generateNewSecret()" class="col m3 waves-effect waves-light btn save-snippets left">
+    Generate New Client Secret
+  </button>
+  </div>
+</div>
+<div class="divider"></div>
+<br>
 <div class='download-instructions-container'>
   <h4>Download Instructions</h4>
   <h6>Note: this is only supported on Macintosh Operating systems</h6>
   <ol>
     <li>Download the compressed file below and unzip it in a local directory</li>
-    <li>Run the setup file by clicking on 'setup.command' If this doesn't run in a terminal emulator, navigate to the folder in your terminal and run './setup.command'.</li>
-    <li>A prompt will appear asking for your valid Nevercode credentials. Enter them and allow the setup script to run.</li>
+    <li>Run the setup file by clicking on 'setup.command' If this doesn't run in a terminal emulator, navigate to the folder in your terminal and run './setup.command'. (Modify the executable permissions by typing 'chmod +x ./setup.command' in your terminal)</li>
+    <li>A prompt will appear asking for your valid Nevercode client secret. Copy it above using the clipboard button, paste it into the setup script, and allow the script to run.</li>
     <li>Once setup is complete, your Sublime Editor should now contain a syncing option in your 'preferences' menu. Click this option to automatically sync your local snippets with the ones on your account.</li>
     <li>All trigger words are prefixed by 'NC_'. So for example, if you choose the trigger word 'express_setup', the actual tab trigger word would be 'NC_express_setup'</li>
+    <li>Should your client-secret ever become compromised, generate a new client secret using the button above and then repeat the above installation in order to reinstall</li>
   </ol>
 </div>
 <div class='download-button'>

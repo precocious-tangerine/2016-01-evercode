@@ -47,8 +47,8 @@ module.exports = {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
-        let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
-        let user = { username, avatar_url, email, theme, selectedSnippet, language };
+        let {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret} = userData;
+        let user = {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret};
         res.status(201).send(user);
       })
       .catch((err) => {
@@ -72,6 +72,28 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
+  }),
+
+  generateSublimeSecret: ((req, res) => {
+   let email = req.user.email;
+   console.log(email);
+   Users.createSublimeSecret(email)
+    .then(secret => {
+      console.log('secret from model is ', secret);
+      res.status(201).send(secret);
+    })
+    .catch(err => res.status(401).send('Unauthorized')) 
+  }),
+
+  verifySublimeSecret: ((req, res) => {
+    let secret = req.headers.secret;
+    Users.exchangeSecretForToken(secret)
+      .then(userObj => {
+        let {email, username} = userObj;
+        let token = utils.createJWT({email, username})
+        res.status(200).send(token);
+      })
+      .catch(err => res.status(401).send('Unauthorized'))
   }),
 
   githubLogin: ((req, res) => {
