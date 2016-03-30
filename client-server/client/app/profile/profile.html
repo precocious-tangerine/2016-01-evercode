@@ -1,24 +1,34 @@
-<div class="row">
-  <div class="user-profile">
+<div class="user-profile">
+  <div class="row">
     <img ng-show='mainCtrl.avatar' class="circle responsive-img" src={{mainCtrl.avatar}} />
     <img ng-hide='mainCtrl.avatar' class="responsive-img" src="../../assets/avatar.png" />
-    <div class="col s12">
-      <form name="profile-username" ng-submit="profile.changeUsername(profile.activeUser.email, profile.username)">
-        <div class="form-group col s9">
-          <input class='form-control' id="profile-username-input" name="username" type="text" ng-model='profile.username' ng-maxlength="20" />
-        </div>
-        <button class="col m3 waves-effect waves-light btn save-snippet right"
-          type="submit" >
-          <i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
-        </button>
-        <p class="help-block" ng-show="snippetForm.title.$error.maxlength">
-          Snippet name must be less than 20 characters
-        </p>
-      </form>
-    </div>
+  </div>
+  <div class="row">
+    <form name="profile-username" 
+      ng-submit="profile.changeUsername(profile.activeUser.email, profile.username)">
+      <div class="form-group col s9">
+        <input class='form-control' 
+          id="profile-username-input"
+          name="username" 
+          type="text" 
+          ng-model='profile.username' 
+          ng-maxlength="20"
+        />
+      </div>
+      <button class="col m3 waves-effect waves-light btn save-snippet right"
+        type="submit">
+        <i class="material-icons">{{profile.activeUser.username === profile.username ? 'edit' : 'save'}}</i>
+      </button>
+      <p class="help-block" 
+        ng-show="snippetForm.title.$error.maxlength">
+        Snippet name must be less than 20 characters
+      </p>
+    </form>
+  </div>
     <hr>
     <h6>Email</h6> 
     {{profile.activeUser.email}}
+  <div class="row">  
     <h6>Editor Theme</h6>
     <hr>
     <div class="profile-theme">
@@ -29,6 +39,8 @@
         class="browser-default">
       </select>
     </div>
+  </ile.activeUser.email}}>
+  <div class="row">  
     <h6>Default Language</h6>
     <hr>
     <div class="profile-language">
@@ -39,6 +51,8 @@
         class="browser-default">
       </select>
     </div>
+  </div>
+  <div class="row">  
     <hr>
     <ul class="collapsible password-change" data-collapsible="accordion">
       <li>
@@ -64,11 +78,13 @@
         </form>
       </li>
     </ul>
+  </div>
+  <div class="row">  
     <h6>Logout</h6>
     <hr>
-    <div class="col 12 center"> 
+    <div> 
       <a ui-sref='main'
-        class="waves-effect waves-teal tooltipped btn right"
+        class="waves-effect waves-teal tooltipped btn center"
         ng-click='mainCtrl.signout()'>
         <i class="material-icons">power_settings_new</i>
       </a>
