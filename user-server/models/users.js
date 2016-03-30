@@ -91,18 +91,17 @@ User.createSublimeSecret = (email) => {
       if (foundUser) {
         var newseed = (Math.random() * 100).toString();
         return bcrypt.genSaltAsync(13)
-          .then(salt => bcrypt.hashAsync(newseed, salt))
-          .then(hash => {
-            foundUser.sublimeSecret = hash;
-            return User.updateUserAsync(foundUser.email, foundUser);
-          })
-          .then(() => {
-            console.log('about to send to server', foundUser.sublimeSecret);
-            return foundUser.sublimeSecret;
-          })
-          .catch(console.log);
-      } else {
-        return new Promise((_, reject) => reject('User not found'));
+        .then(salt => bcrypt.hashAsync(newseed, salt))
+        .then(hash => {
+          foundUser.sublimeSecret = hash;
+          return User.updateUserAsync(foundUser.email, foundUser);
+        })
+        .then(() => {
+          return foundUser.sublimeSecret;    
+        })
+      }
+      else {
+        return new Promise((_,reject) => reject('User not found'));
       }
     });
 };

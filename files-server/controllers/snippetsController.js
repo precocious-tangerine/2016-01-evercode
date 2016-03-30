@@ -141,7 +141,7 @@ module.exports = {
   }),
 
   getSharedSnippet: ((req, res) => {
-    var id = req.query.s;
+    let id = req.query.s;
     Snippets.getSnippetAsync(id)
       .then(snippet => {
         if (snippet) {
@@ -158,8 +158,29 @@ module.exports = {
   }),
 
   rerouteSharedSnippet: ((req, res) => {
-    var id = req.query.s;
+    let id = req.query.s;
     res.redirect('nevercode.com/#/main/editor?s=' + id);
-  })
+  }),
 
+  addSublimeSnippet: ((req, res) => {
+    let email = req.user.email;
+    let username = req.user.username;
+    let fileName = req.body.fileName;
+    let shortcut = req.body.shortcut;
+    let contents = req.body.contents;
+    Snippets.makeSubFolderAsync(email, username, '/' + email + '/' + 'sublime_uploads' )
+    .then(result => {
+      let newSnippet = {
+        createdBy: email,
+        username: username,
+        data: contents,
+        name: fileName,
+        shortcut: shortcut,
+        filePath: '/' + email + '/sublime_uploads/' + fileName
+      }
+      Snippets.makeSnippetAsync(newSnippet)
+      .then(() => res.status(201).send('snippet uploaded'))
+      .catch(err => res.status(500).send(err));
+    })
+  })
 };
