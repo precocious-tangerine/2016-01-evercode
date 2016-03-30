@@ -83,6 +83,7 @@ class SnippetsCtrl {
   }
   showToolbar(id) {
     $('#'+id).toggle(400);
+    $('.tooltipped').tooltip({delay: 50});
   }
   mapStateToThis(state) {
     let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;

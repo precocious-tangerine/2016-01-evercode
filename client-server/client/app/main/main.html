@@ -114,9 +114,9 @@
     </li>
     <li class="row">
       <div class="nav-icon">
-        <a class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Profile" >
-          <img ng-show='mainCtrl.avatar' class="circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
-          <img ng-hide='mainCtrl.avatar' class="icon button-collapse mid-navigation-menu" src="../../assets/avatar.png" />
+        <a ng-click="mainCtrl.toggleSideView('editor.profile')" class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Profile" >
+          <img ng-show='mainCtrl.avatar' class="circle mid-navigation-menu" src={{mainCtrl.avatar}} />
+          <img ng-hide='mainCtrl.avatar' class="icon mid-navigation-menu" src="../../assets/avatar.png" />
          </a>
       </div>
     </li>
@@ -168,7 +168,6 @@
     ui-view>
   </div>
 </div>
-
 
 <!-- -------------- MODAL VIEW -------------- -->
 <signin  show='mainCtrl.signinModalShow' other='mainCtrl.signupModalShow' width='400px' height='auto'>
