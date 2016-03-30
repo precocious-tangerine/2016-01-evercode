@@ -410,6 +410,16 @@ nav,
 #snippet-description-input {
 }
 
+#sidenav-overlay {
+  background-color: #FFFFFF !important;
+  opacity: 0.8 !important;
+}
+
+.drag-target {
+  background-color: #FFFFFF !important;
+  opacity: 0 !important; 
+}
+
 .github img {
   height: 25px;
   margin-top: 5px;
@@ -454,6 +464,10 @@ nav,
 .collapsible-header {
   padding-left: 0;
   padding-right: 0;
+}
+
+.innerContainer {
+  margin: 0;
 }
 
 .password-change {

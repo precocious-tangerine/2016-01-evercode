@@ -29,7 +29,7 @@
       <li class="row corner-logo">
         <div class="nav-icon">
           <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
-             <img class="icon mid-navigation-menu" src="../../assets/N_square.png" />
+             <img class="icon" src="../../assets/N_square.png" />
           </a>
         </div>
       </li>
@@ -40,10 +40,10 @@
             data-position="right"
             data-delay="50" >
             <img src={{mainCtrl.avatar}}
-              class="circle mid-navigation-menu"
+              class="circle"
               ng-show='mainCtrl.avatar'/>
             <img src="../../assets/avatar.png"
-              class="circle mid-navigation-menu"
+              class="circle"
               ng-hide='mainCtrl.avatar'/>
            </a>
         </div>
@@ -107,16 +107,20 @@
   <ul ng-show='mainCtrl.activeUser.email' id="nav-desktop" class="side-nav col s3 m1 l1 main hide-on-small-only">
     <li class="row corner-logo">
       <div class="nav-icon">
-        <a ui-sref="main.public" class="waves-effect waves-teal nav-link">
-           <img class="icon button-collapse mid-navigation-menu" src="../../assets/n.png" />
+        <a ui-sref="main.public" class="waves-effect nav-link waves-teal nav-link">
+           <img class="icon" ui-sref="main.public" src="../../assets/n.png" />
         </a>
       </div>
     </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('editor.profile')">
+    <li class="row">
       <div class="nav-icon">
-        <a class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="50" data-tooltip="Profile" >
-          <img ng-show='mainCtrl.avatar' class="circle button-collapse mid-navigation-menu" src={{mainCtrl.avatar}} />
-          <img ng-hide='mainCtrl.avatar' class="icon button-collapse mid-navigation-menu" src="../../assets/avatar.png" />
+        <a class="waves-effect avatar waves-teal nav-link tooltipped"
+          ng-click="mainCtrl.toggleSideView('editor.profile')"
+          data-position="right"
+          data-delay="50"
+          data-tooltip="Profile" >
+          <img ng-show='mainCtrl.avatar' class="circle" src={{mainCtrl.avatar}} />
+          <img ng-hide='mainCtrl.avatar' class="icon" src="../../assets/avatar.png" />
          </a>
       </div>
     </li>
