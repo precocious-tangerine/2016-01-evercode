@@ -91,7 +91,6 @@
   "homepage": "https://github.com/precocious-tangerine/nevercode.git#readme",
   "pre-commit": [
     "lint",
-    "validate",
     "test"
   ]
 }
