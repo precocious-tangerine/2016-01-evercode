@@ -466,6 +466,10 @@ nav,
   padding-right: 0;
 }
 
+.innerContainer {
+  margin: 0;
+}
+
 .password-change {
   border-right: 0 !important;
   border-left: 0 !important;
