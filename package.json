@@ -21,6 +21,7 @@
     "googleapis": "^3.1.0",
     "grunt": "^0.4.5",
     "html-webpack-plugin": "^2.10.0",
+    "jshint": "^2.9.1",
     "jsonwebtoken": "^5.7.0",
     "materialize-css": "^0.97.5",
     "materialize-sass": "^0.95.2",

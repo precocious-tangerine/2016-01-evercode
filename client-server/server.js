@@ -16,4 +16,4 @@ const startServer = () => {
 	app.listen(port, () => console.log('client-server listening on port ', port));
 };
 
-module.exports = startServer
+module.exports = startServer;

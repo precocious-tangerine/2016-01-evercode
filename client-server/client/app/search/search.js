@@ -1,15 +1,3 @@
-export const search = () => {
-  return {
-    url: '/search',
-    restrict: 'E',
-    controllerAs: 'search',
-    controller: SearchCtrl,
-    template: require('./search.html'),
-    scope: {},
-    access: { restricted: true }
-  }
-}
-
 class SearchCtrl {
   constructor($ngRedux, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
@@ -31,7 +19,7 @@ class SearchCtrl {
     let snippetArr = [];
     let tags = {};
     Object.keys(snippetMap).forEach(key => {
-      let snippetVal = snippetMap[key].value
+      let snippetVal = snippetMap[key].value;
       if (typeof snippetVal === 'object') {
         if (snippetVal.name !== '.config' && snippetVal.name !== '/.config') {
           snippetArr.push(snippetVal);
@@ -49,4 +37,17 @@ class SearchCtrl {
     };
   }
 
+}
+
+export const search = () => {
+  return {
+    url: '/search',
+    restrict: 'E',
+    controllerAs: 'search',
+    controller: SearchCtrl,
+    template: require('./search.html'),
+    scope: {},
+    access: { restricted: true }
+  };
 };
+

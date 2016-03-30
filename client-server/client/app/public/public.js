@@ -1,15 +1,3 @@
-export const publicPage = () => {
-  return {
-    url: '/public',
-    restrict: 'E',
-    controllerAs: 'public',
-    controller: PublicCtrl,
-    template: require('./public.html'),
-    scope: {},
-    access: { restricted: false }
-  }
-}
-
 class PublicCtrl {
   constructor($ngRedux, $state, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
@@ -18,7 +6,7 @@ class PublicCtrl {
     this.snippetList = [];
     this.loading = true;
     this.editorModalShow = false;
-    this.Public.getPublicSnippets().then(res => {
+    this.Public.getPublicSnippets().then(() => {
       this.loading = false;
     });
   }
@@ -37,11 +25,23 @@ class PublicCtrl {
     let { publicList, selectedPublicSnippet } = state;
     let snippetArr = Object.keys(publicList).map(key => {
       return publicList[key];
-    })
+    });
     return {
       publicList,
       snippetArr,
       selectedPublicSnippet
-    }
+    };
   }
 }
+export const publicPage = () => {
+  return {
+    url: '/public',
+    restrict: 'E',
+    controllerAs: 'public',
+    controller: PublicCtrl,
+    template: require('./public.html'),
+    scope: {},
+    access: { restricted: false }
+  };
+};
+

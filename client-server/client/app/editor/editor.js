@@ -1,35 +1,3 @@
-export const editor = () => {
-  return {
-    url: '/editor',
-    restrict: 'E',
-    controllerAs: 'editor',
-    controller: EditorCtrl,
-    template: require('./editor.html'),
-    scope: {},
-    access: { restricted: false }
-  }
-}
-
-export let createEditorModal = () => {
-  return {
-    restrict: 'E',
-    scope: {
-      show: '=',
-      other: '='
-    },
-    link(scope, element, attrs) {
-      scope.dialogStyle = {};
-      attrs.width ? scope.dialogStyle.width = attrs.width: null;
-      attrs.height ? scope.dialogStyle.height = attrs.height: null;
-    },
-    controllerAs: 'editorModal',
-    controller: EditorCtrl,
-    bindToController: true,
-    template: require(`./editorModal.html`),
-    url: '/editor'
-  }
-}
-
 class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, Public, $state, $location) {
     this.$location = $location;
@@ -40,7 +8,7 @@ class EditorCtrl {
     this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
-    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed']
+    this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed'];
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
     this.cmDefaults = { language: 'javascript', theme: 'eclipse' };
     this.tinymceOptions = {
@@ -61,7 +29,7 @@ class EditorCtrl {
   }
 
   getSharedSnippet() {
-    if (this.$location.absUrl().indexOf("?") != -1) {
+    if (this.$location.absUrl().indexOf('?') != -1) {
       let id = this.$location.absUrl().slice(-24);
       this.Public.getSharedSnippet(id);
     }
@@ -161,7 +129,9 @@ class EditorCtrl {
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
-    userTheme !== this.editorOptions && this.editor ? this.editor.setOption('theme', userTheme) : null;
+    if(userTheme !== this.editorOptions && this.editor) {
+      this.editor.setOption('theme', userTheme);
+    }
     let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
     let editorOptions = {
       lineNumbers: true,
@@ -172,13 +142,15 @@ class EditorCtrl {
     };
     let snippetObj = {};
     if (selectedSnippet && (selectedSnippet in snippetMap)) {
-      Object.assign(snippetObj, snippetMap[selectedSnippet].value)
+      Object.assign(snippetObj, snippetMap[selectedSnippet].value);
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
-      Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
+      Object.assign(snippetObj, publicList[selectedPublicSnippet].value);
       editorOptions.readOnly = snippetObj.email !== activeUser.email ? true : 'nocursor';
     } else {
       snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
-      this.editor ? this.editor.setOption('readOnly', 'nocursor') : null;
+      if(this.editor) { 
+        this.editor.setOption('readOnly', 'nocursor');
+      }
     }
 
     let buttonText;
@@ -203,3 +175,40 @@ class EditorCtrl {
     };
   }
 }
+
+export const editor = () => {
+  return {
+    url: '/editor',
+    restrict: 'E',
+    controllerAs: 'editor',
+    controller: EditorCtrl,
+    template: require('./editor.html'),
+    scope: {},
+    access: { restricted: false }
+  };
+};
+
+export let createEditorModal = () => {
+  return {
+    restrict: 'E',
+    scope: {
+      show: '=',
+      other: '='
+    },
+    link(scope, element, attrs) {
+      scope.dialogStyle = {};
+      if(attrs.width) { 
+        scope.dialogStyle.width = attrs.width;
+      }
+      if(attrs.height) {
+        scope.dialogStyle.height = attrs.height;
+      }
+    },
+    controllerAs: 'editorModal',
+    controller: EditorCtrl,
+    bindToController: true,
+    template: require(`./editorModal.html`),
+    url: '/editor'
+  };
+};
+

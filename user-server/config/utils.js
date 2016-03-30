@@ -46,7 +46,7 @@ let createRootFolderAsync = (userObj) => {
       json: {
         path: userObj.email
       } 
-    }, function(error, resp, body) {
+    }, function(error, resp) {
       if (error) {
         console.log(error);
         reject(error);

@@ -13,7 +13,7 @@ if (cluster.isMaster) {
     console.log(`Worker ${worker.process.pid} is online`);
   });
 
-  cluster.on('exit', (worker, code, signal) => {
+  cluster.on('exit', (worker) => {
     console.log(`worker ${worker.process.pid} died`);
     console.log('Starting a new worker');
     cluster.fork();
