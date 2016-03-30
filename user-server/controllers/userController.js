@@ -5,7 +5,7 @@ let qs = require('querystring');
 let setup = require('../../setup');
 let Users = Promise.promisifyAll(require('../models/users'));
 let utils = require('../config/utils.js');
-
+let bcrypt = Promise.promisifyAll(require('bcrypt'));
 module.exports = {
 
   signin: ((req, res) => {
@@ -47,8 +47,8 @@ module.exports = {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
-        let {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret} = userData;
-        let user = {username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret};
+        let { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret } = userData;
+        let user = { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret };
         res.status(201).send(user);
       })
       .catch((err) => {
@@ -74,26 +74,56 @@ module.exports = {
       });
   }),
 
+  updatePassword: ((req, res) => {
+    let { email, password, newPassword } = req.body;
+    if (typeof newPassword === 'string' && newPassword !== '') {
+      Users.findOne({ email: email })
+        .then(foundUser => {
+          if (foundUser) {
+            return bcrypt.compareAsync(password, foundUser._password)
+              .then(success => bcrypt.genSaltAsync(13))
+              .then(salt => bcrypt.hashAsync(newPassword, salt))
+              .then(hash => {
+                return Users.updateUserAsync(email, { _password: hash })
+                  .then(success => {
+                    res.status(201).send(success);
+                  });
+              })
+              .catch(err => {
+                res.status(500).send(err);
+              });
+          } else {
+            res.status(500).send('User with given email does not exist');
+          }
+        })
+        .catch(err => {
+          res.status(500).send(err);
+        });
+    } else {
+      res.status(500).send('New password has invalid format');
+    }
+  }),
+
   generateSublimeSecret: ((req, res) => {
-   let email = req.user.email;
-   console.log(email);
-   Users.createSublimeSecret(email)
-    .then(secret => {
-      console.log('secret from model is ', secret);
-      res.status(201).send(secret);
-    })
-    .catch(err => res.status(401).send('Unauthorized')) 
+    let email = req.user.email;
+    console.log(email);
+    Users.createSublimeSecret(email)
+      .then(secret => {
+        console.log('secret from model is ', secret);
+        res.status(201).send(secret);
+      })
+      .catch(err => res.status(401).send('Unauthorized'));
   }),
 
   verifySublimeSecret: ((req, res) => {
     let secret = req.headers.secret;
     Users.exchangeSecretForToken(secret)
       .then(userObj => {
-        let {email, username} = userObj;
-        let token = utils.createJWT({email, username})
+        let { email, username } = userObj;
+        let token = utils.createJWT({ email, username });
         res.status(200).send(token);
       })
-      .catch(err => res.status(401).send('Unauthorized'))
+      .catch(err => res.status(401).send('Unauthorized'));
   }),
 
   githubLogin: ((req, res) => {

@@ -15,14 +15,13 @@ let userSchema = mongoose.Schema({
   theme: { type: String, default: 'eclipse' },
   language: { type: String, default: 'javascript' },
   selectedSnippet: { type: String },
-  sublimeSecret: {type: String, default: 'No secret issued;'}
+  sublimeSecret: { type: String, default: 'No secret issued;' }
 });
 
 let User = mongoose.model('User', userSchema);
 
 User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
-  // email based login
   if (typeof pw === 'string' && pw !== '') {
     bcrypt.genSaltAsync(13)
       .then((salt) => bcrypt.hashAsync(pw, salt))
@@ -31,9 +30,9 @@ User.makeUser = (userObj, callback) => {
         return utils.createRootFolderAsync(userObj);
       })
       .then(success => User.create(userObj)
-      .then(result => {
-        callback(null, result);
-      }))
+        .then(result => {
+          callback(null, result);
+        }))
       .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
@@ -66,14 +65,13 @@ User.removeUser = (email, callback) => {
 };
 
 User.checkCredentials = (email, attempt, callback) => {
-  // TODO password verification
   let userData = {};
-  return User.findOne({email})
-    .then((foundUser) => {
+  return User.findOne({ email })
+    .then(foundUser => {
       if (foundUser) {
         userData = foundUser.toObject();
         return bcrypt.compareAsync(attempt, foundUser._password)
-          .then((success) => {
+          .then(success => {
             if (success) {
               delete userData._password;
               callback(null, userData);
@@ -88,31 +86,30 @@ User.checkCredentials = (email, attempt, callback) => {
 };
 
 User.createSublimeSecret = (email) => {
-  return User.findOne({email})
+  return User.findOne({ email })
     .then(foundUser => {
-      if(foundUser) {
-        var newseed = (Math.random()*100).toString()
+      if (foundUser) {
+        var newseed = (Math.random() * 100).toString();
         return bcrypt.genSaltAsync(13)
-        .then(salt => bcrypt.hashAsync(newseed, salt))
-        .then(hash => {
-          foundUser.sublimeSecret = hash;
-          return User.updateUserAsync(foundUser.email, foundUser);
-        })
-        .then(() => {
-          console.log('about to send to server', foundUser.sublimeSecret);
-          return foundUser.sublimeSecret;    
-        })
-        .catch(console.log)
-      }
-      else {
-        return new Promise((_,reject) => reject('User not found'));
+          .then(salt => bcrypt.hashAsync(newseed, salt))
+          .then(hash => {
+            foundUser.sublimeSecret = hash;
+            return User.updateUserAsync(foundUser.email, foundUser);
+          })
+          .then(() => {
+            console.log('about to send to server', foundUser.sublimeSecret);
+            return foundUser.sublimeSecret;
+          })
+          .catch(console.log);
+      } else {
+        return new Promise((_, reject) => reject('User not found'));
       }
     });
-}
+};
 
 User.exchangeSecretForToken = (sublimeSecret) => {
   console.log('about to query db for ', sublimeSecret);
-  return User.findOne({sublimeSecret});
-}
+  return User.findOne({ sublimeSecret });
+};
 
 module.exports = User;

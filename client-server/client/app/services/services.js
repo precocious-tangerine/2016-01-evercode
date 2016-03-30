@@ -197,7 +197,7 @@ export class Snippets {
             url: 'files/api/user/snippets',
             data: userObj
           }).then(res => {
-            dispatch(Actions.setActiveUser({ username: userObj.username }));
+            this.Auth.updateUser({ username: userObj.username });
             this.Folders.getFileTree();
           })
           .catch(error => {
@@ -351,6 +351,18 @@ export class Auth {
           .catch(error => {
             console.error(error);
           });
+      },
+
+      updatePassword(infoObj){
+        return this.$http({
+          method: 'PUT',
+          url: 'user/api/updatePassword',
+          data: infoObj
+        }).then(res => {
+          Materialize.toast('Password was succesfully changed!', 4000, 'rounded');
+        }).catch(err => {
+          console.error(err);
+        })
       },
 
       signout() {
