@@ -1,5 +1,6 @@
 class PublicCtrl {
   constructor($ngRedux, $state, Public) {
+    window.publicCtrl = this;
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
     this.Public = Public;

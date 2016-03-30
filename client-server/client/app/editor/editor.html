@@ -7,13 +7,7 @@
     <form name="snippetForm" 
       ng-submit="editor.buttonTrigger()">
       <div class="form-group snippet-title">
-        <input class='form-control' 
-          id="snippet-name-input"
-          name="title" 
-          placeholder="Name Your Snippet" 
-          type="text" 
-          ng-model='editor.snippetObj.name' 
-          ng-maxlength="20"
+        <input class='form-control' id="snippet-name-input" name="title" placeholder="Name Your Snippet" type="text" ng-model='editor.snippetObj.name' ng-maxlength="20"
         />
       </div>
       <button class="col m3 waves-effect waves-light btn save-snippet right"
