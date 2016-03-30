@@ -6,9 +6,9 @@ let setup = require('../../setup');
 let Users = Promise.promisifyAll(require('../models/users'));
 let utils = require('../config/utils.js');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
-module.exports = {
 
-  signin: ((req, res) => {
+module.exports = {
+  signin(req, res) {
     let { email, password } = req.body;
     let token;
     //Do some comparing
@@ -20,9 +20,8 @@ module.exports = {
         console.log(err);
         res.status(401).send({ msg: 'Unauthorized' });
       });
-  }),
-
-  signup: ((req, res) => {
+  },
+  signup(req, res) {
     let { email, password, username } = req.body;
     let token;
     Users.getUserAsync(email)
@@ -41,9 +40,8 @@ module.exports = {
             });
         }
       });
-  }),
-
-  userInfo: ((req, res) => {
+  },
+  userInfo(req, res) {
     let email = req.user.email;
     Users.getUserAsync(email)
       .then(userData => {
@@ -55,9 +53,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  updateUserInfo: ((req, res) => {
+  },
+  updateUserInfo(req, res) {
     let email = req.user.email;
     Users.updateUserAsync(email, req.body)
       .then(success => {
@@ -72,9 +69,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  updatePassword: ((req, res) => {
+  },
+  updatePassword(req, res) {
     let { email, password, newPassword } = req.body;
     if (typeof newPassword === 'string' && newPassword !== '') {
       Users.findOne({ email: email })
@@ -102,9 +98,8 @@ module.exports = {
     } else {
       res.status(500).send('New password has invalid format');
     }
-  }),
-
-  generateSublimeSecret: ((req, res) => {
+  },
+  generateSublimeSecret(req, res) {
     let email = req.user.email;
     console.log(email);
     Users.createSublimeSecret(email)
@@ -113,9 +108,8 @@ module.exports = {
         res.status(201).send(secret);
       })
       .catch(err => res.status(401).send('Unauthorized'));
-  }),
-
-  verifySublimeSecret: ((req, res) => {
+  },
+  verifySublimeSecret(req, res) {
     let secret = req.headers.secret;
     Users.exchangeSecretForToken(secret)
       .then(userObj => {
@@ -124,9 +118,8 @@ module.exports = {
         res.status(200).send(token);
       })
       .catch(err => res.status(401).send('Unauthorized'));
-  }),
-
-  githubLogin: ((req, res) => {
+  },
+  githubLogin(req, res) {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
     var userApiUrl = 'https://api.github.com/user';
     var params = {
@@ -164,5 +157,5 @@ module.exports = {
         });
       });
     });
-  })
+  }
 };

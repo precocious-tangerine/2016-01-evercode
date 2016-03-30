@@ -44,7 +44,6 @@ User.makeUser = (userObj, callback) => {
     callback(new Error('must login via github or local session'), null);
   }
 };
-
 User.getUser = (email, callback) => {
   return User.findOne({ email: email })
     .then((userObj) => {
@@ -52,18 +51,14 @@ User.getUser = (email, callback) => {
     })
     .catch(callback);
 };
-
 User.updateUser = (email, newProps, callback) => {
   newProps._updatedAt = new Date();
   User.update({ email }, newProps, { multi: false }, callback);
 };
-
 User.updateUserAsync = Promise.promisify(User.updateUser);
-
 User.removeUser = (email, callback) => {
   User.findOne({ email }).remove(callback);
 };
-
 User.checkCredentials = (email, attempt, callback) => {
   let userData = {};
   return User.findOne({ email })
@@ -84,7 +79,6 @@ User.checkCredentials = (email, attempt, callback) => {
       }
     });
 };
-
 User.createSublimeSecret = (email) => {
   return User.findOne({ email })
     .then(foundUser => {
@@ -105,7 +99,6 @@ User.createSublimeSecret = (email) => {
       }
     });
 };
-
 User.exchangeSecretForToken = (sublimeSecret) => {
   console.log('about to query db for ', sublimeSecret);
   return User.findOne({ sublimeSecret });
