@@ -1,3 +1,8 @@
+class AboutCtrl {
+  constructor() {
+  }
+}
+
 export const createAboutCtrl = (url) => {
   return {
     url: url,
@@ -7,9 +12,5 @@ export const createAboutCtrl = (url) => {
     scope: {},
     access: {restricted: false}
   };
-}
+};
 
-class AboutCtrl {
-  constructor() {
-  }
-}

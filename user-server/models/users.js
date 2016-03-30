@@ -1,5 +1,5 @@
 'use strict';
-const Promise = require('bluebird');
+let Promise = require('bluebird');
 let mongoose = require('mongoose');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let utils = require('../config/utils.js');
@@ -29,7 +29,7 @@ User.makeUser = (userObj, callback) => {
         userObj._password = hash;
         return utils.createRootFolderAsync(userObj);
       })
-      .then(success => User.create(userObj)
+      .then(() => User.create(userObj)
         .then(result => {
           callback(null, result);
         }))
@@ -37,8 +37,8 @@ User.makeUser = (userObj, callback) => {
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
     return utils.createRootFolderAsync(userObj)
-      .then(success => User.create(userObj))
-      .then(result => callback(null, userObj))
+      .then(() => User.create(userObj))
+      .then(() => callback(null, userObj))
       .catch(err => callback(err, null));
   } else {
     callback(new Error('must login via github or local session'), null);
@@ -92,7 +92,7 @@ User.createSublimeSecret = (email) => {
         })
         .then(() => {
           return foundUser.sublimeSecret;    
-        })
+        });
       }
       else {
         return new Promise((_,reject) => reject('User not found'));

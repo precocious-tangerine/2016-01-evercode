@@ -1,0 +1,17 @@
+{
+  "node": true,
+
+  "curly": true,
+  "latedef": true,
+  "quotmark": true,
+  "undef": true,
+  "unused": true,
+  "trailing": true,
+  "esversion": 6,
+  "browser": true,
+  "undef": false,
+  "predef": ["angular", "-Promise"],
+  "-W138": false
+
+
+}

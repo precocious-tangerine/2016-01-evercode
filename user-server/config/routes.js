@@ -2,7 +2,7 @@
 let { postSignup, getVerification } = require('./utils.js');
 let userController = require('../controllers/userController');
 
-module.exports = (app, express) => {
+module.exports = (app) => {
 
   // Post signup and email verification 
   app.post('/user/send-email', postSignup);

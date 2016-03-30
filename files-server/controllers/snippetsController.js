@@ -4,7 +4,7 @@ let Snippets = Promise.promisifyAll(require('../models/snippets'));
 
 module.exports = {
   getSnippet(req, res) {
-    Snippets.getSnippetAsync(req.query['_id'])
+    Snippets.getSnippetAsync(req.query._id)
       .then(snippet => {
         if (snippet) {
           res.status(200).send(snippet);
@@ -161,7 +161,7 @@ module.exports = {
     let shortcut = req.body.shortcut;
     let contents = req.body.contents;
     Snippets.makeSubFolderAsync(email, username, '/' + email + '/' + 'sublime_uploads' )
-    .then(result => {
+    .then(() => {
       let newSnippet = {
         createdBy: email,
         username: username,
@@ -169,10 +169,10 @@ module.exports = {
         name: fileName,
         shortcut: shortcut,
         filePath: '/' + email + '/sublime_uploads/' + fileName
-      }
+      };
       Snippets.makeSnippetAsync(newSnippet)
       .then(() => res.status(201).send('snippet uploaded'))
       .catch(err => res.status(500).send(err));
-    })
+    });
   }
 };

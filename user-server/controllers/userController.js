@@ -57,7 +57,7 @@ module.exports = {
   updateUserInfo(req, res) {
     let email = req.user.email;
     Users.updateUserAsync(email, req.body)
-      .then(success => {
+      .then(() => {
         Users.getUserAsync(email)
           .then(userData => {
             let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
@@ -77,7 +77,7 @@ module.exports = {
         .then(foundUser => {
           if (foundUser) {
             return bcrypt.compareAsync(password, foundUser._password)
-              .then(success => bcrypt.genSaltAsync(13))
+              .then(() => bcrypt.genSaltAsync(13))
               .then(salt => bcrypt.hashAsync(newPassword, salt))
               .then(hash => {
                 return Users.updateUserAsync(email, { _password: hash })
@@ -107,7 +107,7 @@ module.exports = {
         console.log('secret from model is ', secret);
         res.status(201).send(secret);
       })
-      .catch(err => res.status(401).send('Unauthorized'));
+      .catch(() => res.status(401).send('Unauthorized'));
   },
   verifySublimeSecret(req, res) {
     let secret = req.headers.secret;
@@ -117,7 +117,7 @@ module.exports = {
         let token = utils.createJWT({ email, username });
         res.status(200).send(token);
       })
-      .catch(err => res.status(401).send('Unauthorized'));
+      .catch(() => res.status(401).send('Unauthorized'));
   },
   githubLogin(req, res) {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
@@ -138,7 +138,7 @@ module.exports = {
         // Step 3a. Link user accounts.
         Users.findOne({ email: profile.email }, (err, existingUser) => {
           if (existingUser) {
-            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, username: profile.name }).then((success) => {
+            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, username: profile.name }).then(() => {
               var token = utils.createJWT({ email: existingUser.email, username: profile.name });
               res.status(201).send({ token });
             });

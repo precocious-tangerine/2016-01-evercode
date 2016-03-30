@@ -3,7 +3,7 @@ import ngRedux from 'ng-redux';
 import createLogger from 'redux-logger';
 import { finalReducer } from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
-import ui_codemirror from 'angular-ui-codemirror';
+import 'angular-ui-codemirror';
 import { createAuthModal } from './auth/auth.js';
 import { createAboutCtrl } from './about/about.js';
 import { createDownloadCtrl } from './download/download.js';
@@ -16,9 +16,9 @@ import { publicPage } from './public/public.js';
 import { profile } from './profile/profile.js';
 import satellizer from 'satellizer';
 import setup from '../../../setup.js';
-import ngclipboard from 'ngclipboard';
-import ngAnimate from 'angular-animate';
-import tinymce from './tinymce/tinymce.js';
+import 'ngclipboard';
+import 'angular-animate';
+import './tinymce/tinymce.js';
 angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
@@ -40,7 +40,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.editor.profile', profile())
       .state('main.editor.search', search())
       .state('main.download', createDownloadCtrl('/download'))
-      .state('main.about', createAboutCtrl('/about'))
+      .state('main.about', createAboutCtrl('/about'));
 
     $httpProvider.interceptors.push('AttachTokens');
 
@@ -59,7 +59,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       request: (object) => {
         var jwt = $window.localStorage.getItem('satellizer_token');
         if (jwt) {
-          object.headers['Authorization'] = jwt;
+          object.headers.Authorization = jwt;
         }
         object.headers['Allow-Control-Allow-Origin'] = '*';
         return object;
@@ -67,14 +67,16 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     };
     return attach;
   })
-  .run(($rootScope, $state, $auth, Auth) => {
-    $rootScope.$on('$stateChangeStart', (event, next, current) => {
+  .run(($rootScope, $state, $auth) => {
+    $rootScope.$on('$stateChangeStart', (event, next) => {
       if (next.access.restricted && !$auth.isAuthenticated()) {
         event.preventDefault();
         Materialize.toast('Please sign in first', 2000, 'rounded');
       }
     });
     $rootScope.$on('$stateChangeSuccess', () => {
-      $state.is('main') ? $state.go('.public') : null;
+      if($state.is('main')) {
+        $state.go('.public');
+      }
     });
   });

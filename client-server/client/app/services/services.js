@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import { convertToTree, getAllChildren, createBoundMethods } from './fileTree.js';
+import { convertToTree, createBoundMethods } from './fileTree.js';
 
 export class Folders {
   constructor($http, $ngRedux) {
@@ -16,8 +16,12 @@ export class Folders {
           }).then(res => {
             var snippetMap = convertToTree(res.data);
             dispatch(Actions.setSnippetMap(snippetMap));
-            this.selectedFolder ? null : dispatch(Actions.setSelectedFolder('/' + this.email));
-            snippetPath ? dispatch(Actions.setSelectedSnippet(snippetPath)) : null;
+            if(!this.selectedFolder) {
+              dispatch(Actions.setSelectedFolder('/' + this.email));
+            }
+            if(snippetPath) {
+              dispatch(Actions.setSelectedSnippet(snippetPath));
+            }
           })
           .catch(error => {
             console.error(error);
@@ -44,7 +48,6 @@ export class Folders {
       renameFolder(oldNode, newName) {
         let boundFT = createBoundMethods(this.snippetMap);
         let oldParent = boundFT.parent(oldNode.filePath);
-        let oldChildren = boundFT.allChildren(oldNode.filePath, true);
         let newNode = Object.assign({}, oldNode, {value: newName, filePath: oldParent.filePath + '/' + newName});
 
         let newChildren = [];
@@ -62,10 +65,10 @@ export class Folders {
             node.children.forEach(child => {
               let childPathArr = child.split('/');
               let newPath = currFilePath + '/' + childPathArr[childPathArr.length-1];
-              changeAllChildFolders(this.snippetMap[child], newPath, currFilePath)
-            })
+              changeAllChildFolders(this.snippetMap[child], newPath, currFilePath);
+            });
           }
-        }
+        };
 
         changeAllChildFolders(newNode, newNode.filePath);
 
@@ -75,17 +78,12 @@ export class Folders {
             url: 'files/api/snippets',
             data: {snippetId: currChild.value._id, value: currChild.value}
           })
-          .then(res => {
+          .then(() => {
             if(index === newChildren.length-1) {
               this.getFileTree();
             }
-          })
-        })
-      },
-
-      moveSnippet(oldNode, newNode) {
-        // dispatch(Actions.removeSnippetMap(oldNode.filePath));
-        // dispatch(Actions.addSnippetMap(newNode.filePath, newNode));
+          });
+        });
       },
 
       removeFolder(folderPath) {
@@ -93,14 +91,14 @@ export class Folders {
             method: 'DELETE',
             url: 'files/api/folders',
             params: { filePath: folderPath }
-          }).then(response => {
-            dispatch(Actions.removeSnippetMap(folderPath))
+          }).then(() => {
+            dispatch(Actions.removeSnippetMap(folderPath));
           })
           .catch(error => {
             console.error(error);
           });
       }
-    }
+    };
   }
 
   mapStateToThis(state) {
@@ -131,7 +129,6 @@ export class Snippets {
       },
 
       addSnippet(snippetObj) {
-        let { filePath } = snippetObj
         return this.$http({
             method: 'POST',
             url: 'files/api/snippets',
@@ -159,8 +156,12 @@ export class Snippets {
             let nodeToPass = Object.assign({}, this.snippetMap[oldFilePath], { filePath: res.data.filePath, value: res.data });
             Materialize.toast('Snippet updated!', 3000, 'rounded');
             dispatch(Actions.updateSnippetMap(oldFilePath, res.data.filePath, nodeToPass));
-            this.activeUser.selectedSnippet === oldFilePath ? this.Auth.updateUser({ selectedSnippet: res.data.filePath }) : null;
-            this.selectedPublicSnippet === oldFilePath ? dispatch(Actions.setSelectedPublicSnippet(res.data.filePath)) : null;
+            if(this.activeUser.selectedSnippet === oldFilePath) {
+              this.Auth.updateUser({ selectedSnippet: res.data.filePath });
+            }
+            if(this.selectedPublicSnippet === oldFilePath) {
+              dispatch(Actions.setSelectedPublicSnippet(res.data.filePath));
+            }
             dispatch(Actions.setSelectedSnippet(res.data.filePath));
           })
           .catch(error => {
@@ -174,10 +175,12 @@ export class Snippets {
             method: 'DELETE',
             url: 'files/api/snippets',
             params: { snippetId: snippetObj.value._id }
-          }).then((response) => {
+          }).then(() => {
             this.deselectSnippet();
             dispatch(Actions.removeSnippetMap(snippetObj.filePath));
-            this.activeUser.selectedSnippet === snippetObj.filePath ? this.Auth.updateUser({ selectedSnippet: null }) : null;
+            if(this.activeUser.selectedSnippet === snippetObj.filePath) {
+              this.Auth.updateUser({ selectedSnippet: null });
+            }
             Materialize.toast('Successfully removed!', 3000, 'rounded');
           })
           .catch(error => {
@@ -200,7 +203,7 @@ export class Snippets {
             method: 'PUT',
             url: 'files/api/user/snippets',
             data: userObj
-          }).then(res => {
+          }).then(() => {
             this.Auth.updateUser({ username: userObj.username });
             this.Folders.getFileTree();
           })
@@ -208,7 +211,7 @@ export class Snippets {
             console.error(error);
           });
       }
-    }
+    };
   }
   mapStateToThis(state) {
     return {
@@ -248,7 +251,7 @@ export class Public {
           })
           .then((response) => {
             this.setPublicList(response.data);
-            this.setSelectedPublicSnippet("share");
+            this.setSelectedPublicSnippet('share');
           });
       },
 
@@ -264,13 +267,13 @@ export class Public {
       removeSelectedPublicSnippet() {
         dispatch(Actions.removeSelectedPublicSnippet());
       }
-    }
+    };
   }
   mapStateToThis(state) {
     return {
       publicList: state.publicList,
       selectedPublicSnippet: state.selectedPublicSnippet
-    }
+    };
   }
 }
 
@@ -306,7 +309,7 @@ export class Auth {
 
       githubSignin() {
         this.$auth.authenticate('github')
-          .then((res) => {
+          .then(() => {
             this.getUserInfo();
             Materialize.toast('Successfully signed in!', 5000, 'rounded');
           })
@@ -321,8 +324,8 @@ export class Auth {
             url: 'user/signup',
             data: user
           })
-          .then(res => {
-            Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded')
+          .then(() => {
+            Materialize.toast('Success! Check your e-mail for verification', 4000, 'rounded');
           })
           .catch(error => {
             this.failed = false;
@@ -337,7 +340,9 @@ export class Auth {
           }).then(res => {
             dispatch(Actions.setActiveUser(res.data));
             this.Folders.getFileTree();
-            res.data.selectedSnippet ? dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet)) : null;
+            if(res.data.selectedSnippet) {
+              dispatch(Actions.setSelectedSnippet(res.data.selectedSnippet));
+            }
           })
           .catch(error => {
             console.error(error);
@@ -362,11 +367,11 @@ export class Auth {
           method: 'PUT',
           url: 'user/api/updatePassword',
           data: infoObj
-        }).then(res => {
+        }).then(() => {
           Materialize.toast('Password was succesfully changed!', 4000, 'rounded');
         }).catch(err => {
           console.error(err);
-        })
+        });
       },
 
       signout() {
@@ -376,6 +381,6 @@ export class Auth {
         dispatch(Actions.removeSelectedSnippet());
         dispatch(Actions.clearSnippetMap());
       }
-    }
+    };
   }
 }

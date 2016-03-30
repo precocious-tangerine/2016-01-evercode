@@ -1,19 +1,10 @@
-import * as FT from '../services/fileTree.js'
-export const createMainCtrl = () => {
-  return {
-    url: '/main',
-    restrict: 'E',
-    controllerAs: 'mainCtrl',
-    controller: MainCtrl,
-    template: require('./main.html'),
-    scope: {},
-    access: { restricted: false }
-  }
-}
+import * as FT from '../services/fileTree.js';
 
 class MainCtrl {
   constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public) {
-    $auth.isAuthenticated() ? Auth.getUserInfo(): null;
+    if($auth.isAuthenticated()) {
+      Auth.getUserInfo();
+    }
     this.$state = $state;
     this.Auth = Auth;
     this.Folders = Folders;
@@ -30,7 +21,11 @@ class MainCtrl {
       this.$state.go('main.editor'); 
     } else {
       this.Public.removeSelectedPublicSnippet();
-      this.$state.is('main.' + path) ? this.$state.go('main.editor') : this.$state.go('main.' + path);
+      if(this.$state.is('main.' + path)) {
+        this.$state.go('main.editor'); 
+      } else {
+        this.$state.go('main.' + path);
+      }
     }
   }
 
@@ -55,7 +50,9 @@ class MainCtrl {
     
     let parents = selectedFolder ? boundFT.parents(selectedFolder).reverse() : [];
     this.breadcrumbPath = selectedFolder ? parents.concat(boundFT.node(selectedFolder)) : [];
-    this.breadcrumbPath[0] ? this.breadcrumbPath[0].value = 'Home' : null;
+    if(this.breadcrumbPath[0]) {
+      this.breadcrumbPath[0].value = 'Home';
+    }
     return {
       snippetMap,
       selectedFolder,
@@ -63,5 +60,17 @@ class MainCtrl {
     };
   }
 
+}
+
+export const createMainCtrl = () => {
+  return {
+    url: '/main',
+    restrict: 'E',
+    controllerAs: 'mainCtrl',
+    controller: MainCtrl,
+    template: require('./main.html'),
+    scope: {},
+    access: { restricted: false }
+  };
 };
 

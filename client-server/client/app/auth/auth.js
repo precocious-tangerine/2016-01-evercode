@@ -1,26 +1,3 @@
-export let createAuthModal = (url) => {
-  return () => {
-    return {
-      restrict: 'E',
-      scope: {
-        show: '=',
-        other: '='
-      },
-      replace: true,
-      link(scope, element, attrs) {
-        scope.dialogStyle = {};
-        attrs.width ? scope.dialogStyle.width = attrs.width: null;
-        attrs.height ? scope.dialogStyle.height = attrs.height: null;
-      },
-      controllerAs: 'authCtrl',
-      controller: AuthCtrl,
-      bindToController: true,
-      template: require(`.${url}.html`),
-      url: url
-    }
-  }
-}
-
 class AuthCtrl {
   constructor(Auth) {
     this.user = {};
@@ -56,3 +33,31 @@ class AuthCtrl {
     }
   }
 }
+
+export let createAuthModal = (url) => {
+  return () => {
+    return {
+      restrict: 'E',
+      scope: {
+        show: '=',
+        other: '='
+      },
+      replace: true,
+      link(scope, element, attrs) {
+        scope.dialogStyle = {};
+        if(attrs.width) {
+          scope.dialogStyle.width = attrs.width;
+        }
+        if(attrs.height) {
+          scope.dialogStyle.height = attrs.height;
+        }
+      },
+      controllerAs: 'authCtrl',
+      controller: AuthCtrl,
+      bindToController: true,
+      template: require(`.${url}.html`),
+      url: url
+    };
+  };
+};
+

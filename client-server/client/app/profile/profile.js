@@ -1,15 +1,3 @@
-export const profile = () => {
-  return {
-    url: '/profile',
-    restrict: 'E',
-    controllerAs: 'profile',
-    controller: ProfileCtrl,
-    template: require('./profile.html'),
-    scope: {},
-    access: { restricted: true }
-  }
-}
-
 class ProfileCtrl {
   constructor($ngRedux, $state, Auth, Snippets) {
     $ngRedux.connect(this.mapStateToThis)(this);
@@ -36,7 +24,7 @@ class ProfileCtrl {
     if(this.user.newPass === this.user.confirmPass){
       this.Auth.updatePassword({ email: this.activeUser.email, password: this.user.currentPass, newPassword: this.user.newPass });
     } else {
-      Materialize.toast("New passwords don't match!", 3000, 'rounded');
+      Materialize.toast('New passwords don\'t match!', 3000, 'rounded');
     }
   }
 
@@ -50,6 +38,19 @@ class ProfileCtrl {
       userTheme,
       userLanguage,
       username
-    }
+    };
   }
 }
+
+export const profile = () => {
+  return {
+    url: '/profile',
+    restrict: 'E',
+    controllerAs: 'profile',
+    controller: ProfileCtrl,
+    template: require('./profile.html'),
+    scope: {},
+    access: { restricted: true }
+  };
+};
+

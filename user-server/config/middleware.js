@@ -3,7 +3,7 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let utils = require('./utils.js');
 
-module.exports = (app, express) => {
+module.exports = (app) => {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
