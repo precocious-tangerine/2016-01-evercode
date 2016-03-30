@@ -26,4 +26,7 @@ module.exports = (app, express) => {
 
   app.route('/files/share')
     .get(snippetsController.getSharedSnippet);
+
+  app.route('/files/api/sublime-snippet')
+    .post(snippetsController.addSublimeSnippet);
 };

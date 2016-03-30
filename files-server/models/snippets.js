@@ -22,9 +22,16 @@ let snippetSchema = mongoose.Schema({
 let Snippet = mongoose.model('Snippet', snippetSchema);
 
 Snippet.makeSnippet = (snippetObj, callback) => {
-  Snippet.create(snippetObj)
-    .then((result) => callback(null, result))
-    .catch(callback);
+  Snippet.findOne({filePath: snippetObj.filePath})
+  .then(result => {
+    if(!result) {
+      Snippet.create(snippetObj)
+        .then((result) => callback(null, result))
+        .catch(callback);
+    } else {
+      callback(null, result);
+    }
+  });
 };
 
 Snippet.getSnippet = (_id, callback) => {
