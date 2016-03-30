@@ -3,7 +3,7 @@ let Promise = require('bluebird');
 let Snippets = Promise.promisifyAll(require('../models/snippets'));
 
 module.exports = {
-  getSnippet: ((req, res) => {
+  getSnippet(req, res) {
     Snippets.getSnippetAsync(req.query['_id'])
       .then(snippet => {
         if (snippet) {
@@ -15,8 +15,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-  addSnippet: ((req, res) => {
+  },
+  addSnippet(req, res) {
     req.body.createdBy = req.user.email;
     req.body.username = req.user.username;
     Snippets.makeSnippetAsync(req.body)
@@ -26,9 +26,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  removeSnippet: ((req, res) => {
+  },
+  removeSnippet(req, res) {
     Snippets.removeSnippetAsync(req.query.snippetId)
       .then(response => {
         if (response) {
@@ -40,8 +39,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-  updateSnippet: ((req, res) => {
+  },
+  updateSnippet(req, res) {
     Snippets.updateSnippetAsync(req.body.snippetId, req.body.value)
       .then(success => {
         if (success) {
@@ -59,9 +58,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  getPublicSnippets: ((req, res) => {
+  },
+  getPublicSnippets(req, res) {
     Snippets.getPublicAsync()
       .then(snippetList => {
         let fileTreeObj = {};
@@ -75,8 +73,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-  getUserSnippets: ((req, res) => {
+  },
+  getUserSnippets(req, res) {
     let token = req.user;
     return Snippets.getSnippetsByUserAsync(token.email)
       .then(results => {
@@ -93,9 +91,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  renameUserSnippets: ((req, res) => {
+  },
+  renameUserSnippets(req, res) {
     let email = req.body.email;
     let newName = req.body.username;
     return Snippets.updateSnippetsByUserAsync(email, {username: newName})
@@ -109,9 +106,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  addFolder: ((req, res) => {
+  },
+  addFolder(req, res) {
     let email = req.user.email;
     let username = req.user.username;
     let path = req.body.path;
@@ -122,9 +118,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  removeFolder: ((req, res) => {
+  },
+  removeFolder(req, res) {
     let email = req.user.email;
     let path = req.query.filePath;
     Snippets.removeFolderAsync(email, path)
@@ -138,9 +133,8 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  getSharedSnippet: ((req, res) => {
+  },
+  getSharedSnippet(req, res) {
     let id = req.query.s;
     Snippets.getSnippetAsync(id)
       .then(snippet => {
@@ -155,14 +149,12 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
-  }),
-
-  rerouteSharedSnippet: ((req, res) => {
+  },
+  rerouteSharedSnippet(req, res) {
     let id = req.query.s;
     res.redirect('nevercode.com/#/main/editor?s=' + id);
-  }),
-
-  addSublimeSnippet: ((req, res) => {
+  },
+  addSublimeSnippet(req, res) {
     let email = req.user.email;
     let username = req.user.username;
     let fileName = req.body.fileName;
@@ -182,5 +174,5 @@ module.exports = {
       .then(() => res.status(201).send('snippet uploaded'))
       .catch(err => res.status(500).send(err));
     })
-  })
+  }
 };

@@ -33,22 +33,18 @@ Snippet.makeSnippet = (snippetObj, callback) => {
     }
   });
 };
-
 Snippet.getSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) })
     .then(snippetObj => callback(null, snippetObj))
     .catch(callback);
 };
-
 Snippet.updateSnippet = (_id, newProps, callback) => {
   newProps._updatedAt = new Date();
   Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
 };
-
 Snippet.removeSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
 };
-
 Snippet.getSnippetsByUser = (email, callback) => {
   Snippet.find({ createdBy: email })
     .then((foundSnippets) => {
@@ -60,12 +56,10 @@ Snippet.getSnippetsByUser = (email, callback) => {
     })
     .catch(callback);
 };
-
 Snippet.updateSnippetsByUser = (email, newProps, callback) => {
   newProps._updatedAt = new Date();
   Snippet.update({ createdBy: email }, newProps, {multi: true}, callback);
 };
-
 Snippet.getSnippetsByFolder = (email, folder, callback) => {
   Snippet.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
     .then((foundSnippets) => {
@@ -76,16 +70,13 @@ Snippet.getSnippetsByFolder = (email, folder, callback) => {
       }
     }).catch(callback);
 };
-
 Snippet.makeSubFolder = (email, username, filepath, callback) => {
   filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: filepath + '/.config' }, callback);
 };
-
 Snippet.makeRootFolder = (email, username, callback) => {
   Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: '/' + email + '/.config' }, callback);
 };
-
 Snippet.removeFolder = (email, folder, callback) => {
   Snippet.getSnippetsByFolder(email, folder, (err, snippets) => {
     if (err) {
@@ -101,7 +92,6 @@ Snippet.removeFolder = (email, folder, callback) => {
     }
   });
 };
-
 //TODO figure out how to return only 25
 Snippet.getPublic = (callback) => {
   Snippet.find({ public: 1, name: { $ne: '.config' } })
@@ -109,6 +99,5 @@ Snippet.getPublic = (callback) => {
       callback(null, foundSnippets.sort({ _createdAt: -1 }));
     }).catch(callback);
 };
-
 
 module.exports = Snippet;
