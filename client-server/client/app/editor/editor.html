@@ -127,11 +127,10 @@
       <div class="switch col s3 right-align"
         ng-show="editor.selectedSnippet">
         <label>
-          Private
+          {{editor.snippetObj.public ? 'Public' : 'Private'}}
           <input type="checkbox" ng-checked="editor.snippetObj.public"
             ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
           <span class="lever"></span>
-          Public
         </label>
       </div>
     </div>
