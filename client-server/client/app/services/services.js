@@ -81,27 +81,6 @@ export class Folders {
             }
           })
         })
-
-
-        // let updateRequests = newChildren.reduce( (all, currChild) => {
-        //   return [...all, this.$http({
-        //     method: 'PUT',
-        //     url: 'files/api/snippets',
-        //     data: {snippetId: currChild.value._id, value: currChild.value}
-        //   })];
-        // }, []);
-        // console.log('begin promise')
-        // Promise.all(updateRequests).then(resps => {
-        //   console.log('resps: ', resps)
-        //   dispatch(Actions.removeSnippetMap(oldNode.filePath));
-        //   dispatch(Actions.updateSnippetMap(oldParent.filePath, newParent.filePath, newParent));
-        //   dispatch(Actions.updateSnippetMap(oldNode.filePath, newNode.filePath, newNode));
-        //   newChildren.forEach((newChild, index) => {
-        //     Actions.updateSnippetMap(oldChildren[index].filePath, newChild.filePath, newChild);
-        //   });
-        // })
-        // .catch(console.error);
-        // console.log('promise done: ')
       },
 
       moveSnippet(oldNode, newNode) {

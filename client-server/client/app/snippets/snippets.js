@@ -121,7 +121,7 @@ class SnippetsCtrl {
   }
 
   mapStateToThis(state) {
-    let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList, activeUser } = state;
+    let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;
     let visibleFolders = [],
       visibleSnippets = [];
     let selectedFolderObj = snippetMap[selectedFolder];
