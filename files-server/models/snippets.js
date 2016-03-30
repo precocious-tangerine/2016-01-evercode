@@ -62,6 +62,7 @@ Snippet.getSnippetsByUser = (email, callback) => {
 };
 
 Snippet.updateSnippetsByUser = (email, newProps, callback) => {
+  console.log('updateSnippet: ', email, newProps)
   newProps._updatedAt = new Date();
   Snippet.update({ createdBy: email }, newProps, {multi: true}, callback);
 };

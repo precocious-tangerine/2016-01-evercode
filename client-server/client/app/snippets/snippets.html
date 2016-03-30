@@ -39,7 +39,7 @@
         </span>
         <span class="folder-list-item right">
           <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
-         <i ng-click="snippets.toggleFolderModal()" class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i>
+         <i ng-click="snippets.toggleFolderModal(folder)" class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i>
         </span>
       </div>
     </div>
@@ -70,5 +70,5 @@
 </ul>
 
 <!-- -------------- MODAL VIEW -------------- -->
-<folder show='snippets.folderModalShow' width='200px' height='75px'>
+<folder email="snippets.activeUser.email" name="snippets.folderModal.value" selectedfolder="snippets.folderModal" show="snippets.folderModalShow" width='200px' height='100px'>
 </folder>
