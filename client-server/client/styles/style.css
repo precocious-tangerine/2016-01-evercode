@@ -457,6 +457,9 @@ nav,
   border-left: 0 !important;
   box-shadow: none !important;
 }
+/*.carousel {
+  top:-100px !important;
+}*/
 
 /*---------ANIMATION---------*/
 
