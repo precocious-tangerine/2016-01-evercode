@@ -151,7 +151,6 @@ class EditorCtrl {
       this.editor.setOption('readOnly', false);
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value)
-      var that = this;
       this.editor ? this.editor.setOption('readOnly', 'nocursor') : null;
     } else {
       snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
