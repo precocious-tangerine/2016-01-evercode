@@ -395,7 +395,7 @@ nav,
 }
 
 .snippet-gallery {
-  min-height: 275px;
+  min-height: 150px;
   padding: 3px;
 }
 
@@ -616,4 +616,11 @@ nav,
   border-radius: 100px;
   background-color: lightgrey;
   color: white;
+}
+
+li.snippet-gallery {
+  float:left;
+}
+.card-title {
+  text-align: center;
 }

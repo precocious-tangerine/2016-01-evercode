@@ -16,7 +16,7 @@
       <div class='tags col s12 valign-wrapper'>
         <span class="tag valign">TAGS:</span>
         <span class='chip tag'
-          ng-repeat="tag in editorModal.snippetMap[editorModal.selectedSnippet].value.tags">
+          ng-repeat="tag in editorModal.snippetMap[editorModal.selectedPublicSnippet].value.tags">
           {{ tag }}<i ng-click="editorModal.removeOrAddTag(tag)" class="material-icons">close</i>
         </span>
       </div>
