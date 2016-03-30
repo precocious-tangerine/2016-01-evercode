@@ -163,6 +163,16 @@ html, body {
   margin: 0;
 }
 
+.copy-to-clipboard {
+  background-color: #2E3C56;
+  color: white;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  border-radius: 2px;
+  padding: 5px 3px 0 3px;
+  text-align: center;
+}
+
 .code-selector {
   margin: 0 2vw;
 }
