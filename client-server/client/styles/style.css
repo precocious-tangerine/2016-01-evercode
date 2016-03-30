@@ -81,20 +81,27 @@ html, body {
   background-image: url("../assets/sf-gg-bay.jpg");
   background-position: center; 
   background-size: 100%;
+  background-color: rgba(255,255,255, .6);
 }
 
 .splash {
   text-align: center;
-  color: #2E3C56;
+  color: #EDEDED;
+  /*color: #2E3C56*/;
   padding-top: 75px;
+  padding-bottom: 75px;
+  
 }
 
 .splash span {
   font-weight: 100;
+  opacity: 1;
+
 }
 
 .splash img {
   width: 200px;
+  opacity: 1;
 }
 
 .splash-buttons {
@@ -108,9 +115,6 @@ html, body {
   text-align: center;
 }
 
-.public-spacing {
-  margin-top: 100px;
-}
 
 .search-results {
   z-index: 2;
@@ -322,6 +326,7 @@ nav,
 .corner-logo {
   border-bottom: 2px solid grey;
   background-color: white;
+  margin-top: 0px !important;
 }
 
 .brand-logo {
@@ -332,7 +337,7 @@ nav,
 .outerContainer {
   margin-left: 70px !important;
   position: relative !important;
-  margin-top: 16px !important;
+  margin-top: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
