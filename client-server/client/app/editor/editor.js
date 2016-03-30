@@ -126,7 +126,7 @@ class EditorCtrl {
 
   togglePublic() {
     this.snippetObj.public = !this.snippetObj.public;
-    this.updateSnippet();
+    this.updateSnippet(this.snippetObj.filePath);
   }
 
   confirmCopyAction(element){
