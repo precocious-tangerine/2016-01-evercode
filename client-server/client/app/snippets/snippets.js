@@ -38,6 +38,7 @@ class FolderModalCtrl {
 
   renameFolder() {
     this.Folders.renameFolder(this.selectedfolder, this.name);
+    this.hideModal();
   }
 
   hideModal() {
