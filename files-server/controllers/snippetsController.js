@@ -95,7 +95,7 @@ module.exports = {
   renameUserSnippets(req, res) {
     let email = req.body.email;
     let newName = req.body.username;
-    return Snippets.updateSnippetsByUserAsync(email, {username: newName})
+    return Snippets.updateSnippetsByUserAsync(email, { username: newName })
       .then(results => {
         if (results && results.nModified !== 0) {
           res.status(200).send(results);
@@ -152,15 +152,16 @@ module.exports = {
   },
   rerouteSharedSnippet(req, res) {
     let id = req.query.s;
-    res.redirect('nevercode.com/#/main/editor?s=' + id);
+    res.redirect('http://nevercode.com/#/main/editor?s=' + id);
   },
+
   addSublimeSnippet(req, res) {
     let email = req.user.email;
     let username = req.user.username;
     let fileName = req.body.fileName;
     let shortcut = req.body.shortcut;
     let contents = req.body.contents;
-    Snippets.makeSubFolderAsync(email, username, '/' + email + '/' + 'sublime_uploads' )
+    Snippets.makeSubFolderAsync(email, username, '/' + email + '/' + 'sublime_uploads')
     .then(() => {
       let newSnippet = {
         createdBy: email,
@@ -171,8 +172,8 @@ module.exports = {
         filePath: '/' + email + '/sublime_uploads/' + fileName
       };
       Snippets.makeSnippetAsync(newSnippet)
-      .then(() => res.status(201).send('snippet uploaded'))
-      .catch(err => res.status(500).send(err));
+        .then(() => res.status(201).send('snippet uploaded'))
+        .catch(err => res.status(500).send(err));
     });
   }
 };

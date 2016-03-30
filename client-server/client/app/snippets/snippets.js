@@ -81,6 +81,9 @@ class SnippetsCtrl {
   closeSideNav() {
     this.$state.go('main.editor');
   }
+  showToolbar(id) {
+    $('#'+id).toggle(400);
+  }
   mapStateToThis(state) {
     let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;
     let visibleFolders = [],

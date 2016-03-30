@@ -126,6 +126,10 @@ class EditorCtrl {
     this.updateSnippet();
   }
 
+  confirmCopyAction(element){
+    Materialize.toast(element + ' added to your clipboard!', 3000, 'rounded');
+  }
+
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';

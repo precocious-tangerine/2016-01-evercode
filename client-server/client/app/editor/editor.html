@@ -57,14 +57,14 @@
         ng-click="editor.toggleTag()"
         data-tooltip="Add Tag"
         data-position="right"
-        data-delay="50">
+        data-delay="800">
         +
       </span>
       <span class='chip tag addTag tooltipped'
         ng-show="editor.addTag"
         data-tooltip="Close Input"
         data-position="bottom"
-        data-delay="50"
+        data-delay="800"
         ng-click="editor.toggleTag()">
         x
       </span>
@@ -76,7 +76,7 @@
     </span>
     </div>
     <div ng-show="editor.selectedSnippet" class='shortcut col m9 valign-wrapper'>
-      <img class="tooltipped" data-position="top" data-delay="50" data-tooltip="Sublime snippet trigger keyword" width="30px" src="../../assets/subl.png">
+      <img class="tooltipped" data-position="top" data-delay="800" data-tooltip="Sublime snippet trigger keyword" width="30px" src="../../assets/subl.png">
       <span >NC_</span>
       <span class="valign">
         <form name="shortcut"
@@ -95,9 +95,10 @@
       <a class="btn"
         data-tooltip="Copy Snippet"
         data-position="bottom"
-        data-delay="50"
+        data-delay="800"
         ngclipboard
-        data-clipboard-text={{editor.snippetObj.data}}>
+        data-clipboard-text={{editor.snippetObj.data}}
+        ng-click="editor.confirmCopyAction('Snippet content')">
         <i class="material-icons">assignment</i>
       </a>
       <div class="code-selector">
@@ -120,9 +121,10 @@
         ng-show="editor.activeUser.username"
         data-tooltip="Copy Share URL"
         data-position="bottom"
-        data-delay="50"
+        data-delay="800"
         ngclipboard
-        data-clipboard-text="http://nevercode.com/files/n/?s={{editor.snippetObj._id}}">
+        data-clipboard-text="http://nevercode.com/files/n/?s={{editor.snippetObj._id}}"
+        ng-click="editor.confirmCopyAction('Share url')">
         <i class="material-icons">share</i>Share URL
       </a>
       <div class="switch col s3 right-align"

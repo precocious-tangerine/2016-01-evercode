@@ -48,7 +48,14 @@ html, body {
 }
 
 .backdrop {
-  background-color: lightgrey;
+  background-color: grey;
+}
+
+.material-tooltip {
+  font-size: 0.8rem;
+  line-height: 100%;
+  min-height: 25px;
+
 }
 
 .main {
@@ -320,7 +327,7 @@ nav,
 }
 
 .folder-list-item:hover, .search-list-item:hover {
-  background-color: #f6f6f6;
+  /*background-color: #f6f6f6;*/
 }
 
 .folder-list-item, .search-list-item {
@@ -507,6 +514,13 @@ nav,
   transform: translateX(-800%);
 }
 
+.toolbar {
+  margin-bottom: 0 !important;
+}
+
+.snippet-name {
+  margin-bottom: 0 !important;
+}
 
 /*--------------------------*/
 
