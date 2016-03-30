@@ -38,9 +38,20 @@
           </a>
         </span>
         <span class="folder-list-item right">
-          <i ng-click="snippets.removeFolder(folder.filePath)" class="waves-effect waves-teal right material-icons snippet-icon">delete</i>
-         <i ng-click="snippets.toggleFolderModal(folder)" class="waves-effect waves-teal right material-icons snippet-icon rename-tool">build</i>
+        <i ng-click="snippets.showToolbar(folder.value)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
         </span>
+        <div class='row toolbar-folder' id='{{folder.value}}' style='display: none'>
+          <i ng-click="snippets.removeFolder(folder.filePath)"
+          class="waves-effect waves-teal right material-icons snippet-icon tooltipped"
+          data-tooltip="Remove Folder"
+          data-position="bottom"
+          data-delay="800">delete</i>
+          <i ng-click="snippets.toggleFolderModal(folder)"
+          class="waves-effect waves-teal right material-icons snippet-icon tooltipped"
+          data-tooltip="Edit Name"
+          data-position="bottom"
+          data-delay="800">edit</i>
+        </div>
       </div>
     </div>
     <div>
@@ -61,11 +72,28 @@
           <i ng-click="snippets.showToolbar(snippet.value.name)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
         </span>
         </div>
-        <div class='row toolbar' id='{{snippet.value.name}}' style='display: none'>
-          <i ng-click="snippets.toggleChangeName(snippet)" class="waves-effect waves-teal material-icons snippet-icon">edit</i>
-          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">{{snippet.value.favorite ? 'star' : 'star_border'}}</i>
-            <i class="waves-effect waves-teal material-icons snippet-icon" ngclipboard data-clipboard-text={{snippet.value.data}}>assignment</i>
-          <i ng-click="snippets.removeSnippet(snippet)" class="waves-effect waves-teal material-icons snippet-icon">delete</i>
+        <div class='row toolbar-snippet' id='{{snippet.value.name}}' style='display: none'>
+          <i ng-click="snippets.toggleChangeName(snippet)"
+          class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+          data-tooltip="Edit Name"
+          data-position="bottom"
+          data-delay="800"
+          >edit</i>
+          <i ng-click="snippets.toggleFavorite(snippet)"
+          class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+          data-tooltip="Toggle as favorite"
+          data-position="bottom"
+          data-delay="800">{{snippet.value.favorite ? 'star' : 'star_border'}}</i>
+            <i class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+            ngclipboard data-clipboard-text={{snippet.value.data}}
+            data-tooltip="Copy to clipboard"
+            data-position="bottom"
+            data-delay="800">assignment</i>
+          <i ng-click="snippets.removeSnippet(snippet)"
+          class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+          data-tooltip="Delete Snippet"
+          data-position="bottom"
+          data-delay="800">delete</i>
         </div>
         <p class="list-description">
           {{snippet.value.description}}

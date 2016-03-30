@@ -528,8 +528,17 @@ nav,
   transform: translateX(-800%);
 }
 
-.toolbar {
+.toolbar-folder {
+  margin-bottom: 10px !important;
+  text-align: right;
+}
+.toolbar-snippet {
   margin-bottom: 0 !important;
+  text-align: right;
+}
+
+.toolbar-folder i, .toolbar-snippet i {
+  margin-top: 0 !important;
 }
 
 .snippet-name {
