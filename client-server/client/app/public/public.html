@@ -15,9 +15,9 @@
   <div id="public-snippets-container" class="row">
     <ul class="public-snippet-lis">
       <li class="snippet-gallery col s12 m4 l3"
+        ng-click="public.toggleEditorModal(snippetNode.value.filePath)"
         ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
-        <div class="card snippet-gallery-card"
-          ng-click="public.toggleEditorModal(snippet.value.filePath)">
+        <div class="card snippet-gallery-card">
           <div class="card-title">
             <h5>{{snippetNode.value.name}}</h5>
           </div>
@@ -31,11 +31,12 @@
             </p>
           </div>
           <div class='card-action'>
-            <a ng-click="public.toggleEditorModal(snippetNode.value.filePath)">Open in Editor</a>
+            <a>Open in Editor</a>
           </div>
       </div>
     </li>
   </ul>
+  </div>
   <div class="preloader-wrapper active" ng-show="public.loading">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">

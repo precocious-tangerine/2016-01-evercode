@@ -585,6 +585,7 @@ nav,
 
 .toolbar-folder i, .toolbar-snippet i {
   margin-top: 0 !important;
+  color: #2E3C56 !important;
 }
 
 .snippet-name {

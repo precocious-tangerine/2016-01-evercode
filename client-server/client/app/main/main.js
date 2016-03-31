@@ -19,6 +19,7 @@ class MainCtrl {
   toggleSideView(path, newSnippet) {
     if(newSnippet){
       this.Snippets.deselectSnippet();
+      this.Public.removeSelectedPublicSnippet();
       this.focus('snippet-input-name');
       this.$state.go('main.editor'); 
     } else {
