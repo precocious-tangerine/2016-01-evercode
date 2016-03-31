@@ -78,6 +78,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       }
     });
     $rootScope.$on('$stateChangeSuccess', () => {
+      $('.material-tooltip').css('display', 'none');
       if($state.is('main')) {
         $state.go('.public');
       }
