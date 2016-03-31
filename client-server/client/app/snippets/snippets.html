@@ -38,9 +38,9 @@
           </a>
         </span>
         <span class="folder-list-item right">
-        <i ng-click="snippets.showToolbar(folder.value)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
+        <i ng-click="snippets.showToolbar($index)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
         </span>
-        <div class='row toolbar-folder' id='{{folder.value}}' style='display: none'>
+        <div class='row toolbar-folder' id="{{$index}}" style='display: none'>
           <i ng-click="snippets.removeFolder(folder.filePath)"
           class="waves-effect waves-teal right material-icons snippet-icon tooltipped"
           data-tooltip="Remove Folder"
@@ -69,10 +69,10 @@
         </a>
         </span>
         <span class="folder-list-item right">
-          <i ng-click="snippets.showToolbar(snippet.value.name)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
+          <i ng-click="snippets.showToolbar(snippet.value._id)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
         </span>
         </div>
-        <div class='row toolbar-snippet' id='{{snippet.value.name}}' style='display: none'>
+        <div class='row toolbar-snippet' id='{{snippet.value._id}}' style='display: none'>
           <i ng-click="snippets.focusNameInput(snippet.value.filePath)"
           class="waves-effect waves-teal material-icons snippet-icon tooltipped"
           data-tooltip="Edit Name"
