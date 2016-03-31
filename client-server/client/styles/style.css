@@ -385,8 +385,8 @@ nav,
   border: 1px solid lightgrey;
 }
 
-.folder-list-item:hover, .search-list-item:hover {
-  /*background-color: #f6f6f6;*/
+.folder-list:hover, .search-list:hover {
+  background-color: #f6f6f6;
 }
 
 .folder-list-item, .search-list-item {
