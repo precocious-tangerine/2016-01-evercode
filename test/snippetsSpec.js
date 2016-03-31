@@ -16,6 +16,7 @@ let removeTestSnippet = (callback) => {
     })
     .catch(err => {
       console.log(err);
+      callback(err);
     });
 };
 
