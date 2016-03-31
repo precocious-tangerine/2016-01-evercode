@@ -12,12 +12,15 @@
       <input id="public-search" type="text" ng-model="searchInput" placeholder="Search public snippets..." />
     </div>
   </div>
-  <ul class="public-snippet-list">
-    <li item-height='100' class="snippet-gallery col s12 m4 l3"
-      ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
-      <div class="card snippet-gallery-card">
-        <div class="card-title">
-          <h5>{{snippetNode.value.name}}</h5>
+  <div id="public-snippets-container" class="row">
+    <ul class="public-snippet-lis">
+      <li class="snippet-gallery col s12 m4 l3"
+        ng-repeat="snippet in public.snippetArr | filter:{name:searchInput} track by snippet.filePath">
+        <div class="card snippet-gallery-card"
+          ng-click="public.toggleEditorModal(snippet.value.filePath)">
+          <div class="card-title">
+            <h5>{{snippetNode.value.name}}</h5>
+          </div>
         </div>
         <div class="card-content">
           <span class='chip tag'
