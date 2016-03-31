@@ -1,7 +1,7 @@
 import * as FT from '../services/fileTree.js';
 
 class MainCtrl {
-  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public) {
+  constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public, focus) {
     if($auth.isAuthenticated()) {
       Auth.getUserInfo();
     }
@@ -10,6 +10,7 @@ class MainCtrl {
     this.Folders = Folders;
     this.Snippets = Snippets;
     this.Public = Public;
+    this.focus = focus;
     this.signinModalShow = false;
     this.signupModalShow = false;
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
@@ -18,6 +19,7 @@ class MainCtrl {
   toggleSideView(path, newSnippet) {
     if(newSnippet){
       this.Snippets.deselectSnippet();
+      this.focus('snippet-input-name');
       this.$state.go('main.editor'); 
     } else {
       this.Public.removeSelectedPublicSnippet();

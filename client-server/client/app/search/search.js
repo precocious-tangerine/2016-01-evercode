@@ -1,7 +1,8 @@
 class SearchCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, Snippets, focus) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
+    focus('search-input');
   }
 
   changeSelectedSnippet(snippetPath) {

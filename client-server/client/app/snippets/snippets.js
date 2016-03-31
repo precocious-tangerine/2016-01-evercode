@@ -1,5 +1,5 @@
 class SnippetsCtrl {
-  constructor($ngRedux, Snippets, Folders, Public, $state) {
+  constructor($ngRedux, Snippets, Folders, Public, $state, focus) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Public = Public;
     this.Folders = Folders;
@@ -8,6 +8,12 @@ class SnippetsCtrl {
     this.folderModalShow = false;
     this.folderModal = {};
     this.$state = $state;
+    this.focus = focus;
+  }
+
+  focusNameInput(filePath) {
+    this.changeSelectedSnippet(filePath);
+    this.focus('snippet-input-name');
   }
 
   toggleFolderModal(folderObj) {
@@ -59,6 +65,7 @@ class SnippetsCtrl {
   deselectSnippet() {
     this.Public.removeSelectedPublicSnippet();
     this.Snippets.deselectSnippet();
+    this.focus('snippet-input-name');
   }
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);

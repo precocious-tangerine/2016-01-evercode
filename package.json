@@ -28,6 +28,7 @@
     "mocks": "0.0.15",
     "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
+    "ng-focus-on": "^0.2.2",
     "ng-redux": "^3.3.3",
     "ngclipboard": "^1.1.1",
     "passport": "^0.3.2",
