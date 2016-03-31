@@ -369,11 +369,11 @@ nav,
 
 
 .outerContainer {
-  margin-left: 0px !important;
+  margin-left: 0px;
   position: relative !important;
-  margin-top: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  margin-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .side-nav li {
