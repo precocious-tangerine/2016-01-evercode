@@ -1,10 +1,10 @@
 <div>
-  <div class="splash">
-    <img src="../../assets/n.png">
-    <h1><span>never</span>:code</h1>
-    <h5>Your most useful code snippets in one place.</h5>
-  </div>
-  <div class="public-spacing">
+  <div class="splash-container">
+    <div class="splash">
+      <img src="../../assets/n.png">
+      <h1><span>never</span>:code</h1>
+      <h5>Your most useful code snippets in one place.</h5>
+    </div>
   </div>
   <div>
     <h4 class='public-header'>Public Snippets</h4>
@@ -12,25 +12,27 @@
       <input id="public-search" type="text" ng-model="searchInput" placeholder="Search public snippets..." />
     </div>
   </div>
-  <ul class="public-snippet-list">
-    <li item-height='100' class="snippet-gallery col s12 m4 l3"
-      ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
-      <div class="card snippet-gallery-card">
-        <div class="card-title">
-          <h5>{{snippetNode.value.name}}</h5>
-        </div>
-        <div class="card-content">
-          <span class='chip tag'
-          ng-repeat="tag in snippetNode.value.tags">
-          {{ tag }}</span><br><br>
-          <p>{{snippetNode.value.description}}</p>
-          <p>{{snippetNode.value.username}}<br>
-             {{snippetNode.value.language}}<br>
-          </p>
-        </div>
-        <div class='card-action'>
-          <a ng-click="public.toggleEditorModal(snippetNode.value.filePath)">Open in Editor</a>
-        </div>
+  <div id="public-snippets-container" class="row">
+    <ul class="public-snippet-lis">
+      <li class="snippet-gallery col s12 m4 l3"
+        ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
+        <div class="card snippet-gallery-card"
+          ng-click="public.toggleEditorModal(snippet.value.filePath)">
+          <div class="card-title">
+            <h5>{{snippetNode.value.name}}</h5>
+          </div>
+          <div class="card-content">
+            <span class='chip tag'
+            ng-repeat="tag in snippetNode.value.tags">
+            {{ tag }}</span>
+            <p>{{snippetNode.value.description}}</p>
+            <p>{{snippetNode.value.username}}<br>
+               {{snippetNode.value.language}}<br>
+            </p>
+          </div>
+          <div class='card-action'>
+            <a ng-click="public.toggleEditorModal(snippetNode.value.filePath)">Open in Editor</a>
+          </div>
       </div>
     </li>
   </ul>

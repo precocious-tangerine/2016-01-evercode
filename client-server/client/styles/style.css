@@ -8,7 +8,7 @@ html, body {
 @media only screen and (max-width: 600px) {
   #outer-container {
     position: relative !important;
-    margin-top: 16px !important;
+    margin-top: 0px !important;
     margin-left: 0px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -27,6 +27,13 @@ html, body {
   #toast-container {
     min-width: 90vw !important;
     max-width: 90vw !important;
+  }
+
+  .splash-container {
+    background-image: url("../assets/sf-gg-bay.jpg");
+    background-position: center; 
+    background-size: 200% !important;
+    background-color: rgba(255,255,255, .6);
   }
 }
 
@@ -77,18 +84,32 @@ html, body {
   color: grey;
 }
 
+.splash-container {
+  background-image: url("../assets/sf-gg-bay.jpg");
+  background-position: center; 
+  background-size: 100%;
+  background-color: rgba(255,255,255, .6);
+  background-repeat: no-repeat;
+}
+
 .splash {
   text-align: center;
-  color: #2E3C56;
+  color: #EDEDED;
+  /*color: #2E3C56*/;
   padding-top: 75px;
+  padding-bottom: 75px;
+  
 }
 
 .splash span {
   font-weight: 100;
+  opacity: 1;
+
 }
 
 .splash img {
   width: 200px;
+  opacity: 1;
 }
 
 .splash-buttons {
@@ -98,13 +119,15 @@ html, body {
   border-bottom: 2px solid lightgrey;
 }
 
+#public-snippets-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .public-header {
   text-align: center;
 }
 
-.public-spacing {
-  margin-top: 100px;
-}
 
 .search-results {
   z-index: 2;
@@ -316,6 +339,7 @@ nav,
 .corner-logo {
   border-bottom: 2px solid grey;
   background-color: white;
+  margin-top: 0px !important;
 }
 
 .brand-logo {
@@ -326,7 +350,7 @@ nav,
 .outerContainer {
   margin-left: 70px !important;
   position: relative !important;
-  margin-top: 16px !important;
+  margin-top: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
@@ -395,12 +419,17 @@ nav,
 }
 
 .snippet-gallery {
-  min-height: 150px;
   padding: 3px;
 }
 
 .snippet-gallery-card {
   padding: 10px;
+  min-height: 150px;
+}
+
+.card-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 
 .public-chip {

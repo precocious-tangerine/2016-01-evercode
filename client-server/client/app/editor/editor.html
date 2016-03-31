@@ -1,5 +1,6 @@
 <div class="col s12 m3 l3 innerContainer transform" 
-  ng-class="editor.$state.is('main.editor.search') ? null : 'card'" ui-view>
+  ng-class="editor.$state.is('main.editor.search') ? null : 'card'"
+  ui-view>
 </div>
 <div class='transform editor col s12 right' 
   ng-class="editor.$state.is('main.editor') ? 'm12 l12' : 'm9 l9'">
@@ -64,7 +65,9 @@
       </span>
       <span class="tag-input valign"
         ng-show="editor.addTag" >
-      <form name="tagForm" ng-submit="editor.removeOrAddTag()" novalidate>
+      <form name="tagForm"
+        ng-submit="editor.removeOrAddTag()"
+        novalidate>
         <input placeholder="Add tag" type="text" ng-model='editor.tag'/>
       </form>
     </span>
@@ -124,11 +127,10 @@
       <div class="switch col s3 right-align"
         ng-show="editor.selectedSnippet">
         <label>
-          Private
+          {{editor.snippetObj.public ? 'Public' : 'Private'}}
           <input type="checkbox" ng-checked="editor.snippetObj.public"
             ng-click="editor.selectedSnippet ? editor.togglePublic() : ''">
           <span class="lever"></span>
-          Public
         </label>
       </div>
     </div>
