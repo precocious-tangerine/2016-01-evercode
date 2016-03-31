@@ -6,7 +6,9 @@ class SnippetsCtrl {
     this.Snippets = Snippets;
     this.folderInput = false;
     this.folderModalShow = false;
+    this.moveModalShow = false;
     this.folderModal = {};
+    this.moveModal = {};
     this.$state = $state;
     this.focus = focus;
   }
@@ -19,6 +21,14 @@ class SnippetsCtrl {
   toggleFolderModal(folderObj) {
     this.folderModal = folderObj;
     this.folderModalShow = !this.folderModalShow;
+  }
+
+  toggleMoveModal(snippetObj) {
+    console.log('clicked');
+    this.moveModal = snippetObj;
+    console.log('moveModal', this.moveModal);
+    this.moveModalShow = !this.moveModalShow;
+    console.log('moveModalShow', this.moveModalShow);
   }
 
   hideModal() {
@@ -70,13 +80,16 @@ class SnippetsCtrl {
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);
   }
+
   closeSideNav() {
     this.$state.go('main.editor');
   }
+
   showToolbar(id) {
     $('#'+id).toggle(400);
     $('.tooltipped').tooltip({delay: 50});
   }
+
   mapStateToThis(state) {
     let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;
     let visibleFolders = [],

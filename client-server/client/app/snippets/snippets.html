@@ -79,6 +79,11 @@
           data-position="bottom"
           data-delay="800"
           >edit</i>
+          <i ng-click="snippets.toggleMoveModal(snippet)"
+          class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+          data-tooltip="Move Snippet"
+          data-position="bottom"
+          data-delay="800">keyboard_arrow_up</i>
           <i ng-click="snippets.toggleFavorite(snippet)"
           class="waves-effect waves-teal material-icons snippet-icon tooltipped"
           data-tooltip="Toggle as favorite"
@@ -106,3 +111,5 @@
 <!-- -------------- MODAL VIEW -------------- -->
 <folder name="snippets.folderModal.value" selectedfolder="snippets.folderModal" show="snippets.folderModalShow" width='200px' height='100px'>
 </folder>
+<move root='snippets.snippetMap.__root' name="snippets.moveModal.value.name" selectedsnippet="snippets.moveModal" show="snippets.moveModalShow" map='snippets.snippetMap' width='200px' height='100px'>
+</move>

@@ -87,7 +87,19 @@ export const convertToTree = (snippetObj) => {
   }, {});
   return userTreeMap;
 };
-
+export let getAllFoldersPaths = (root) => {
+    let results = [];
+    let traverse = (node) => {
+        if(typeof node.value === 'string') {
+            results.push(node.filePath);
+            node.children.forEach(el => {
+              traverse(el);
+            });
+        }
+    };
+    traverse(root);
+    return results;
+};
 export const createBoundMethods = (...args) => {
   return {
     node: getNode.bind(null,...args),
