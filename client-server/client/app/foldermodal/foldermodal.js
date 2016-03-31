@@ -34,6 +34,6 @@ export let createFolderModal = () => {
     controllerAs: 'folderModalCtrl',
     controller: FolderModalCtrl,
     bindToController: true,
-    template: require(`./folderModal.html`)
+    template: require(`./foldermodal.html`)
   };
 };
