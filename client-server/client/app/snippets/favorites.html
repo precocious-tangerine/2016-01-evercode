@@ -2,10 +2,10 @@
     <div>
       <h4>Favorites</h4>
     </div>
-    <div class="" ng-repeat="snippet in snippets.favoritesArr | orderBy:'_createdAt' | filter:{favorite:true}">
-      <div class="folder-list">
+    <div class="fade" ng-click="snippets.changeSelectedSnippet(snippet.filePath)" ng-repeat="snippet in snippets.favoritesArr | orderBy:'_createdAt' | filter:{favorite:true}">
+      <div class="folder-list waves-effect col s12">
         <span class="folder-list-item">
-          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
+          <a class="no-waves folder-list-link">
             <span class="folder-text valign-wrapper">
               <i class="material-icons code-icon valign">code</i>
               {{snippet.name}}

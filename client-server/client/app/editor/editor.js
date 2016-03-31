@@ -41,7 +41,7 @@ class EditorCtrl {
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
-    this.focus('input-tag')
+    this.focus('input-tag');
   }
 
   toggleAnnotation() {
