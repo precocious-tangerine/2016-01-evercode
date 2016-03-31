@@ -2,7 +2,8 @@
   <input id="search-bar" data-activates="search-results" type="text" ng-model="search.searchInput" placeholder="Search your snippets..." focus-on="search-input" />
   <div class="search-results">
     <div>
-      <h5>Found by Name</h5>
+      <h6>Found by Name</h6>
+      <hr>
     </div>
     <div class="search-list-name">
       <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
@@ -19,7 +20,8 @@
       </div>
     </div>
     <div>
-      <h5>Found by Content</h5>
+      <h6>Found by Content</h6>
+      <hr>
     </div>
     <div class="search-list-content">
       <div ng-repeat="snippet in (search.snippetArr | orderBy:'_createdAt' | filter:{data:search.searchInput})">
@@ -36,7 +38,8 @@
       </div>
     </div>
     <div>
-      <h5>Found by Description</h5>
+      <h6>Found by Description</h6>
+      <hr>
     </div>
     <div class="search-list-description">
       <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{description:search.searchInput}">
@@ -53,7 +56,8 @@
       </div>
     </div>
     <div>
-      <h5>Found by Tag</h5>
+      <h6>Found by Tag</h6>
+      <hr>
     </div>
     <div ng-repeat="(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show='search.hasTag(snippetTag, search.searchInput)'>
       <div ng-repeat="snippet in snippets">

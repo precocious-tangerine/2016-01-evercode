@@ -23,9 +23,9 @@
     </div>
     <div class="code-editor row card">
       <div class="col s12 code-toolbar valign-wrapper">
-        <a class="btn col s1"
+        <a class="copy-to-clipboard tooltipped"
           data-tooltip="Copy Snippet"
-          data-position="bottom"
+          data-position="top"
           data-delay="800"
           ngclipboard
           data-clipboard-text={{editorModal.snippetObj.data}}>
@@ -47,12 +47,13 @@
             ng-change="editorModal.changeTheme(editorModal.userTheme)">
           </select>
         </div>
-        <a class="btn col s3"
+        <a class="btn col s1 valign-wrapper tooltipped"
           data-tooltip="Copy Share URL"
-          data-position="bottom"
+          data-position="top"
           data-delay="800"
           ngclipboard
-          data-clipboard-text="localhost:3000/n/?s={{editorModal.snippetObj._id}}">Share URL
+          data-clipboard-text="localhost:3000/n/?s={{editorModal.snippetObj._id}}">
+          <i class="material-icons">share</i>
         </a>
       </div>
       <div class="col s12 public-code-mirror"
