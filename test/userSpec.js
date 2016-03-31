@@ -50,7 +50,8 @@ describe('the User Model', () => {
     before(done => {
       let testUser = {
         email: 'test@chai.com',
-        _password: 'just testing'
+        _password: 'just testing',
+        username: 'test'
       };
 
       let testMakeUser = () => {
@@ -106,7 +107,8 @@ describe('the User Model', () => {
     before(done => {
       let testUser = {
         email: 'test@chai.com',
-        _password: 'just testing'
+        _password: 'just testing',
+        username: 'test'
       };
 
       let testGetUser = () => {
@@ -156,7 +158,8 @@ describe('the User Model', () => {
     };
     let testUser = {
       email: 'test@chai.com',
-      _password: 'just testing'
+      _password: 'just testing',
+      username: 'test'
     };
 
     before(done => {
@@ -212,7 +215,8 @@ describe('the User Model', () => {
     before(done => {
       let testUser = {
         email: 'test@chai.com',
-        _password: 'just testing'
+        _password: 'just testing',
+        username: 'test'
       };
 
       let testRemoveUser = () => {
