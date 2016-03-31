@@ -73,12 +73,17 @@
         </span>
         </div>
         <div class='row toolbar-snippet' id='{{snippet.value.name}}' style='display: none'>
-          <i ng-click="snippets.toggleChangeName(snippet)"
+          <i ng-click="snippets.focusNameInput(snippet.value.filePath)"
           class="waves-effect waves-teal material-icons snippet-icon tooltipped"
           data-tooltip="Edit Name"
           data-position="bottom"
           data-delay="800"
           >edit</i>
+          <i ng-click="snippets.toggleMoveModal(snippet)"
+          class="waves-effect waves-teal material-icons snippet-icon tooltipped"
+          data-tooltip="Move Snippet"
+          data-position="bottom"
+          data-delay="800">keyboard_arrow_up</i>
           <i ng-click="snippets.toggleFavorite(snippet)"
           class="waves-effect waves-teal material-icons snippet-icon tooltipped"
           data-tooltip="Toggle as favorite"
@@ -106,3 +111,5 @@
 <!-- -------------- MODAL VIEW -------------- -->
 <folder name="snippets.folderModal.value" selectedfolder="snippets.folderModal" show="snippets.folderModalShow" width='200px' height='100px'>
 </folder>
+<move paths='snippets.paths' name="snippets.moveModal.value.name" selectedsnippet="snippets.moveModal" show="snippets.moveModalShow" width='auto' height='auto'>
+</move>

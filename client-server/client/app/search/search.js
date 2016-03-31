@@ -1,7 +1,8 @@
 class SearchCtrl {
-  constructor($ngRedux, Snippets) {
+  constructor($ngRedux, Snippets, focus) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Snippets = Snippets;
+    focus('search-input');
   }
 
   changeSelectedSnippet(snippetPath) {
@@ -9,8 +10,6 @@ class SearchCtrl {
   }
   
   hasTag(snippetTag, searchTag) {
-    console.log('snippetTag is ', snippetTag);
-    console.log('searchTag is ', searchTag);
     return !!snippetTag.includes(searchTag);
   }
 

@@ -1,13 +1,23 @@
+import { getAllFoldersPaths } from './../services/fileTree.js';
+
 class SnippetsCtrl {
-  constructor($ngRedux, Snippets, Folders, Public, $state) {
+  constructor($ngRedux, Snippets, Folders, Public, $state, focus) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.Public = Public;
     this.Folders = Folders;
     this.Snippets = Snippets;
     this.folderInput = false;
     this.folderModalShow = false;
+    this.moveModalShow = false;
     this.folderModal = {};
+    this.moveModal = {};
     this.$state = $state;
+    this.focus = focus;
+  }
+
+  focusNameInput(filePath) {
+    this.changeSelectedSnippet(filePath);
+    this.focus('snippet-input-name');
   }
 
   toggleFolderModal(folderObj) {
@@ -15,8 +25,10 @@ class SnippetsCtrl {
     this.folderModalShow = !this.folderModalShow;
   }
 
-  hideModal() {
-    this.show = false;
+  toggleMoveModal(snippetObj) {
+    this.paths = getAllFoldersPaths(this.snippetMap, this.snippetMap.__root.filePath);
+    this.moveModal = snippetObj;
+    this.moveModalShow = !this.moveModalShow;
   }
 
   addFolder() {
@@ -47,11 +59,11 @@ class SnippetsCtrl {
   }
   changeSelectedSnippet(snippetPath) {
     if (this.selectedPublicSnippet) {
-      if(this.selectedPublicSnippet !== snippetPath) {
+      if (this.selectedPublicSnippet !== snippetPath) {
         this.Public.setSelectedPublicSnippet(snippetPath);
       }
     } else {
-      if(this.selectedSnippet !== snippetPath) {
+      if (this.selectedSnippet !== snippetPath) {
         this.Snippets.changeSelectedSnippet(snippetPath);
       }
     }
@@ -59,17 +71,21 @@ class SnippetsCtrl {
   deselectSnippet() {
     this.Public.removeSelectedPublicSnippet();
     this.Snippets.deselectSnippet();
+    this.focus('snippet-input-name');
   }
   removeSnippet(snippetObj) {
     this.Snippets.removeSnippet(snippetObj);
   }
+
   closeSideNav() {
     this.$state.go('main.editor');
   }
+
   showToolbar(id) {
-    $('#'+id).toggle(400);
-    $('.tooltipped').tooltip({delay: 50});
+    $('#' + id).toggle(400);
+    $('.tooltipped').tooltip({ delay: 50 });
   }
+
   mapStateToThis(state) {
     let { selectedFolder, snippetMap, selectedSnippet, selectedPublicSnippet, publicList } = state;
     let visibleFolders = [],

@@ -126,7 +126,7 @@ class EditorCtrl {
 
   togglePublic() {
     this.snippetObj.public = !this.snippetObj.public;
-    this.updateSnippet();
+    this.updateSnippet(this.snippetObj.filePath);
   }
 
   confirmCopyAction(element){
@@ -155,7 +155,7 @@ class EditorCtrl {
       }
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value);
-      if(this.editor) { 
+      if(this.editor) {
         this.editor.setOption('readOnly', 'nocursor');
       }
     } else {

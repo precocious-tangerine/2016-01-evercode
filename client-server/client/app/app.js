@@ -11,6 +11,7 @@ import { search } from './search/search.js';
 import { Folders, Auth, Snippets, Public } from './services/services.js';
 import { snippets } from './snippets/snippets.js';
 import { createFolderModal } from './foldermodal/foldermodal.js';
+import { createMoveModal } from './movemodal/moveModal.js';
 import { createMainCtrl } from './main/main.js';
 import { editor, createEditorModal } from './editor/editor.js';
 import { publicPage } from './public/public.js';
@@ -20,7 +21,8 @@ import setup from '../../../setup.js';
 import 'ngclipboard';
 import 'angular-animate';
 import './tinymce/tinymce.js';
-angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce'])
+import 'ng-focus-on';
+angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
     $authProvider.oauth2({
@@ -44,7 +46,6 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
       .state('main.about', createAboutCtrl('/about'));
 
     $httpProvider.interceptors.push('AttachTokens');
-
     $ngReduxProvider.createStoreWith(finalReducer, [createLogger()]);
   })
   .service('Auth', Auth)
@@ -55,6 +56,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .directive('signup', createAuthModal('/signup'))
   .directive('editor', createEditorModal)
   .directive('folder', createFolderModal)
+  .directive('move', createMoveModal)
   .factory('AttachTokens', ($window) => {
     var attach = {
       request: (object) => {

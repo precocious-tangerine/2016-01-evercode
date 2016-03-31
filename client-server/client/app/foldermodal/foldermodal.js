@@ -19,8 +19,7 @@ export let createFolderModal = () => {
     scope: {
       show: '=',
       selectedfolder: '=',
-      name: '=',
-      email: '='
+      name: '='
     },
     link(scope, element, attrs) {
       scope.dialogStyle = {};

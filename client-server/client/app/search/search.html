@@ -1,10 +1,9 @@
 <ul id="search-list-container" class="search side-nav col s12">
-  <input id="search-bar" data-activates="search-results" type="text" ng-model="search.searchInput" placeholder="Search your snippets..." />
+  <input id="search-bar" data-activates="search-results" type="text" ng-model="search.searchInput" placeholder="Search your snippets..." focus-on="search-input" />
   <div class="search-results">
     <div>
       <h5>Found by Name</h5>
     </div>
-
     <div class="search-list-name">
       <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
         <span class="search-list-item">
@@ -56,7 +55,7 @@
     <div>
       <h5>Found by Tag</h5>
     </div>
-    <div ng-repeat= "(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show = 'search.hasTag(snippetTag, search.searchInput)'>
+    <div ng-repeat="(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show='search.hasTag(snippetTag, search.searchInput)'>
       <div ng-repeat="snippet in snippets">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">

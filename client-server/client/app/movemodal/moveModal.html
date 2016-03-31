@@ -1,0 +1,21 @@
+<div class='ng-modal' ng-show='moveSnippetModalCtrl.show'>
+  <div class='ng-modal-overlay folder-overlay' ng-click='moveSnippetModalCtrl.hideModal()'>
+  </div>
+  <div class='ng-modal-dialog ng-modal-folder-dialog card section' ng-style='dialogStyle'>
+    <div class='ng-modal-close row' ng-click='moveSnippetModalCtrl.hideModal()'>
+      X
+    </div>
+    <div>
+      Select destination folder for {{moveSnippetModalCtrl.name}}:
+    </div>
+    <div>
+      <form ng-submit="moveSnippetModalCtrl.moveSnippet(moveSnippetModalCtrl.selectedPath)">
+        <p ng-repeat='path in moveSnippetModalCtrl.paths track by $index'>
+          <input name="newPath" type="radio"  ng-model="moveSnippetModalCtrl.selectedPath" value={{path}} id="{{path}}" />
+          <label for="{{path}}">{{path}}</label>
+        </p>
+        <button type="submit" class="waves-effect waves-light btn">Confirm</button>
+      </form>
+    </div>
+  </div>
+</div>
