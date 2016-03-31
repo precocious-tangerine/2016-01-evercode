@@ -92,7 +92,7 @@
       <a class="copy-to-clipboard tooltipped"
         data-tooltip="Copy Snippet"
         data-position="top"
-        data-delay="500"
+        data-delay="800"
         ngclipboard
         data-clipboard-text={{editor.snippetObj.data}}
         ng-click="editor.confirmCopyAction('Snippet content')">
@@ -118,12 +118,15 @@
         ng-show="editor.activeUser.username"
         data-tooltip="Copy Share URL"
         data-position="top"
-        data-delay="500"
+        data-delay="800"
         ngclipboard
         data-clipboard-text="http://nevercode.com/files/n/?s={{editor.snippetObj._id}}">
         <i class="material-icons">share</i><span class="valign">Share</span>
       </a>
-      <div class="switch col s3 right-align"
+      <div class="switch col s3 right-align tooltipped"
+        data-tooltip="Toggle Public/Private status"
+        data-position="top"
+        data-delay="800"
         ng-show="editor.selectedSnippet">
         <label>
           {{editor.snippetObj.public ? 'Public' : 'Private'}}
@@ -135,7 +138,10 @@
     </div>
     <div class="comment-btn">
       <div class="fixed-action-btn horizontal">
-        <a class="btn-floating btn"
+        <a class="btn-floating btn tooltipped"
+          data-tooltip="Add Notes"
+          data-position="left"
+          data-delay="800"
           ng-click="editor.toggleAnnotation()">
           <i class="material-icons">comment</i>
         </a>
@@ -163,3 +169,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50})
+  });
+</script>
