@@ -427,6 +427,11 @@ nav,
   min-height: 150px;
 }
 
+.card-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
 .public-chip {
   background-color: #2E3C56;
   color: white;

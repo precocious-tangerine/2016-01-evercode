@@ -15,25 +15,24 @@
   <div id="public-snippets-container" class="row">
     <ul class="public-snippet-lis">
       <li class="snippet-gallery col s12 m4 l3"
-        ng-repeat="snippet in public.snippetArr | filter:{name:searchInput} track by snippet.filePath">
+        ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
         <div class="card snippet-gallery-card"
           ng-click="public.toggleEditorModal(snippet.value.filePath)">
           <div class="card-title">
             <h5>{{snippetNode.value.name}}</h5>
           </div>
-        </div>
-        <div class="card-content">
-          <span class='chip tag'
-          ng-repeat="tag in snippetNode.value.tags">
-          {{ tag }}</span><br><br>
-          <p>{{snippetNode.value.description}}</p>
-          <p>{{snippetNode.value.username}}<br>
-             {{snippetNode.value.language}}<br>
-          </p>
-        </div>
-        <div class='card-action'>
-          <a ng-click="public.toggleEditorModal(snippetNode.value.filePath)">Open in Editor</a>
-        </div>
+          <div class="card-content">
+            <span class='chip tag'
+            ng-repeat="tag in snippetNode.value.tags">
+            {{ tag }}</span>
+            <p>{{snippetNode.value.description}}</p>
+            <p>{{snippetNode.value.username}}<br>
+               {{snippetNode.value.language}}<br>
+            </p>
+          </div>
+          <div class='card-action'>
+            <a ng-click="public.toggleEditorModal(snippetNode.value.filePath)">Open in Editor</a>
+          </div>
       </div>
     </li>
   </ul>
