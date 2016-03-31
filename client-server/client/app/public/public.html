@@ -13,29 +13,29 @@
     </div>
   </div>
   <div id="public-snippets-container" class="row">
-    <ul class="public-snippet-lis">
+    <ul class="public-snippet-list">
       <li class="snippet-gallery col s12 m4 l3"
         ng-click="public.toggleEditorModal(snippetNode.value.filePath)"
         ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
         <div class="card snippet-gallery-card">
           <div class="card-title">
-            <h5>{{snippetNode.value.name}}</h5>
+            <h5>{{snippetNode.value.name}} <i class="material-icons col s2 snippet-card-icon">launch</i></h5>
+            <hr>
           </div>
-          <div class="card-content">
-            <span class='chip tag'
-            ng-repeat="tag in snippetNode.value.tags">
-            {{ tag }}</span>
+          <div>
+            <p><span>created by: </span>{{snippetNode.value.username}}<br>
+               <span>language: </span>{{snippetNode.value.language}}<br>
+            </p>
+            <hr>
             <p>{{snippetNode.value.description}}</p>
-            <p>{{snippetNode.value.username}}<br>
-               {{snippetNode.value.language}}<br>
+            <p class='chip tag'
+              ng-repeat="tag in snippetNode.value.tags">
+              {{ tag }}
             </p>
           </div>
-          <div class='card-action'>
-            <a>Open in Editor</a>
-          </div>
-      </div>
-    </li>
-  </ul>
+        </div>
+      </li>
+    </ul>
   </div>
   <div class="preloader-wrapper active" ng-show="public.loading">
     <div class="spinner-layer spinner-blue-only">
