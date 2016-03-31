@@ -172,7 +172,7 @@ module.exports = {
         filePath: '/' + email + '/sublime_uploads/' + fileName
       };
       Snippets.makeSnippetAsync(newSnippet)
-        .then(() => res.status(201).send('snippet uploaded'))
+        .then((result) => res.status(201).send(result))
         .catch(err => res.status(500).send(err));
     });
   }
