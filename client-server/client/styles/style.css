@@ -408,6 +408,16 @@ nav,
   color: #95A5A6;
 }
 
+.no-waves {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  z-index: 1;
+}
+
+
 .list-description {
   padding: 5px;
   margin: 0;
