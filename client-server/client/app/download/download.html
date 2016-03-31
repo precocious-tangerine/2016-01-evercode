@@ -1,28 +1,35 @@
-<div class='download-header'>
+<div class='download-header row'>
   <h2>Nevercode Sublime Extension</h2>
   <img class="responsive-img" width="400px" src="../../assets/n_s.png">
   <h5>Easily integrate your code snippets and templates with sublime's snippet templates</h5>
 </div>
-<div class="divider"></div>
-<div class='sublime-secret'>
+<div class="spacing"></div>
+<hr>
+<div class='sublime-secret row'>
   <div class='sublime-secret-entry'>
-  <h5 class='sublime-secret-title'>Current Client Secret:<span class='client-secret-value'>{{downloadCtrl.activeUser.sublimeSecret}}</span></h5>
+    <span class='sublime-secret-title'>Client Secret:</span><span class='client-secret-value'>{{downloadCtrl.activeUser.sublimeSecret}}
+    <a class="copy-to-clipboard tooltipped"
+      data-tooltip="Copy Client Secret"
+      data-position="top"
+      data-delay="500"
+      ngclipboard
+      data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}
+      ng-click="downloadCtrl.generateNewSecret()">
+      <i class="material-icons tiny">assignment</i>
+    </a>
+    </span>
   </div>
   <div class='sublime-secret-buttons' text-align:>
-  <a class="btn col m3 offset-m3" 
-        data-tooltip="Copy Client Secret"
-        data-position="bottom"
-        data-delay="800"
-        ngclipboard
-        data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}>Copy to Clipboard</a>
-  <button ng-click="downloadCtrl.generateNewSecret()" class="col m3 waves-effect waves-light btn save-snippets left">
-    Generate New Client Secret
-  </button>
+    <button ng-click="downloadCtrl.generateNewSecret()" class="col s4 offset-s4 waves-effect waves-light btn save-snippets center-align">
+      Generate New Client Secret
+    </button>
   </div>
 </div>
-<div class="divider"></div>
-<br>
-<div class='download-instructions-container'>
+<div>
+  <hr>
+</div>
+<div class="spacing"></div>
+<div class='download-instructions-container row'>
   <h4>Download Instructions</h4>
   <h6>Note: this is only supported on Macintosh Operating systems</h6>
   <ol>

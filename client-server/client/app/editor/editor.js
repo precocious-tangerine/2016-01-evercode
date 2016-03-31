@@ -161,7 +161,7 @@ class EditorCtrl {
     } else {
       snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
       if(this.editor) { 
-        this.editor.setOption('readOnly', 'nocursor');
+        this.editor.setOption('readOnly', false);
       }
     }
 

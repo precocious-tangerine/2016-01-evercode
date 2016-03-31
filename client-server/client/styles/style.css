@@ -54,6 +54,10 @@ html, body {
   font-size: 2em;
 }
 
+.spacing {
+  margin: 50px 0;
+}
+
 .backdrop {
   background-color: grey;
 }
@@ -132,6 +136,7 @@ html, body {
 .search-results {
   z-index: 2;
   display: none;
+  text-align: left;
 }
 
 .search {
@@ -445,12 +450,25 @@ nav,
   text-align: center;
 }
 
-.download-instructions-container > h4, h6 {
+.download-instructions-container > h4, .download-instructions-container > h6 {
   text-align: center;
 }
 
 .download-instructions-container > h6 {
   font-style: italic;
+}
+
+.sublime-secret-entry {
+  text-align: center;
+}
+
+.sublime-secret-title {
+  font-size: 1.5em;
+  ;margin-right: 20px;
+}
+
+.sublime-secret-value {
+  font-weight: 100;
 }
 
 #snippet-name-input {
