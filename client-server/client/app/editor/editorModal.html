@@ -52,7 +52,7 @@
           data-position="top"
           data-delay="800"
           ngclipboard
-          data-clipboard-text="localhost:3000/n/?s={{editorModal.snippetObj._id}}">
+          data-clipboard-text="http://nevercode.com/files/n/?s={{editorModal.snippetObj._id}}">
           <i class="material-icons">share</i>
         </a>
       </div>
@@ -64,3 +64,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50})
+  });
+</script>

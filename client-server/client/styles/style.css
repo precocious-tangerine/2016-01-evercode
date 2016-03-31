@@ -304,6 +304,7 @@ html, body {
 
 .avatar img {
   width: 3rem;
+  margin-top: 10px;
 }
 
 #nav-mobile {
@@ -550,6 +551,19 @@ nav,
   border-left: 0 !important;
   box-shadow: none !important;
 }
+
+.top-nav-menu > li:hover {
+  background-color:lightgrey;
+}
+
+.copy-to-clipboard {
+  cursor: pointer;
+}
+
+.responsive-img {
+  margin-top: 10px;
+}
+
 /*.carousel {
   top:-100px !important;
 }*/
