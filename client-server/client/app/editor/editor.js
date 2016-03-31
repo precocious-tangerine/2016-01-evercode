@@ -204,6 +204,7 @@ export let createEditorModal = () => {
   return {
     restrict: 'E',
     scope: {
+      snippetObj: '=',
       show: '=',
       other: '='
     },
