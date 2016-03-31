@@ -30,7 +30,6 @@ html, body {
   }
 
   .splash-container {
-    background-image: url("../assets/sf-gg-bay.jpg");
     background-position: center; 
     background-size: 200% !important;
     background-color: rgba(255,255,255, .6);
@@ -88,8 +87,25 @@ html, body {
   color: grey;
 }
 
+.public-search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#public-search {
+  width: 30vw;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 0 20px;
+}
+
+#public-search input {
+  padding: 10px 0 0 0;
+  border-bottom: none;
+}
+
 .splash-container {
-  background-image: url("../assets/sf-gg-bay.jpg");
   background-position: center; 
   background-size: 100%;
   background-color: rgba(255,255,255, .6);
@@ -98,7 +114,6 @@ html, body {
 
 .splash {
   text-align: center;
-  color: #EDEDED;
   /*color: #2E3C56*/;
   padding-top: 75px;
   padding-bottom: 75px;
@@ -431,6 +446,8 @@ nav,
 .snippet-gallery-card {
   padding: 10px;
   height: 300px;
+  background-color: #2E3C56;
+  color: white;
 }
 
 .snippet-card-icon {
