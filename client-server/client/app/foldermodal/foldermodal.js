@@ -1,0 +1,39 @@
+class FolderModalCtrl {
+  constructor(Folders) {
+    this.Folders = Folders;
+  }
+
+  renameFolder() {
+    this.Folders.renameFolder(this.selectedfolder, this.name);
+    this.hideModal();
+  }
+
+  hideModal() {
+    this.show = false;
+  }
+}
+
+export let createFolderModal = () => {
+  return {
+    restrict: 'E',
+    scope: {
+      show: '=',
+      selectedfolder: '=',
+      name: '=',
+      email: '='
+    },
+    link(scope, element, attrs) {
+      scope.dialogStyle = {};
+      if(attrs.width) {
+        scope.dialogStyle.width = attrs.width;
+      }
+      if(attrs.height) {
+        scope.dialogStyle.height = attrs.height;
+      }
+    },
+    controllerAs: 'folderModalCtrl',
+    controller: FolderModalCtrl,
+    bindToController: true,
+    template: require(`./folderModal.html`)
+  };
+};
