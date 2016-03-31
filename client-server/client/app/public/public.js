@@ -1,7 +1,8 @@
 class PublicCtrl {
-  constructor($ngRedux, $state, Public) {
+  constructor($ngRedux, $state, $location, Public) {
     $ngRedux.connect(this.mapStateToThis)(this);
     this.$state = $state;
+    this.$location = $location;
     this.Public = Public;
     this.snippetList = [];
     this.loading = true;
@@ -9,8 +10,17 @@ class PublicCtrl {
     this.Public.getPublicSnippets().then(() => {
       this.loading = false;
     });
-  }
 
+    this.checkIfUserHasVerified();
+  }
+  checkIfUserHasVerified() {
+    if (this.$location.absUrl().indexOf('?') != -1) {
+      let auth = this.$location.absUrl().slice(-13);
+      if(auth === 'verified=true') {
+        Materialize.toast('You have been confired! Please sign in.', 2000, 'rounded');
+      }
+    }
+  }
   toggleEditorModal(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
     this.editorModalShow = !this.editorModalShow;

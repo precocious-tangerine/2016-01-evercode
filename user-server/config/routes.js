@@ -5,12 +5,11 @@ let userController = require('../controllers/userController');
 module.exports = (app) => {
 
   // Post signup and email verification 
-  app.post('/user/send-email', postSignup);
+  app.post('/user/signup', postSignup);
   app.get('/user/email-verification/:URL', getVerification);
 
   // Sign in and sign up locally and using github 
   app.post('/user/signin', userController.signin);
-  app.post('/user/signup', userController.signup);
   app.post('/user/auth/github', userController.githubLogin);
 
   // Get or update profile information

@@ -79,11 +79,11 @@ nev.generateTempUserModelAsync(User)
   .catch(err => console.log('err in tempUser', err));
 
 module.exports.postSignup = (req, res) => {
-  let { email, password } = req.body;
+  let {email, password, username} = req.body;
   bcrypt.genSaltAsync(13)
     .then(salt => bcrypt.hashAsync(password, salt))
     .then(hash => {
-      let newUser = new User({ email, _password: hash });
+      let newUser = new User({username,email, _password: hash});
       return nev.createTempUserAsync(newUser);
     })
     .then((newTempUser) => {
@@ -93,14 +93,15 @@ module.exports.postSignup = (req, res) => {
           .then((info) => {
             res.send('an email has been sent to you. Please verify it\n, info: ' + JSON.stringify(info));
           }).catch(err => {
-            console.log('err is ', err);
-            res.status(404).send('failed to send');
+            res.status(404).send(err);
           });
       } else {
         res.send('You have already signed up');
       }
     })
-    .catch(res.status(500).send);
+    .catch(err => {
+      res.status(500).send(err);
+    });
 };
 
 
@@ -111,7 +112,7 @@ module.exports.getVerification = (req, res) => {
       if (user) {
         createRootFolderAsync(user)
           .then(() => nev.sendConfirmationEmailAsync(user.email))
-          .then(() => res.send('You have been confirmed as a user'))
+          .then(() => res.redirect('http://nevercode.com/#/main/public?verified=true'))
           .catch(err => {
             console.log('err: sending verify email', err);
             res.status(404).send(err);
