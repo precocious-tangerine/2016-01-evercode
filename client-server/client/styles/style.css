@@ -713,8 +713,11 @@ nav,
   color: white;
 }
 
+.parallax-container{
+  width: 100%;
+}
+
 .parallax img {
-  width: 150%;
   filter: blur(5px);
   filter: brightness(0.4) !important;
 }
