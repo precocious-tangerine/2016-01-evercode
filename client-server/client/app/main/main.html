@@ -102,72 +102,70 @@
 
   </div>
 </nav>
-
-<div class="row">
-  <ul ng-show='mainCtrl.activeUser.email' id="nav-desktop" class="side-nav col s3 m1 l1 main hide-on-small-only">
-    <li class="row corner-logo">
-      <div class="nav-icon">
-        <a ui-sref="main.public" class="waves-effect nav-link waves-teal nav-link">
-           <img class="icon" ui-sref="main.public" src="../../assets/n.png" />
-        </a>
-      </div>
-    </li>
-    <li class="row">
-      <div class="nav-icon">
-        <a ng-click="mainCtrl.toggleSideView('editor.profile')" class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Profile" >
-          <img ng-show='mainCtrl.avatar' class="circle mid-navigation-menu" src={{mainCtrl.avatar}} />
-          <img ng-hide='mainCtrl.avatar' class="icon mid-navigation-menu" src="../../assets/avatar.png" />
-         </a>
-      </div>
-    </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('editor.search')">
-      <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Search for ...">
-          <i class="material-icons center">search</i>
-        </a>
-      </div>
-    </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('editor', true)">
-      <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Create Snippet">
-          <i class="material-icons center">add</i>
-        </a>
-      </div>
-    </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('editor.favorites')">
-      <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Favorites">
-          <i class="material-icons">star</i>
-        </a>
-      </div>
-    </li>
-    <li class="row" ng-click="mainCtrl.toggleSideView('editor.snippets')">
-      <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Folders">
-          <i class="material-icons">library_books</i>
-        </a>
-      </div>
-    </li>
-    <li ui-sref='main.public' class="row">
-      <div class="nav-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Public Page">
-          <i class="material-icons">people</i>
-        </a>
-      </div>
-    </li>
-    <li ui-sref='main.download' class="row">
-      <div class="nav-icon subl-icon">
-        <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Sublime Plugin">
-          <img src="../../assets/subl_bw.png">
-        </a>
-      </div>
-    </li>
-  </ul>
-  <div class="outerContainer col s12 m11"
+<ul ng-show='mainCtrl.activeUser.email' id="nav-desktop" class="side-nav main hide-on-small-only">
+  <li class="row corner-logo">
+    <div class="nav-icon">
+      <a ui-sref="main.public" class="waves-effect nav-link waves-teal nav-link">
+         <img class="icon" ui-sref="main.public" src="../../assets/n.png" />
+      </a>
+    </div>
+  </li>
+  <li class="row">
+    <div class="nav-icon">
+      <a ng-click="mainCtrl.toggleSideView('editor.profile')" class="waves-effect avatar waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Profile" >
+        <img ng-show='mainCtrl.avatar' class="circle mid-navigation-menu" src={{mainCtrl.avatar}} />
+        <img ng-hide='mainCtrl.avatar' class="icon mid-navigation-menu" src="../../assets/avatar.png" />
+       </a>
+    </div>
+  </li>
+  <li class="row" ng-click="mainCtrl.toggleSideView('editor.search')">
+    <div class="nav-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Search for ...">
+        <i class="material-icons center">search</i>
+      </a>
+    </div>
+  </li>
+  <li class="row" ng-click="mainCtrl.toggleSideView('editor', true)">
+    <div class="nav-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Create Snippet">
+        <i class="material-icons center">add</i>
+      </a>
+    </div>
+  </li>
+  <li class="row" ng-click="mainCtrl.toggleSideView('editor.favorites')">
+    <div class="nav-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Favorites">
+        <i class="material-icons">star</i>
+      </a>
+    </div>
+  </li>
+  <li class="row" ng-click="mainCtrl.toggleSideView('editor.snippets')">
+    <div class="nav-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Folders">
+        <i class="material-icons">library_books</i>
+      </a>
+    </div>
+  </li>
+  <li ui-sref='main.public' class="row">
+    <div class="nav-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Public Page">
+        <i class="material-icons">people</i>
+      </a>
+    </div>
+  </li>
+  <li ui-sref='main.download' class="row">
+    <div class="nav-icon subl-icon">
+      <a class="waves-effect waves-teal nav-link tooltipped" data-position="right" data-delay="800" data-tooltip="Sublime Plugin">
+        <img src="../../assets/subl_bw.png">
+      </a>
+    </div>
+  </li>
+</ul>
+<div class="outerContainer row"
     id="outer-container"
     ui-view>
-  </div>
 </div>
+
 
 <!-- -------------- MODAL VIEW -------------- -->
 <signin  show='mainCtrl.signinModalShow' other='mainCtrl.signupModalShow' width='400px' height='auto'>
