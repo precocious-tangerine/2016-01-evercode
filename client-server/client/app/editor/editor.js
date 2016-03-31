@@ -30,8 +30,11 @@ class EditorCtrl {
 
   getSharedSnippet() {
     if (this.$location.absUrl().indexOf('?') != -1) {
-      let id = this.$location.absUrl().slice(-24);
-      this.Public.getSharedSnippet(id);
+      let query = this.$location.absUrl().slice(-26);
+      if(query.substr(0,2) == 's=') {
+        let id = query.slice(-24);
+        this.Public.getSharedSnippet(id);
+      }
     }
   }
 
