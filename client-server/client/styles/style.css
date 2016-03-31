@@ -107,7 +107,8 @@ html, body {
 
 .splash {
   text-align: center;
-  /*color: #2E3C56*/;
+  color: #EDEDED;
+  /*color: #2E3C56;*/
   padding-top: 75px;
   padding-bottom: 75px;
 }
@@ -133,6 +134,7 @@ html, body {
 #public-snippets-container {
   margin-top: 20px;
   margin-bottom: 20px;
+  height: 100vh;
 }
 
 .public-header {
@@ -710,9 +712,19 @@ nav,
   color: white;
 }
 
+.parallax img {
+  width: 150%;
+  filter: blur(5px);
+  filter: brightness(0.4) !important;
+}
+
 li.snippet-gallery {
   float:left;
 }
 .card-title {
   text-align: center;
+}
+
+.whitewash {
+  background-color: rgba(255,255,255, 0.6);
 }
