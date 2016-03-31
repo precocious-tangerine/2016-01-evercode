@@ -7,9 +7,9 @@
       <span>{{editorModal.snippetObj.description}}</span>
     </div>
     <div class="col s3">
-      <button ng-show="!!editorModal.activeUser.username" class="waves-effect waves-light btn save-snippet right"
+      <button ng-show="!!editorModal.activeUser.username" ng-click="editorModal.addSnippet()" class="waves-effect waves-light btn save-snippet right"
         type="submit" >
-        {{editorModal.buttonText}}<i class='material-icons right'>archive</i>
+        Save Snippet<i class='material-icons right'>archive</i>
       </button>
     </div>
     <div class="row tag-row">
@@ -17,7 +17,7 @@
         <span class="tag valign">TAGS:</span>
         <span class='chip tag'
           ng-repeat="tag in editorModal.snippetMap[editorModal.selectedPublicSnippet].value.tags">
-          {{ tag }}<i ng-click="editorModal.removeOrAddTag(tag)" class="material-icons">close</i>
+          {{ tag }}
         </span>
       </div>
     </div>
