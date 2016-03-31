@@ -8,11 +8,14 @@
   </div>
   <div>
     <h4 class='public-header'>Public Snippets</h4>
-    <div>
-      <input id="public-search" type="text" ng-model="searchInput" placeholder="Search public snippets..." />
+    <div class="public-search-box">
+      <div id="public-search">
+        <input type="text" ng-model="searchInput" placeholder="Search public snippets..." />
+      </div>
     </div>
   </div>
   <div id="public-snippets-container" class="row">
+    <hr>
     <ul class="public-snippet-list">
       <li class="snippet-gallery col s12 m4 l3"
         ng-click="public.toggleEditorModal(snippetNode.value.filePath)"

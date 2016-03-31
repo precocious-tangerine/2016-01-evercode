@@ -6,7 +6,7 @@
       <hr>
     </div>
     <div class="search-list-name">
-      <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
+      <div class="search-list" ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
@@ -24,7 +24,7 @@
       <hr>
     </div>
     <div class="search-list-content">
-      <div ng-repeat="snippet in (search.snippetArr | orderBy:'_createdAt' | filter:{data:search.searchInput})">
+      <div class="search-list" ng-repeat="snippet in (search.snippetArr | orderBy:'_createdAt' | filter:{data:search.searchInput})">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
@@ -42,7 +42,7 @@
       <hr>
     </div>
     <div class="search-list-description">
-      <div ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{description:search.searchInput}">
+      <div class="search-list" ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{description:search.searchInput}">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
@@ -60,7 +60,7 @@
       <hr>
     </div>
     <div ng-repeat="(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show='search.hasTag(snippetTag, search.searchInput)'>
-      <div ng-repeat="snippet in snippets">
+      <div class="search-list" ng-repeat="snippet in snippets">
         <span class="search-list-item">
           <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
