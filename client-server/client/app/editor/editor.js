@@ -173,6 +173,7 @@ class EditorCtrl {
     } else {
       buttonText = 'Add Snippet';
     }
+    setTimeout(() => this.editor.refresh(), 1);
     return {
       path,
       snippetMap,
@@ -204,12 +205,13 @@ export let createEditorModal = () => {
   return {
     restrict: 'E',
     scope: {
-      snippetObj: '=',
-      show: '=',
-      other: '='
+      show: '='
     },
     link(scope, element, attrs) {
       scope.dialogStyle = {};
+      if(scope.editorModal.publicList && attrs.snippetPath) {
+        scope.editorModal.snippetObj = scope.editorModal.publicList[attrs.snippetPath] || {};
+      }
       if(attrs.width) { 
         scope.dialogStyle.width = attrs.width;
       }
