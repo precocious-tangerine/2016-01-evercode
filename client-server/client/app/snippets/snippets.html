@@ -27,10 +27,10 @@
     <div>
       {{snippets.visibleFolders.length ? 'Folders' : ''}}
     </div>
-    <div class="fade" ng-repeat="folder in snippets.visibleFolders track by $index">
-      <div class="folder-list">
+    <div class="fade" ng-click="snippets.changeActiveTab(folder.filePath)" ng-repeat="folder in snippets.visibleFolders track by $index">
+      <div class="folder-list waves-effect col s12">
         <span class="folder-list-item">
-          <a class="waves-effect waves-teal folder-list-link" ng-click="snippets.changeActiveTab(folder.filePath)">
+          <a class="no-waves folder-list-link">
             <span class="folder-text valign-wrapper">
               <i class="material-icons folder-icon valign">folder</i>
               <span class='folder-name'>{{folder.value}}</span>
@@ -57,20 +57,20 @@
     <div>
       {{snippets.visibleSnippets.length ? 'Snippets' : ''}}
     </div>
-    <div class="fade" ng-repeat="snippet in snippets.visibleSnippets | orderBy:'value.name' track by $index" >
-      <div class="folder-list">
-      <div class='snippet-name row'>
-        <span class="waves-effect waves-teal">
-          <a class="folder-list-link" ng-click="snippets.changeSelectedSnippet(snippet.filePath)">
-            <span class="folder-text valign-wrapper">
-              <i class="material-icons code-icon valign">code</i>
-              {{snippet.value.name}}
-            </span>
-        </a>
-        </span>
-        <span class="folder-list-item right">
-          <i ng-click="snippets.showToolbar(snippet.value._id)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
-        </span>
+    <div class="fade" ng-click="snippets.changeSelectedSnippet(snippet.filePath)" ng-repeat="snippet in snippets.visibleSnippets | orderBy:'value.name' track by $index" >
+      <div class="folder-list  waves-effect col s12">
+        <div class='snippet-name row'>
+          <span class="no-waves">
+            <a class="folder-list-link">
+              <span class="folder-text valign-wrapper">
+                <i class="material-icons code-icon valign">code</i>
+                {{snippet.value.name}}
+              </span>
+          </a>
+          </span>
+          <span class="folder-list-item right">
+            <i ng-click="snippets.showToolbar(snippet.value._id)" class="waves-effect waves-teal material-icons snippet-icon">more_vert</i>
+          </span>
         </div>
         <div class='row toolbar-snippet' id='{{snippet.value._id}}' style='display: none'>
           <i ng-click="snippets.focusNameInput(snippet.value.filePath)"

@@ -1,10 +1,11 @@
 class EditorCtrl {
-  constructor($ngRedux, Snippets, Auth, Public, $state, $location) {
+  constructor($ngRedux, Snippets, Auth, Public, $state, $location, focus) {
     this.$location = $location;
     this.$state = $state;
     this.Snippets = Snippets;
     this.Auth = Auth;
     this.Public = Public;
+    this.focus = focus;
     this.codemirrorLoaded = (_editor) => {
       this.editor = _editor;
     };
@@ -40,6 +41,7 @@ class EditorCtrl {
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
+    this.focus('input-tag');
   }
 
   toggleAnnotation() {
