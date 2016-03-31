@@ -1,11 +1,16 @@
-import { getAllFoldersPaths } from './../services/fileTree.js';
-
 class MoveSnippetModalCtrl {
-  constructor() {
-    console.log('rendered');
-    this.getAllFoldersPaths = getAllFoldersPaths;
-    // this.paths = getAllFoldersPaths(this.root);
-    // console.log('paths', this.paths);
+  constructor(Snippets) {
+    this.Snippets = Snippets;
+  }
+
+  moveSnippet(newPath){
+    let oldPath = this.selectedsnippet.value.filePath;
+    let snippetToMove = Object.assign({},
+      this.selectedsnippet.value, {
+        filePath: newPath + '/' + this.selectedsnippet.value.name
+      });
+    this.Snippets.updateSnippet(snippetToMove, oldPath);
+    this.hideModal();
   }
 
   hideModal() {
@@ -21,8 +26,7 @@ export let createMoveModal = () => {
       show: '=',
       selectedsnippet: '=',
       name: '=',
-      email: '=',
-      snippetmap: '='
+      paths: '='
     },
     link(scope, element, attrs) {
       scope.dialogStyle = {};

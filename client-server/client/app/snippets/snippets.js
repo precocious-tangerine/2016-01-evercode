@@ -1,3 +1,5 @@
+import { getAllFoldersPaths } from './../services/fileTree.js';
+
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders, Public, $state, focus) {
     $ngRedux.connect(this.mapStateToThis)(this);
@@ -24,15 +26,9 @@ class SnippetsCtrl {
   }
 
   toggleMoveModal(snippetObj) {
-    console.log('clicked');
+    this.paths = getAllFoldersPaths(this.snippetMap, this.snippetMap.__root.filePath);
     this.moveModal = snippetObj;
-    console.log('moveModal', this.moveModal);
     this.moveModalShow = !this.moveModalShow;
-    console.log('moveModalShow', this.moveModalShow);
-  }
-
-  hideModal() {
-    this.show = false;
   }
 
   addFolder() {
@@ -63,11 +59,11 @@ class SnippetsCtrl {
   }
   changeSelectedSnippet(snippetPath) {
     if (this.selectedPublicSnippet) {
-      if(this.selectedPublicSnippet !== snippetPath) {
+      if (this.selectedPublicSnippet !== snippetPath) {
         this.Public.setSelectedPublicSnippet(snippetPath);
       }
     } else {
-      if(this.selectedSnippet !== snippetPath) {
+      if (this.selectedSnippet !== snippetPath) {
         this.Snippets.changeSelectedSnippet(snippetPath);
       }
     }
@@ -86,8 +82,8 @@ class SnippetsCtrl {
   }
 
   showToolbar(id) {
-    $('#'+id).toggle(400);
-    $('.tooltipped').tooltip({delay: 50});
+    $('#' + id).toggle(400);
+    $('.tooltipped').tooltip({ delay: 50 });
   }
 
   mapStateToThis(state) {

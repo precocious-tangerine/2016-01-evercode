@@ -9,11 +9,13 @@
       Select destination folder for {{moveSnippetModalCtrl.name}}:
     </div>
     <div>
-      <form name="updateFolder" ng-submit="moveSnippetModalCtrl.renameFolder()" novalidate>
-        <div class="form-group">
-          <input type="text" class="validate" class="form-control" maxlength="20" ng-minlength="1" ng-model="moveSnippetModalCtrl.name"/>
-        </div>
+      <form ng-submit="moveSnippetModalCtrl.moveSnippet(moveSnippetModalCtrl.selectedPath)">
+        <p ng-repeat='path in moveSnippetModalCtrl.paths track by $index'>
+          <input name="newPath" type="radio"  ng-model="moveSnippetModalCtrl.selectedPath" value={{path}} id="{{path}}" />
+          <label for="{{path}}">{{path}}</label>
+        </p>
+        <button type="submit" class="waves-effect waves-light btn">Confirm</button>
       </form>
     </div>
-  </div
+  </div>
 </div>
