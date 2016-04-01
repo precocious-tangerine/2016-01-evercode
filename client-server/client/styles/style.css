@@ -400,6 +400,10 @@ nav,
   font-size: 2em;
 }
 
+.profile img {
+  margin-top: 10px;
+}
+
 .user-profile h6 {
   text-align: left;
   font-weight: bold;
@@ -653,10 +657,6 @@ li.snippet-gallery {
 .copy-to-clipboard {
   cursor: pointer;
   border-radius: 4px;
-}
-
-.responsive-img {
-  margin-top: 10px;
 }
 
 
