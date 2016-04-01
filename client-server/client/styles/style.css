@@ -28,12 +28,6 @@ html, body {
     min-width: 90vw !important;
     max-width: 90vw !important;
   }
-
-  .splash-container {
-    background-position: center; 
-    background-size: 200% !important;
-    background-color: rgba(255,255,255, .6);
-  }
 }
 
 #container {
@@ -78,7 +72,7 @@ html, body {
 
 .top-nav {
   background-color: white;
-  height: 50px;
+  height: 66px;
   box-shadow: none;
 }
 
@@ -114,10 +108,11 @@ html, body {
 
 .splash {
   text-align: center;
-  /*color: #2E3C56*/;
+  color: #EDEDED;
+  /*color: #2E3C56;*/
+  text-shadow: 2px 2px #000000;
   padding-top: 75px;
   padding-bottom: 75px;
-  
 }
 
 .splash span {
@@ -126,7 +121,7 @@ html, body {
 
 }
 
-.splash img {
+#splash-logo {
   width: 200px;
   opacity: 1;
 }
@@ -141,6 +136,7 @@ html, body {
 #public-snippets-container {
   margin-top: 20px;
   margin-bottom: 20px;
+  height: 100vh;
 }
 
 .public-header {
@@ -369,11 +365,11 @@ nav,
 
 
 .outerContainer {
-  margin-left: 70px !important;
+  margin-left: 0px;
   position: relative !important;
-  margin-top: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  margin-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .side-nav li {
@@ -718,9 +714,22 @@ nav,
   color: white;
 }
 
+.parallax-container{
+  width: 100%;
+}
+
+.parallax img {
+  filter: blur(5px);
+  filter: brightness(0.4) !important;
+}
+
 li.snippet-gallery {
   float:left;
 }
 .card-title {
   text-align: center;
+}
+
+.whitewash {
+  background-color: rgba(255,255,255, 0.6);
 }
