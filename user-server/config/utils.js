@@ -83,7 +83,7 @@ module.exports.postSignup = (req, res) => {
   bcrypt.genSaltAsync(13)
     .then(salt => bcrypt.hashAsync(password, salt))
     .then(hash => {
-      let newUser = new User({username,email, _password: hash});
+      let newUser = new User({username, email, _password: hash});
       return nev.createTempUserAsync(newUser);
     })
     .then((newTempUser) => {
