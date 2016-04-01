@@ -63,7 +63,7 @@ module.exports.createRootFolderAsync = createRootFolderAsync;
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://159.203.227.218/user/email-verification/${URL}',
+  verificationURL: 'http://159.203.175.202/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {
