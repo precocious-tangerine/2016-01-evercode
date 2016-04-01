@@ -188,7 +188,11 @@ class EditorCtrl {
     } else {
       buttonText = 'Add Snippet';
     }
-    setTimeout(() => this.editor.refresh(), 1);
+    setTimeout(() => {
+      if(this.editor) {
+        this.editor.refresh();
+      }
+    }, 1);
     return {
       path,
       snippetMap,
