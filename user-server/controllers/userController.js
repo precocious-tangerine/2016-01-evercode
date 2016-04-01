@@ -138,7 +138,7 @@ module.exports = {
         // Step 3a. Link user accounts.
         Users.findOne({ email: profile.email }, (err, existingUser) => {
           if (existingUser) {
-            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url, username: profile.name }).then(() => {
+            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url }).then(() => {
               var token = utils.createJWT({ email: existingUser.email, username: profile.name });
               res.status(201).send({ token });
             });

@@ -7,8 +7,8 @@
       <span>{{editorModal.snippetObj.description}}</span>
     </div>
     <div class="col s3">
-      <button ng-show="!!editorModal.activeUser.username" ng-click="editorModal.addSnippet()" class="waves-effect waves-light btn save-snippet right"
-        type="submit" >
+      <button ng-click="editorModal.addSnippet()" class="waves-effect waves-light btn save-snippet right"
+        type="submit" ng-hide='editorModal.activeUser.username === editorModal.snippetObj.username'>
         Save Snippet<i class='material-icons right'>archive</i>
       </button>
     </div>
