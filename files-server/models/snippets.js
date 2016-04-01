@@ -24,7 +24,7 @@ let Snippet = mongoose.model('Snippet', snippetSchema);
 Snippet.makeSnippet = (snippetObj, callback) => {
   Snippet.findOne({filePath: snippetObj.filePath})
   .then(result => {
-    if(!result) {
+    if (!result) {
       Snippet.create(snippetObj)
         .then((result) => callback(null, result))
         .catch(callback);

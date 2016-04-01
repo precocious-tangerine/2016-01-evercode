@@ -119,6 +119,7 @@
         data-position="top"
         data-delay="800"
         ngclipboard
+        ng-click="editor.confirmCopyAction('Share URL')"
         data-clipboard-text="{{editor.snippetObj._id ? 'neverco.de/files/n/?s=' + editor.shorten(editor.snippetObj._id) : ' ' }}">
         <i class="material-icons">share</i><span class="valign">Share</span>
       </a>

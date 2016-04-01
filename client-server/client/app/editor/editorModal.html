@@ -28,7 +28,8 @@
           data-position="top"
           data-delay="800"
           ngclipboard
-          data-clipboard-text={{editorModal.snippetObj.data}}>
+          data-clipboard-text={{editorModal.snippetObj.data}}
+          ng-click="editorModal.confirmCopyAction('Snippet content')">
           <i class="material-icons">assignment</i>
         </a>
         <div class="code-selector col s3">
@@ -52,7 +53,8 @@
           data-position="top"
           data-delay="800"
           ngclipboard
-          data-clipboard-text="http://nevercode.com/files/n/?s={{editorModal.snippetObj._id}}">
+          data-clipboard-text="http://nevercode.com/files/n/?s={{editorModal.snippetObj._id}}"
+          ng-click="editorModal.confirmCopyAction('Share URL')">
           <i class="material-icons">share</i>
         </a>
       </div>
