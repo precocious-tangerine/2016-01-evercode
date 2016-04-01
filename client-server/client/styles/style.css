@@ -102,21 +102,30 @@ html, body {
 .splash-container {
   background-position: center; 
   background-size: 100%;
-  background-color: rgba(255,255,255, .6);
+  background-color: rgba(46,60,86, .6);
   background-repeat: no-repeat;
+}
+
+.splash-box {
+  background-color: rgba(255,255,255, .1);
+  border-radius: 15px;
+  width: 50vw;
+  min-width: 300px;
+  padding: 10px;
+  margin: 25px 0;
 }
 
 .splash {
   text-align: center;
-  color: #2E3C56;
-  padding-top: 75px;
-  padding-bottom: 75px;
+  color: #fff;
+  padding-top: 25px;
+  padding-bottom: 25px; 
+  text-shadow: 1px 1px #2E3C56;
 }
 
 .splash span {
   font-weight: 100;
   opacity: 1;
-
 }
 
 #splash-logo {
@@ -713,6 +722,9 @@ nav,
 }
 
 .parallax-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
