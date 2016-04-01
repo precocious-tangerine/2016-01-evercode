@@ -50,9 +50,18 @@ class EditorCtrl {
 
   removeOrAddTag(tagToRemove) {
     let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
+    if (objectToUpdate.tags.length >= 5){
+      Materialize.toast('Cant have more then 5 tags on the snippet!', 3000, 'rounded');
+      return;
+    }
     if (this.tag) {
-      objectToUpdate.tags.push(this.tag);
-      this.tag = '';
+      if(objectToUpdate.tags.indexOf(this.tag) !== -1){
+        Materialize.toast('Cant add duplicate tag to the snippet!', 3000, 'rounded');
+        return;
+      } else {
+        objectToUpdate.tags.push(this.tag);
+        this.tag = '';
+      }
     }
     if (tagToRemove) {
       objectToUpdate.tags.splice(objectToUpdate.tags.indexOf(tagToRemove), 1);
