@@ -108,9 +108,7 @@ html, body {
 
 .splash {
   text-align: center;
-  color: #EDEDED;
-  /*color: #2E3C56;*/
-  text-shadow: 2px 2px #000000;
+  color: #2E3C56;
   padding-top: 75px;
   padding-bottom: 75px;
 }
