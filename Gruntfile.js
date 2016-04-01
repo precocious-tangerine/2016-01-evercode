@@ -5,8 +5,14 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      files: {
-        '':[''],
+      dist: {
+        dest: 'client-server/client/dist/bundle-all.min.js',
+        src: [
+          'client-server/client/js/jquery-2.1.1.min.js',
+          'client-server/client/dist/bundle.min.js',
+          'client-server/client/js/materialize.min.js',
+          'client-server/client/js/code-mirror-scripts/all-cm-scripts.min.js'
+          ]
       }
     },
     ngAnnotate: {
@@ -44,6 +50,6 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['ngAnnotate', 'uglify', 'cssmin', 'concat']);
 
 };
