@@ -41,6 +41,7 @@ class EditorCtrl {
 
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
+    this.tag = '';
     this.focus('input-tag');
   }
 
@@ -50,11 +51,11 @@ class EditorCtrl {
 
   removeOrAddTag(tagToRemove) {
     let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
-    if (objectToUpdate.tags.length >= 5){
-      Materialize.toast('Cant have more then 5 tags on the snippet!', 3000, 'rounded');
-      return;
-    }
     if (this.tag) {
+      if (objectToUpdate.tags.length >= 5){
+        Materialize.toast('Cant have more then 5 tags on the snippet!', 3000, 'rounded');
+        return;
+      }
       if(objectToUpdate.tags.indexOf(this.tag) !== -1){
         Materialize.toast('Cant add duplicate tag to the snippet!', 3000, 'rounded');
         return;
@@ -179,7 +180,7 @@ class EditorCtrl {
         this.editor.setOption('readOnly', false);
       }
     }
-
+    this.addTag = false;
     let buttonText;
     if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
       buttonText = 'Save Snippet';

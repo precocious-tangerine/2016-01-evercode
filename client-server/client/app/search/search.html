@@ -8,7 +8,7 @@
     <div class="search-list-name">
       <div class="search-list" ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{name:search.searchInput}">
         <span class="search-list-item">
-          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <a ui-sref="main.editor.search" ng-show="search.searchInput" class="waves-effect search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
             <i class="material-icons code-icon valign">code</i>{{snippet.name}}
           </span>
@@ -26,7 +26,7 @@
     <div class="search-list-content">
       <div class="search-list" ng-repeat="snippet in (search.snippetArr | orderBy:'_createdAt' | filter:{data:search.searchInput})">
         <span class="search-list-item">
-          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <a ui-sref="main.editor.search" ng-show="search.searchInput" class="waves-effect search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
             <i class="material-icons code-icon valign">code</i>{{snippet.name}}
           </span>
@@ -44,7 +44,7 @@
     <div class="search-list-description">
       <div class="search-list" ng-repeat="snippet in search.snippetArr | orderBy:'_createdAt' | filter:{description:search.searchInput}">
         <span class="search-list-item">
-          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <a ui-sref="main.editor.search" ng-show="search.searchInput" class="waves-effect search-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
             <i class="material-icons code-icon valign">code</i>{{snippet.name}}
           </span>
@@ -62,7 +62,7 @@
     <div ng-repeat="(snippetTag, snippets) in search.tags" class="search-list-tag" ng-show='search.hasTag(snippetTag, search.searchInput)'>
       <div class="search-list" ng-repeat="snippet in snippets">
         <span class="search-list-item">
-          <a ui-sref=".editor" ng-show="search.searchInput" class="waves-effect waves-teal  folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
+          <a ui-sref="main.editor.search" ng-show="search.searchInput" class="waves-effect folder-list-link" ng-click="search.changeSelectedSnippet(snippet.filePath)">
           <span class="search-text valign-wrapper">
             <i class="material-icons code-icon valign">code</i>{{snippet.name}}
           </span>
