@@ -6,6 +6,11 @@ class DownloadCtrl {
 		this.activeUser = {};
 		$ngRedux.connect(this.mapStateToThis, this.mapDispatchToThis)(this);
 	}
+
+	confirmCopyAction() {
+	  Materialize.toast('Client secret added to your clipboard!', 3000, 'rounded');
+	}
+	
 	mapDispatchToThis(dispatch) {
 		return {
 			generateNewSecret() {

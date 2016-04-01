@@ -13,7 +13,8 @@
       data-position="top"
       data-delay="500"
       ngclipboard
-      data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}>
+      data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}
+      ng-click='downloadCtrl.confirmCopyAction()'>
       <i class="material-icons tiny">assignment</i>
     </a>
     </span>
