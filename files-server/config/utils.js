@@ -23,4 +23,5 @@ module.exports.decode = (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-}; 
+};
+
