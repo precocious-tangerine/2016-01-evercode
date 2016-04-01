@@ -71,8 +71,11 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     return attach;
   })
   .run(($rootScope, $state, $auth) => {
-    $rootScope.$on('$stateChangeStart', (event, next) => {
-      if (next.access.restricted && !$auth.isAuthenticated()) {
+    $rootScope.$on('$stateChangeStart', (event, next, toParams, fromState) => {
+      if (!$auth.isAuthenticated() && (next.access.restricted || next.name === 'main.editor')) {
+        if(!fromState.name){
+          $state.go('main.public');
+        }
         event.preventDefault();
         Materialize.toast('Please sign in first', 2000, 'rounded');
       }

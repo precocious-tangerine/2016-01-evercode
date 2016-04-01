@@ -17,7 +17,7 @@
   <div id="public-snippets-container" class="row">
     <hr>
     <ul class="public-snippet-list">
-      <li class="snippet-gallery col s12 m4 l3"
+      <li class="snippet-gallery col s12 m4 l3 fade"
         ng-click="public.toggleEditorModal(snippetNode.value.filePath)"
         ng-repeat="snippetNode in (public.snippetArr | filter:searchInput) track by snippetNode.filePath">
         <div class="card snippet-gallery-card">

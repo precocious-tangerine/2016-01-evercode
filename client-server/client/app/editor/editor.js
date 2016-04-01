@@ -32,7 +32,7 @@ class EditorCtrl {
   getSharedSnippet() {
     if (this.$location.absUrl().indexOf('?') != -1) {
       let query = this.$location.absUrl().slice(-26);
-      if(query.substr(0,2) == 's=') {
+      if (query.substr(0, 2) == 's=') {
         let id = query.slice(-24);
         this.Public.getSharedSnippet(id);
       }
@@ -76,23 +76,27 @@ class EditorCtrl {
   }
 
   addSnippet() {
-    let objectToUpdate = (this.snippetObj.username !== this.activeUser.username) ? Object.assign({}, {
-      data: this.snippetObj.data,
-      name: this.snippetObj.name,
-      language: this.snippetObj.language,
-      public: false,
-      annotation: this.snippetObj.annotation,
-      description: this.snippetObj.description
-    }) : this.snippetObj;
-    let path = this.path + '/' + this.snippetObj.name;
-    objectToUpdate.shortcut = objectToUpdate.shortcut || this.snippetObj.name;
-    if (!this.snippetObj.name) {
-      Materialize.toast('Please, name the snippet', 3000, 'rounded');
-    } else if (!this.snippetMap[path]) {
-      objectToUpdate.filePath = path;
-      this.Snippets.addSnippet(objectToUpdate);
+    if (!this.activeUser.username) {
+      Materialize.toast('Please, sign in first', 3000, 'rounded');
     } else {
-      Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+      let objectToUpdate = (this.snippetObj.username !== this.activeUser.username) ? Object.assign({}, {
+        data: this.snippetObj.data,
+        name: this.snippetObj.name,
+        language: this.snippetObj.language,
+        public: false,
+        annotation: this.snippetObj.annotation,
+        description: this.snippetObj.description
+      }) : this.snippetObj;
+      let path = this.path + '/' + this.snippetObj.name;
+      objectToUpdate.shortcut = objectToUpdate.shortcut || this.snippetObj.name;
+      if (!this.snippetObj.name) {
+        Materialize.toast('Please, name the snippet', 3000, 'rounded');
+      } else if (!this.snippetMap[path]) {
+        objectToUpdate.filePath = path;
+        this.Snippets.addSnippet(objectToUpdate);
+      } else {
+        Materialize.toast('Can not use duplicate name', 3000, 'rounded');
+      }
     }
   }
 
@@ -101,7 +105,7 @@ class EditorCtrl {
       Materialize.toast('Please, sign in or sign up first', 3000, 'rounded');
     } else if (this.selectedSnippet) {
       this.updateSnippet(this.selectedSnippet);
-    } else if (this.selectedPublicSnippet in this.snippetMap){
+    } else if (this.selectedPublicSnippet in this.snippetMap) {
       this.updateSnippet(this.selectedPublicSnippet);
     } else {
       this.addSnippet();
@@ -131,14 +135,14 @@ class EditorCtrl {
     this.updateSnippet(this.snippetObj.filePath);
   }
 
-  confirmCopyAction(element){
+  confirmCopyAction(element) {
     Materialize.toast(element + ' added to your clipboard!', 3000, 'rounded');
   }
 
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';
-    if(userTheme !== this.editorOptions && this.editor) {
+    if (userTheme !== this.editorOptions && this.editor) {
       this.editor.setOption('theme', userTheme);
     }
     let path = selectedFolder && (selectedFolder in snippetMap) ? snippetMap[selectedFolder].filePath : null;
@@ -152,24 +156,24 @@ class EditorCtrl {
     let snippetObj = {};
     if (selectedSnippet && (selectedSnippet in snippetMap)) {
       Object.assign(snippetObj, snippetMap[selectedSnippet].value);
-      if(this.editor) {
+      if (this.editor) {
         this.editor.setOption('readOnly', false);
       }
     } else if (selectedPublicSnippet && (selectedPublicSnippet in publicList)) {
       Object.assign(snippetObj, publicList[selectedPublicSnippet].value);
-      if(this.editor) {
+      if (this.editor) {
         this.editor.setOption('readOnly', 'nocursor');
       }
     } else {
-      snippetObj.language = activeUser.username ?  activeUser.language : this.cmDefaults.language;
-      if(this.editor) { 
+      snippetObj.language = activeUser.username ? activeUser.language : this.cmDefaults.language;
+      if (this.editor) {
         this.editor.setOption('readOnly', false);
       }
     }
 
     let buttonText;
     if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
-      buttonText = 'Fork Snippet';
+      buttonText = 'Save Snippet';
     } else if (selectedSnippet || (selectedPublicSnippet in snippetMap)) {
       buttonText = 'Update Snippet';
     } else {
@@ -211,13 +215,13 @@ export let createEditorModal = () => {
     },
     link(scope, element, attrs) {
       scope.dialogStyle = {};
-      if(scope.editorModal.publicList && attrs.snippetPath) {
+      if (scope.editorModal.publicList && attrs.snippetPath) {
         scope.editorModal.snippetObj = scope.editorModal.publicList[attrs.snippetPath] || {};
       }
-      if(attrs.width) { 
+      if (attrs.width) {
         scope.dialogStyle.width = attrs.width;
       }
-      if(attrs.height) {
+      if (attrs.height) {
         scope.dialogStyle.height = attrs.height;
       }
     },
@@ -228,4 +232,3 @@ export let createEditorModal = () => {
     url: '/editor'
   };
 };
-

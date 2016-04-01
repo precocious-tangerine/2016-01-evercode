@@ -17,7 +17,7 @@ class PublicCtrl {
     if (this.$location.absUrl().indexOf('?') != -1) {
       let auth = this.$location.absUrl().slice(-13);
       if(auth === 'verified=true') {
-        Materialize.toast('You have been confired! Please sign in.', 2000, 'rounded');
+        Materialize.toast('Your account has been verified! Please sign in', 3000, 'rounded');
       }
     }
   }
