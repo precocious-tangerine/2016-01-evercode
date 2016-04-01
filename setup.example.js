@@ -1,13 +1,20 @@
 module.exports = {
 	githubClientId: '',
 	githubSecret: '',
-	githubCallback: '/auth/github/callback',
+	githubCallback: 'user/auth/github/callback',
 	mongodbHost: 'mongodb://127.0.0.1',
-	mongodbUsersName: '',
-	mongodbFilesName: '',
+	mongodbUsersName: '/neverCodeUsers',
+	mongodbFilesName: '/neverCodeFiles',
 	mongodbPort: ':27017',
-	secretToken: '',
+	secretToken: 'donkey',
 	verificationEmailRoute: 'user/email-verification',
 	filesServerAddress: '',
-	filesServerPort: 
-}
+	filesServerPort: undefined ,
+	filesServerAddress: '',
+	filesServerPort: '',
+	userServerAddress: '',
+	userServerPort: '',
+	nginxServerAddress: '',
+	nginxServerPort: '',
+	urlDomain: '' 
+};
