@@ -93,8 +93,9 @@ Snippet.removeFolder = (email, folder, callback) => {
   });
 };
 //TODO figure out how to return only 25
-Snippet.getPublic = (callback) => {
-  Snippet.find({ public: 1, name: { $ne: '.config' } })
+Snippet.getPublic = (page, callback) => {
+  page = page || 0;
+  Snippet.find({ public: 1, name: { $ne: '.config' } },{}, {limit:24 , skip: 24 * page})
     .then((foundSnippets) => {
       callback(null, foundSnippets.sort({ _createdAt: -1 }));
     }).catch(callback);

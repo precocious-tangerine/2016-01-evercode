@@ -60,7 +60,8 @@ module.exports = {
       });
   },
   getPublicSnippets(req, res) {
-    Snippets.getPublicAsync()
+    let page = req.body.page || 0;
+    Snippets.getPublicAsync(page)
       .then(snippetList => {
         let fileTreeObj = {};
         snippetList.forEach(snippet => {
