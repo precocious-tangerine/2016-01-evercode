@@ -6,7 +6,7 @@ module.exports = {
 	mongodbUsersName: '/neverCodeUsers',
 	mongodbFilesName: '/neverCodeFiles',
 	mongodbPort: ':27017',
-	secretToken: 'donkey',
+	secretToken: '',
 	verificationEmailRoute: 'user/email-verification',
 	filesServerAddress: '',
 	filesServerPort: undefined ,
