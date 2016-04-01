@@ -2,6 +2,7 @@
 let Promise = require('bluebird');
 let Snippets = Promise.promisifyAll(require('../models/snippets'));
 
+
 module.exports = {
   getSnippet(req, res) {
     Snippets.getSnippetAsync(req.query._id)
@@ -153,7 +154,7 @@ module.exports = {
   },
   rerouteSharedSnippet(req, res) {
     let id = req.query.s;
-    res.redirect('http://nevercode.com/#/main/editor?s=' + id);
+    res.redirect('http://neverco.de/#/main/editor?s=' + id);
   },
 
   addSublimeSnippet(req, res) {
