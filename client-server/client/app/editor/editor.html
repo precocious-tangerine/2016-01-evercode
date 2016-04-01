@@ -3,7 +3,7 @@
   ui-view>
 </div>
 <div class='editor right transform' 
-  ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12' : 'col s9 m9 l9'">
+  ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12' : 'col s12 m9 l9'">
   <div class="row editor-row">
     <form name="snippetForm" 
       ng-submit="editor.buttonTrigger()">
@@ -25,8 +25,7 @@
     <form name="descriptionForm"
       ng-submit="editor.selectedSnippet ? editor.updateSnippet() : ' '">
       <div class="form-group snippet-description">
-        <input class="form-control col s12" 
-          id="snippet-description-input"
+        <input class="form-control col s12"
           name="description"
           placeholder="add a description"
           type="text"
@@ -51,7 +50,7 @@
         ng-hide="editor.addTag"
         ng-click="editor.toggleTag()"
         data-tooltip="Add Tag"
-        data-position="right"
+        data-position="bottom"
         data-delay="800">
         +
       </span>

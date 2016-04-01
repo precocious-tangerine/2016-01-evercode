@@ -13,7 +13,11 @@
           </a>
         </span>
         <span class="folder-list-item right">
-          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect waves-teal material-icons snippet-icon">star</i>
+          <i ng-click="snippets.toggleFavorite(snippet)" class="waves-effect our-waves-circle material-icons snippet-icon tooltipped"
+          data-tooltip="Remove from favorites"
+          data-position="right"
+          data-delay="800"
+          >star</i>
         </span>
         <p class="list-description">
           {{snippet.description}}

@@ -13,7 +13,7 @@ app.use('/', express.static(__dirname + '/client'));
 const port = process.env.port || 3001;
 
 const startServer = () => {
-	app.listen(port, () => console.log('client-server listening on port ', port));
+  app.listen(port, () => console.log('client-server listening on port ', port));
 };
 
 module.exports = startServer;
