@@ -452,14 +452,14 @@ nav,
 .snippet-gallery-card {
   padding: 10px;
   height: 300px;
-  background-color: #2E3C56;
-  border: 2px solid white;
-  color: white;
-  font-weight: 100;
+  background-color: #ecf0f1;
+  border: 2px solid #grey;
+  color: #2E3C56;
+  font-weight: light;
 }
 
 .snippet-gallery-card:hover {
-  border: 2px solid #2E3C56;
+  border: 2px solid darkgrey;
 }
 
 .snippet-gallery-card span {
@@ -584,7 +584,7 @@ nav,
   cursor: pointer;
 }
 
-.responsive-img {
+.user-profile img {
   margin-top: 10px;
 }
 
