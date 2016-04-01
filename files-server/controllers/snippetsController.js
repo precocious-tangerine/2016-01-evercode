@@ -2,7 +2,6 @@
 let Promise = require('bluebird');
 let Snippets = Promise.promisifyAll(require('../models/snippets'));
 
-
 module.exports = {
   getSnippet(req, res) {
     Snippets.getSnippetAsync(req.query._id)
