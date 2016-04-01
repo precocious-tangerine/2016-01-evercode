@@ -123,7 +123,8 @@ class EditorCtrl {
         shortcut: this.snippetObj.shortcut,
         public: this.snippetObj.public,
         annotation: this.snippetObj.annotation,
-        description: this.snippetObj.description
+        description: this.snippetObj.description,
+        username: this.activeUser.username
       });
     objectToUpdate.filePath = this.snippetMap[snippetPath].parent + '/' + this.snippetObj.name;
     this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[snippetPath].filePath);
@@ -139,7 +140,8 @@ class EditorCtrl {
         language: this.snippetObj.language,
         public: false,
         annotation: this.snippetObj.annotation,
-        description: this.snippetObj.description
+        description: this.snippetObj.description,
+        username: this.activeUser.username
       }) : this.snippetObj;
       let path = this.path + '/' + this.snippetObj.name;
       objectToUpdate.shortcut = objectToUpdate.shortcut || this.snippetObj.name;
@@ -224,7 +226,7 @@ class EditorCtrl {
         this.editor.setOption('readOnly', false);
       }
     }
-    this.addTag = false;
+    this.tag = '';
     let buttonText;
     if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
       buttonText = 'Save Snippet';

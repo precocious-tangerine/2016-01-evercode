@@ -18,7 +18,6 @@ module.exports = {
   },
   addSnippet(req, res) {
     req.body.createdBy = req.user.email;
-    req.body.username = req.user.username;
     Snippets.makeSnippetAsync(req.body)
       .then(snippet => {
         res.status(201).send(snippet);
