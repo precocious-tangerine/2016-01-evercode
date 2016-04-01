@@ -226,7 +226,7 @@ class EditorCtrl {
         this.editor.setOption('readOnly', false);
       }
     }
-    this.addTag = false;
+    this.tag = '';
     let buttonText;
     if (selectedPublicSnippet && snippetObj.username !== activeUser.username) {
       buttonText = 'Save Snippet';
