@@ -7,13 +7,14 @@
     </a>
     <ul class="center breadcrumbs top-nav-menu"
       ng-show='mainCtrl.activeUser.email' >
-      <a class="breadcrumb"
-        ui-sref='main.editor.snippets'
-        ng-show="mainCtrl.$state.includes('main.editor')"
-        ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath"
-        ng-click="mainCtrl.changeActiveTab(folder.filePath)" >
-        {{folder.value}}
-      </a>
+      <li class="breadcrumb">
+        <a ui-sref='main.editor.snippets'
+          ng-show="mainCtrl.$state.includes('main.editor')"
+          ng-repeat="folder in mainCtrl.breadcrumbPath track by folder.filePath"
+          ng-click="mainCtrl.changeActiveTab(folder.filePath)" >
+          {{folder.value}}
+        </a>
+      </li>
       <li class='right'><a ui-sref='main.about'>About</a></li>
       <li class='right'><a ui-sref='main.public'>Home</a></li>
     </ul>

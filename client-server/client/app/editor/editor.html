@@ -2,8 +2,8 @@
   ng-class="editor.$state.is('main.editor.search') ? null : 'card'"
   ui-view>
 </div>
-<div class='transform editor col s12 right' 
-  ng-class="editor.$state.is('main.editor') ? 'm12 l12' : 'm9 l9'">
+<div class='editor right transform' 
+  ng-class="editor.$state.is('main.editor') ? 'col s12 m12 l12' : 'col s9 m9 l9'">
   <div class="row editor-row">
     <form name="snippetForm" 
       ng-submit="editor.buttonTrigger()">

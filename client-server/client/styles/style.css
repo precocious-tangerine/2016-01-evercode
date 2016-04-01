@@ -28,6 +28,7 @@ html, body {
     min-width: 90vw !important;
     max-width: 90vw !important;
   }
+}
 
 #container {
   position: absolute;
@@ -71,7 +72,7 @@ html, body {
 
 .top-nav {
   background-color: white;
-  height: 50px;
+  height: 66px;
   box-shadow: none;
 }
 
