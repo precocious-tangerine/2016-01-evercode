@@ -27,9 +27,9 @@
     <div>
       {{snippets.visibleFolders.length ? 'Folders' : ''}}
     </div>
-    <div class="fade" ng-click="snippets.changeActiveTab(folder.filePath)" ng-repeat="folder in snippets.visibleFolders track by $index">
+    <div class="fade" ng-repeat="folder in snippets.visibleFolders track by $index">
       <div class="folder-list waves-effect col s12">
-        <span class="folder-list-item">
+        <span class="folder-list-item" ng-click="snippets.changeActiveTab(folder.filePath)">
           <a class="no-waves folder-list-link">
             <span class="folder-text valign-wrapper">
               <i class="material-icons folder-icon valign">folder</i>
