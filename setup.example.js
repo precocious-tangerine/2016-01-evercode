@@ -8,13 +8,4 @@ module.exports = {
 	mongodbPort: ':27017',
 	secretToken: '',
 	verificationEmailRoute: 'user/email-verification',
-	filesServerAddress: '',
-	filesServerPort: undefined ,
-	filesServerAddress: '',
-	filesServerPort: '',
-	userServerAddress: '',
-	userServerPort: '',
-	nginxServerAddress: '',
-	nginxServerPort: '',
-	urlDomain: '' 
 };

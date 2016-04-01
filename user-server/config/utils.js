@@ -36,7 +36,7 @@ module.exports.decode = (req, res, next) => {
 let createRootFolderAsync = (userObj) => {
   let token = createJWT(userObj);
   return new Promise((resolve, reject) => {
-    let fullUrl = setup.filesServerAddress + ':' + setup.filesServerPort + '/files/api/folders';
+    let fullUrl = 'http://neverco.de/files/api/folders';
     request({
       url: fullUrl,
       method: 'POST',
@@ -63,7 +63,7 @@ module.exports.createRootFolderAsync = createRootFolderAsync;
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://159.203.175.202/user/email-verification/${URL}',
+  verificationURL: 'http://neverco.de/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {
@@ -112,7 +112,7 @@ module.exports.getVerification = (req, res) => {
       if (user) {
         createRootFolderAsync(user)
           .then(() => nev.sendConfirmationEmailAsync(user.email))
-          .then(() => res.redirect('http://159.203.175.202/#/main/public?verified=true'))
+          .then(() => res.redirect('http://neverco.de/#/main/public?verified=true'))
           .catch(err => {
             console.log('err: sending verify email', err);
             res.status(404).send(err);
