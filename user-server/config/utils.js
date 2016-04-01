@@ -63,7 +63,7 @@ module.exports.createRootFolderAsync = createRootFolderAsync;
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://localhost:3003/user/email-verification/${URL}',
+  verificationURL: 'http://159.203.227.218/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {
@@ -112,7 +112,7 @@ module.exports.getVerification = (req, res) => {
       if (user) {
         createRootFolderAsync(user)
           .then(() => nev.sendConfirmationEmailAsync(user.email))
-          .then(() => res.redirect('http://nevercode.com/#/main/public?verified=true'))
+          .then(() => res.redirect('http://159.203.175.202/#/main/public?verified=true'))
           .catch(err => {
             console.log('err: sending verify email', err);
             res.status(404).send(err);
