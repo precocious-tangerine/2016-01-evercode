@@ -67,8 +67,8 @@ nev.configureAsync({
   transportOptions: {
     service: 'Gmail',
     auth: {
-      user: 'precocioustangerine2@gmail.com',
-      pass: 'donkeydonkey'
+      user: setup.email,
+      pass: setup.emailPassword
     }
   },
   passwordFieldName: '_password',
