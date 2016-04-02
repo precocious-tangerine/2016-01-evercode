@@ -8,4 +8,6 @@ module.exports = {
 	mongodbPort: ':27017',
 	secretToken: '',
 	verificationEmailRoute: 'user/email-verification',
+	email: '',
+	emailPassword: ''
 };
