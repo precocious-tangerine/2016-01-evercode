@@ -70,9 +70,13 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     };
     return attach;
   })
-  .run(($rootScope, $state, $auth) => {
+  .run(($rootScope, $state, $auth, $location) => {
     $rootScope.$on('$stateChangeStart', (event, next, toParams, fromState) => {
       if (!$auth.isAuthenticated() && (next.access.restricted || next.name === 'main.editor')) {
+        if($location.absUrl().indexOf('?') !== -1) {
+          $state.go('main.editor');
+          return;
+        }
         if(!fromState.name){
           $state.go('main.public');
         }
