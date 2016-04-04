@@ -72,12 +72,8 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   })
   .run(($rootScope, $state, $auth, $location) => {
     $rootScope.$on('$stateChangeStart', (event, next, toParams, fromState) => {
-      if (!$auth.isAuthenticated() && (next.access.restricted || next.name === 'main.editor')) {
-        if($location.absUrl().indexOf('?') !== -1) {
-          $state.go('main.editor');
-          return;
-        }
-        if(!fromState.name){
+      if (($location.absUrl().indexOf('?') === -1) && !$auth.isAuthenticated() && (next.access.restricted || next.name === 'main.editor')) {
+        if (!fromState.name) {
           $state.go('main.public');
         }
         event.preventDefault();
@@ -86,7 +82,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
     });
     $rootScope.$on('$stateChangeSuccess', () => {
       $('.material-tooltip').css('display', 'none');
-      if($state.is('main')) {
+      if ($state.is('main')) {
         $state.go('.public');
       }
     });
