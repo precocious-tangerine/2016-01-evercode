@@ -38,8 +38,8 @@ class EditorCtrl {
         let base62Chunks = [];
         let id = '';
         for (let i = 0; i < base62String.length; i += 8){
-          if(base62String[i + 9]){
-            base62Chunks.push(base62String.slice(i, i + 9));
+          if(base62String[i + 8]){
+            base62Chunks.push(base62String.slice(i, i + 8));
           } else {
             base62Chunks.push(base62String.slice(i));
           }
