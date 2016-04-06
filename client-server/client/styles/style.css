@@ -584,6 +584,9 @@ li.snippet-gallery {
   font-style: italic;
 }
 
+#download-description {
+  color: #FFFFFF;
+}
 .sublime-secret-entry {
   text-align: center;
 }
