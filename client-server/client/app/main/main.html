@@ -174,4 +174,10 @@
 
 <signup  show='mainCtrl.signupModalShow' other='mainCtrl.signinModalShow' width='400px' height='auto'>
 </signup>
-<script>$(".button-collapse").sideNav({closeOnClick: true})</script>
+<script>
+$(".button-collapse").sideNav({closeOnClick: true});
+$("a.tooltipped").click( function() {
+  this.blur();
+});
+</script>
+          
