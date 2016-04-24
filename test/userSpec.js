@@ -1,12 +1,8 @@
 'use strict';
-require('babel-polyfill');
 let expect = require('chai').expect;
-let mongoose = require('mongoose');
 let Promise = require('bluebird');
-mongoose.connect('mongodb://127.0.0.1/everCodeTest');
-let User = require('../user-server/models/users');
-let Snippet = require('../files-server/models/snippets');
-let Users = Promise.promisifyAll(require('../user-server/models/users'));
+let User = Promise.promisifyAll(require('../user-server/models/users'));
+let Snippet = Promise.promisifyAll(require('../files-server/models/snippets'));
 
 let removeTestUser = (callback) => {
   User.findOne({ email: 'test@chai.com' })
@@ -55,7 +51,7 @@ describe('the User Model', () => {
       };
 
       let testMakeUser = () => {
-        Users.makeUserAsync(testUser)
+        User.makeUserAsync(testUser)
           .then(returnedUser => {
             resultUser = returnedUser;
             done();
@@ -88,8 +84,7 @@ describe('the User Model', () => {
     it('should have a root folder in the snippets db collection', (done) => {
       Snippet.findOne({ createdBy: resultUser.email })
         .then(result => {
-          expect(result).to.have.property('createdBy')
-            .that.equals(resultUser.email);
+          expect(result).to.have.property('createdBy').that.equals(resultUser.email);
           done();
           if (result) {
             result.remove();
@@ -115,7 +110,7 @@ describe('the User Model', () => {
         User.create(testUser)
           .then(returnedUser => {
             testUser = returnedUser;
-            Users.getUserAsync(testUser.email)
+            User.getUserAsync(testUser.email)
               .then(result => {
                 resultUser = result;
                 done();
@@ -167,7 +162,7 @@ describe('the User Model', () => {
         User.create(testUser)
           .then(returnedUser => {
             testUser = returnedUser;
-            Users.updateUserAsync(testUser.email, userUpdates)
+            User.updateUserAsync(testUser.email, userUpdates)
               .then(result => {
                 updateResult = result;
                 User.findOne({ _id: testUser._id })
@@ -223,7 +218,7 @@ describe('the User Model', () => {
         User.create(testUser)
           .then(returnedUser => {
             resultUser = returnedUser;
-            Users.removeUserAsync(testUser.email)
+            User.removeUserAsync(testUser.email)
               .then(result => {
                 deleteResult = result;
                 done();

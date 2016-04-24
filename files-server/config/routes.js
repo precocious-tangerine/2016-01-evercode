@@ -1,5 +1,6 @@
 'use strict';
 let snippetsController = require('../controllers/snippetsController');
+
 module.exports = (app) => {
   // Access, add, remove or update user snippets
   app.route('/files/api/snippets')

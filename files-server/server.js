@@ -1,10 +1,6 @@
 'use strict';
 let express = require('express');
 let app = express();
-let mongoose = require('mongoose');
-let setup = require('../setup.js');
-
-mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbFilesName);
 
 require(__dirname + '/config/middleware.js')(app, express);
 require(__dirname + '/config/routes.js')(app, express);

@@ -1,5 +1,8 @@
 'use strict';
 let mongoose = require('mongoose');
+let setup = require('../../setup.js');
+let db = mongoose.createConnection(setup.mongodbHost + setup.mongodbPort + setup.mongodbFilesName);
+
 let Promise = require('bluebird');
 
 let snippetSchema = mongoose.Schema({
@@ -19,7 +22,7 @@ let snippetSchema = mongoose.Schema({
   language: { type: String, default: 'javascript' }
 });
 
-let Snippet = mongoose.model('Snippet', snippetSchema);
+let Snippet = db.model('Snippet', snippetSchema);
 
 Snippet.makeSnippet = (snippetObj, callback) => {
   Snippet.findOne({filePath: snippetObj.filePath})

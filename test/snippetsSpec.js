@@ -2,11 +2,11 @@
 require('babel-polyfill');
 let expect = require('chai').expect;
 let Promise = require('bluebird');
-let Snippet = require('../files-server/models/snippets');
-let Snippets = Promise.promisifyAll(require('../files-server/models/snippets'));
+let Snippet = Promise.promisifyAll(require('../files-server/models/snippets'));
+
 
 let removeTestSnippet = (callback) => {
-  Snippet.findOne({ data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets' })
+  Snippet.findOne({ data: 'I am the test Snippet, and I stand alone in this world of snippets' })
     .then(result => {
       if (result) {
         result.remove(callback);
@@ -46,14 +46,14 @@ describe('the Snippet Model', () => {
 
       let testSnippet = {
         createdBy: 'test@chai.com',
-        data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+        data: 'I am the test Snippet, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/',
         name: 'test.snip',
         username: 'test'
       };
 
       let testMakeSnippet = () => {
-        Snippets.makeSnippetAsync(testSnippet)
+        Snippet.makeSnippetAsync(testSnippet)
           .then(returnedSnippet => {
             resultSnippet = returnedSnippet;
             done();
@@ -117,7 +117,7 @@ describe('the Snippet Model', () => {
 
       let testSnippet = {
         createdBy: 'test@chai.com',
-        data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+        data: 'I am the test Snippet, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/',
         name: 'test.snip',
         username: 'test'
@@ -127,7 +127,7 @@ describe('the Snippet Model', () => {
         Snippet.create(testSnippet)
           .then(returnedSnippet => {
             testSnippet = returnedSnippet;
-            Snippets.getSnippetAsync(testSnippet._id)
+            Snippet.getSnippetAsync(testSnippet._id)
               .then(result => {
                 resultSnippet = result;
                 done();
@@ -188,7 +188,7 @@ describe('the Snippet Model', () => {
     };
     let testSnippet = {
       createdBy: 'test@chai.com',
-      data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+      data: 'I am the test Snippet, and I stand alone in this world of snippets',
       filePath: 'test@chai.com/test.snip',
       name: 'test.snip',
       username: 'test'
@@ -199,7 +199,7 @@ describe('the Snippet Model', () => {
         Snippet.create(testSnippet)
           .then(returnedSnippet => {
             oldSnippet = returnedSnippet;
-            Snippets.updateSnippetAsync(returnedSnippet._id, snippetUpdates)
+            Snippet.updateSnippetAsync(returnedSnippet._id, snippetUpdates)
               .then(result => {
                 updateResult = result;
                 Snippet.findOne({ _id: returnedSnippet._id })
@@ -253,7 +253,7 @@ describe('the Snippet Model', () => {
     before(done => {
       let testSnippet = {
         createdBy: 'test@chai.com',
-        data: 'I am the test Snippet, made by Edison Huff, and I stand alone in this world of snippets',
+        data: 'I am the test Snippet, and I stand alone in this world of snippets',
         filePath: 'test@chai.com/test.snip',
         name: 'test.snip',
         username: 'test'
@@ -344,7 +344,7 @@ describe('the Snippet Model', () => {
 
     before(done => {
       let testMakeRootFolder = () => {
-        Snippets.makeRootFolderAsync(email, username)
+        Snippet.makeRootFolderAsync(email, username)
           .then(createdFolder => {
             folder = createdFolder;
             done();
@@ -382,7 +382,7 @@ describe('the Snippet Model', () => {
 
     before(done => {
       let testMakeSubFolder = () => {
-        Snippets.makeSubFolderAsync(email, username, filepath)
+        Snippet.makeSubFolderAsync(email, username, filepath)
           .then(createdFolder => {
             folder = createdFolder;
             done();
@@ -422,9 +422,9 @@ describe('the Snippet Model', () => {
 
     before(done => {
       let testRemoveFolder = () => {
-        Snippets.makeSubFolderAsync(email, username, filepath)
+        Snippet.makeSubFolderAsync(email, username, filepath)
           .then(createdFolder => {
-            Snippets.removeFolderAsync(email, filepath)
+            Snippet.removeFolderAsync(email, filepath)
               .then(result => {
                 success = result[0].result;
                 Snippet.findOne({ filepath: filepath + '/.config' })

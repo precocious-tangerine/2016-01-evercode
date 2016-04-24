@@ -1,6 +1,9 @@
 'use strict';
-let Promise = require('bluebird');
 let mongoose = require('mongoose');
+let setup = require('../../setup.js');
+let db = mongoose.createConnection(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
+
+let Promise = require('bluebird');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 let utils = require('../config/utils.js');
 
@@ -18,7 +21,7 @@ let userSchema = mongoose.Schema({
   sublimeSecret: { type: String, default: 'No secret issued;' }
 });
 
-let User = mongoose.model('User', userSchema);
+let User = db.model('User', userSchema);
 
 User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
