@@ -9,6 +9,8 @@ let User = require('../models/users.js');
 let jwt = require('jsonwebtoken');
 let secret = setup.secretToken;
 
+mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
+
 
 let createJWT = (user) => {
   let payload = {
