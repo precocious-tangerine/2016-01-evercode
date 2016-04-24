@@ -71,6 +71,7 @@ module.exports = {
         final[snippet.filePath] = {};
         final[snippet.filePath].filePath = snippet.filePath;
         final[snippet.filePath].value = snippet;
+        return final;
       }, {});
       res.status(200).send(fileTreeObj);
     })
@@ -86,6 +87,7 @@ module.exports = {
         if (Array.isArray(results) && results.length > 0) {
           let fileTreeObj = results.reduce((final, snippet) => {
             final[snippet.filePath] = snippet;
+            return final;
           }, {});
           res.status(200).send(fileTreeObj);
         } else {
