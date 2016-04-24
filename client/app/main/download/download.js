@@ -1,4 +1,4 @@
-import * as Actions from '../redux/actions.js';
+import * as Actions from '../../redux/actions.js';
 
 class DownloadCtrl {
 	constructor($ngRedux, $http) {

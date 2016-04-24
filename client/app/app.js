@@ -1,27 +1,28 @@
 import angular from 'angular';
 import ngRedux from 'ng-redux';
 import createLogger from 'redux-logger';
-import { finalReducer } from './redux/reducers.js';
+import {finalReducer} from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import 'angular-ui-codemirror';
-import { createAuthModal } from './auth/auth.js';
-import { createAboutCtrl } from './about/about.js';
-import { createDownloadCtrl } from './download/download.js';
-import { search } from './search/search.js';
-import { Folders, Auth, Snippets, Public } from './services/services.js';
-import { snippets } from './snippets/snippets.js';
-import { createFolderModal } from './foldermodal/foldermodal.js';
-import { createMoveModal } from './movemodal/moveModal.js';
-import { createMainCtrl } from './main/main.js';
-import { editor, createEditorModal } from './editor/editor.js';
-import { publicPage } from './public/public.js';
-import { profile } from './profile/profile.js';
+import {createAuthModal} from './modals/authmodals/authmodal.js';
+import {createAboutCtrl} from './main/about/about.js';
+import {createDownloadCtrl} from './main/download/download.js';
+import {search} from './main/editor/search/search.js';
+import {Folders, Auth, Snippets, Public} from './services/services.js';
+import {snippets} from './main/editor/snippets/snippets.js';
+import {createFolderModal} from './modals/foldermodal/foldermodal.js';
+import {createMoveModal} from './modals/movemodal/moveModal.js';
+import {createMainCtrl} from './main/main.js';
+import {editor, createEditorModal} from './main/editor/editor.js';
+import {publicPage} from './main/public/public.js';
+import {profile} from './main/editor/profile/profile.js';
 import satellizer from 'satellizer';
-import setup from '../../../setup.js';
+import setup from '../../setup.js';
 import 'ngclipboard';
 import 'angular-animate';
 import './tinymce/tinymce.js';
 import 'ng-focus-on';
+
 angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
