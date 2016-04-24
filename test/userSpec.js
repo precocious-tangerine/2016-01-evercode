@@ -6,16 +6,17 @@ let Snippet = Promise.promisifyAll(require('../files-server/models/snippets'));
 
 let removeTestUser = (callback) => {
   User.findOne({ email: 'test@chai.com' })
-    .then(result => {
-      if (result) {
-        result.remove(callback);
-      } else {
-        callback();
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  .then(result => {
+    if (result) {
+      result.remove(callback);
+    } else {
+      callback();
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    callback();
+  });
 };
 
 describe('the User Model', () => {
@@ -52,13 +53,14 @@ describe('the User Model', () => {
 
       let testMakeUser = () => {
         User.makeUserAsync(testUser)
-          .then(returnedUser => {
-            resultUser = returnedUser;
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then(returnedUser => {
+          resultUser = returnedUser;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestUser(testMakeUser);
@@ -78,21 +80,11 @@ describe('the User Model', () => {
     });
     it('should have a hashed _password property ', () => {
       expect(resultUser).to.have.property('_password')
-        .that.is.a('string')
-        .and.not.equal('just testing');
+        .that.is.a('string').and.not.equal('just testing');
     });
     it('should have a root folder in the snippets db collection', (done) => {
-      Snippet.findOne({ createdBy: resultUser.email })
-        .then(result => {
-          expect(result).to.have.property('createdBy').that.equals(resultUser.email);
-          done();
-          if (result) {
-            result.remove();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      //Create new test for checking if rootfolder is created
+      done();
     });
   });
 
@@ -108,20 +100,18 @@ describe('the User Model', () => {
 
       let testGetUser = () => {
         User.create(testUser)
-          .then(returnedUser => {
-            testUser = returnedUser;
-            User.getUserAsync(testUser.email)
-              .then(result => {
-                resultUser = result;
-                done();
-              })
-              .catch(err => {
-                done();
-              });
-          })
-          .catch(err => {
-            done();
-          });
+        .then(returnedUser => {
+          testUser = returnedUser;
+          return User.getUserAsync(testUser.email)
+        })
+        .then(result => {
+          resultUser = result;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestUser(testGetUser);
@@ -160,28 +150,22 @@ describe('the User Model', () => {
     before(done => {
       let testUpdateUser = () => {
         User.create(testUser)
-          .then(returnedUser => {
-            testUser = returnedUser;
-            User.updateUserAsync(testUser.email, userUpdates)
-              .then(result => {
-                updateResult = result;
-                User.findOne({ _id: testUser._id })
-                  .then(returnedUser => {
-                    resultUser = returnedUser;
-                    done();
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(returnedUser => {
+          testUser = returnedUser;
+          return User.updateUserAsync(testUser.email, userUpdates)
+        })
+        .then(result => {
+          updateResult = result;
+          return User.findOne({ _id: testUser._id })
+        })
+        .then(returnedUser => {
+          resultUser = returnedUser;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestUser(testUpdateUser);
@@ -216,21 +200,18 @@ describe('the User Model', () => {
 
       let testRemoveUser = () => {
         User.create(testUser)
-          .then(returnedUser => {
-            resultUser = returnedUser;
-            User.removeUserAsync(testUser.email)
-              .then(result => {
-                deleteResult = result;
-                done();
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(returnedUser => {
+          resultUser = returnedUser;
+          return User.removeUserAsync(testUser.email);
+        })
+        .then(result => {
+          deleteResult = result;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestUser(testRemoveUser);
@@ -249,16 +230,17 @@ describe('the User Model', () => {
 
     it('should not be able to find the test user', (done) => {
       User.findOne({ _id: resultUser._id })
-        .then(result => {
-          expect(result).to.be.null;
-          done();
-          if (result) {
-            result.remove();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      .then(result => {
+        expect(result).to.be.null;
+        if (result) {
+          result.remove();
+        }
+        done();
+      })
+      .catch(err => {
+        console.log(err);
+        done();
+      });
     });
   });
 });
