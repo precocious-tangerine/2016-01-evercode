@@ -7,17 +7,17 @@ let Snippet = Promise.promisifyAll(require('../files-server/models/snippets'));
 
 let removeTestSnippet = (callback) => {
   Snippet.findOne({ data: 'I am the test Snippet, and I stand alone in this world of snippets' })
-    .then(result => {
-      if (result) {
-        result.remove(callback);
-      } else {
-        callback();
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      callback(err);
-    });
+  .then(result => {
+    if (result) {
+      result.remove(callback);
+    } else {
+      callback();
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    callback(err);
+  });
 };
 
 describe('the Snippet Model', () => {
@@ -54,14 +54,14 @@ describe('the Snippet Model', () => {
 
       let testMakeSnippet = () => {
         Snippet.makeSnippetAsync(testSnippet)
-          .then(returnedSnippet => {
-            resultSnippet = returnedSnippet;
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(returnedSnippet => {
+          resultSnippet = returnedSnippet;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestSnippet(testMakeSnippet);
@@ -125,20 +125,18 @@ describe('the Snippet Model', () => {
 
       let testGetSnippet = () => {
         Snippet.create(testSnippet)
-          .then(returnedSnippet => {
-            testSnippet = returnedSnippet;
-            Snippet.getSnippetAsync(testSnippet._id)
-              .then(result => {
-                resultSnippet = result;
-                done();
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            done();
-          });
+        .then(returnedSnippet => {
+          testSnippet = returnedSnippet;
+          return testSnippet._id;
+        })
+        .then(Snippet.getSnippetAsync)
+        .then(result => {
+          resultSnippet = result;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+        });
       };
 
       removeTestSnippet(testGetSnippet);
@@ -169,13 +167,11 @@ describe('the Snippet Model', () => {
     });
 
     it('should have a name property that is a string', () => {
-      expect(resultSnippet).to.have.property('name', 'test.snip')
-        .that.is.a('string');
+      expect(resultSnippet).to.have.property('name', 'test.snip').that.is.a('string');
     });
 
     it('should have a public property that is a boolean and defaulted to true', () => {
-      expect(resultSnippet).to.have.property('public', true)
-        .that.is.a('boolean');
+      expect(resultSnippet).to.have.property('public', true).that.is.a('boolean');
     });
   });
 
@@ -197,28 +193,22 @@ describe('the Snippet Model', () => {
     before(done => {
       let testUpdateSnippet = () => {
         Snippet.create(testSnippet)
-          .then(returnedSnippet => {
-            oldSnippet = returnedSnippet;
-            Snippet.updateSnippetAsync(returnedSnippet._id, snippetUpdates)
-              .then(result => {
-                updateResult = result;
-                Snippet.findOne({ _id: returnedSnippet._id })
-                  .then(returnedSnippet => {
-                    resultSnippet = returnedSnippet;
-                    done();
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(returnedSnippet => {
+          oldSnippet = returnedSnippet;
+          return Snippet.updateSnippetAsync(oldSnippet._id, snippetUpdates);
+        })
+        .then(result => {
+          updateResult = result;
+          return Snippet.findOne({ _id: oldSnippet._id })
+        })
+        .then(returnedSnippet => {
+          resultSnippet = returnedSnippet;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestSnippet(testUpdateSnippet);
@@ -261,21 +251,18 @@ describe('the Snippet Model', () => {
 
       let testRemoveSnippet = () => {
         Snippet.create(testSnippet)
-          .then(returnedSnippet => {
-            resultSnippet = returnedSnippet;
-            Snippet.removeSnippetAsync(returnedSnippet._id)
-              .then(result => {
-                deleteResult = result;
-                done();
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(returnedSnippet => {
+          resultSnippet = returnedSnippet;
+          return Snippet.removeSnippetAsync(returnedSnippet._id)
+        })
+        .then(result => {
+          deleteResult = result;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestSnippet(testRemoveSnippet);
@@ -283,43 +270,43 @@ describe('the Snippet Model', () => {
     });
 
     it('should return a results object', () => {
-      expect(deleteResult.result).to.be.an('object')
-        .that.has.property('ok');
+      expect(deleteResult.result).to.be.an('object').that.has.property('ok');
     });
 
     it('should report removal from the database', () => {
-      expect(deleteResult.result).to.have.property('n')
-        .that.equals(1);
+      expect(deleteResult.result).to.have.property('n').that.equals(1);
     });
 
     it('should not be able to find the test snippet', (done) => {
       Snippet.findOne({ _id: resultSnippet._id })
-        .then(result => {
-          expect(result).to.be.null;
-          done();
-          if (result) {
-            result.remove();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      .then(result => {
+        expect(result).to.be.null;
+        if (result) {
+          result.remove();
+        }
+        done();
+      })
+      .catch(err => {
+        console.log(err);
+        done();
+      });
     });
   });
 
   let removeTestFolderSnippet = (callback) => {
     Snippet.find({ email: 'test@chai.com' })
-      .then(result => {
-        if (Array.isArray(result)) {
-          result.forEach(snippet => snippet.remove());
-          callback();
-        } else {
-          callback();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    .then(result => {
+      if (Array.isArray(result)) {
+        result.forEach(snippet => snippet.remove());
+        callback();
+      } else {
+        callback();
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      callback();
+    });
   };
 
   describe('Folder basics', () => {
@@ -345,14 +332,14 @@ describe('the Snippet Model', () => {
     before(done => {
       let testMakeRootFolder = () => {
         Snippet.makeRootFolderAsync(email, username)
-          .then(createdFolder => {
-            folder = createdFolder;
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(createdFolder => {
+          folder = createdFolder;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestFolderSnippet(testMakeRootFolder);
@@ -366,10 +353,8 @@ describe('the Snippet Model', () => {
     it('should add initial properties', () => {
       expect(folder).to.have.property('filePath', '/test@chai.com/.config')
         .that.is.a('string');
-      expect(folder).to.have.property('username', 'test')
-        .that.is.a('string');
-      expect(folder).to.have.property('favorite', false)
-        .that.is.a('boolean');
+      expect(folder).to.have.property('username', 'test').that.is.a('string');
+      expect(folder).to.have.property('favorite', false).that.is.a('boolean');
     });
 
   });
@@ -383,14 +368,14 @@ describe('the Snippet Model', () => {
     before(done => {
       let testMakeSubFolder = () => {
         Snippet.makeSubFolderAsync(email, username, filepath)
-          .then(createdFolder => {
-            folder = createdFolder;
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(createdFolder => {
+          folder = createdFolder;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestFolderSnippet(testMakeSubFolder);
@@ -407,10 +392,8 @@ describe('the Snippet Model', () => {
     });
 
     it('should have other properties unchanged', () => {
-      expect(folder).to.have.property('username', 'test')
-        .that.is.a('string');
-      expect(folder).to.have.property('favorite', false)
-        .that.is.a('boolean');
+      expect(folder).to.have.property('username', 'test').that.is.a('string');
+      expect(folder).to.have.property('favorite', false).that.is.a('boolean');
     });
   });
 
@@ -423,27 +406,19 @@ describe('the Snippet Model', () => {
     before(done => {
       let testRemoveFolder = () => {
         Snippet.makeSubFolderAsync(email, username, filepath)
-          .then(createdFolder => {
-            Snippet.removeFolderAsync(email, filepath)
-              .then(result => {
-                success = result[0].result;
-                Snippet.findOne({ filepath: filepath + '/.config' })
-                  .then(foundSnippet => {
-                    snippet = foundSnippet;
-                    done();
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
+        .then(createdFolder => Snippet.removeFolderAsync(email, filepath))
+        .then(result => {
+          success = result[0].result;
+          return Snippet.findOne({ filepath: filepath + '/.config' })
+        })
+        .then(foundSnippet => {
+          snippet = foundSnippet;
+          done();
+        })
+        .catch(err => {
+          console.log(err);
+          done();
+        });
       };
 
       removeTestFolderSnippet(testRemoveFolder);
