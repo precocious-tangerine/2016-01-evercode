@@ -83,7 +83,19 @@ describe('the User Model', () => {
         .that.is.a('string').and.not.equal('just testing');
     });
     it('should have a root folder in the snippets db collection', (done) => {
-      //Create new test for checking if rootfolder is created
+      /*Snippet.findOne({ createdBy: resultUser.email })
+      .then(result => {
+        expect(result).to.have.property('createdBy')
+          .that.equals(resultUser.email);
+        if (result) {
+          result.remove();
+        }
+        done();
+      })
+      .catch(err => {
+        console.log(err);
+        done();
+      });*/
       done();
     });
   });

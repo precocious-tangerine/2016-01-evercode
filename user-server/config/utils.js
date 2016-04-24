@@ -38,7 +38,7 @@ module.exports.decode = (req, res, next) => {
 let createRootFolderAsync = (userObj) => {
   let token = createJWT(userObj);
   return new Promise((resolve, reject) => {
-    let fullUrl = 'http://neverco.de/files/api/folders';
+    let fullUrl = setup.server + '/files/api/folders';
     request({
       url: fullUrl,
       method: 'POST',

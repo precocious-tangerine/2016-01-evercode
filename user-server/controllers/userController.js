@@ -102,7 +102,7 @@ module.exports = {
   },
   generateSublimeSecret(req, res) {
     let email = req.user.email;
-    Users.createSublimeSecret(email)
+    Users.createSublimeSecretAsync(email)
     .then(secret => {
       res.status(201).send(secret);
     })
@@ -110,7 +110,7 @@ module.exports = {
   },
   verifySublimeSecret(req, res) {
     let secret = req.headers.secret;
-    Users.exchangeSecretForToken(secret)
+    Users.exchangeSecretForTokenAsync(secret)
     .then(userObj => {
       let { email, username } = userObj;
       let token = utils.createJWT({ email, username });

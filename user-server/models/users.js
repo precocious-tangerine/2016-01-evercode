@@ -39,7 +39,7 @@ User.makeUser = (userObj, callback) => {
     .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
-    return utils.createRootFolderAsync(userObj)
+    utils.createRootFolderAsync(userObj)
       .then(() => User.create(userObj))
       .then(() => callback(null, userObj))
       .catch(err => callback(err, null));
@@ -48,7 +48,7 @@ User.makeUser = (userObj, callback) => {
   }
 };
 User.getUser = (email, callback) => {
-  return User.findOne({ email: email })
+  User.findOne({ email })
   .then((userObj) => {
     callback(null, userObj);
   })
@@ -64,26 +64,26 @@ User.removeUser = (email, callback) => {
 };
 User.checkCredentials = (email, attempt, callback) => {
   let userData = {};
-  return User.findOne({ email })
-    .then(foundUser => {
-      if (foundUser) {
-        userData = foundUser.toObject();
-        return bcrypt.compareAsync(attempt, foundUser._password)
-          .then(success => {
-            if (success) {
-              delete userData._password;
-              callback(null, userData);
-            } else {
-              callback(new Error('Incorrect Password'), null);
-            }
-          })
-          .catch(callback);
-      } else {
-        callback(new Error('Email not found'), null);
-      }
-    });
+  User.findOne({ email })
+  .then(foundUser => {
+    if (foundUser) {
+      userData = foundUser.toObject();
+      bcrypt.compareAsync(attempt, foundUser._password)
+      .then(success => {
+        if (success) {
+          delete userData._password;
+          callback(null, userData);
+        } else {
+          callback(new Error('Incorrect Password'), null);
+        }
+      })
+      .catch(callback);
+    } else {
+      callback(new Error('Email not found'), null);
+    }
+  });
 };
-User.createSublimeSecret = (email) => {
+User.createSublimeSecretAsync = (email) => {
   return User.findOne({ email })
     .then(foundUser => {
       if (foundUser) {
@@ -103,8 +103,7 @@ User.createSublimeSecret = (email) => {
       }
     });
 };
-User.exchangeSecretForToken = (sublimeSecret) => {
-  console.log('about to query db for ', sublimeSecret);
+User.exchangeSecretForTokenAsync = (sublimeSecret) => {
   return User.findOne({ sublimeSecret });
 };
 
