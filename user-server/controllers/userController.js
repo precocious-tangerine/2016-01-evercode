@@ -13,111 +13,110 @@ module.exports = {
     let token;
     //Do some comparing
     Users.checkCredentialsAsync(email, password)
-      .then((userData) => {
-        token = utils.createJWT({ email, username: userData.username });
-        res.status(201).send({ token, msg: 'Authorized' });
-      }).catch((err) => {
-        console.log(err);
-        res.status(401).send({ msg: 'Unauthorized' });
-      });
+    .then((userData) => {
+      token = utils.createJWT({ email, username: userData.username });
+      res.status(201).send({ token, msg: 'Authorized' });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send({ msg: 'Unauthorized' });
+    });
   },
   signup(req, res) {
     let { email, password, username } = req.body;
     let token;
     Users.getUserAsync(email)
-      .then(found => {
-        if (found) {
-          res.status(500).send('User with given email already exists!');
-        } else {
-          Users.makeUserAsync({ email, _password: password, username: username })
-            .then(userData => {
-              token = utils.createJWT({ email: userData.email, username: userData.username });
-              res.status(201).send({ token });
-            })
-            .catch((err) => {
-              console.log(err);
-              res.status(500).send(err);
-            });
-        }
-      });
+    .then(found => {
+      if (found) {
+        res.status(500).send('User with given email already exists!');
+      } else {
+        Users.makeUserAsync({ email, _password: password, username: username })
+        .then(userData => {
+          token = utils.createJWT({ email: userData.email, username: userData.username });
+          res.status(201).send({ token });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send(err);
+        });
+      }
+    });
   },
   userInfo(req, res) {
     let email = req.user.email;
     Users.getUserAsync(email)
-      .then(userData => {
-        let { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret } = userData;
-        let user = { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret };
-        res.status(201).send(user);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send(err);
-      });
+    .then(userData => {
+      let { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret } = userData;
+      let user = { username, avatar_url, email, theme, selectedSnippet, language, sublimeSecret };
+      res.status(201).send(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
   },
   updateUserInfo(req, res) {
     let email = req.user.email;
     Users.updateUserAsync(email, req.body)
-      .then(() => {
-        Users.getUserAsync(email)
-          .then(userData => {
-            let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
-            let user = { username, avatar_url, email, theme, selectedSnippet, language };
-            res.status(201).send(user);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).send(err);
+    .then(() => {
+      Users.getUserAsync(email)
+      .then(userData => {
+        let { username, avatar_url, email, theme, selectedSnippet, language } = userData;
+        let user = { username, avatar_url, email, theme, selectedSnippet, language };
+        res.status(201).send(user);
       });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
   },
   updatePassword(req, res) {
     let { email, password, newPassword } = req.body;
     if (typeof newPassword === 'string' && newPassword !== '') {
       Users.findOne({ email: email })
-        .then(foundUser => {
-          if (foundUser) {
-            return bcrypt.compareAsync(password, foundUser._password)
-              .then(() => bcrypt.genSaltAsync(13))
-              .then(salt => bcrypt.hashAsync(newPassword, salt))
-              .then(hash => {
-                return Users.updateUserAsync(email, { _password: hash })
-                  .then(success => {
-                    res.status(201).send(success);
-                  });
-              })
-              .catch(err => {
-                res.status(500).send(err);
-              });
-          } else {
-            res.status(500).send('User with given email does not exist');
-          }
-        })
-        .catch(err => {
-          res.status(500).send(err);
-        });
+      .then(foundUser => {
+        if (foundUser) {
+          return bcrypt.compareAsync(password, foundUser._password)
+            .then(() => bcrypt.genSaltAsync(13))
+            .then(salt => bcrypt.hashAsync(newPassword, salt))
+            .then(hash => {
+              return Users.updateUserAsync(email, { _password: hash })
+                .then(success => {
+                  res.status(201).send(success);
+                });
+            })
+            .catch(err => {
+              res.status(500).send(err);
+            });
+        } else {
+          res.status(500).send('User with given email does not exist');
+        }
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
     } else {
       res.status(500).send('New password has invalid format');
     }
   },
   generateSublimeSecret(req, res) {
     let email = req.user.email;
-    console.log(email);
     Users.createSublimeSecret(email)
-      .then(secret => {
-        console.log('secret from model is ', secret);
-        res.status(201).send(secret);
-      })
-      .catch(() => res.status(401).send('Unauthorized'));
+    .then(secret => {
+      res.status(201).send(secret);
+    })
+    .catch(() => res.status(401).send('Unauthorized'));
   },
   verifySublimeSecret(req, res) {
     let secret = req.headers.secret;
     Users.exchangeSecretForToken(secret)
-      .then(userObj => {
-        let { email, username } = userObj;
-        let token = utils.createJWT({ email, username });
-        res.status(200).send(token);
-      })
-      .catch(() => res.status(401).send('Unauthorized'));
+    .then(userObj => {
+      let { email, username } = userObj;
+      let token = utils.createJWT({ email, username });
+      res.status(200).send(token);
+    })
+    .catch(() => res.status(401).send('Unauthorized'));
   },
   githubLogin(req, res) {
     var accessTokenUrl = 'https://github.com/login/oauth/access_token';
@@ -138,21 +137,22 @@ module.exports = {
         // Step 3a. Link user accounts.
         Users.findOne({ email: profile.email }, (err, existingUser) => {
           if (existingUser) {
-            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url }).then(() => {
+            Users.updateUserAsync(profile.email, { github: profile.id, avatar_url: profile.avatar_url })
+            .then(() => {
               var token = utils.createJWT({ email: existingUser.email, username: profile.name });
               res.status(201).send({ token });
             });
           } else {
             let { email, id, avatar_url, name } = profile;
             Users.makeUserAsync({ email, github: id, avatar_url, username: name })
-              .then((userObj) => {
-                token = utils.createJWT({ email: userObj.email, username: userObj.username });
-                res.status(201).send({ token });
-              })
-              .catch((err) => {
-                console.log(err);
-                res.status(401).send('Unauthorized');
-              });
+            .then((userObj) => {
+              token = utils.createJWT({ email: userObj.email, username: userObj.username });
+              res.status(201).send({ token });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(401).send('Unauthorized');
+            });
           }
         });
       });

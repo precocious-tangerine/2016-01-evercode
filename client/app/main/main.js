@@ -16,14 +16,13 @@ class MainCtrl {
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
-  toggleSideView(path, newSnippet) {
-    if(newSnippet){
+  toggleSideView(path, newSnippetBoolean) {
+    this.Public.removeSelectedPublicSnippet();
+    if(newSnippetBoolean){
       this.Snippets.deselectSnippet();
-      this.Public.removeSelectedPublicSnippet();
       this.focus('snippet-input-name');
       this.$state.go('main.editor'); 
     } else {
-      this.Public.removeSelectedPublicSnippet();
       if(this.$state.is('main.' + path)) {
         this.$state.go('main.editor'); 
       } else {

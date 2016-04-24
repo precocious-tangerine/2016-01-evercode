@@ -25,12 +25,10 @@ class PublicCtrl {
     this.Public.setSelectedPublicSnippet(filepath);
     this.editorModalShow = !this.editorModalShow;
   }
-
   openSnippet(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
     this.$state.go('main.editor.snippets');
   }
-
   mapStateToThis(state) {
     let { publicList, selectedPublicSnippet} = state;
     let snippetArr = Object.keys(publicList).map(key => {

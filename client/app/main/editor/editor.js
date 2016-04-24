@@ -24,11 +24,9 @@ class EditorCtrl {
     this.getSharedSnippet();
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
-
   hideModal() {
     this.show = false;
   }
-
   getSharedSnippet() {
     if (this.$location.absUrl().indexOf('?') != -1) {
       let query = this.$location.absUrl().slice(-18);
@@ -57,7 +55,6 @@ class EditorCtrl {
       }
     }
   }
-
   shorten(hexString) {
     let charSet = ['e','d','i','s','o','n','g','h','c','j','k','l','m','f','a','p','q','r','b','t','u','v','w','x','y','z','E','D','I','S','O','N','A','B','C','F','G','H','J','K','L','M','P','Q','R','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','#','$'];
     let hexChunks = [];
@@ -82,17 +79,14 @@ class EditorCtrl {
 
    return result;
   }
-
   toggleTag() {
     this.addTag = this.selectedSnippet ? !this.addTag : Materialize.toast('Create a snippet first', 3000, 'rounded');
     this.tag = '';
     this.focus('input-tag');
   }
-
   toggleAnnotation() {
     this.showAnnotation = !this.showAnnotation;
   }
-
   removeOrAddTag(tagToRemove) {
     let objectToUpdate = Object.assign({}, this.snippetMap[this.selectedSnippet].value);
     if (this.tag) {
@@ -113,7 +107,6 @@ class EditorCtrl {
     }
     this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[this.selectedSnippet].filePath);
   }
-
   updateSnippet(snippetPath) {
     let objectToUpdate = Object.assign({},
       this.snippetMap[snippetPath].value, {
@@ -129,7 +122,6 @@ class EditorCtrl {
     objectToUpdate.filePath = this.snippetMap[snippetPath].parent + '/' + this.snippetObj.name;
     this.Snippets.updateSnippet(objectToUpdate, this.snippetMap[snippetPath].filePath);
   }
-
   addSnippet() {
     if (!this.activeUser.username) {
       Materialize.toast('Please, sign in first', 3000, 'rounded');
@@ -155,7 +147,6 @@ class EditorCtrl {
       }
     }
   }
-
   buttonTrigger() {
     if (!this.activeUser.username) {
       Materialize.toast('Please, sign in or sign up first', 3000, 'rounded');
@@ -168,7 +159,6 @@ class EditorCtrl {
       this.editor.setOption('readOnly', false);
     }
   }
-
   addAnnotation() {
     let annotationObj = {
       id: this.snippetMap[this.selectedSnippet].value._id,
@@ -176,25 +166,20 @@ class EditorCtrl {
     };
     this.Snippets.addAnnotation(annotationObj);
   }
-
   changeLanguage(language) {
     this.editor.setOption('mode', language);
   }
-
   changeTheme(theme) {
     this.editor.setOption('theme', theme);
     this.Auth.updateUser({ theme: theme });
   }
-
   togglePublic() {
     this.snippetObj.public = !this.snippetObj.public;
     this.updateSnippet(this.snippetObj.filePath);
   }
-
   confirmCopyAction(element) {
     Materialize.toast(element + ' added to your clipboard!', 3000, 'rounded');
   }
-
   mapStateToThis(state) {
     let { selectedFolder, selectedSnippet, snippetMap, activeUser, selectedPublicSnippet, publicList } = state;
     let userTheme = activeUser.theme ? activeUser.theme : 'eclipse';

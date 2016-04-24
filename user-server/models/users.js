@@ -24,16 +24,16 @@ User.makeUser = (userObj, callback) => {
   let pw = userObj._password;
   if (typeof pw === 'string' && pw !== '') {
     bcrypt.genSaltAsync(13)
-      .then((salt) => bcrypt.hashAsync(pw, salt))
-      .then((hash) => {
-        userObj._password = hash;
-        return utils.createRootFolderAsync(userObj);
-      })
-      .then(() => User.create(userObj)
-        .then(result => {
-          callback(null, result);
-        }))
-      .catch(err => callback(err, null));
+    .then((salt) => bcrypt.hashAsync(pw, salt))
+    .then((hash) => {
+      userObj._password = hash;
+      return utils.createRootFolderAsync(userObj);
+    })
+    .then(() => User.create(userObj))
+    .then(result => {
+      callback(null, result);
+    })
+    .catch(err => callback(err, null));
   } else if (userObj.github) {
     // OAuth based login (no supplied password)
     return utils.createRootFolderAsync(userObj)
@@ -46,10 +46,10 @@ User.makeUser = (userObj, callback) => {
 };
 User.getUser = (email, callback) => {
   return User.findOne({ email: email })
-    .then((userObj) => {
-      callback(null, userObj);
-    })
-    .catch(callback);
+  .then((userObj) => {
+    callback(null, userObj);
+  })
+  .catch(callback);
 };
 User.updateUser = (email, newProps, callback) => {
   newProps._updatedAt = new Date();
@@ -73,7 +73,8 @@ User.checkCredentials = (email, attempt, callback) => {
             } else {
               callback(new Error('Incorrect Password'), null);
             }
-          }).catch(callback);
+          })
+          .catch(callback);
       } else {
         callback(new Error('Email not found'), null);
       }
@@ -85,14 +86,14 @@ User.createSublimeSecret = (email) => {
       if (foundUser) {
         var newseed = (Math.random() * 100).toString();
         return bcrypt.genSaltAsync(13)
-        .then(salt => bcrypt.hashAsync(newseed, salt))
-        .then(hash => {
-          foundUser.sublimeSecret = hash;
-          return User.updateUserAsync(foundUser.email, foundUser);
-        })
-        .then(() => {
-          return foundUser.sublimeSecret;    
-        });
+          .then(salt => bcrypt.hashAsync(newseed, salt))
+          .then(hash => {
+            foundUser.sublimeSecret = hash;
+            return User.updateUserAsync(foundUser.email, foundUser);
+          })
+          .then(() => {
+            return foundUser.sublimeSecret;    
+          });
       }
       else {
         return new Promise((_,reject) => reject('User not found'));

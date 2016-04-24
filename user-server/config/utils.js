@@ -81,50 +81,51 @@ nev.generateTempUserModelAsync(User)
 module.exports.postSignup = (req, res) => {
   let {email, password, username} = req.body;
   bcrypt.genSaltAsync(13)
-    .then(salt => bcrypt.hashAsync(password, salt))
-    .then(hash => {
-      let newUser = new User({username, email, _password: hash});
-      return nev.createTempUserAsync(newUser);
-    })
-    .then((newTempUser) => {
-      if (newTempUser) {
-        let URL = newTempUser[nev.options.URLFieldName];
-        return nev.sendVerificationEmailAsync(email, URL)
-          .then((info) => {
-            res.send('an email has been sent to you. Please verify it\n, info: ' + JSON.stringify(info));
-          }).catch(err => {
-            res.status(404).send(err);
-          });
-      } else {
-        res.send('You have already signed up');
-      }
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
+  .then(salt => bcrypt.hashAsync(password, salt))
+  .then(hash => {
+    let newUser = new User({username, email, _password: hash});
+    return nev.createTempUserAsync(newUser);
+  })
+  .then((newTempUser) => {
+    if (newTempUser) {
+      let URL = newTempUser[nev.options.URLFieldName];
+      nev.sendVerificationEmailAsync(email, URL)
+      .then((info) => {
+        res.send('an email has been sent to you. Please verify it\n, info: ' + JSON.stringify(info));
+      })
+      .catch(err => {
+        res.status(404).send(err);
+      });
+    } else {
+      res.send('You have already signed up');
+    }
+  })
+  .catch(err => {
+    res.status(500).send(err);
+  });
 };
 
 
 module.exports.getVerification = (req, res) => {
   let url = req.params.URL;
   nev.confirmTempUserAsync(url)
-    .then((user) => {
-      if (user) {
-        createRootFolderAsync(user)
-          .then(() => nev.sendConfirmationEmailAsync(user.email))
-          .then(() => res.redirect('http://neverco.de/#/main/public?verified=true'))
-          .catch(err => {
-            console.log('err: sending verify email', err);
-            res.status(404).send(err);
-          });
-      } else {
-        res.status(404).send('Error: confirming temp user FAILED');
-      }
-    })
-    .catch(err => {
-      console.log('err is', err);
-      res.status(404).send('failed');
-    });
+  .then((user) => {
+    if (user) {
+      createRootFolderAsync(user)
+      .then(() => nev.sendConfirmationEmailAsync(user.email))
+      .then(() => res.redirect('http://neverco.de/#/main/public?verified=true'))
+      .catch(err => {
+        console.log('err: sending verify email', err);
+        res.status(404).send(err);
+      });
+    } else {
+      res.status(404).send('Error: confirming temp user FAILED');
+    }
+  })
+  .catch(err => {
+    console.log('err is', err);
+    res.status(404).send('failed');
+  });
 };
 
 

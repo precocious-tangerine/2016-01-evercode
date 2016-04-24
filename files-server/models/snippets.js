@@ -26,8 +26,8 @@ Snippet.makeSnippet = (snippetObj, callback) => {
   .then(result => {
     if (!result) {
       Snippet.create(snippetObj)
-        .then((result) => callback(null, result))
-        .catch(callback);
+      .then((result) => callback(null, result))
+      .catch(callback);
     } else {
       callback(null, result);
     }
@@ -35,8 +35,8 @@ Snippet.makeSnippet = (snippetObj, callback) => {
 };
 Snippet.getSnippet = (_id, callback) => {
   Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) })
-    .then(snippetObj => callback(null, snippetObj))
-    .catch(callback);
+  .then(snippetObj => callback(null, snippetObj))
+  .catch(callback);
 };
 Snippet.updateSnippet = (_id, newProps, callback) => {
   newProps._updatedAt = new Date();
@@ -47,14 +47,14 @@ Snippet.removeSnippet = (_id, callback) => {
 };
 Snippet.getSnippetsByUser = (email, callback) => {
   Snippet.find({ createdBy: email })
-    .then((foundSnippets) => {
-      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
-        callback(null, foundSnippets);
-      } else {
-        callback(new Error('no snippets found'), null);
-      }
-    })
-    .catch(callback);
+  .then((foundSnippets) => {
+    if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+      callback(null, foundSnippets);
+    } else {
+      callback(new Error('no snippets found'), null);
+    }
+  })
+  .catch(callback);
 };
 Snippet.updateSnippetsByUser = (email, newProps, callback) => {
   newProps._updatedAt = new Date();
@@ -82,17 +82,17 @@ Snippet.removeFolder = (email, folder, callback) => {
     if (err) {
       callback(err);
     } else {
-      var removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
-      var promiseArray = snippets.map(snip => removeSnippetAsync(snip._id));
+      let removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
+      let promiseArray = snippets.map(snip => removeSnippetAsync(snip._id));
       Promise.all(promiseArray)
-        .then(response => {
-          callback(null, response);
-        })
-        .catch(callback);
+      .then(response => {
+        callback(null, response);
+      })
+      .catch(callback);
     }
   });
 };
-//TODO figure out how to return only 25
+
 Snippet.getPublic = (page, callback) => {
   page = page || 0;
   Snippet.find({ public: 1, name: { $ne: '.config' } },{}, {limit:24 , skip: 24 * page})
