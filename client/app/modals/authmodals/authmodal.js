@@ -34,7 +34,7 @@ class AuthCtrl {
   }
 }
 
-export let createAuthModal = (url) => {
+let createAuthModal = (url) => {
   return () => {
     return {
       restrict: 'E',
@@ -60,4 +60,6 @@ export let createAuthModal = (url) => {
     };
   };
 };
+
+export default createAuthModal;
 

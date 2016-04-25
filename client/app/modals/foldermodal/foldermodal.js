@@ -13,7 +13,7 @@ class FolderModalCtrl {
   }
 }
 
-export let createFolderModal = () => {
+let createFolderModal = () => {
   return {
     restrict: 'E',
     scope: {
@@ -36,3 +36,5 @@ export let createFolderModal = () => {
     template: require(`./foldermodal.html`)
   };
 };
+
+export default createFolderModal;

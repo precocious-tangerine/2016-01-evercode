@@ -1,4 +1,4 @@
-class EditorCtrl {
+export class EditorCtrl {
   constructor($ngRedux, Snippets, Auth, Public, $state, $location, focus) {
     this.$location = $location;
     this.$state = $state;
@@ -6,9 +6,7 @@ class EditorCtrl {
     this.Auth = Auth;
     this.Public = Public;
     this.focus = focus;
-    this.codemirrorLoaded = (_editor) => {
-      this.editor = _editor;
-    };
+
     this.cmLanguages = ['javascript', 'python', 'clike', 'ruby', 'php', 'sql', 'css', 'htmlmixed'];
     this.cmThemes = ['eclipse', 'twilight', '3024-day', 'ambiance', 'cobalt', 'material', 'mdn-like', 'paraiso-light', 'rubyblue', 'yeti', 'zenburn'];
     this.cmDefaults = { language: 'javascript', theme: 'eclipse' };
@@ -26,6 +24,9 @@ class EditorCtrl {
   }
   hideModal() {
     this.show = false;
+  }
+  codemirrorLoaded(_editor) {
+    this.editor = _editor;
   }
   getSharedSnippet() {
     if (this.$location.absUrl().indexOf('?') != -1) {
@@ -252,28 +253,3 @@ export const editor = () => {
   };
 };
 
-export let createEditorModal = () => {
-  return {
-    restrict: 'E',
-    scope: {
-      show: '='
-    },
-    link(scope, element, attrs) {
-      scope.dialogStyle = {};
-      if (scope.editorModal.publicList && attrs.snippetPath) {
-        scope.editorModal.snippetObj = scope.editorModal.publicList[attrs.snippetPath] || {};
-      }
-      if (attrs.width) {
-        scope.dialogStyle.width = attrs.width;
-      }
-      if (attrs.height) {
-        scope.dialogStyle.height = attrs.height;
-      }
-    },
-    controllerAs: 'editorModal',
-    controller: EditorCtrl,
-    bindToController: true,
-    template: require(`./editorModal.html`),
-    url: '/editor'
-  };
-};

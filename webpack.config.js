@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  devtool: false,
+  devtool: 'source-map',
   entry: [
     path.join(__dirname, 'client/app/app.js')
   ],

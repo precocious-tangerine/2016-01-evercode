@@ -19,7 +19,7 @@ class MoveSnippetModalCtrl {
 
 }
 
-export let createMoveModal = () => {
+let createMoveModal = () => {
   return {
     restrict: 'E',
     scope: {
@@ -43,3 +43,5 @@ export let createMoveModal = () => {
     template: require(`./moveModal.html`)
   };
 };
+
+export default createMoveModal;

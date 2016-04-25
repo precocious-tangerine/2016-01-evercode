@@ -4,16 +4,14 @@ import createLogger from 'redux-logger';
 import {finalReducer} from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import 'angular-ui-codemirror';
-import {createAuthModal} from './modals/authmodals/authmodal.js';
 import {createAboutCtrl} from './main/about/about.js';
 import {createDownloadCtrl} from './main/download/download.js';
 import {search} from './main/editor/search/search.js';
-import {Folders, Auth, Snippets, Public} from './services/services.js';
+import {Folders, Auth, Snippets, Public} from './services/index.js';
+import {createFolderModal, createEditorModal, createMoveModal, createAuthModal} from './modals/index.js';
 import {snippets} from './main/editor/snippets/snippets.js';
-import {createFolderModal} from './modals/foldermodal/foldermodal.js';
-import {createMoveModal} from './modals/movemodal/moveModal.js';
 import {createMainCtrl} from './main/main.js';
-import {editor, createEditorModal} from './main/editor/editor.js';
+import {editor} from './main/editor/editor.js';
 import {publicPage} from './main/public/public.js';
 import {profile} from './main/editor/profile/profile.js';
 import satellizer from 'satellizer';
@@ -22,6 +20,12 @@ import 'ngclipboard';
 import 'angular-animate';
 import './tinymce/tinymce.js';
 import 'ng-focus-on';
+
+window.createFolderModal = createFolderModal;
+window.createEditorModal = createEditorModal;
+window.createMoveModal = createMoveModal;
+window.createAuthModal = createAuthModal;
+
 
 angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
