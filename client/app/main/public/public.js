@@ -7,7 +7,9 @@ class PublicCtrl {
     this.snippetList = [];
     this.loading = true;
     this.editorModalShow = false;
-    this.Public.getPublicSnippets().then(() => {
+
+    this.Public.getPublicSnippets()
+    .then(() => {
       this.loading = false;
     });
 
@@ -24,10 +26,6 @@ class PublicCtrl {
   toggleEditorModal(filepath) {
     this.Public.setSelectedPublicSnippet(filepath);
     this.editorModalShow = !this.editorModalShow;
-  }
-  openSnippet(filepath) {
-    this.Public.setSelectedPublicSnippet(filepath);
-    this.$state.go('main.editor.snippets');
   }
   mapStateToThis(state) {
     let { publicList, selectedPublicSnippet} = state;
