@@ -7,6 +7,31 @@ let Users = require('../models/users');
 let utils = require('../config/utils.js');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 
+
+//Email verification configuration
+let mongoose = require('mongoose');
+mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
+let nev = Promise.promisifyAll(require('email-verification')(mongoose));
+nev.configureAsync({
+  persistentUserModel: Users,
+  expirationTime: 600,
+  verificationURL: setup.server + '/user/email-verification/${URL}',
+  transportOptions: {
+    service: 'Gmail',
+    auth: {
+      user: setup.email,
+      pass: setup.emailPassword
+    }
+  },
+  passwordFieldName: '_password',
+});
+
+nev.generateTempUserModelAsync(Users)
+  .then(tempUser => console.log('created tempUser', tempUser))
+  .catch(err => console.log('err in tempUser', err));
+
+
+
 module.exports = {
   signin(req, res) {
     let { email, password } = req.body;
@@ -22,24 +47,51 @@ module.exports = {
       res.status(401).send({ msg: 'Unauthorized' });
     });
   },
-  signup(req, res) {
-    let { email, password, username } = req.body;
-    let token;
-    Users.getUserAsync(email)
-    .then(found => {
-      if (found) {
-        res.status(500).send('User with given email already exists!');
-      } else {
-        Users.makeUserAsync({ email, _password: password, username: username })
-        .then(userData => {
-          token = utils.createJWT({ email: userData.email, username: userData.username });
-          res.status(201).send({ token });
+  postSignup(req, res) {
+    let {email, password, username} = req.body;
+    bcrypt.genSaltAsync(13)
+    .then(salt => bcrypt.hashAsync(password, salt))
+    .then(hash => {
+      let newUser = new Users({username, email, _password: hash});
+      return nev.createTempUserAsync(newUser);
+    })
+    .then((newTempUser) => {
+      if (newTempUser) {
+        let URL = newTempUser[nev.options.URLFieldName];
+        nev.sendVerificationEmailAsync(email, URL)
+        .then((info) => {
+          res.send('an email has been sent to you. Please verify it\n, info: ' + JSON.stringify(info));
         })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).send(err);
+        .catch(err => {
+          res.status(404).send(err);
         });
+      } else {
+        res.send('You have already signed up');
       }
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+  },
+  getVerification(req, res) {
+    let url = req.params.URL;
+    nev.confirmTempUserAsync(url)
+    .then((user) => {
+      if (user) {
+        utils.createRootFolderAsync(user)
+        .then(() => nev.sendConfirmationEmailAsync(user.email))
+        .then(() => res.redirect('http://neverco.de/#/main/public?verified=true'))
+        .catch(err => {
+          console.log('err: sending verify email', err);
+          res.status(404).send(err);
+        });
+      } else {
+        res.status(404).send('Error: confirming temp user FAILED');
+      }
+    })
+    .catch(err => {
+      console.log('err is', err);
+      res.status(404).send('failed');
     });
   },
   userInfo(req, res) {
@@ -159,3 +211,10 @@ module.exports = {
     });
   }
 };
+
+
+
+
+
+
+
