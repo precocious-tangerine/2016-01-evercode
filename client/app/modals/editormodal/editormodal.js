@@ -1,4 +1,4 @@
-import {EditorCtrl} from '../../main/editor/editor.js';
+import {EditorCtrl} from '../../controllers/main/editor/editor.js';
 
 let createEditorModal = () => {
   return {

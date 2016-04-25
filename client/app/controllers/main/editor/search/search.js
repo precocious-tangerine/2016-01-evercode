@@ -38,7 +38,7 @@ class SearchCtrl {
 
 }
 
-export const search = () => {
+const search = () => {
   return {
     url: '/search',
     restrict: 'E',
@@ -49,4 +49,6 @@ export const search = () => {
     access: { restricted: true }
   };
 };
+
+export default search;
 

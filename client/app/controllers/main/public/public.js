@@ -39,7 +39,7 @@ class PublicCtrl {
     };
   }
 }
-export const publicPage = () => {
+const publicPage = () => {
   return {
     url: '/public',
     restrict: 'E',
@@ -50,4 +50,6 @@ export const publicPage = () => {
     access: { restricted: false }
   };
 };
+
+export default publicPage;
 

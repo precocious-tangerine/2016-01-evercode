@@ -42,7 +42,7 @@ class ProfileCtrl {
   }
 }
 
-export const profile = () => {
+const profile = () => {
   return {
     url: '/profile',
     restrict: 'E',
@@ -53,4 +53,6 @@ export const profile = () => {
     access: { restricted: true }
   };
 };
+
+export default profile;
 

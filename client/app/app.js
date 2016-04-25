@@ -4,16 +4,9 @@ import createLogger from 'redux-logger';
 import {finalReducer} from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import 'angular-ui-codemirror';
-import {createAboutCtrl} from './main/about/about.js';
-import {createDownloadCtrl} from './main/download/download.js';
-import {search} from './main/editor/search/search.js';
 import {Folders, Auth, Snippets, Public} from './services/index.js';
 import {createFolderModal, createEditorModal, createMoveModal, createAuthModal} from './modals/index.js';
-import {snippets} from './main/editor/snippets/snippets.js';
-import {createMainCtrl} from './main/main.js';
-import {editor} from './main/editor/editor.js';
-import {publicPage} from './main/public/public.js';
-import {profile} from './main/editor/profile/profile.js';
+import {mainPage, publicPage, editor, snippets, profile, downloadPage, aboutPage, search} from './controllers/index.js';
 import satellizer from 'satellizer';
 import setup from '../../setup.js';
 import 'ngclipboard';
@@ -21,10 +14,6 @@ import 'angular-animate';
 import './tinymce/tinymce.js';
 import 'ng-focus-on';
 
-window.createFolderModal = createFolderModal;
-window.createEditorModal = createEditorModal;
-window.createMoveModal = createMoveModal;
-window.createAuthModal = createAuthModal;
 
 
 angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satellizer, 'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
@@ -40,15 +29,15 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
 
     $urlRouterProvider.otherwise('/main/public');
     $stateProvider
-      .state('main', createMainCtrl())
-      .state('main.public', publicPage('/public'))
+      .state('main', mainPage())
+      .state('main.public', publicPage())
       .state('main.editor', editor())
       .state('main.editor.snippets', snippets('/snippets'))
       .state('main.editor.favorites', snippets('/favorites'))
       .state('main.editor.profile', profile())
       .state('main.editor.search', search())
-      .state('main.download', createDownloadCtrl('/download'))
-      .state('main.about', createAboutCtrl('/about'));
+      .state('main.download', downloadPage())
+      .state('main.about', aboutPage());
 
     $httpProvider.interceptors.push('AttachTokens');
     $ngReduxProvider.createStoreWith(finalReducer, [createLogger()]);

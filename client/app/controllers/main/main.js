@@ -1,4 +1,4 @@
-import * as FT from '../services/fileTree.js';
+import * as FT from '../../services/fileTree.js';
 
 class MainCtrl {
   constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public, focus) {
@@ -64,7 +64,7 @@ class MainCtrl {
 
 }
 
-export const createMainCtrl = () => {
+const mainPage = () => {
   return {
     url: '/main',
     restrict: 'E',
@@ -75,4 +75,6 @@ export const createMainCtrl = () => {
     access: { restricted: false }
   };
 };
+
+export default mainPage;
 

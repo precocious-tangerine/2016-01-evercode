@@ -1,4 +1,4 @@
-import * as Actions from '../../redux/actions.js';
+import * as Actions from '../../../redux/actions.js';
 
 class DownloadCtrl {
 	constructor($ngRedux, $http) {
@@ -31,14 +31,16 @@ class DownloadCtrl {
 	}
 }
 
-export const createDownloadCtrl = (url) => {
+const downloadPage = () => {
 	return {
-		url: url,
+		url: '/download',
 		controllerAs: 'downloadCtrl',
 		controller: DownloadCtrl,
-		template: require(`.${url}.html`),
+		template: require('./download.html'),
 		scope: {},
 		access: {restricted: true}
 	};
 };
+
+export default downloadPage;
 

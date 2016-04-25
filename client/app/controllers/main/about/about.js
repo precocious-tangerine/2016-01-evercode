@@ -3,14 +3,16 @@ class AboutCtrl {
   }
 }
 
-export const createAboutCtrl = (url) => {
+const aboutPage = () => {
   return {
-    url: url,
+    url: '/about',
     controllerAs: 'aboutCtrl',
     controller: AboutCtrl,
-    template: require(`.${url}.html`),
+    template: require('./about.html'),
     scope: {},
     access: {restricted: false}
   };
 };
+
+export default aboutPage;
 

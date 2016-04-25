@@ -1,4 +1,4 @@
-import { getAllFoldersPaths } from '../../../services/fileTree.js';
+import { getAllFoldersPaths } from '../../../../services/fileTree.js';
 
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders, Public, $state, focus) {
@@ -125,7 +125,7 @@ class SnippetsCtrl {
   }
 }
 
-export const snippets = (url) => {
+const snippets = (url) => {
   return {
     url: url,
     controllerAs: 'snippets',
@@ -134,3 +134,5 @@ export const snippets = (url) => {
     access: { restricted: true }
   };
 };
+
+export default snippets;
