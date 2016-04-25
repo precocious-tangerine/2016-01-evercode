@@ -1,4 +1,4 @@
-import { getAllFoldersPaths } from '../../../../services/fileTree.js';
+import { getAllFoldersPaths } from '../../../../redux/fileTree.js';
 
 class SnippetsCtrl {
   constructor($ngRedux, Snippets, Folders, Public, $state, focus) {

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { insertNode, deleteNode, updateNode } from '../services/fileTree.js';
+import { insertNode, deleteNode, updateNode } from './fileTree.js';
 
 const modifySelectedSnippet = (state = '', action) => {
   switch (action.type) {

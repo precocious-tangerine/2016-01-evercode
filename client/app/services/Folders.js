@@ -1,5 +1,5 @@
 import * as Actions from '../redux/actions.js';
-import { convertToTree, createBoundMethods } from './fileTree.js';
+import { convertToTree, createBoundMethods } from '../redux/fileTree.js';
 
 export default class Folders {
   constructor($http, $ngRedux) {

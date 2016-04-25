@@ -1,4 +1,4 @@
-import * as FT from '../../services/fileTree.js';
+import * as FT from '../../redux/fileTree.js';
 
 class MainCtrl {
   constructor($ngRedux, $state, $auth, Folders, Auth, Snippets, Public, focus) {
