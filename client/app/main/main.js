@@ -16,19 +16,19 @@ class MainCtrl {
     $ngRedux.connect(this.mapStateToThis.bind(this))(this);
   }
 
-  toggleSideView(path, newSnippetBoolean) {
+  toggleSideView(path) {
     this.Public.removeSelectedPublicSnippet();
-    if(newSnippetBoolean){
-      this.Snippets.deselectSnippet();
-      this.focus('snippet-input-name');
+    if(this.$state.is('main.' + path)) {
       this.$state.go('main.editor'); 
     } else {
-      if(this.$state.is('main.' + path)) {
-        this.$state.go('main.editor'); 
-      } else {
-        this.$state.go('main.' + path);
-      }
+      this.$state.go('main.' + path);
     }
+  }
+
+  openBlankTextEditor() {
+    this.Public.removeSelectedPublicSnippet();
+    this.Snippets.deselectSnippet();
+    this.$state.go('main.editor'); 
   }
 
   changeActiveTab(folderPath) {

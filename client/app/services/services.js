@@ -13,7 +13,8 @@ export class Folders {
         return this.$http({
             method: 'GET',
             url: 'files/api/user/snippets'
-          }).then(res => {
+          })
+          .then(res => {
             var snippetMap = convertToTree(res.data);
             dispatch(Actions.setSnippetMap(snippetMap));
             if(!this.selectedFolder) {
@@ -33,7 +34,8 @@ export class Folders {
             method: 'POST',
             url: 'files/api/folders',
             data: folder
-          }).then(snippet => {
+          })
+          .then(snippet => {
             dispatch(Actions.addSnippetMap(snippet.data.filePath, snippet.data));
           })
           .catch(error => {
