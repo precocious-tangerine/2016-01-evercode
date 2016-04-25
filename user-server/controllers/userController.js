@@ -3,7 +3,7 @@ let Promise = require('bluebird');
 let request = require('request');
 let qs = require('querystring');
 let setup = require('../../setup');
-let Users = Promise.promisifyAll(require('../models/users'));
+let Users = require('../models/users');
 let utils = require('../config/utils.js');
 let bcrypt = Promise.promisifyAll(require('bcrypt'));
 

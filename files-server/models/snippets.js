@@ -37,7 +37,6 @@ let snippetStatics = {
   },
 
   getSnippet(_id, callback) {
-    console.log('this is ', this);
     this.findOne({_id: mongoose.Types.ObjectId(_id)})
     .then(snippetObj => callback(null, snippetObj))
     .catch(callback);

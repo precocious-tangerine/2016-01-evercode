@@ -1,6 +1,5 @@
 'use strict';
-let Promise = require('bluebird');
-let Snippets = Promise.promisifyAll(require('../models/snippets'));
+let Snippets = require('../models/snippets');
 
 module.exports = {
   getSnippet(req, res) {
