@@ -8,7 +8,6 @@ let nev = Promise.promisifyAll(require('email-verification')(mongoose));
 let User = require('../models/users.js');
 let jwt = require('jsonwebtoken');
 let secret = setup.secretToken;
-
 mongoose.connect(setup.mongodbHost + setup.mongodbPort + setup.mongodbUsersName);
 
 
@@ -65,7 +64,7 @@ module.exports.createRootFolderAsync = createRootFolderAsync;
 nev.configureAsync({
   persistentUserModel: User,
   expirationTime: 600,
-  verificationURL: 'http://neverco.de/user/email-verification/${URL}',
+  verificationURL: setup.server + '/user/email-verification/${URL}',
   transportOptions: {
     service: 'Gmail',
     auth: {

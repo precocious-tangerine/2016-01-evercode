@@ -1,8 +1,7 @@
 'use strict';
 require('babel-polyfill');
 let expect = require('chai').expect;
-let Promise = require('bluebird');
-let Snippet = Promise.promisifyAll(require('../files-server/models/snippets'));
+let Snippet = require('../files-server/models/snippets');
 
 
 let removeTestSnippet = (callback) => {
@@ -129,13 +128,14 @@ describe('the Snippet Model', () => {
           testSnippet = returnedSnippet;
           return testSnippet._id;
         })
-        .then(Snippet.getSnippetAsync)
+        .then(Snippet.getSnippetAsync.bind(Snippet))
         .then(result => {
           resultSnippet = result;
           done();
         })
         .catch(err => {
           console.log(err);
+          done();
         });
       };
 
