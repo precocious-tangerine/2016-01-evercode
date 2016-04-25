@@ -1,20 +1,20 @@
 import angular from 'angular';
-import ngRedux from 'ng-redux';
 import createLogger from 'redux-logger';
 import {finalReducer} from './redux/reducers.js';
-import angular_ui_router from 'angular-ui-router';
 import {Folders, Auth, Snippets, Public, UrlEncoding} from './services/index.js';
 import {createFolderModal, createEditorModal, createMoveModal, createAuthModal} from './modals/index.js';
 import {mainPage, publicPage, editor, snippets, profile, downloadPage, aboutPage, search} from './controllers/index.js';
-import satellizer from 'satellizer';
 import setup from '../../setup.js';
+import 'angular-ui-router';
+import 'satellizer';
+import 'ng-redux';
 import 'angular-ui-codemirror';
 import 'ngclipboard';
 import 'angular-animate';
 import './tinymce/tinymce.js';
 import 'ng-focus-on';
 
-angular.module('evercode', [ngRedux, angular_ui_router, satellizer,'ui.codemirror',  'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
+angular.module('evercode', ['ngRedux', 'ui.router', 'satellizer','ui.codemirror',  'ngclipboard', 'ngAnimate', 'ui.tinymce', 'focusOn'])
   .config(($stateProvider, $urlRouterProvider, $httpProvider, $ngReduxProvider, $authProvider) => {
 
     $authProvider.oauth2({
