@@ -73,7 +73,7 @@
     "files-server": "nodemon --harmony-destructuring files-server/noncluster.js",
     "start-servers": "npm run user-server & npm run files-server & npm run client-server",
     "css": "node-sass  client-server/client/styles/materialize.scss client-server/client/styles/materialize.css",
-    "test": "mocha test --harmony-destructuring --compilers js:babel-core/register",
+    "test": "mocha test --harmony-destructuring",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
     "dev": "webpack-dev-server --devtool source-map --progress --colors --hot --content-base client",
