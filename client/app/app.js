@@ -4,7 +4,7 @@ import createLogger from 'redux-logger';
 import {finalReducer} from './redux/reducers.js';
 import angular_ui_router from 'angular-ui-router';
 import 'angular-ui-codemirror';
-import {Folders, Auth, Snippets, Public} from './services/index.js';
+import {Folders, Auth, Snippets, Public, UrlEncoding} from './services/index.js';
 import {createFolderModal, createEditorModal, createMoveModal, createAuthModal} from './modals/index.js';
 import {mainPage, publicPage, editor, snippets, profile, downloadPage, aboutPage, search} from './controllers/index.js';
 import satellizer from 'satellizer';
@@ -46,6 +46,7 @@ angular.module('evercode', [ngRedux, angular_ui_router, 'ui.codemirror', satelli
   .service('Folders', Folders)
   .service('Snippets', Snippets)
   .service('Public', Public)
+  .service('UrlEncoding', UrlEncoding)
   .directive('signin', createAuthModal('/signin'))
   .directive('signup', createAuthModal('/signup'))
   .directive('editor', createEditorModal)
