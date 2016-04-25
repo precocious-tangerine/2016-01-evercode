@@ -7,38 +7,38 @@ let Promise = require('bluebird');
 // //                   Auth Routes                        //
 // //////////////////////////////////////////////////////////
 
-// describe('Auth Routes', function() {
+ describe('Auth Routes', function() {
 
-//   let request = require('supertest');
-//   let express = require('express');
-//   let testApp = express();
-//   let Routes = require('../user-server/config/routes.js')(testApp, express);
-//   let config = require('../setup.js');
-//   let userController = require('../user-server/controllers/userController');
+   let request = require('supertest');
+   let express = require('express');
+   let testApp = express();
+   let Routes = require('../user-server/config/routes.js')(testApp, express);
+   let config = require('../setup.js');
+   let userController = require('../user-server/controllers/userController');
 
-//   describe('Auth basics', function() {
-//     it('should have signin function', function() {
-//       expect(userController.signin).to.be.a('function');
-//     });
+   describe('Auth basics', function() {
+     it('should have signin function', function() {
+       expect(userController.signin).to.be.a('function');
+     });
 
-//     it('should have getSnippet function', function() {
-//       expect(userController.signup).to.be.a('function');
-//     });
+     it('should have postSignup function', function() {
+       expect(userController.postSignup).to.be.a('function');
+     });
 
-//     it('should have githubLogin function', function() {
-//       expect(userController.githubLogin).to.be.a('function');
-//     });
+     it('should have githubLogin function', function() {
+       expect(userController.githubLogin).to.be.a('function');
+     });
 
-//     it('should have a userInfo function', function() {
-//       expect(userController.userInfo).to.be.a('function');
-//     });
+     it('should have a userInfo function', function() {
+       expect(userController.userInfo).to.be.a('function');
+     });
 
-//     it('should have a updateUserInfo function', function() {
-//       expect(userController.updateUserInfo).to.be.a('function');
-//     });
-//   });
+     it('should have a updateUserInfo function', function() {
+       expect(userController.updateUserInfo).to.be.a('function');
+     });
+   });
 
-//   describe('basic', function() {
+   describe('basic', function() {
 
 //     it('should have a /user/signup route', function(done) {
 //       request(testApp)
@@ -55,21 +55,20 @@ let Promise = require('bluebird');
 //         });
 //     });
 
-//     it('should have a /user/signin route', function() {
-//       request(testApp)
-//         .post('/user/signin')
-//         .send({ email: 'test@chai.com', password: 'test' })
-//         .expect(401)
-//         .end(function(err, res) {
-//           if (err) {
-//             done(err);
-//           } else {
-//             expect(res.body).to.equal('Unathorized');
-//             done();
-//           }
-//         });
-//     });
-//   });
+     // it('should have a /user/signin route', function() {
+     //   request(testApp)
+     //     .post('/user/signin')
+     //     .send({ email: 'test@chai.com', password: 'test' })
+     //     .expect(401)
+     //     .end(function(err, res) {
+     //       if (err) {
+     //         done(err);
+     //       } else {
+     //         done();
+     //       }
+     //     });
+     // });
+   });
 
 //   describe('/user/signup', function() {
 
@@ -158,7 +157,7 @@ let Promise = require('bluebird');
 
 //   });
 
-// });
+ });
 
 // //////////////////////////////////////////////////////////
 // //                   Snippet Routes                     //
