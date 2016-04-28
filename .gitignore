@@ -9,9 +9,9 @@
 setup.js
 
 #client
-client-server/client/lib/*
-client-server/client/dist/*
-client-server/client/styles/materialize.css
+client/lib/*
+client/dist/*
+client/styles/materialize.css
 
 #npm_files
 /node_modules/*

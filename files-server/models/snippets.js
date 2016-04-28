@@ -1,5 +1,8 @@
 'use strict';
 let mongoose = require('mongoose');
+let setup = require('../../setup.js');
+let db = mongoose.createConnection(setup.mongodbHost + setup.mongodbPort + setup.mongodbFilesName);
+
 let Promise = require('bluebird');
 
 let snippetSchema = mongoose.Schema({
@@ -19,34 +22,37 @@ let snippetSchema = mongoose.Schema({
   language: { type: String, default: 'javascript' }
 });
 
-let Snippet = mongoose.model('Snippet', snippetSchema);
-
-Snippet.makeSnippet = (snippetObj, callback) => {
-  Snippet.findOne({filePath: snippetObj.filePath})
-  .then(result => {
-    if (!result) {
-      Snippet.create(snippetObj)
+let snippetStatics = {
+  makeSnippet(snippetObj, callback) {
+    this.findOne({filePath: snippetObj.filePath})
+    .then(result => {
+      if (!result) {
+        this.create(snippetObj)
         .then((result) => callback(null, result))
         .catch(callback);
-    } else {
-      callback(null, result);
-    }
-  });
-};
-Snippet.getSnippet = (_id, callback) => {
-  Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) })
+      } else {
+        callback(null, result);
+      }
+    });
+  },
+
+  getSnippet(_id, callback) {
+    this.findOne({_id: mongoose.Types.ObjectId(_id)})
     .then(snippetObj => callback(null, snippetObj))
     .catch(callback);
-};
-Snippet.updateSnippet = (_id, newProps, callback) => {
-  newProps._updatedAt = new Date();
-  Snippet.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
-};
-Snippet.removeSnippet = (_id, callback) => {
-  Snippet.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
-};
-Snippet.getSnippetsByUser = (email, callback) => {
-  Snippet.find({ createdBy: email })
+  },
+
+  updateSnippet(_id, newProps, callback) {
+    newProps._updatedAt = new Date();
+    this.update({ _id: mongoose.Types.ObjectId(_id) }, newProps, { multi: false }, callback);
+  },
+
+  removeSnippet(_id, callback) {
+    this.findOne({ _id: mongoose.Types.ObjectId(_id) }).remove(callback);
+  },
+
+  getSnippetsByUser(email, callback) {
+    this.find({ createdBy: email })
     .then((foundSnippets) => {
       if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
         callback(null, foundSnippets);
@@ -55,50 +61,62 @@ Snippet.getSnippetsByUser = (email, callback) => {
       }
     })
     .catch(callback);
-};
-Snippet.updateSnippetsByUser = (email, newProps, callback) => {
-  newProps._updatedAt = new Date();
-  Snippet.update({ createdBy: email }, newProps, {multi: true}, callback);
-};
-Snippet.getSnippetsByFolder = (email, folder, callback) => {
-  Snippet.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
-    .then((foundSnippets) => {
-      if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
-        callback(null, foundSnippets);
+  },
+
+  updateSnippetsByUser(email, newProps, callback) {
+    newProps._updatedAt = new Date();
+    this.update({ createdBy: email }, newProps, {multi: true}, callback);
+  },
+
+  getSnippetsByFolder(email, folder, callback) {
+    this.find({ createdBy: email, filePath: new RegExp(folder + '.*', 'igm') })
+      .then((foundSnippets) => {
+        if (Array.isArray(foundSnippets) && foundSnippets.length !== 0) {
+          callback(null, foundSnippets);
+        } else {
+          callback(new Error('password invalid'), null);
+        }
+      }).catch(callback);
+  },
+
+  makeSubFolder(email, username, filepath, callback) {
+    filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
+    this.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: filepath + '/.config' }, callback);
+  },
+
+  makeRootFolder(email, username, callback) {
+    this.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: '/' + email + '/.config' }, callback);
+  },
+
+  removeFolder(email, folder, callback) {
+    this.getSnippetsByFolder(email, folder, (err, snippets) => {
+      if (err) {
+        callback(err);
       } else {
-        callback(new Error('password invalid'), null);
-      }
-    }).catch(callback);
-};
-Snippet.makeSubFolder = (email, username, filepath, callback) => {
-  filepath = (filepath.charAt(0) !== '/') ? '/' + filepath : filepath;
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: filepath + '/.config' }, callback);
-};
-Snippet.makeRootFolder = (email, username, callback) => {
-  Snippet.makeSnippet({ name: '.config', data: '..', createdBy: email, username: username, filePath: '/' + email + '/.config' }, callback);
-};
-Snippet.removeFolder = (email, folder, callback) => {
-  Snippet.getSnippetsByFolder(email, folder, (err, snippets) => {
-    if (err) {
-      callback(err);
-    } else {
-      var removeSnippetAsync = Promise.promisify(Snippet.removeSnippet);
-      var promiseArray = snippets.map(snip => removeSnippetAsync(snip._id));
-      Promise.all(promiseArray)
+        let removeSnippetAsync = Promise.promisify(this.removeSnippet.bind(this));
+        let promiseArray = snippets.map(snip => removeSnippetAsync(snip._id));
+        Promise.all(promiseArray)
         .then(response => {
           callback(null, response);
         })
         .catch(callback);
-    }
-  });
+      }
+    });
+  },
+
+  getPublic(page, callback) {
+    page = page || 0;
+    this.find({ public: 1, name: { $ne: '.config' } },{}, {limit:24 , skip: 24 * page})
+      .then((foundSnippets) => {
+        callback(null, foundSnippets.sort({ _createdAt: -1 }));
+      })
+      .catch(callback);
+  }
 };
-//TODO figure out how to return only 25
-Snippet.getPublic = (page, callback) => {
-  page = page || 0;
-  Snippet.find({ public: 1, name: { $ne: '.config' } },{}, {limit:24 , skip: 24 * page})
-    .then((foundSnippets) => {
-      callback(null, foundSnippets.sort({ _createdAt: -1 }));
-    }).catch(callback);
-};
+
+let snippetStaticsAsync = Promise.promisifyAll(snippetStatics);
+
+Object.assign(snippetSchema.statics, snippetStaticsAsync);
+let Snippet = db.model('Snippet', snippetSchema);
 
 module.exports = Snippet;

@@ -1,0 +1,80 @@
+<div class="parallax-container splash-container">
+  <div class="parallax"><img src="../../assets/photo.jpeg"></div>
+  <div class="download-header row ">
+    <img class="responsive-img" width="400px" src="../../assets/n_s.png">
+      <div class='download-button spacing'>
+        <a href='/nevercode-sublime-setup.zip' class="waves-effect waves-light btn btn-large"><i class="material-icons left">cloud</i>Download the Sublime Plugin</a>
+      </div>
+    <h5 id="download-description">Easily integrate your code snippets and templates with sublime's snippet templates</h5>
+  </div>
+</div>
+<hr>
+<div class='sublime-secret row'>
+  <div class='sublime-secret-entry'>
+    <span class='sublime-secret-title'>Client Secret:</span><span class='client-secret-value'>{{downloadCtrl.activeUser.sublimeSecret}}
+    <a class="copy-to-clipboard tooltipped"
+      data-tooltip="Copy Client Secret"
+      data-position="top"
+      data-delay="500"
+      ngclipboard
+      data-clipboard-text={{downloadCtrl.activeUser.sublimeSecret}}
+      ng-click='downloadCtrl.confirmCopyAction()'>
+      <i class="material-icons tiny">assignment</i>
+    </a>
+    </span>
+  </div>
+  <div class='sublime-secret-buttons' text-align:>
+    <button ng-click="downloadCtrl.generateNewSecret()" class="col s4 offset-s4 waves-effect waves-light btn save-snippets center-align">
+      Generate New Client Secret
+    </button>
+  </div>
+</div>
+<div>
+  <hr>
+</div>
+<div class="spacing"></div>
+<div class='download-instructions-container row'>
+  <h4>Sublime Plugin Guide</h4>
+  <br>
+  <h6>Automatic Installation (supported only on OS X)</h6>
+  <ol>
+    <li>Download the compressed file below and unzip it in a local directory</li>
+    <li>Run the setup file by clicking on "setup.command" If this doesn't run in a terminal emulator, navigate to the folder in your terminal and run "./setup.command". (Modify the executable permissions by typing "chmod +x ./setup.command" in your terminal if this doesn't work)</li>
+    <li>A prompt will appear asking for your valid Nevercode client secret. Copy it above using the clipboard button, paste it into the setup script, and allow the script to run.</li>
+    <li>Once setup is complete, your Sublime Editor should now contain a "Nevercode" menu in Preferences with two options, "Sync with Nevercode" and "Input Client Secret"</li>
+  </ol>
+  <br>
+  <h6>Manual Installation</h6>
+  <ol>
+    <li>Copy the compressed zip file above to a local directory and decompress the file</li>
+    <li>Inside the uncompressed archive, there should be a file called "setup.sh" and a folder called "Nevercode". Copy the Nevercode folder into your Sublime's "Packages" folder.</li>
+    <li>Re-open Sublime and there should now be a "Nevercode Menu" with two options, "Sync with Nevercode" and "Input Client Secret". Click on "Input Client Secret" and an input box should appear at the bottom of your test editor</li>
+    <li>Copy the client secret on your account to your clipboard, pase it into the input field in Sublime, and then hit enter</li>
+    <li>A dialog box should appear indicating your client secret is valid. Once you see this, installation has completed.</li>
+  </ol>
+  <br>
+  <h6>Syncing your local Snippets with Sublime</h6>
+  <ol>
+    <li>Inside the "Nevercode" menu which is nested inside of "Preferences", click "Sync with Nevercode"</li>
+    <li>A new window should appear in sublime which indicates the progress of the plugin. Once it is completed, a dialog box should appear indicating the new snippets which have been downloaded locally and integrated with Sublime.</li>
+    <li>All shortcuts which are set in Nevercode are first prefixed with "NC_" are set as triggers for pasting the snippets into your code. So, for example, if you set a shortcut for a particular snippet to be "NchooseK", you could input this snippet into your text by typing "NC_NchooseK" then hitting the Tab button</li>
+  </ol>
+  <br>
+  <h6>Uploading Snippet to Nevercode</h6>
+  <ol>
+    <li>If you compose a snippet in Sublime and wish to upload it to your Nevercode account, highlight the code, right-click, and then click "Upload Selection to Nevercode".
+    <li>The input box should appear at the bottom of the page asking you to input a name for the file. Enter a name and then hit Enter.</li>
+    <li>Another input box should appear at the botom of the page asking for a shortcut. This will be the shortcut that you use in order to paste the code into your current open file. Enter a unique shortcut and then hit Enter.</li>
+    <li>A dialogue box should appear indicating the result of the upload. If sucessful, be sure to re-sync in order to store snippet locally.
+  </ol>
+  <br>
+  <h6>Resetting your Client Secret</h6>
+  <ol>
+    <li>In the event that your client secret has been compromised, generate a new client secret by clicking the corresponding button on the Sublime plugin link page.</li>
+    <li>A new client secret should then appear. Copy the client secret to your clipboard and then open Sublime.</li>
+    <li>Open the "Nevercode" submenu nested inside of "Preferences" and click on "Input Client Secret"</li>
+    <li>An input box should appear at the bottom of the page with an old client secret. Erase it and paste your new client secret, then hit enter</li>
+    <li>A dialogue box should appear once the client secret is confirmed as valid by the server. Click OK to finish setting up your new secret</li>
+  </ol>
+</div>
+

@@ -1,12 +1,11 @@
 'use strict';
-let { postSignup, getVerification } = require('./utils.js');
 let userController = require('../controllers/userController');
 
 module.exports = (app) => {
 
   // Post signup and email verification 
-  app.post('/user/signup', postSignup);
-  app.get('/user/email-verification/:URL', getVerification);
+  app.post('/user/signup', userController.postSignup);
+  app.get('/user/email-verification/:URL', userController.getVerification);
 
   // Sign in and sign up locally and using github 
   app.post('/user/signin', userController.signin);
