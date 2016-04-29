@@ -24,7 +24,7 @@ export default class Public {
             method: 'GET',
             url: '/files/share?s=' + id,
           })
-          .then((response) => {
+          .then(response => {
             this.setPublicList(response.data);
             this.setSelectedPublicSnippet('share');
           });

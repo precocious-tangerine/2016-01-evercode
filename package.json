@@ -68,11 +68,10 @@
   },
   "scripts": {
     "nginx": "sudo nginx",
-    "client-server": "nodemon --harmony-destructuring client-server/noncluster.js",
     "user-server": "nodemon --harmony-destructuring user-server/noncluster.js",
     "files-server": "nodemon --harmony-destructuring files-server/noncluster.js",
-    "start-servers": "npm run user-server & npm run files-server & npm run client-server",
-    "css": "node-sass  client-server/client/styles/materialize.scss client-server/client/styles/materialize.css",
+    "start-servers": "npm run user-server & npm run files-server",
+    "css": "node-sass client/styles/materialize.scss client/styles/materialize.css",
     "test": "mocha test --harmony-destructuring",
     "start": "node --harmony-destructuring server/noncluster.js",
     "cluster": "node --harmony-destructuring server/cluster.js",
