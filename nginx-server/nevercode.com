@@ -8,7 +8,7 @@ server {
     #access_log  /var/log/nginx/log/host.access.log  main;
 
     location / {
-      root /home
+      root /Users/BigHeart/Desktop/nevercode/client;
     }
 
     location /files {
